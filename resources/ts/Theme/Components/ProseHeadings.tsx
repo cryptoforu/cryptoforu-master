@@ -37,6 +37,12 @@ export const ProseHeadings = defineStyleConfig({
       color: props.colorMode === 'dark' ? 'emerald.400' : 'emerald.600',
       lineHeight: round(40 / 36),
     }),
+    proseGradientEmerald: (props: StyleFunctionProps) => ({
+      bgGradient: 'linear(to-r, emerald.200, green.400, teal.200)',
+      bgClip: 'text',
+      fontWeight: 'bold',
+      letterSpacing: '-0.025em',
+    }),
   },
   defaultProps: {
     variant: 'proseSlate',

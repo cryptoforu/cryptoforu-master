@@ -26,7 +26,24 @@ const sizes = {
       w: '400px',
     },
   }),
+  md: definePartsStyle({
+    content: {
+      w: '224px',
+    },
+  }),
 };
+
+const main = definePartsStyle((props) => ({
+  content: {
+    borderRadius: '6px',
+    borderColor: mode('rgb(15 23 42 / 0.1)', 'rgb(248 250 252 / 0.06)')(props),
+    bg: mode('emerald.100', 'slateAlpha.900')(props),
+    filter: 'primaryAlpha.700',
+    backdropFilter: 'blur(8px)',
+    px: 2,
+    py: 2,
+  },
+}));
 
 const sidebar = definePartsStyle((props) => ({
   content: {
@@ -38,6 +55,7 @@ const sidebar = definePartsStyle((props) => ({
 
 const variants = {
   sidebar,
+  main,
 };
 
 export const popoverTheme = defineMultiStyleConfig({

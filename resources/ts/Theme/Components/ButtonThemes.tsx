@@ -1,5 +1,5 @@
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
-
+import { variants } from './NavigationLink';
 const sidebarBase = {
   boxSize: 'initial',
   justifyContent: 'flex-start',
@@ -76,6 +76,54 @@ const gradPurple = defineStyle({
   py: '2',
 });
 
+const primaryBtn = defineStyle({
+  bgGradient: 'linear(to-r, emerald.200, green.400, teal.200)',
+  color: 'slate.800',
+  _active: {
+    bg: 'emerald.400',
+  },
+  _hover: {
+    bgGradient: 'linear(to-r, teal.200, green.400, emerald.200)',
+    color: 'primary.900',
+  },
+  _focus: {
+    outline: '1px solid',
+    outlineColor: 'emerald.100',
+  },
+  _dark: {
+    _focus: {
+      outline: '1px solid',
+      outlineColor: 'emerald.100',
+    },
+  },
+  rounded: 'full',
+});
+
+const sm = defineStyle({
+  py: '1.5',
+  px: '3',
+  fontSize: 'sm',
+  fontWeight: '500',
+});
+
+const md = defineStyle({
+  py: '2',
+  px: '4',
+  fontSize: 'sm',
+  fontWeight: '600',
+});
+
 export const buttonTheme = defineStyleConfig({
-  variants: { sidebar, sidebarActive, gradLime, gradPurple },
+  variants: {
+    sidebar,
+    sidebarActive,
+    gradLime,
+    gradPurple,
+    primaryBtn,
+    ...variants,
+  },
+  sizes: {
+    sm,
+    md,
+  },
 });

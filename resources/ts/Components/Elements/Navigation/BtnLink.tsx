@@ -7,6 +7,7 @@ import {
   chakra,
   forwardRef,
 } from '@chakra-ui/react';
+import { m } from 'framer-motion';
 import { useRoute } from '@/Providers/RouteProvider';
 import { RequestPayload, VisitOptions } from '@inertiajs/core';
 import { RouteParam, RouteParamsWithQueryOverload } from 'ziggy-js';
@@ -59,5 +60,5 @@ const BtnLink = forwardRef<BtnLinkProps, BtnComponent>(function Btnlink(
     />
   );
 });
-
+export const MotionBtn = chakra(m(BtnLink));
 export default BtnLink;

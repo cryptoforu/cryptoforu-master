@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 
 use App\Interfaces\Settings\MenuInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -44,7 +45,7 @@ class HandleInertiaRequests extends Middleware
     {
         $ziggy = new Ziggy($group = null, $request->url());
         $ziggy = $ziggy->toArray();
-
+        $admin_path = Str::of($request->path())->startsWith('admin');
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -55,7 +56,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'ziggy' => $ziggy,
             'cookies' => $request->header('cookie', '') ?? '',
-            'admin_sidebar' => $request->is('admin') ? $this->menu->getMenu('admin_sidebar') : null,
+            'admin_sidebar' => $admin_path ? $this->menu->getMenu('admin_sidebar') : null,
             'main_menu' => $this->menu->getMenu('front_main'),
 
         ]);

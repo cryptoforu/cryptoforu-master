@@ -2,12 +2,17 @@
 
 namespace App\Services\Earn\Actions;
 
+use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Earn;
-use App\Services\Library\Concerns\Cleanable;
 
 class DeleteEarn
 {
-    use Cleanable;
+
+    public function __construct(
+        private LibraryActionsInterface $action,
+    ) {
+
+    }
 
     /**
      * Delete Earning Method
@@ -15,9 +20,10 @@ class DeleteEarn
     public function handle(Earn $earn): bool
     {
         if ($earn->exists) {
+            foreach ($earn->images as $img) {
+                $this->action->delete($img);
+            }
             $earn->delete();
-            $this->clean([$earn->image, $earn->thumb]);
-
             return true;
         }
 

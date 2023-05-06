@@ -10,16 +10,10 @@ use Illuminate\Support\Facades\Storage;
 trait Directories
 {
     public function directory(
-        string $directory,
-        bool $public_path = null
+        string $directory
     ) {
-        if (!isset($public_path)) {
-            $storage = Storage::allDirectories(public_path('images'));
-            $path = 'images/' . $directory;
-        } else {
-            $storage = Storage::allDirectories(public_path($directory));
-            $path = $directory;
-        }
+        $storage = Storage::allDirectories(public_path('images'));
+        $path = 'images/' . $directory;
         if (Arr::exists(
             array:$storage,
             key:$directory

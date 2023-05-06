@@ -16,8 +16,9 @@ import {
   SettingsContent,
   LazyImage,
   popoverTheme,
+  MainNav,
 } from './Components';
-import { containerTheme } from './Layouts';
+import { containerTheme, FrontLayout } from './Layouts';
 import { TagsInput } from './Styles/checkBoxTheme';
 import { textStyles } from './Styles/prose';
 const config: ThemeConfig = {
@@ -33,7 +34,7 @@ const styles = {
   global: (props: StyleFunctionProps) => ({
     body: {
       color: mode('slate.950', 'emerald.100')(props),
-      bg: mode('emerald.50', 'slate.950')(props),
+      bg: mode('emerald.50', 'primaryDark')(props),
       display: 'flex',
       flexDirection: 'column',
       height: 'full',
@@ -55,6 +56,20 @@ const styles = {
 };
 
 const colors = {
+  primaryDark: '#00040f',
+  primaryAlpha: {
+    50: 'rgba(0, 4, 15, 0.04)',
+    100: 'rgba(0, 4, 15, 0.06)',
+    200: 'rgba(0, 4, 15, 0.08)',
+    300: 'rgba(0, 4, 15, 0.16)',
+    400: 'rgba(0, 4, 15, 0.24)',
+    500: 'rgba(0, 4, 15, 0.36)',
+    600: 'rgba(0, 4, 15, 0.48)',
+    700: 'rgba(0, 4, 15, 0.64)',
+    800: 'rgba(0, 4, 15, 0.80)',
+    900: 'rgba(0, 4, 15, 0.90)',
+    950: 'rgba(0, 4, 15, 0.95)',
+  },
   slate: {
     50: '#f8fafc',
     100: '#f1f5f9',
@@ -67,6 +82,18 @@ const colors = {
     800: '#1e293b',
     900: '#0f172a',
     950: '#020617',
+  },
+  slateAlpha: {
+    50: 'RGBA(2,6,23,0.04)',
+    100: 'RGBA(2,6,23,0.06)',
+    200: 'RGBA(2,6,23,0.08)',
+    300: 'RGBA(2,6,23,0.16)',
+    400: 'RGBA(2,6,23,0.24)',
+    500: 'RGBA(2,6,23,0.36)',
+    600: 'RGBA(2,6,23,0.48)',
+    700: 'RGBA(2,6,23,0.64)',
+    800: 'RGBA(2,6,23,0.80)',
+    900: 'RGBA(2,6,23,0.92)',
   },
   emerald: {
     50: '#ecfdf5',
@@ -107,6 +134,8 @@ const theme = extendTheme({
     NavigationLink,
     SettingsContent,
     LazyImage,
+    FrontLayout,
+    MainNav,
   },
 });
 export default theme;

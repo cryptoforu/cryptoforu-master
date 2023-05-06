@@ -1,18 +1,22 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Services\Library\Concerns;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 trait Destroyable
 {
-    public function destroy(string $file_path)
+    public function destroy(object $file)
     {
-        if (Storage::fileExists($file_path)) {
-            Storage::delete($file_path);
 
+        if (Storage::fileExists($file->file_url)) {
+            Storage::delete($file->file_url);
+            Arr::map($file->file_conversions, function ($value, $key) {
+                Storage::delete($value);
+            });
             return true;
         }
 

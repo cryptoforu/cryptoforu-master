@@ -1,20 +1,26 @@
 import { PropsWithChildren } from 'react';
 import AppHead from '@/Components/AppHead';
-import { Container, Flex, FlexProps } from '@chakra-ui/react';
+import {
+  Flex,
+  useMultiStyleConfig,
+  ThemingProps,
+  HTMLChakraProps,
+} from '@chakra-ui/react';
+import { MainNav } from '@/Components/Navbars';
+export interface FrontLayoutProps
+  extends ThemingProps,
+    HTMLChakraProps<'div'>,
+    PropsWithChildren {}
 
-const FrontLayout = ({ children, ...props }: PropsWithChildren<FlexProps>) => {
+const FrontLayout = ({ children, ...props }: FrontLayoutProps) => {
+  const { size, ...rest } = props;
+  const styles = useMultiStyleConfig('FrontLayout', { size });
   return (
     <>
       <AppHead />
-      <Flex
-        as="main"
-        role="main"
-        direction="column"
-        flex="1"
-        py="16"
-        {...props}
-      >
-        <Container flex="1">{children}</Container>
+      <MainNav />
+      <Flex as="main" role="main" __css={styles.main} {...rest}>
+        {children}
       </Flex>
     </>
   );

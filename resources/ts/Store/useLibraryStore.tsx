@@ -35,6 +35,11 @@ const useLibraryStore = create<LibraryStore>()(
     values: {
       id: 0,
       file_name: '',
+      conversions: {
+        lg: '',
+        md: '',
+        sm: '',
+      },
       mime_type: '',
       size: '',
       width: 256,

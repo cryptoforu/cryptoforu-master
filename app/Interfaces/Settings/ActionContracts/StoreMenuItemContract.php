@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Interfaces\Settings\ActionContracts;
 
@@ -13,5 +13,5 @@ interface StoreMenuItemContract
      *
      * @param  StoreMenuItemRequest  $request
      */
-    public function handle(StoreMenuItemRequest $from): void;
+    public function handle(StoreMenuItemRequest $from): bool;
 }

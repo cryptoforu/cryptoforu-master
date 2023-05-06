@@ -18,7 +18,7 @@ class CreateFile
         if (!empty($files)) {
             foreach ($files as $file) {
                 $category = LibraryCategory::find($request->validated('library_category_id'));
-                $fl = $store->handle($file, $category->directory, true);
+                $fl = $store->handle($file, $category->directory);
                 Library::create([
                     'file_name' => $fl['file_name'],
                     'mime_type' => $fl['mime'],

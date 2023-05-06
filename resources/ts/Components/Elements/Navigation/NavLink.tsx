@@ -1,4 +1,10 @@
-import { chakra, LinkProps } from '@chakra-ui/react';
+import {
+  chakra,
+  LinkProps,
+  ThemingProps,
+  useStyleConfig,
+  forwardRef,
+} from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import { useRoute } from '@/Providers/RouteProvider';
 import { FormDataConvertible, VisitOptions } from '@inertiajs/core';
@@ -12,11 +18,19 @@ interface NavLinkProps extends NavLinkComponent {
   options?: VisitOptions;
   params?: RouteParam | RouteParamsWithQueryOverload;
   routeParams?: boolean;
+  variant?: ThemingProps['variant'];
+  size?: ThemingProps['size'];
 }
 
 const Navigate = chakra(Link);
-const NavLink = ({ ...props }: NavLinkProps) => {
-  const { to, data, options, params, routeParams, ...rest } = props;
+
+const NavLink = forwardRef<NavLinkProps, typeof Navigate>(function NavLink(
+  props,
+  ref
+) {
+  const { to, data, options, params, routeParams, variant, size, ...rest } =
+    props;
+  const styles = useStyleConfig('NavigationLink', { variant, size });
   const { route } = useRoute();
   const param = routeParams ? route().params : params;
   let url = '';
@@ -26,8 +40,9 @@ const NavLink = ({ ...props }: NavLinkProps) => {
   } else {
     url = to;
   }
-
-  return <Navigate href={url} data={data} {...rest} />;
-};
+  return (
+    <Navigate itemRef={ref} href={url} data={data} __css={styles} {...rest} />
+  );
+});
 
 export default NavLink;

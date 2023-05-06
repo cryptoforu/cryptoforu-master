@@ -55,11 +55,16 @@ export type LibraryCategory = {
   directory: string;
   media: Array<LibraryData>;
 };
+export type Conversions = {
+  lg_name: string;
+  md_name: string;
+  sm_name: string;
+};
 export type LibraryData = {
   id: number;
   file_name: string;
   mime_type?: string;
-  conversions?: Array<unknown>;
+  conversions: Conversions;
   size?: string;
   width?: number;
   height?: number;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Models;
 
@@ -8,6 +8,7 @@ use App\Services\Settings\Menu\DataObjects\MenuItemsData;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 
 class MenuItem extends Model
@@ -35,6 +36,10 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class);
     }
 
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Library::class, 'imageable');
+    }
     /**
      * Scope query for current route
      */

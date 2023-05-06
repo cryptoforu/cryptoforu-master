@@ -1,13 +1,16 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Services\Library\Actions;
 
+use App\Interfaces\Library\LibraryDeleteContract;
 use App\Models\Library;
 use App\Services\Library\Concerns\Destroyable;
+use App\Services\Library\DataObjects\LibDeleteData;
+use Throwable;
 
-class DeleteFile
+class DeleteFile implements LibraryDeleteContract
 {
     use Destroyable;
 
@@ -17,9 +20,25 @@ class DeleteFile
     public function handle(Library $library): bool
     {
         if ($library->exists) {
+            $file = LibDeleteData::fromArray([
+                'file_url' => $library->image_url,
+                'file_conversions' => [
+                    'lg' => $library->conversions['lg_path'],
+                    'md' => $library->conversions['md_path'],
+                    'sm' => $library->conversions['sm_path'],
+                ],
+            ]);
+            try {
+                $this->destroy(
+                    file:$file,
+                );
+                session()->now('success', 'Destroyed File From Storage');
+            } catch (Throwable $e) {
+                report($e);
+                session()->now('warning', 'Could not delete file');
+            }
             $library->delete();
-            $this->destroy($library->image_url);
-
+            cache()->store('library')->clear();
             return true;
         }
 

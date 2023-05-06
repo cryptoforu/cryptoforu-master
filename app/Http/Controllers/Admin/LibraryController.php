@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLibraryRequest;
 use App\Http\Requests\UpdateLibraryRequest;
 use App\Interfaces\Library\LibraryActionsInterface;
+use App\Interfaces\Library\LibraryDeleteContract;
 use App\Interfaces\Library\LibraryResourceInterface;
 use App\Models\Library;
 use Illuminate\Http\RedirectResponse;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class LibraryController extends Controller
 {
@@ -28,6 +30,7 @@ class LibraryController extends Controller
     public function __construct(
         protected LibraryResourceInterface $library,
         protected LibraryActionsInterface $action,
+        protected LibraryDeleteContract $delete,
     ) {}
 
     /**
@@ -90,7 +93,7 @@ class LibraryController extends Controller
     {
 
         $request->collect('selected')->except([0])
-            ->map(fn($lib) => $this->action->delete(Library::find($lib['id'])));
+            ->map(fn($lib) => $this->delete->handle(Library::find($lib['id'])));
         cache()->store('library')->clear();
         return back()->with('success', 'Deleted Succesfuly');
     }
@@ -100,11 +103,16 @@ class LibraryController extends Controller
      */
     public function destroy(Library $library): RedirectResponse
     {
-        if ($library->exists) {
-            Storage::delete($library->image_url);
+        try {
+            $this->delete->handle(
+                library:$library
+            );
             $library->delete();
-            cache()->store('library')->clear();
+        } catch (Throwable $e) {
+            report($e);
+            session()->now('warning', 'Something Went Wrong');
         }
+
         return back()->with('success', 'Deleted Succsfully');
     }
 

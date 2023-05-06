@@ -15,18 +15,17 @@ class StoreFile
     use Directories;
     use Responsive;
 
-    public function handle(UploadedFile $file, string $directory, bool $public_path = null)
+    public function handle(UploadedFile $file, string $directory)
     {
         $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file_path = $this->directory($directory, $public_path) . '/' . $file_name;
-        $thumb_path = $this->directory($directory . '/' . 'Thumbs', $public_path) . '/' . $file_name;
+        $file_path = $this->directory($directory) . '/' . $file_name;
+        $thumb_path = '/img/cache/sm/' . $file_name;
         $conversions = $this->responsive(
             file:$file,
             directory:$directory,
         );
         try {
-            $fl = Image::make($file)->save(public_path($file_path), 80, 'webp');
-            Image::make($file)->resize(240, 240)->save(public_path($thumb_path), 75, 'webp');
+            $fl = Image::make($file)->save(public_path($file_path));
         } catch (Throwable $e) {
             if ($e) {
                 $fl = $file->store($file_path);

@@ -42,6 +42,8 @@ return [
         public_path('images/categories'),
         public_path('images/earning'),
         public_path('images/misc'),
+        public_path('images/front_images/home/Conversions'),
+        public_path('images/front_images/home'),
     ],
 
     /*

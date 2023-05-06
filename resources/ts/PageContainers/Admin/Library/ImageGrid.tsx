@@ -18,6 +18,7 @@ import {
   StackDivider,
   Alert,
   AlertIcon,
+  HStack,
 } from '@chakra-ui/react';
 import { usePageProps } from '@/Hooks/useTypedPage';
 import { ImageOverlay } from './';
@@ -43,7 +44,13 @@ const ModalDetails = ({
   showingDetails,
 }: ModalDetailsProps) => {
   return (
-    <Modal isOpen={showingDetails} onClose={toogleDetails} isCentered size="xl">
+    <Modal
+      isOpen={showingDetails}
+      onClose={toogleDetails}
+      isCentered
+      size="5xl"
+      scrollBehavior="inside"
+    >
       <ModalOverlay
         bg="none"
         backdropFilter="auto"
@@ -81,7 +88,7 @@ const ModalDetails = ({
                   switch (key) {
                     case 'size':
                       return (
-                        <VStack spacing={2} key={key} alignItems="start">
+                        <VStack spacing={2} key={'size'} alignItems="start">
                           <ProseHeadings component="h3">
                             {toHeadline(key)}
                           </ProseHeadings>
@@ -95,6 +102,22 @@ const ModalDetails = ({
                             {toHeadline(key)}
                           </ProseHeadings>
                           <Clipboard copyVal={value as string} />
+                        </VStack>
+                      );
+                    case 'conversions':
+                      return (
+                        <VStack spacing={2} key={key} alignItems="start">
+                          <ProseHeadings component="h3">
+                            {toHeadline(key)}
+                          </ProseHeadings>
+                          {Object.entries(
+                            value as ModalDetailsProps['values']['conversions']
+                          ).map(([key, val]) => (
+                            <HStack spacing={2} width="full" key={key}>
+                              <ProsePa>{key}</ProsePa>
+                              <Clipboard copyVal={val as string} />
+                            </HStack>
+                          ))}
                         </VStack>
                       );
                     default:
@@ -136,6 +159,7 @@ const ImageGrid = () => {
   } = useDetails();
   const { errors } = usePageProps();
   const { isChecked, setSelected, selectAll } = useChecked();
+  console.log(values);
   return (
     <Container variant="panel">
       <SimpleGrid columns={{ base: 2, sm: 3, lg: 4 }} spacing={10}>
@@ -201,6 +225,11 @@ const ImageGrid = () => {
                       setValues({
                         id: file.id,
                         file_name: file.file_name,
+                        conversions: {
+                          lg_name: file.conversions.lg_name,
+                          md_name: file.conversions.md_name,
+                          sm_name: file.conversions.sm_name,
+                        },
                         mime_type: file.mime_type,
                         size: file.size,
                         width: file.width,

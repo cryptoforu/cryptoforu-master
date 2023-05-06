@@ -50,8 +50,31 @@ export const NavigationLink = defineStyleConfig({
             : `${props.colorScheme}.400`,
       },
     }),
+    primaryNav: (props: StyleFunctionProps) => ({
+      position: 'relative',
+      color: props.colorMode === 'dark' ? 'slate.50' : 'slate.900',
+      rounded: 'lg',
+      px: 2,
+      py: 3,
+      display: 'flex',
+      fontWeight: 'md',
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+    }),
+    activeNav: (props: StyleFunctionProps) => ({
+      position: 'relative',
+      color: props.colorMode === 'dark' ? 'emerald.400' : 'emerald.500',
+      rounded: 'lg',
+      px: 2,
+      py: 3,
+      display: 'flex',
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+    }),
   },
   defaultProps: {
     variant: 'primary',
   },
 });
+
+export const variants = NavigationLink.variants;

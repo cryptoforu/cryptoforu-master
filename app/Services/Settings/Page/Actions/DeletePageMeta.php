@@ -2,13 +2,16 @@
 
 namespace App\Services\Settings\Page\Actions;
 
+use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Page;
-use App\Services\Library\Concerns\Cleanable;
 
 class DeletePageMeta
 {
-    use Cleanable;
 
+    public function __construct(
+        private LibraryActionsInterface $action,
+    ) {
+    }
     /**
      * Delete Page Meta Data
      */
@@ -16,8 +19,12 @@ class DeletePageMeta
     {
         $page = Page::ofName($id);
         if ($page->exists) {
+            if (!empty($page->images)) {
+                foreach ($page->images as $img) {
+                    $this->action->delete($img);
+                }
+            }
             $page->delete();
-            $this->clean([$page->meta_image, $page->tw_image, $page->og_image]);
             cache()->store('library')->clear();
             return true;
         }

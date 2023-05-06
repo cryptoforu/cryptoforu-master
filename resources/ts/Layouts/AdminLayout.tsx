@@ -3,12 +3,11 @@ import { Flex, Box, Container } from '@chakra-ui/react';
 import { MainSidebar } from '@/Components/Sidebar';
 import { AdminNav } from '@/Components/Navbars';
 import useTypedPage from '@/Hooks/useTypedPage';
-import useToastStore from '@/Store/useToastStore';
-
+import { useToast } from '@/Store/useToastProvider';
 import { useAdminLayoutAnimation } from '@/Store/useAdminLayout';
 import { m } from 'framer-motion';
 const AdminLayout = ({ children }: React.PropsWithChildren) => {
-  useToastStore();
+  useToast();
   const { url } = useTypedPage();
   const scope = useAdminLayoutAnimation();
 

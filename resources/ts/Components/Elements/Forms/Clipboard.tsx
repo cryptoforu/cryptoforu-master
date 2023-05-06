@@ -11,12 +11,12 @@ const Clipboard = ({ copyVal }: ClipBoardProps) => {
       as={m.input}
       rounded="md"
       whileFocus={{ color: '#10b981' }}
-      variant="filled"
+      variant="primary"
       size="sm"
       isReadOnly={true}
-      value={value}
+      value={hasCopied ? 'Copied!' : value}
       onTap={onCopy}
-      bgColor={hasCopied ? 'emerald.500' : 'transparent'}
+      bgColor={hasCopied ? 'slateAlpha.400' : 'transparent'}
     />
   );
 };
