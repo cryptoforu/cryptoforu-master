@@ -5,12 +5,14 @@ namespace App\Services\FrontEnd;
 use App\Contracts\CacheStoreContract;
 use App\Interfaces\FrontEnd\FrontEndInterface;
 use App\Interfaces\Settings\PageInterface;
+use App\Services\FrontEnd\Queries\GetHomeData;
 
 class FrontEndService implements FrontEndInterface
 {
     public function __construct(
         private readonly CacheStoreContract $store,
         private readonly PageInterface $page,
+        private readonly GetHomeData $homeData,
     ) {
     }
 
@@ -23,6 +25,7 @@ class FrontEndService implements FrontEndInterface
                     page_type:'front',
                     page:'home'
                 ),
+                ...$this->homeData->handle(),
             ]
         );
     }

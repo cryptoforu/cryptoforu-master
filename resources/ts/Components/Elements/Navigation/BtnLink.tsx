@@ -8,13 +8,14 @@ import {
   forwardRef,
 } from '@chakra-ui/react';
 import { m } from 'framer-motion';
+import { btnOutline } from '@/Motion/variants';
 import { useRoute } from '@/Providers/RouteProvider';
 import { RequestPayload, VisitOptions } from '@inertiajs/core';
 import { RouteParam, RouteParamsWithQueryOverload } from 'ziggy-js';
 
 type BtnComponent = typeof Button | typeof IconButton;
 
-interface BtnLinkProps extends HTMLChakraProps<BtnComponent> {
+export interface BtnLinkProps extends HTMLChakraProps<BtnComponent> {
   to: string;
   component?: BtnComponent;
   data?: RequestPayload;
@@ -61,4 +62,33 @@ const BtnLink = forwardRef<BtnLinkProps, BtnComponent>(function Btnlink(
   );
 });
 export const MotionBtn = chakra(m(BtnLink));
+
+export const PrimaryButton = (props: BtnLinkProps) => {
+  return (
+    <MotionBtn
+      initial="initial"
+      whileHover="hover"
+      whileTap="tap"
+      variants={btnOutline}
+      custom="#34d399"
+      variant="primaryBtn"
+      {...props}
+    />
+  );
+};
+
+export const SecondaryButton = (props: BtnLinkProps) => {
+  return (
+    <MotionBtn
+      initial="initial"
+      whileHover="hover"
+      whileTap="tap"
+      variants={btnOutline}
+      custom="#1e293b"
+      variant="secondaryBtn"
+      {...props}
+    />
+  );
+};
+
 export default BtnLink;

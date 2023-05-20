@@ -71,7 +71,7 @@ const ModalDetails = ({
                   __css: { aspectRatio: 2 / 3 },
                 }}
                 imgProps={{
-                  src: `/img/cache/original/${values.file_name}`,
+                  img_name: values.file_name,
                   alt: '',
                   objectFit: 'cover',
                 }}
@@ -159,7 +159,6 @@ const ImageGrid = () => {
   } = useDetails();
   const { errors } = usePageProps();
   const { isChecked, setSelected, selectAll } = useChecked();
-  console.log(values);
   return (
     <Container variant="panel">
       <SimpleGrid columns={{ base: 2, sm: 3, lg: 4 }} spacing={10}>
@@ -181,7 +180,7 @@ const ImageGrid = () => {
                       w: 'full',
                     }}
                     imgProps={{
-                      src: `/img/cache/original/${file.file_name}`,
+                      img_name: file.file_name,
                       alt: '',
                       rounded: 'md',
                       width: 'full',

@@ -13,14 +13,14 @@ class LgFilter implements FilterInterface
         if (Request::query('w')) {
             return $image->widen(Request::query('w'), function ($constraint) {
                 $constraint->upsize();
-            })->encode('jpg', 75);
+            })->encode($image->mime(), 75);
         } else {
             return $image->widen(
                 1200,
                 function ($constraint) {
                     $constraint->upsize();
                 }
-            )->encode('jpg', 75);
+            )->encode($image->mime(), 75);
         }
     }
 }

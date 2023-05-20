@@ -48,8 +48,6 @@ class UpdateEarn
             return false;
         }
         $earn->slug = Str::slug($validated['title']);
-        $earn->main_features = Str::between($validated['content'], '<!-- Features -->', '<!-- Features -->');
-        $earn->content = Str::between($validated['content'], '<!-- Content -->', '<!-- Content -->');
         $earn->save();
 
         return true;

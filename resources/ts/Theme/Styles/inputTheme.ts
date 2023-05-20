@@ -11,28 +11,18 @@ const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
 
 export const inputTheme = defineMultiStyleConfig({
   variants: {
-    main: () => ({
+    main: (props: StyleFunctionProps) => ({
       field: {
-        bg: 'slate.100',
+        bg: mode('slate.100', 'slate.900')(props),
+        color: mode('slate.950', 'emerald.200')(props),
         border: '1px solid',
-        color: 'slate.900',
-        borderColor: 'slate.100',
-        borderRadius: 'lg',
+        borderColor: mode('slate.50', 'slate.800')(props),
+        borderRadius: '12px',
         fontSize: 'sm',
         _placeholder: { color: 'slate.600' },
         _focus: {
-          borderColor: 'emerald.600',
-        },
-        _dark: {
-          bg: 'slate.800',
-          borderColor: 'slate.800',
-          color: 'emerald.100',
-          _placeholder: {
-            color: 'slate.600',
-          },
-          _focus: {
-            borderColor: 'emerald.500',
-          },
+          outlineWidth: '2px',
+          outlineColor: mode('emerald.600', 'emerald.400')(props),
         },
       },
     }),
@@ -57,7 +47,6 @@ export const inputTheme = defineMultiStyleConfig({
         border: '1px solid',
         borderColor: props.colorMode === 'dark' ? 'slate.800' : 'slate.100',
         fontWeight: '500',
-        padding: '20px',
         borderRadius: '16px',
         _placeholder: {
           color: props.colorMode === 'dark' ? 'slate.400' : 'slate.600',

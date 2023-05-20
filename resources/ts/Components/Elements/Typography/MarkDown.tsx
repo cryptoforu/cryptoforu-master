@@ -1,24 +1,20 @@
 import remarkGfm from 'remark-gfm';
 import { ProseHeadings, ProsePa, Prose } from './';
-import { Link, LinkProps } from '@chakra-ui/react';
-
-interface MarkDownProps {
+import { Link, TextProps } from '@chakra-ui/react';
+interface MarkDownProps extends TextProps {
   content: string;
-  linkProps?: LinkProps;
 }
 
-const MarkDown = ({ content, linkProps }: MarkDownProps) => {
+const MarkDown = ({ content, ...rest }: MarkDownProps) => {
   return (
     <Prose
       children={content}
       remarkPlugins={[remarkGfm]}
       components={{
-        p({ ...props }) {
-          return <ProsePa {...props} />;
+        p({ node, ...props }) {
+          return <ProsePa {...props} {...rest} />;
         },
-        a({ children, href }) {
-          return <Link {...linkProps} children={children} href={href} />;
-        },
+        a: ({ node, ...props }) => <Link {...props} />,
         h1: ({ node, ...props }) => (
           <ProseHeadings component="h1" size="xxl" {...props} />
         ),

@@ -17,7 +17,7 @@ const MotionBox = chakra(m.span, {
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
-function HoverComponent() {
+function HoverComponent({ layoutId }: { layoutId: string }) {
   const [isPresent, safeToRemove] = usePresence();
   const [scope, animate] = useAnimate();
 
@@ -48,14 +48,16 @@ function HoverComponent() {
       inset={0}
       rounded="lg"
       bg={mode('slateAlpha.100', 'blackAlpha.700')}
-      layoutId="hoverBackground"
+      layoutId={layoutId}
     />
   );
 }
 
-const HoverLink = ({ isHovered }: { isHovered: boolean }) => {
+const HoverLink = ({ isHovered, id }: { isHovered: boolean; id: string }) => {
   return (
-    <AnimatePresence>{isHovered ? <HoverComponent /> : null}</AnimatePresence>
+    <AnimatePresence>
+      {isHovered ? <HoverComponent layoutId={id} /> : null}
+    </AnimatePresence>
   );
 };
 export default HoverLink;

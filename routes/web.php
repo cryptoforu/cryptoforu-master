@@ -8,7 +8,9 @@ use App\Http\Controllers\Admin\EarnController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\Settings\AddSettingsController;
 use App\Http\Controllers\Admin\Settings\UpdateMetaController;
+use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\FrontEnd\ContactController;
 use App\Http\Controllers\FrontEnd\CryptoController;
 use App\Http\Controllers\FrontEnd\EarnCryptoController;
@@ -28,20 +30,22 @@ use Intervention\Image\Facades\Image;
 |
  */
 
-Route::get('/', HomeController::class)->name('home');
-Route::controller(EarnCryptoController::class)->prefix('earn-crypto')->group(function () {
-    Route::get('/', 'index')->name('earn-crypto');
-    Route::get('/list', 'list')->name('faucets-lists');
+Route::middleware('optimizeImages')->group(function () {
+    Route::get('/', HomeController::class)->name('home');
+    Route::controller(EarnCryptoController::class)->prefix('earn-crypto')->group(function () {
+        Route::get('/', 'index')->name('earn-crypto');
+        Route::get('/list', 'list')->name('faucets-lists');
+    });
+    Route::controller(LearnCryptoController::class)->prefix('learn-crypto')->group(function () {
+        Route::get('/', 'index')->name('learn-crypto');
+    });
+    Route::controller(CryptoController::class)->prefix('crypto')->group(function () {
+        Route::get('/', 'index')->name('crypto');
+        Route::get('/news', 'news')->name('crypto-news');
+        Route::get('/markets', 'markets')->name('crypto-markets');
+    });
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 });
-Route::controller(LearnCryptoController::class)->prefix('learn-crypto')->group(function () {
-    Route::get('/', 'index')->name('learn-crypto');
-});
-Route::controller(CryptoController::class)->prefix('crypto')->group(function () {
-    Route::get('/', 'index')->name('crypto');
-    Route::get('/news', 'news')->name('crypto-news');
-    Route::get('/markets', 'markets')->name('crypto-markets');
-});
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/placeholder/{width}/{height}', function (int $width = 1200, int $height = 800) {
     return Image::cache(function ($image) use ($width, $height) {
         return $image->canvas(
@@ -54,6 +58,7 @@ Route::get('/placeholder/{width}/{height}', function (int $width = 1200, int $he
 Route::middleware('auth:sanctum')->prefix('admin')->group(function (): void{
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::put('admin-settings/{page}', UpdateMetaController::class)->name('page.update');
+    Route::post('admin-settings/create', AddSettingsController::class)->name('add.settings');
     Route::controller(SettingsController::class)->group(function (): void{
         Route::get('admin-settings', 'index')->name('admin-settings.index');
         Route::get('admin-settings/create', 'create')->name('admin-settings.create');
@@ -89,4 +94,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (): void{
     Route::resource('admin-library', LibraryController::class)->parameters([
         'admin-library' => 'library',
     ]);
+    Route::post('/site/delete', [SiteController::class, 'delete'])->name('site.delete');
+    Route::resource('site', SiteController::class);
 });

@@ -79,7 +79,7 @@ const Register = () => {
           </HStack>
           <Stack>
             <Button
-              variant={'gradLime'}
+              variant="primaryBtn"
               type="submit"
               isLoading={processing}
               loadingText="Submitting"

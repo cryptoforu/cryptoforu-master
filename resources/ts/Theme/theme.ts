@@ -1,6 +1,6 @@
 import { extendTheme, type ThemeConfig } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
-import type { StyleFunctionProps } from '@chakra-ui/styled-system';
+import { styles } from './Styles/global';
+import { colors } from './Styles/colors';
 import { inputTheme } from './Styles/inputTheme';
 import {
   buttonTheme,
@@ -17,10 +17,11 @@ import {
   LazyImage,
   popoverTheme,
   MainNav,
+  GlowCard,
+  PaperCard,
 } from './Components';
-import { containerTheme, FrontLayout } from './Layouts';
+import { containerTheme } from './Layouts';
 import { TagsInput } from './Styles/checkBoxTheme';
-import { textStyles } from './Styles/prose';
 const config: ThemeConfig = {
   initialColorMode: 'dark',
   useSystemColorMode: true,
@@ -28,87 +29,9 @@ const config: ThemeConfig = {
 const fonts = {
   body: 'Space Mono, monospace',
   heading: 'Space Mono, monospace',
-};
-
-const styles = {
-  global: (props: StyleFunctionProps) => ({
-    body: {
-      color: mode('slate.950', 'emerald.100')(props),
-      bg: mode('emerald.50', 'primaryDark')(props),
-      display: 'flex',
-      flexDirection: 'column',
-      height: 'full',
-      overflowX: 'hidden',
-    },
-    '::-webkit-scrollbar': {
-      width: '5px',
-    },
-    '::-webkit-scrollbar-track': {
-      bg: mode('slate.200', 'slate.900')(props),
-    },
-    '::-webkit-scrollbar-thumb:hover': {
-      bg: 'emerald.500',
-    },
-    '::-webkit-scrollbar-thumb': {
-      bgImage: '-webkit-linear-gradient(45deg, #6366f1, #22d3ee)',
-    },
-  }),
-};
-
-const colors = {
-  primaryDark: '#00040f',
-  primaryAlpha: {
-    50: 'rgba(0, 4, 15, 0.04)',
-    100: 'rgba(0, 4, 15, 0.06)',
-    200: 'rgba(0, 4, 15, 0.08)',
-    300: 'rgba(0, 4, 15, 0.16)',
-    400: 'rgba(0, 4, 15, 0.24)',
-    500: 'rgba(0, 4, 15, 0.36)',
-    600: 'rgba(0, 4, 15, 0.48)',
-    700: 'rgba(0, 4, 15, 0.64)',
-    800: 'rgba(0, 4, 15, 0.80)',
-    900: 'rgba(0, 4, 15, 0.90)',
-    950: 'rgba(0, 4, 15, 0.95)',
+  '.fontsource-space-mono': {
+    'font-family': 'Space Mono, monospace',
   },
-  slate: {
-    50: '#f8fafc',
-    100: '#f1f5f9',
-    200: '#e2e8f0',
-    300: '#cbd5e1',
-    400: '#94a3b8',
-    500: '#64748b',
-    600: '#475569',
-    700: '#334155',
-    800: '#1e293b',
-    900: '#0f172a',
-    950: '#020617',
-  },
-  slateAlpha: {
-    50: 'RGBA(2,6,23,0.04)',
-    100: 'RGBA(2,6,23,0.06)',
-    200: 'RGBA(2,6,23,0.08)',
-    300: 'RGBA(2,6,23,0.16)',
-    400: 'RGBA(2,6,23,0.24)',
-    500: 'RGBA(2,6,23,0.36)',
-    600: 'RGBA(2,6,23,0.48)',
-    700: 'RGBA(2,6,23,0.64)',
-    800: 'RGBA(2,6,23,0.80)',
-    900: 'RGBA(2,6,23,0.92)',
-  },
-  emerald: {
-    50: '#ecfdf5',
-    100: '#d1fae5',
-    200: '#a7f3d0',
-    300: '#6ee7b7',
-    400: '#34d399',
-    500: '#10b981',
-    600: '#059669',
-    700: '#0f766e',
-    800: '#115e59',
-    900: '#134e4a',
-    950: '#022c22',
-  },
-  gradLime: 'linear(to-l, green.200, emerald.200)',
 };
 
 const theme = extendTheme({
@@ -116,7 +39,6 @@ const theme = extendTheme({
   fonts,
   styles,
   colors,
-  textStyles,
   components: {
     Input: inputTheme,
     Textarea: textareaTheme,
@@ -134,8 +56,9 @@ const theme = extendTheme({
     NavigationLink,
     SettingsContent,
     LazyImage,
-    FrontLayout,
     MainNav,
+    GlowCard,
+    PaperCard,
   },
 });
 export default theme;

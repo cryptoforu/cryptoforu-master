@@ -75,6 +75,10 @@ return [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data/frontend'),
         ],
+        'site' => [
+            'driver' => 'file',
+            'path' => storage_path('framework/cache/data/site'),
+        ],
         'memcached' => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),

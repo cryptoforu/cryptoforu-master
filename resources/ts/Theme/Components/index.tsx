@@ -12,3 +12,5 @@ export { SettingsContent } from './SettingsContent';
 export { LazyImage } from './LazyImage';
 export { popoverTheme } from './Popover';
 export { MainNav } from './MainNav';
+export { GlowCard } from './GlowCard';
+export { default as PaperCard } from './PaperCard';

@@ -1,5 +1,5 @@
 import { StyleFunctionProps, defineStyleConfig } from '@chakra-ui/react';
-import { round, em } from '../utils/convert';
+import { round, em, rem } from '../utils/convert';
 
 export const ProseHeadings = defineStyleConfig({
   baseStyle: (props: StyleFunctionProps) => ({
@@ -23,10 +23,18 @@ export const ProseHeadings = defineStyleConfig({
       fontSize: em(42, 16),
       letterSpacing: '-0.025em',
     },
+    xxxl: {
+      fontSize: rem(56),
+      lineHeight: '2.5rem',
+    },
   },
   variants: {
     proseSlate: (props: StyleFunctionProps) => ({
       color: props.colorMode === 'dark' ? 'slate.50' : 'slate.900',
+      lineHeight: round(40 / 36),
+    }),
+    proseSlateLight: (props: StyleFunctionProps) => ({
+      color: props.colorMode === 'dark' ? 'slate.300' : 'slate.700',
       lineHeight: round(40 / 36),
     }),
     proseGray: (props: StyleFunctionProps) => ({

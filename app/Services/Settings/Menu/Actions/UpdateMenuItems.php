@@ -41,7 +41,7 @@ final class UpdateMenuItems implements UpdateMenuItemContract
                     category:2,
                 );
             }
-            $nMenu->icon = '/img/cache/original/' . $icon['file_name'];
+            $nMenu->icon = $icon['file_name'];
         } else {
             $request->collect()->map(function ($item, $key) use ($nMenu): void {
                 $nMenu->$key = $item;

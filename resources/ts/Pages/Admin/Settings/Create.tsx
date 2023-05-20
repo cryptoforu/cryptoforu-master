@@ -56,7 +56,6 @@ interface CreateSettingsProps {
 
 const CreateSettings = (props: CreateSettingsProps) => {
   const { form, menu_form } = props;
-
   return (
     <>
       <AppHead />

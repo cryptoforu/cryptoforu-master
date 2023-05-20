@@ -57,7 +57,7 @@ PageCard.Image = function PageCardImage({ label, image }: CardText) {
 
       <LazyImage
         imgProps={{
-          src: image,
+          img_name: image as string,
           alt: '',
           objectFit: 'cover',
         }}

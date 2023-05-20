@@ -26,6 +26,12 @@ export const ProsePa = defineStyleConfig({
     secondary: (props: StyleFunctionProps) => ({
       color: props.colorMode === 'dark' ? 'gray.400' : 'gray.700',
     }),
+    gradEmerald: (props: StyleFunctionProps) => ({
+      bgGradient: 'linear(to-r, emerald.200, green.400, teal.200)',
+      bgClip: 'text',
+      fontWeight: 'bold',
+      letterSpacing: '-0.025em',
+    }),
   },
   defaultProps: {
     size: 'md',

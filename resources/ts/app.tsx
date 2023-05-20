@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './bootstrap';
-import '@fontsource/space-mono';
+import 'unfonts.css';
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';

@@ -13,37 +13,40 @@ import { ProfileDropDown, ThemeSwitcher, AdminNavigation } from './index';
 import { NavLink } from '@/Components/Elements/Navigation';
 import { usePageProps } from '@/Hooks/useTypedPage';
 import type { Auth } from '@/types';
-import type { PageMeta } from '../../Types/generated';
+import type { AdminNavigation as A } from '../../Types/generated';
 interface AdminNavProps {
   auth: Auth;
-  meta: PageMeta;
+  navigation: A;
 }
 
 const AdminNav = () => {
-  const { auth, meta: breadcumb } = usePageProps<AdminNavProps>();
+  const { auth, navigation } = usePageProps<AdminNavProps>();
   return (
-    <Card variant={'containerCard'}>
+    <Card variant={'containerCard'} bg="slateAlpha.900">
       <CardBody>
         <Flex justify="space-between" align="center" w="full">
           <Box mb={{ sm: '8px', md: '0px' }}>
-            {breadcumb && breadcumb?.parents ? (
+            <NavLink to={'admin.dashboard'} fontWeight={'bold'} fontSize={'lg'}>
+              Dashboard
+            </NavLink>
+            {navigation && navigation?.parents ? (
               <Breadcrumb>
                 <BreadcrumbItem>
                   <BreadcrumbLink
                     as={NavLink}
-                    to={breadcumb?.route as string}
+                    to={navigation?.route as string}
                     routeParams={true}
                   >
-                    {breadcumb?.parents.label}
+                    {navigation?.parents.label}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbItem isCurrentPage>
                   <BreadcrumbLink
                     as={NavLink}
-                    to={breadcumb?.route as string}
+                    to={navigation?.route as string}
                     routeParams={true}
                   >
-                    {breadcumb?.label}
+                    {navigation?.label}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
@@ -52,23 +55,14 @@ const AdminNav = () => {
                 <BreadcrumbItem isCurrentPage>
                   <BreadcrumbLink
                     as={NavLink}
-                    to={breadcumb?.route as string}
+                    to={navigation?.route as string}
                     routeParams={true}
                   >
-                    {breadcumb?.label}
+                    {navigation?.label}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
             )}
-
-            <NavLink
-              to={breadcumb?.route as string}
-              routeParams={true}
-              fontWeight={'bold'}
-              fontSize={'lg'}
-            >
-              {breadcumb?.label}
-            </NavLink>
           </Box>
           <HStack spacing="3">
             <AdminNavigation />

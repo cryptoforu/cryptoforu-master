@@ -90,7 +90,7 @@ const EditInput = ({
                 imgProps={{
                   w: '6',
                   h: '6',
-                  src: props.defaultValue
+                  img_name: props.defaultValue
                     ? props.defaultValue
                     : '/placeholder/40/40',
                 }}

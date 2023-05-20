@@ -70,7 +70,7 @@ class CacheStoreProvider extends ServiceProvider
         )->give(function () {
             return new CacheStoreService(
                 store:Cache::store('frontend'),
-                valuestore:Valuestore::make(storage_path('app/store/library/front-data.json'))
+                valuestore:Valuestore::make(storage_path('app/store/frontend/front-data.json'))
             );
         });
     }

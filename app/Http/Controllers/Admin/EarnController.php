@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateEarnRequest;
 use App\Interfaces\Earn\EarnActionInterface;
 use App\Interfaces\Earn\EarnServiceInterface;
 use App\Models\Earn;
-use Exception;
+use App\Responses\RedirectSuccess;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,8 +33,8 @@ class EarnController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component: 'Admin/Earn/EarnIndex',
-            props: $this->earn->forIndex(),
+            component:'Admin/Earn/EarnIndex',
+            props:$this->earn->forIndex(),
         );
     }
 
@@ -44,8 +44,8 @@ class EarnController extends Controller
     public function create(): Response
     {
         return Inertia::render(
-            component: 'Admin/Earn/EarnCreate',
-            props: $this->earn->forCreate(),
+            component:'Admin/Earn/EarnCreate',
+            props:$this->earn->forCreate(),
         );
     }
 
@@ -56,15 +56,18 @@ class EarnController extends Controller
     {
         try {
             $this->action->store(
-                request: $request,
+                request:$request,
+            );
+            return new RedirectSuccess(
+                url:'admin-earn.index',
+                message:'Added New Method Succesfully'
             );
         } catch (Throwable $e) {
-            throw new Exception($e->getMessage());
+            report($e);
 
             return back()->with('error', 'Something Went Wrong');
         }
 
-        return to_route('admin-earn.index')->with('success', 'Added New Method Succesfully');
     }
 
     /**
@@ -80,9 +83,9 @@ class EarnController extends Controller
     public function edit(Earn $earn): Response
     {
         return Inertia::render(
-            component: 'Admin/Earn/EarnEdit',
-            props: $this->earn->forEdit(
-                earn: $earn,
+            component:'Admin/Earn/EarnEdit',
+            props:$this->earn->forEdit(
+                earn:$earn,
             )
         );
     }
@@ -90,20 +93,16 @@ class EarnController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEarnRequest $request, Earn $earn): RedirectResponse
+    public function update(UpdateEarnRequest $request, Earn $earn): RedirectSuccess
     {
-        try {
-            $this->action->update(
-                request: $request,
-                earn: $earn,
-            );
-        } catch (Throwable $e) {
-            throw new Exception($e->getTraceAsString());
-
-            return back()->with('error', 'Something Went Wrong');
-        }
-
-        return to_route('admin-earn.index')->with('success', 'Updated Succesfully');
+        $this->action->update(
+            request:$request,
+            earn:$earn,
+        );
+        return new RedirectSuccess(
+            url:'admin-earn.index',
+            message:'Updated Succesfully'
+        );
     }
 
     /**
@@ -113,14 +112,16 @@ class EarnController extends Controller
     {
         try {
             $this->action->destroy(
-                earn: $earn,
+                earn:$earn,
+            );
+            return new RedirectSuccess(
+                url:'admin-earn.index',
+                message:'Deleted Succesfully',
             );
         } catch (Throwable $e) {
-            throw new Exception($e->getMessage());
+            report($e);
 
             return back()->with('error', 'Something Went Wrong');
         }
-
-        return back()->with('success', 'Deleted Succesfully');
     }
 }

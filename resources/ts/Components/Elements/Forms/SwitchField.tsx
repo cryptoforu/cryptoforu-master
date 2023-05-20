@@ -2,18 +2,14 @@ import { useField } from 'formik';
 import { Label } from './';
 import type { FieldProps } from './FormTypes';
 import { Switch } from '@chakra-ui/react';
-import { ChangeEvent } from 'react';
 
-interface SwitchProps extends FieldProps {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const SwitchField = ({ ...props }: SwitchProps) => {
-  const [field] = useField(props);
-
+const SwitchField = ({ ...props }: FieldProps) => {
+  const [field, meta, helpers] = useField(props.name);
+  const { value } = meta;
+  const { setValue } = helpers;
   return (
     <Label name={props.name} label={props.label} errors={props.errors}>
-      <Switch {...field} {...props} />
+      <Switch isChecked={value} onChange={() => setValue(!value)} />
     </Label>
   );
 };

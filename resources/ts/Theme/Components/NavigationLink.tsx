@@ -1,16 +1,17 @@
 import { StyleFunctionProps, defineStyleConfig } from '@chakra-ui/react';
-
+import { em } from '../utils/convert';
 export const NavigationLink = defineStyleConfig({
   baseStyle: (props: StyleFunctionProps) => ({
     fontWeight: 'medium',
-    fontSize: '16px',
     transition: 'all 0.15s ease-out',
+    letterSpacing: '-0.025em',
   }),
   variants: {
     primary: (props: StyleFunctionProps) => ({
       color: props.colorMode === 'dark' ? 'slate.50' : 'slate.900',
       _hover: {
-        color: props.colorMode === 'dark' ? 'slate.100' : 'slate.800',
+        textDecoration: 'underline',
+        textColor: props.colorMode === 'dark' ? 'slate.100' : 'emerald.400',
       },
       _focus: {
         outline: 'none',
@@ -72,7 +73,26 @@ export const NavigationLink = defineStyleConfig({
       lineHeight: '1.5rem',
     }),
   },
+  sizes: {
+    sm: {
+      fontSize: em(18, 16),
+    },
+    md: {
+      fontSize: em(20, 16),
+    },
+    lg: {
+      fontSize: em(24, 16),
+    },
+    xl: {
+      fontSize: em(36, 16),
+    },
+    xxl: {
+      fontSize: em(42, 16),
+      letterSpacing: '-0.025em',
+    },
+  },
   defaultProps: {
+    size: 'md',
     variant: 'primary',
   },
 });

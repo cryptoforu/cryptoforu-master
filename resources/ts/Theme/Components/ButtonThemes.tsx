@@ -44,59 +44,68 @@ const sidebarActive = defineStyle({
   },
 });
 
-const gradLime = defineStyle({
-  bgGradient: 'linear(to-l, green.300, teal.300)',
-  color: 'slate.800',
-  _hover: {
-    bgGradient: 'linear(to-l, green.300, teal.200)',
-    color: 'slate.700',
-  },
-  _focus: {
-    outlineColor: 'slate.200',
-  },
-  _dark: {
-    color: 'slate.900',
-    _hover: {
-      color: 'slate.800',
-    },
-  },
-});
-
-const gradPurple = defineStyle({
-  bgGradient: 'linear(to-br, purple.600, blue.500)',
-  color: 'slate.50',
-  _hover: {
-    bgGradient: 'linear(to-br, blue.400, purple.500)',
-    color: 'slate.100',
-  },
-  _focus: {
-    outlineColor: 'purple.300',
-  },
-  px: '3',
-  py: '2',
-});
-
 const primaryBtn = defineStyle({
-  bgGradient: 'linear(to-r, emerald.200, green.400, teal.200)',
-  color: 'slate.800',
+  bgGradient: 'linear(to-r, teal.200, emerald.200)',
+  color: 'primaryDark',
   _active: {
     bg: 'emerald.400',
   },
   _hover: {
-    bgGradient: 'linear(to-r, teal.200, green.400, emerald.200)',
-    color: 'primary.900',
+    bgGradient: 'linear(to-l, teal.200, green.200)',
+    color: 'slate.900',
   },
   _focus: {
-    outline: '1px solid',
-    outlineColor: 'emerald.100',
+    outline: '2.5px solid',
+    outlineColor: 'emerald.500',
   },
   _dark: {
     _focus: {
-      outline: '1px solid',
-      outlineColor: 'emerald.100',
+      outline: '2.5px solid',
+      outlineColor: 'emerald.400',
     },
   },
-  rounded: 'full',
+});
+const secondaryBtn = defineStyle({
+  bg: 'slate.900',
+  color: 'slate.50',
+  _active: {
+    bg: 'slate.800',
+  },
+  _hover: {
+    bg: 'slate.800',
+    color: 'slate.100',
+  },
+  _focus: {
+    outline: '2.5px solid',
+    outlineColor: 'slate.900',
+  },
+  _dark: {
+    _focus: {
+      outline: '2.5px solid',
+      outlineColor: 'slate.900',
+    },
+  },
+});
+const submitBtn = defineStyle({
+  bgGradient: 'linear(to-r, cyan.400, blue.400)',
+  color: 'slate.950',
+  _active: {
+    bg: 'blue.500',
+  },
+  _hover: {
+    bgGradient: 'linear(to-r, cyan.300, blue.300)',
+    color: 'slate.900',
+  },
+  _focus: {
+    ring: '2.5px',
+    ringColor: 'slate.300',
+  },
+  _dark: {
+    _focus: {
+      ring: '2.5px',
+      ringColor: 'slate.300',
+    },
+  },
 });
 
 const sm = defineStyle({
@@ -109,17 +118,18 @@ const sm = defineStyle({
 const md = defineStyle({
   py: '2',
   px: '4',
-  fontSize: 'sm',
+  fontSize: 'md',
   fontWeight: '600',
+  letterSpacing: '-0.025em',
 });
 
 export const buttonTheme = defineStyleConfig({
   variants: {
     sidebar,
     sidebarActive,
-    gradLime,
-    gradPurple,
     primaryBtn,
+    secondaryBtn,
+    submitBtn,
     ...variants,
   },
   sizes: {

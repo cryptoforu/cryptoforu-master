@@ -89,9 +89,52 @@ const primaryVariant = definePartsStyle((props) => {
   };
 });
 
+const secondaryVariant = definePartsStyle((props) => {
+  return {
+    tab: {
+      color: props.colorMode === 'dark' ? 'slate.100' : 'slate.800',
+      rounded: 'md',
+      fontSize: 'lg',
+      letterSpacing: '-0.025em',
+      fontWeight: 'bold',
+      _selected: {
+        color: mode('emerald.500', 'emerald.400')(props),
+      },
+      _hover: {
+        bg: mode('slateAlpha.100', 'blackAlpha.700')(props),
+        color: mode('slate.900', 'white')(props),
+      },
+    },
+    tablist: {
+      borderBottom: 'none',
+    },
+    tabpanels: {
+      position: 'relative',
+      mt: '2',
+      overflow: 'hidden',
+      rounded: 'xl',
+      bg: mode('slate.200', 'slateAlpha.900')(props),
+      px: '6',
+      py: '12',
+    },
+    tabpanel: {
+      transition: 'all',
+      transitionDuration: '0.5s',
+    },
+    indicator: {
+      md: '-1.5px',
+      height: '3px',
+      bg: 'emerald.400',
+      rounded: 'sm',
+      width: '80px',
+    },
+  };
+});
+
 const variants = {
   main: mainVariant,
   primary: primaryVariant,
+  secondary: secondaryVariant,
 };
 
 // export the component theme

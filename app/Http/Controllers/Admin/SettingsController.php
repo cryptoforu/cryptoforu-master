@@ -8,10 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMenuItemRequest;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdateMenuItemRequest;
-use App\Http\Requests\UpdatePageMetaRequest;
 use App\Interfaces\Settings\ActionContracts\StoreMenuItemContract;
 use App\Interfaces\Settings\ActionContracts\UpdateMenuItemContract;
-use App\Interfaces\Settings\ActionContracts\UpdatePageMetaContract;
 use App\Interfaces\Settings\SettingsActionInterface;
 use App\Interfaces\Settings\SettingsInterface;
 use App\Services\Settings\Enums\ActionEnum;
@@ -40,7 +38,6 @@ class SettingsController extends Controller
         SettingsInterface $settings,
         SettingsActionInterface $action,
         private readonly UpdateMenuItemContract $updateMenu,
-        protected UpdatePageMetaContract $updatePage,
         private readonly StoreMenuItemContract $menuStore,
     ) {
         $this->settings = $settings;
@@ -134,13 +131,9 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePageMetaRequest $request, string | int $id)
+    public function update()
     {
-        $this->updatePage->handle(
-            request:$request,
-            id:$id
-        );
-        return back()->with('success', 'Updated Settings Successfully');
+        //
     }
 
     /**

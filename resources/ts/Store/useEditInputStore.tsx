@@ -19,6 +19,7 @@ interface InputStore<T extends object> {
     name: string,
     id: string | number
   ) => void;
+  setValues: (payload: T) => void;
 }
 
 const useEditInputStore = create<InputStore<Item>>()(
@@ -29,6 +30,10 @@ const useEditInputStore = create<InputStore<Item>>()(
     setInput: (action) =>
       set((state) => {
         state.showInput = state.showInput === action ? 0 : action;
+      }),
+    setValues: (payload) =>
+      set((state) => {
+        state.values = payload;
       }),
     handleInputChange: (e) =>
       set((state) => {
@@ -70,4 +75,5 @@ export const useIsEditing = (id: number | string) =>
   useEditInputStore((state) => state.activeInput(id));
 export const useSetFile = () => useEditInputStore((state) => state.setFile);
 export const useEditId = () => useEditInputStore((state) => state.id);
+export const useSetValues = () => useEditInputStore((state) => state.setValues);
 export default useEditInputStore;

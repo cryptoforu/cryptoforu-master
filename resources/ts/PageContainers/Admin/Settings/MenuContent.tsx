@@ -1,8 +1,5 @@
 import { Fragment, useTransition } from 'react';
 import {
-  useMultiStyleConfig,
-  ThemingProps,
-  HTMLChakraProps,
   Box,
   useColorModeValue as mode,
   Menu,
@@ -13,6 +10,11 @@ import {
   Portal,
   IconButton,
 } from '@chakra-ui/react';
+import SettingsContent, {
+  SettingsBody,
+  SettingsRow,
+  SettingsRowBody,
+} from '../SettingsContent';
 import { BtnLink } from '@/Components/Elements/Navigation';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useMenuContent } from '@/Store/useMenuContent';
@@ -20,7 +22,6 @@ import { ProseHeadings } from '@/Components/Elements/Typography';
 import EditMenu from './EditMenu';
 import PageHeader from './PageHeader';
 import { DeleteIcon } from '@chakra-ui/icons';
-interface MenuContentProps extends ThemingProps, HTMLChakraProps<'div'> {}
 
 function MenuHeader() {
   const [isPending, startTransition] = useTransition();
@@ -30,7 +31,7 @@ function MenuHeader() {
       <Menu placement="bottom-end">
         <MenuButton
           as={Button}
-          variant="gradLime"
+          variant="primaryBtn"
           rightIcon={<ChevronDownIcon />}
           isLoading={isPending}
         >
@@ -80,19 +81,17 @@ function Delete({ id }: { id: number }) {
   );
 }
 
-const MenuContent = ({ ...props }: MenuContentProps) => {
-  const { size, variant, ...rest } = props;
-  const styles = useMultiStyleConfig('SettingsContent', { size, variant });
+const MenuContent = () => {
   const { currentValues } = useMenuContent();
   return (
-    <Box __css={styles.container} {...rest}>
+    <SettingsContent>
       <MenuHeader />
-      <Box __css={styles.body}>
+      <SettingsBody>
         {currentValues?.items?.map((child, childIndex) => (
           <Fragment key={child.id}>
-            <Box __css={styles.rowbody} key={child.label} position="relative">
+            <SettingsRowBody key={child.label} position="relative">
               <Delete id={child.id as number} />
-              <Box __css={styles.row}>
+              <SettingsRow>
                 <ProseHeadings component="h3"> Label </ProseHeadings>
                 <EditMenu
                   index={`${childIndex}.label`}
@@ -100,8 +99,8 @@ const MenuContent = ({ ...props }: MenuContentProps) => {
                   name="label"
                   defaultValue={child.label}
                 />
-              </Box>
-              <Box __css={styles.row}>
+              </SettingsRow>
+              <SettingsRow>
                 <ProseHeadings component="h3"> Icon </ProseHeadings>
                 <EditMenu
                   index={`${childIndex}.icon`}
@@ -109,8 +108,8 @@ const MenuContent = ({ ...props }: MenuContentProps) => {
                   name="icon"
                   defaultValue={child.icon}
                 />
-              </Box>
-              <Box __css={styles.row}>
+              </SettingsRow>
+              <SettingsRow>
                 <ProseHeadings component="h3"> Route </ProseHeadings>
                 <EditMenu
                   index={`${childIndex}.route`}
@@ -118,12 +117,12 @@ const MenuContent = ({ ...props }: MenuContentProps) => {
                   name="route"
                   defaultValue={child.route}
                 />
-              </Box>
-            </Box>
+              </SettingsRow>
+            </SettingsRowBody>
           </Fragment>
         ))}
-      </Box>
-    </Box>
+      </SettingsBody>
+    </SettingsContent>
   );
 };
 export default MenuContent;

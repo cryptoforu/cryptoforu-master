@@ -70,6 +70,9 @@ return [
         'sm' => 'App\Services\Library\ImageFilters\SmFilter',
         'md' => 'App\Services\Library\ImageFilters\MdFilter',
         'lg' => 'App\Services\Library\ImageFilters\LgFilter',
+        'pnglg' => 'App\Services\Library\ImageFilters\PngLarge',
+        'pngmd' => 'App\Services\Library\ImageFilters\PngMedium',
+        'pngsm' => 'App\Services\Library\ImageFilters\PngSmall',
     ],
 
     /*

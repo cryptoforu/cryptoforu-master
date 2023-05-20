@@ -34,7 +34,7 @@ const MainNavigation = () => {
             onHoverStart={() => onHover(menuIndex)}
             onHoverEnd={() => onHover()}
           >
-            <HoverLink isHovered={isHovered(menuIndex)} />
+            <HoverLink isHovered={isHovered(menuIndex)} id="navbar" />
             <Box as="span" position="relative" zIndex={10}>
               {menu.label}
             </Box>
@@ -62,7 +62,7 @@ const MainNavigation = () => {
                   isActive(menu.route as string) ? 'activeNav' : 'primaryNav'
                 }
               >
-                <HoverLink isHovered={isHovered(menuIndex)} />
+                <HoverLink isHovered={isHovered(menuIndex)} id="navbar" />
                 <Box as="span" position="relative" zIndex={10}>
                   {menu.label}
                 </Box>
@@ -84,7 +84,7 @@ const MainNavigation = () => {
                     onHoverEnd={() => onHover()}
                     justifyContent="start"
                   >
-                    <HoverLink isHovered={isHovered(child.label)} />
+                    <HoverLink isHovered={isHovered(child.label)} id="navbar" />
                     <Flex direction="row" minW="100%">
                       <Flex as="span" position="relative" zIndex={10}>
                         {child.label}

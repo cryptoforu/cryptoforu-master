@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef } from 'react';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { ToastId, useToast as useChakraToast } from '@chakra-ui/react';
-import { usePageProps } from '@/Hooks/useTypedPage';
+import useTypedPage, { usePageProps } from '@/Hooks/useTypedPage';
 import { Flash } from '@/types';
 import { shallow } from 'zustand/shallow';
 
 type ToastState = {
   isToastOpen: boolean;
-  status: 'success' | 'warning';
-  message: string;
+  status: 'success' | 'warning' | 'error';
+  description: string;
   title: string;
   duration: number;
 };
@@ -25,7 +25,7 @@ const useToastProvider = create<ToastStore>()(
   immer((set, get) => ({
     isToastOpen: false,
     status: 'success',
-    message: '',
+    description: '',
     title: '',
     duration: 9000,
     flash: (action) =>
@@ -35,7 +35,7 @@ const useToastProvider = create<ToastStore>()(
     setToast: (status, message) =>
       set((state) => {
         state.status = status;
-        state.message = message;
+        state.description = message;
         state.title = status.toUpperCase();
       }),
   }))
@@ -43,6 +43,7 @@ const useToastProvider = create<ToastStore>()(
 
 export const useToast = () => {
   const { flash } = usePageProps<Flash>();
+  const { errors } = useTypedPage().props;
   const stateRef = useRef(useToastProvider.getState().isToastOpen);
   const setFlash = useToastProvider((state) => state.flash);
   const setToast = useToastProvider((state) => state.setToast);
@@ -57,7 +58,7 @@ export const useToast = () => {
   const options = useToastProvider(
     (state) => ({
       status: state.status,
-      message: state.message,
+      description: state.description,
       title: state.title,
       duration: state.duration,
     }),
@@ -72,13 +73,8 @@ export const useToast = () => {
       setFlash(true);
     }
   }, [flash.success, flash.warning, setFlash, setToast]);
-  const toast = useChakraToast();
 
-  const addToast = useCallback(() => {
-    if (toastIdRef.current) {
-      toastIdRef.current = toast({ ...options });
-    }
-  }, [options, toast]);
+  const toast = useChakraToast();
 
   const onClose = useCallback(() => {
     if (toastIdRef.current) {
@@ -86,18 +82,36 @@ export const useToast = () => {
       setFlash(false);
     }
   }, [setFlash, toast]);
-
+  useEffect(() => {
+    if (errors) {
+      for (const [key, value] of Object.entries(errors)) {
+        toastIdRef.current = toast({
+          id: key,
+          title: 'Error',
+          description: value as string,
+          status: 'error',
+          position: 'top',
+        });
+      }
+    }
+    const timeoutId = setTimeout(() => {
+      onClose();
+    }, 2000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [errors, onClose, toast]);
   useEffect(() => {
     if (!stateRef.current) {
       return;
     } else if (stateRef.current) {
-      addToast();
+      toastIdRef.current = toast({ ...options });
     }
     const timeoutId = setTimeout(() => {
       onClose();
-    }, 9000);
+    }, 2000);
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [addToast, onClose]);
+  }, [onClose, options, toast]);
 };

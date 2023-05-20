@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace App\Http\Middleware;
 
 use App\Interfaces\Settings\MenuInterface;
+use App\Interfaces\Site\SocialLinksContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Middleware;
@@ -13,7 +14,8 @@ use Tightenco\Ziggy\Ziggy;
 class HandleInertiaRequests extends Middleware
 {
     public function __construct(
-        private readonly MenuInterface $menu
+        private readonly MenuInterface $menu,
+        protected SocialLinksContract $social,
     ) {
     }
 
@@ -58,7 +60,7 @@ class HandleInertiaRequests extends Middleware
             'cookies' => $request->header('cookie', '') ?? '',
             'admin_sidebar' => $admin_path ? $this->menu->getMenu('admin_sidebar') : null,
             'main_menu' => $this->menu->getMenu('front_main'),
-
+            'social' => $this->social->handle(),
         ]);
     }
 }

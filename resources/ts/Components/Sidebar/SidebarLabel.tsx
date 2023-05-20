@@ -49,7 +49,7 @@ const SidebarLabel = ({ label, onTap, icon, children }: SidebarLabelProps) => {
             borderRadius: '12px',
             bg: 'gray.700',
           }}
-          imgProps={{ w: '24px', h: '24px', src: icon }}
+          imgProps={{ w: '24px', h: '24px', img_name: icon as string }}
         />
       }
       marginY="2"

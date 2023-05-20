@@ -51,7 +51,7 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
         >
           <LazyImage
             boxProps={{ maxWidth: '100%' }}
-            imgProps={{ w: '24px', h: '24px', src: icon }}
+            imgProps={{ w: '24px', h: '24px', img_name: icon as string }}
           />
         </Flex>
         <ProsePa

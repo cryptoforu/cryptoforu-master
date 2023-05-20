@@ -20,21 +20,17 @@ const ImgCard = ({
   description,
   to,
   params,
-  srcSet,
 }: ImgCardProps) => {
   return (
     <Flex direction="column">
-      <Box mb="20px" position="relative" borderRadius="15px">
+      <Box mb="20px" position="relative" borderRadius="15px" maxHeight="300px">
         <LazyImage
           imgProps={{
-            loading: 'lazy',
-            src: image,
-            srcSet: srcSet,
-            sizes: '(min-width: 66em) 33vw, (min-width: 44em) 50vw, 100vw',
-            rounded: 'md',
+            img_name: image as string,
+            objectFit: 'cover',
           }}
           boxProps={{
-            maxWidth: '500px',
+            maxWidth: 'full',
             height: 'auto',
           }}
         />
@@ -44,10 +40,7 @@ const ImgCard = ({
         <ProseHeadings component="h3" size="lg">
           {title}
         </ProseHeadings>
-        <MarkDown
-          content={description as string}
-          linkProps={{ color: 'emerald.400', isExternal: true }}
-        />
+        <MarkDown content={description as string} />
         <Flex justifyContent="space-between">
           <BtnLink
             to={to}

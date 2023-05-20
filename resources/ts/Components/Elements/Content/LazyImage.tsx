@@ -1,16 +1,17 @@
 import {
-  Img,
-  ImgProps,
   Box,
   BoxProps,
   forwardRef,
   useColorModeValue,
+  useMergeRefs,
 } from '@chakra-ui/react';
+import { ResponsiveImage } from './';
+import type { IResponsiveImage } from './ResponsiveImage';
 import { useEffect, useState } from 'react';
 import { useAnimate, cubicBezier } from 'framer-motion';
 
 export interface IImageProps {
-  imgProps: ImgProps;
+  imgProps: IResponsiveImage;
   boxProps?: BoxProps;
 }
 
@@ -46,20 +47,17 @@ const LazyImage = forwardRef(({ imgProps, boxProps }: IImageProps, ref) => {
         );
     imageLoaded && animate('img', { opacity: 1 }, { duration: 1.5 });
   }, [animate, imageLoaded, scope]);
+  const refs = useMergeRefs(scope, ref);
   return (
     <Box
-      ref={scope}
+      ref={refs}
       position="relative"
       bg={background}
       overflow="hidden"
       rounded="md"
       {...boxProps}
     >
-      <Img
-        ref={ref}
-        maxWidth="100%"
-        inlineSize="auto"
-        blockSize="auto"
+      <ResponsiveImage
         style={{ opacity: 0 }}
         onLoad={handleLoad}
         {...imgProps}

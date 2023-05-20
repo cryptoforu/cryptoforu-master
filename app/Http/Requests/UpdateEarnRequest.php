@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Http\Requests;
 
-use App\Services\Earn\Enums\FeaturedEnum;
+use App\Services\Earn\Enums\EarnStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Enum\Laravel\Rules\EnumRule;
 
@@ -28,9 +28,10 @@ class UpdateEarnRequest extends FormRequest
         return [
             'title' => 'string',
             'content' => 'string',
+            'main_features' => 'string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg,webp|max:5048',
             'link' => 'string',
-            'featured' => new EnumRule(FeaturedEnum::class),
+            'status' => new EnumRule(EarnStatus::class),
             'earn_category_id' => 'integer',
         ];
     }
@@ -38,7 +39,7 @@ class UpdateEarnRequest extends FormRequest
     public function enums(): array
     {
         return [
-            'featured' => FeaturedEnum::class,
+            'status' => EarnStatus::class,
         ];
     }
 }

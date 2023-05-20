@@ -111,10 +111,11 @@ function Multiple({
             <VStack mt="8">
               <Button
                 type="submit"
-                colorScheme="blue"
+                variant="primaryBtn"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
                 loadingText="Uploading"
+                width="full"
               >
                 Upload
               </Button>

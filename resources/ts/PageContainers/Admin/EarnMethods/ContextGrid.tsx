@@ -15,16 +15,7 @@ const ContextGrid = () => {
         {values?.earn?.map((value) => (
           <ImgCard
             key={value?.id}
-            image={
-              value.image_name
-                ? `/img/cache/lg/${value.image_name}`
-                : value.image
-            }
-            srcSet={
-              value.image_name
-                ? `/img/cache/sm/${value.image_name} 300w, /img/cache/md/${value.image_name} 600w, /img/cache/lg/${value.image_name} 1200w`
-                : undefined
-            }
+            image={value.image_name ? value.image_name : value.image}
             title={value?.title}
             category={values?.name}
             description={

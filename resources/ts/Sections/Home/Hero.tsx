@@ -1,10 +1,16 @@
-import { Box, Button, Flex, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
 import { HeroWrapper } from '@/Components/Wrappers';
-import { LazyImage } from '@/Components/Elements/Content';
+import { ResponsiveImage } from '@/Components/Elements/Content';
 import { Logo } from '@/Components/Elements/Content';
 import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
-import { BtnLink } from '@/Components/Elements/Navigation';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '@/Components/Elements/Navigation';
+import { usePageProps } from '@/Hooks/useTypedPage';
+import type { IHomeData } from '../home-types';
 const Hero = () => {
+  const { hero } = usePageProps<IHomeData>().data;
   return (
     <HeroWrapper>
       <Box
@@ -34,16 +40,17 @@ const Hero = () => {
               mb="-56"
               opacity={0.5}
             >
-              <LazyImage
-                boxProps={{
-                  width: '530px',
-                  height: '530px',
+              <ResponsiveImage
+                img_name="6456ab874ce73.png"
+                loading="eager"
+                htmlWidth="530px"
+                htmlHeight="530px"
+                query={{
+                  sm: 300,
+                  md: 600,
+                  lg: 1200,
                 }}
-                imgProps={{
-                  loading: 'eager',
-                  alt: '',
-                  src: '/img/cache/original/6456ab874ce73.png',
-                }}
+                alt=""
               />
             </Box>
             <Box position="relative" pt="8">
@@ -52,55 +59,46 @@ const Hero = () => {
                 size="xxl"
                 variant="proseGradientEmerald"
               >
-                Cryptoforu | Learn and earn Crypto
+                {hero.title}
               </ProseHeadings>
-              <ProsePa>
-                If you are interested in making money online, then Cryptoforu is
-                the right place for you. We help individuals to learn and earn
-                crypto by providing them with the knowledge they need to
-                succeed.
-              </ProsePa>
+              <ProsePa>{hero.description}</ProsePa>
               <Flex
                 mt="8"
                 gap="4"
                 position="relative"
                 justify={{ base: 'center', lg: 'start' }}
               >
-                <BtnLink
-                  as={Button}
-                  variant="primaryBtn"
-                  size="md"
-                  to="earn-crypto"
-                >
-                  Get Started
-                </BtnLink>
-                <BtnLink as={Button} to="learn-crypto" rounded="full" size="md">
+                <PrimaryButton to="earn-crypto">Get Started</PrimaryButton>
+                <SecondaryButton to="learn-crypto">
                   Learn Crypto
-                </BtnLink>
+                </SecondaryButton>
               </Flex>
             </Box>
           </Box>
           <Box position={{ base: 'relative', lg: 'static' }} pl={{ xl: '10' }}>
             <Box position="relative">
-              <LazyImage
-                boxProps={{
-                  width: '1200px',
-                  height: '600px',
-                  position: 'absolute',
-                  top: '-64',
-                  right: '-64',
-                }}
-                imgProps={{
-                  loading: 'eager',
-                  alt: '',
-                  filter: 'auto',
-                  blur: '8px',
-                  opacity: 0.5,
-                  brightness: '40%',
-                  src: '/img/cache/original/6456cef565b01.png',
-                }}
-              />
-
+              <Box
+                position="absolute"
+                top="-40"
+                right="-64"
+                width={1200}
+                height={2300}
+              >
+                <ResponsiveImage
+                  img_name="6456cef565b01.png"
+                  loading="eager"
+                  query={{
+                    sm: 600,
+                    md: 1200,
+                    lg: 2300,
+                  }}
+                  filter="auto"
+                  blur="8px"
+                  opacity={0.5}
+                  brightness="40%"
+                  alt=""
+                />
+              </Box>
               <Box
                 position="relative"
                 mx="auto"

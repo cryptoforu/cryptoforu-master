@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Services\Earn\Actions;
 
@@ -8,6 +8,7 @@ use App\Models\Earn;
 use App\Models\EarnCategory;
 use App\Services\Earn\DataObjects\EarnCategoryData;
 use App\Services\Earn\DataObjects\EarnData;
+use App\Services\Earn\Enums\EarnStatus;
 use App\Services\Settings\Concerns\FormFactory;
 use App\Services\Settings\Page\DataObjects\AdminNavigation;
 use App\Services\Settings\Page\DataObjects\PageData;
@@ -23,18 +24,19 @@ class EditEarn
      */
     public function handle(Earn $earn): array
     {
-        $initialValues = (new Collection(items: EarnData::editSchema($earn)));
+        $initialValues = (new Collection(items:EarnData::editSchema($earn)));
         $options = [
             'earn_category_id' => EarnCategoryData::collection(
-                items: EarnCategory::all()->map(
-                    fn ($e) => $e->getData()
+                items:EarnCategory::all()->map(
+                    fn($e) => $e->getData()
                 )
             )->toArray(),
+            'status' => EarnStatus::options(),
         ];
 
         $schema = $this->generate(
-            items: (new Collection(items: EarnData::editSchema(earn: $earn, type: 'n'))),
-            options: $options
+            items:(new Collection(items:EarnData::editSchema(earn:$earn, type:'n'))),
+            options:$options
         );
 
         return [

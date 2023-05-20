@@ -34,7 +34,7 @@ class StoreMenuItems implements StoreMenuItemContract
                 file:$validated['icon'],
                 directory:'menu_icons'
             );
-            $icon_path = '/img/cache/original/' . $icon['file_name'];
+            $icon_path = $icon['file_name'];
         }
 
         $menu = MenuItem::create([

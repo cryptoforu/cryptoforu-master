@@ -12,7 +12,7 @@ import {
 import { useScrolled } from '@/Store/useNavStore';
 import { Logo } from '../Elements/Content';
 import ThemeSwitcher from './ThemeSwitcher';
-import { BtnLink } from '../Elements/Navigation';
+import { PrimaryButton } from '../Elements/Navigation';
 import { Link } from '@inertiajs/react';
 import MainNavigation from './MainNavigation';
 export interface MainNavProps extends ThemingProps, HTMLChakraProps<'header'> {}
@@ -55,9 +55,9 @@ const MainNav = () => {
         <MainNavigation />
         <Flex flex="1" align="center" justify="flex-end" gap="2">
           <ThemeSwitcher />
-          <BtnLink to="login" variant="primaryBtn" size="sm">
+          <PrimaryButton to="login" size="sm">
             Login
-          </BtnLink>
+          </PrimaryButton>
         </Flex>
       </Flex>
     </Nav>

@@ -93,7 +93,7 @@ export function useFormContext<FormItem extends FormID>() {
     FormContext as unknown as React.Context<FormContextData<FormItem>>
   );
   if (!context) {
-    throw new Error('useMyContext must be used under MyContextProvider');
+    throw new Error('useFormContext must be used under FormContextProvider');
   }
   return context;
 }

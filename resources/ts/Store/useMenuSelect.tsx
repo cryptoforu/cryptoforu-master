@@ -110,7 +110,7 @@ export function MenuSelect() {
     <Menu placement="bottom-end">
       <MenuButton
         as={Button}
-        variant="gradLime"
+        variant="primaryBtn"
         rightIcon={<ChevronDownIcon />}
         isLoading={isPending}
       >

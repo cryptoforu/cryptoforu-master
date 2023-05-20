@@ -21,7 +21,7 @@ const PageSelect = ({ admin, front }: Settings['select']) => {
     <Menu placement="bottom-end">
       <MenuButton
         as={Button}
-        variant="gradLime"
+        variant="primaryBtn"
         rightIcon={<ChevronDownIcon />}
         isLoading={isPending}
       >

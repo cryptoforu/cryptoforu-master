@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Http\Requests;
 
@@ -26,6 +26,7 @@ class StoreEarnRequest extends FormRequest
         return [
             'title' => 'required|string',
             'content' => 'required|string',
+            'main_features' => 'required|string',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg,webp|max:5048',
             'link' => 'required|string',
             'featured' => 'required|boolean',

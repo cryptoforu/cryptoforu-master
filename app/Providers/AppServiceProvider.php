@@ -31,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(
             provider:FrontEndProvider::class,
         );
+        $this->app->register(
+            provider:SiteProvider::class,
+        );
     }
 
     /**

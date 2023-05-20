@@ -7,15 +7,17 @@ export type AdminNavigation = {
 export type CategoryData = {
   id: number;
   name: string;
+  color: string;
   slug?: string;
   description?: string;
-  category_image?: string;
+  category_image: string;
   category_thumb?: string;
   posts?: Array<PostData>;
 };
 export type EarnCategory = {
   id: number;
   name: string;
+  color: string;
   description?: string;
   category_image?: string;
   earn?: Array<EarnData>;
@@ -128,4 +130,22 @@ export type TagsData = {
   id: number;
   name: string;
   posts?: Array<PostData>;
+};
+export type SiteData<T extends object> = {
+  data_name: string;
+  data_values: T;
+};
+
+export type HeroData = {
+  id: string | number;
+  title: string;
+  description: string;
+};
+
+export type FeaturesData = {
+  id: string | number;
+  name: string;
+  image: string;
+  description: string;
+  link: string;
 };

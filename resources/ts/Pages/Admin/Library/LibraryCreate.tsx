@@ -15,7 +15,7 @@ const LibraryCreate = () => {
         <PanelWrapper>
           <Card variant="containerCard">
             <CardBody>
-              <DataTabs data={data} />
+              <DataTabs data={data} variant="secondary" />
             </CardBody>
           </Card>
         </PanelWrapper>

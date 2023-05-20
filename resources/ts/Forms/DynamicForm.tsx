@@ -16,6 +16,7 @@ import { Label } from '@/Components/Elements/Forms';
 const DynamicForm = () => {
   const { initialValues, form_schema, handleSubmit, withButton, form_id } =
     useFormContext();
+  console.log(initialValues);
   return (
     <FormWrapper title="" desc="">
       <Formik
@@ -80,9 +81,6 @@ const DynamicForm = () => {
                         name={value.name}
                         label={value.label}
                         value={values[value.name as keyof typeof initialValues]}
-                        onChange={(e) =>
-                          setFieldValue(value.name, e.target.value)
-                        }
                       />
                     );
                   case 'tags':

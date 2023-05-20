@@ -21,18 +21,18 @@ const TextAreaField = ({ ...props }: FieldProps) => {
         <Flex minWidth="100%" alignItems="center" gap="2">
           <Box width="80%">
             <Progress
-              value={defValue.length}
+              value={defValue?.length || 0}
               max={maxLength}
               size="md"
               rounded="lg"
               mx="20px"
-              colorScheme={defValue.length < 100 ? 'emerald' : 'red'}
+              colorScheme={defValue?.length < 100 ? 'emerald' : 'red'}
             />
           </Box>
           <Spacer />
           <Box maxWidth="30%">
             <ProseHeadings component="h3">
-              {defValue.length} / {maxLength}{' '}
+              {defValue?.length} / {maxLength}{' '}
             </ProseHeadings>
           </Box>
         </Flex>
