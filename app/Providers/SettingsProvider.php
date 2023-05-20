@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -27,32 +27,32 @@ class SettingsProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            abstract :SettingsResources::class,
-            concrete:fn() => SettingsResources::make(storage_path('app/settings.json'))
+            abstract : SettingsResources::class,
+            concrete: fn () => SettingsResources::make(storage_path('app/settings.json'))
         );
 
         $this->app->bind(
-            abstract :UpdateMenuItemContract::class,
-            concrete:UpdateMenuItems::class,
+            abstract : UpdateMenuItemContract::class,
+            concrete: UpdateMenuItems::class,
         );
 
         $this->app->bind(
-            abstract :SettingsInterface::class,
-            concrete:SettingsService::class
+            abstract : SettingsInterface::class,
+            concrete: SettingsService::class
         );
 
         $this->app->bind(
-            abstract :MenuInterface::class,
-            concrete:MenuResources::class
+            abstract : MenuInterface::class,
+            concrete: MenuResources::class
         );
 
         $this->app->bind(
-            abstract :PageInterface::class,
-            concrete:PageResource::class
+            abstract : PageInterface::class,
+            concrete: PageResource::class
         );
         $this->app->bind(
-            abstract :SettingsActionInterface::class,
-            concrete:SettingsAction::class
+            abstract : SettingsActionInterface::class,
+            concrete: SettingsAction::class
         );
         $this->app->bind(
             StoreMenuItemContract::class,

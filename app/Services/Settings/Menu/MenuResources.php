@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings\Menu;
 
@@ -23,8 +23,8 @@ class MenuResources implements MenuInterface
         $menu = $this->getMenu->handle($position);
 
         return $this->store->load(
-            key:$position,
-            callback:$menu,
+            key: $position,
+            callback: $menu,
         );
     }
 

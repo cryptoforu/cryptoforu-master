@@ -23,8 +23,8 @@ class StoreEarn
 
         if ($request->hasFile('image')) {
             $image = $this->library->store(
-                file:$validated['image'],
-                directory:'/earning'
+                file: $validated['image'],
+                directory: '/earning'
             );
             $image_path = $image['path'];
             $image_name = $image['file_name'];
@@ -45,9 +45,9 @@ class StoreEarn
         ]);
 
         $this->library->save(
-            model:$earn,
-            file:$image,
-            category:3
+            model: $earn,
+            file: $image,
+            category: 3
         );
 
         return true;

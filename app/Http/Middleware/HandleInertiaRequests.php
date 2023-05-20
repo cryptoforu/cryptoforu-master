@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
@@ -33,7 +33,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/asset-versioning
      */
-    public function version(Request $request):  ? string
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -43,18 +43,19 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/shared-data
      */
-    public function share(Request $request) : array
+    public function share(Request $request): array
     {
         $ziggy = new Ziggy($group = null, $request->url());
         $ziggy = $ziggy->toArray();
         $admin_path = Str::of($request->path())->startsWith('admin');
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
             'flash' => [
-                'success' => fn() => $request->session()->get('success'),
-                'warning' => fn() => $request->session()->get('warning'),
+                'success' => fn () => $request->session()->get('success'),
+                'warning' => fn () => $request->session()->get('warning'),
             ],
             'ziggy' => $ziggy,
             'cookies' => $request->header('cookie', '') ?? '',

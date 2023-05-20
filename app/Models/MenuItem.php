@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -40,6 +40,7 @@ class MenuItem extends Model
     {
         return $this->morphMany(Library::class, 'imageable');
     }
+
     /**
      * Scope query for current route
      */

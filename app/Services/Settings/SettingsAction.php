@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings;
 
@@ -41,27 +41,29 @@ class SettingsAction implements SettingsActionInterface
     public function store(
         StorePageRequest $from,
         ActionEnum $action
-    ): void{
+    ): void {
         $this->page->handle(
-            from:$from
+            from: $from
         );
         $this->store->flushCache();
     }
 
-    public function destroy(Request $request, string | int $id): bool
+    public function destroy(Request $request, string|int $id): bool
     {
         $enum = $request->input('delete');
         if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_menu())) {
             $this->deleteMenuItem->handle(
-                id:$id,
+                id: $id,
             );
             $this->store->flushCache();
+
             return true;
         } elseif (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_page())) {
             $this->deletePageMeta->handle(
-                id:$id,
+                id: $id,
             );
             $this->store->flushCache();
+
             return true;
         }
 

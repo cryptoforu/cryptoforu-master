@@ -24,8 +24,8 @@ class CacheStoreProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            abstract :CacheStoreContract::class,
-            concrete:CacheStoreService::class,
+            abstract : CacheStoreContract::class,
+            concrete: CacheStoreService::class,
         );
 
         $this->app->when([EarnService::class, EarnActions::class])->needs(
@@ -41,11 +41,11 @@ class CacheStoreProvider extends ServiceProvider
             ->needs(
                 CacheStoreContract::class
             )->give(function () {
-            return new CacheStoreService(
-                Cache::store('settings'),
-                Valuestore::make(storage_path('app/store/settings/settings-data.json'))
-            );
-        });
+                return new CacheStoreService(
+                    Cache::store('settings'),
+                    Valuestore::make(storage_path('app/store/settings/settings-data.json'))
+                );
+            });
 
         $this->app->when(BlogService::class)->needs(
             CacheStoreContract::class,
@@ -69,8 +69,8 @@ class CacheStoreProvider extends ServiceProvider
             CacheStoreContract::class,
         )->give(function () {
             return new CacheStoreService(
-                store:Cache::store('frontend'),
-                valuestore:Valuestore::make(storage_path('app/store/frontend/front-data.json'))
+                store: Cache::store('frontend'),
+                valuestore: Valuestore::make(storage_path('app/store/frontend/front-data.json'))
             );
         });
     }

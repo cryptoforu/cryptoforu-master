@@ -27,7 +27,7 @@ class AdminNavigation extends Data
 
     public static function fromModel(Page $page): self
     {
-        return new  self(
+        return new self(
             label: $page->label,
             route: $page->route,
             childs: Lazy::whenLoaded('childs', $page, fn () => AdminNavigation::collection($page->childs)),

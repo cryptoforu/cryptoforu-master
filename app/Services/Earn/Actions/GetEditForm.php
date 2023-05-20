@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Earn\Actions;
 
@@ -20,18 +20,18 @@ class GetEditForm
      */
     public function handle(): array
     {
-        $initialValues = (new Collection(items:EarnData::schema()));
+        $initialValues = (new Collection(items: EarnData::schema()));
         $options = [
             'earn_category_id' => EarnCategoryData::collection(
-                items:EarnCategory::all()->map(
-                    fn($e) => $e->getData()
+                items: EarnCategory::all()->map(
+                    fn ($e) => $e->getData()
                 )
             )->toArray(),
             'status' => EarnStatus::options(),
         ];
         $schema = $this->generate(
-            items:(new Collection(items:EarnData::schema(type:'n'))),
-            options:$options
+            items: (new Collection(items: EarnData::schema(type: 'n'))),
+            options: $options
         );
 
         return [

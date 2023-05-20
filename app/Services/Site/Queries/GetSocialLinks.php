@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\Site\Queries;
 
 use App\Interfaces\Site\SocialLinksContract;
@@ -14,8 +16,8 @@ class GetSocialLinks implements SocialLinksContract
     {
         return Cache::rememberForever('social', function () {
             return (new Collection(
-                items:Site::ofData('home_page')->data_values['social_links']
-            ))->map(fn($social) => SocialLinksData::from($social))->toArray();
+                items: Site::ofData('home_page')->data_values['social_links']
+            ))->map(fn ($social) => SocialLinksData::from($social))->toArray();
         });
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Site\Queries;
 
 use App\Models\Site;
@@ -16,11 +17,12 @@ class ShowData
         $query = Site::all();
         $data = (
             new Collection(
-                items:PageData::collection(
-                    items:$query->map(fn($item) => $item->getData())
+                items: PageData::collection(
+                    items: $query->map(fn ($item) => $item->getData())
                 )
             )
-        )->keyBy(fn(array $i) => Str::slug($i['data_name']));
+        )->keyBy(fn (array $i) => Str::slug($i['data_name']));
+
         return collect([
             'data' => $data,
             'select' => $this->selectable($data, 'data_name'),

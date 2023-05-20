@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings\Page\Actions;
 
@@ -19,28 +19,28 @@ class StorePageMeta
     {
         $validated = $from->validated();
 
-        $image_paths = strval(config('app.url') . '/img/cache/original/6453f5dad4e11.png');
+        $image_paths = strval(config('app.url').'/img/cache/original/6453f5dad4e11.png');
 
         if ($from->hasFile('meta_image')) {
             $meta_image = $this->library->store(
-                file:$validated['meta_image'],
-                directory:'meta'
+                file: $validated['meta_image'],
+                directory: 'meta'
             );
-            $meta_path = strval(config('app.url') . '/' . $meta_image['path']);
+            $meta_path = strval(config('app.url').'/'.$meta_image['path']);
         }
         if ($from->hasFile('tw_image')) {
             $tw_image = $this->library->store(
-                file:$validated['tw_image'],
-                directory:'meta'
+                file: $validated['tw_image'],
+                directory: 'meta'
             );
-            $tw_path = strval(config('app.url') . '/' . $tw_image['path']);
+            $tw_path = strval(config('app.url').'/'.$tw_image['path']);
         }
         if ($from->hasFile('og_image')) {
             $og_image = $this->library->store(
-                file:$validated['og_image'],
-                directory:'meta'
+                file: $validated['og_image'],
+                directory: 'meta'
             );
-            $og_path = strval(config('app.url') . '/' . $og_image['path']);
+            $og_path = strval(config('app.url').'/'.$og_image['path']);
         }
 
         $page = Page::create([
@@ -54,12 +54,12 @@ class StorePageMeta
             'page_type' => $validated['page_type'],
             'page_name' => $validated['page_name'],
         ]);
-        if (!empty($from->allFiles())) {
+        if (! empty($from->allFiles())) {
             collect([$meta_image, $tw_image, $og_image])
-                ->map(fn($img) => $this->library->save(
-                    model:$page,
-                    file:$img,
-                    category:8
+                ->map(fn ($img) => $this->library->save(
+                    model: $page,
+                    file: $img,
+                    category: 8
                 ));
         }
 

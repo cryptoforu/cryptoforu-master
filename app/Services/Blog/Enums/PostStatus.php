@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Blog\Enums;
 
@@ -34,8 +34,8 @@ final class PostStatus extends Enum
         return Arr::map(PostStatus::cases(), function ($value, $key) {
             return
                 [
-                'name' => $value,
-            ];
+                    'name' => $value,
+                ];
         });
     }
 }

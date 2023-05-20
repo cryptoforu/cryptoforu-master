@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library\Actions;
 
@@ -17,12 +17,12 @@ class StoreFile
 
     public function handle(UploadedFile $file, string $directory)
     {
-        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file_path = $this->directory($directory) . '/' . $file_name;
-        $thumb_path = '/img/cache/sm/' . $file_name;
+        $file_name = uniqid().'.'.$file->getClientOriginalExtension();
+        $file_path = $this->directory($directory).'/'.$file_name;
+        $thumb_path = '/img/cache/sm/'.$file_name;
         $conversions = $this->responsive(
-            file:$file,
-            directory:$directory,
+            file: $file,
+            directory: $directory,
         );
         try {
             $fl = Image::make($file)->save(public_path($file_path));

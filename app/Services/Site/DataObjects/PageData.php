@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Site\DataObjects;
 
 use App\Models\Site;
@@ -16,8 +17,8 @@ class PageData extends Data
     public static function fromModel(Site $site): self
     {
         return new self(
-            data_name:$site->data_name,
-            data_values:$site->data_values,
+            data_name: $site->data_name,
+            data_values: $site->data_values,
         );
     }
 }

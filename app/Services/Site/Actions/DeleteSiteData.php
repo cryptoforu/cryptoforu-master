@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\Site\Actions;
 
 use App\Interfaces\Site\DeleteDataContract;
@@ -12,7 +14,6 @@ class DeleteSiteData implements DeleteDataContract
     /**
      * Delete Data
      *
-     * @param Request $request
      * @return void
      */
     public function handle(Request $request)
@@ -33,6 +34,7 @@ class DeleteSiteData implements DeleteDataContract
             return $model->data_values->forget($validated['key']);
         }, function () use ($model, $validated, $collection) {
             $model->data_values[$validated['key']] = $collection;
+
             return $model->data_values;
         });
         $model->data_values = $updated;

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library\Concerns;
 
@@ -17,6 +17,7 @@ trait Destroyable
             Arr::map($file->file_conversions, function ($value, $key) {
                 Storage::delete($value);
             });
+
             return true;
         }
 

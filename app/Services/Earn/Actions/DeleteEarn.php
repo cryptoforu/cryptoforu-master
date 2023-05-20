@@ -7,7 +7,6 @@ use App\Models\Earn;
 
 class DeleteEarn
 {
-
     public function __construct(
         private LibraryActionsInterface $action,
     ) {
@@ -24,6 +23,7 @@ class DeleteEarn
                 $this->action->delete($img);
             }
             $earn->delete();
+
             return true;
         }
 

@@ -10,7 +10,6 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static self FEATURED()
  * @method static self NOTFEATURED()
  */
-
 final class FeaturedEnum extends Enum
 {
     protected static function values(): array

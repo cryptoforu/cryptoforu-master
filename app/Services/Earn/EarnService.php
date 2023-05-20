@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Earn;
 
@@ -30,11 +30,11 @@ class EarnService implements EarnServiceInterface
     {
         $data = $this->show->handle();
         $meta = $this->store->load(
-            key:'earnIndex',
-            callback:[
+            key: 'earnIndex',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_earn'
+                    page_type: 'admin',
+                    page: 'admin_earn'
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'select' => $data['select'],
@@ -44,7 +44,7 @@ class EarnService implements EarnServiceInterface
         return [
             ...$meta,
             ...$this->store->withInertia(
-                collection:$data['data']
+                collection: $data['data']
             ),
 
         ];
@@ -58,11 +58,11 @@ class EarnService implements EarnServiceInterface
     public function forCreate()
     {
         return $this->store->load(
-            key:'earnCreate',
-            callback:[
+            key: 'earnCreate',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_add_earning_methods'
+                    page_type: 'admin',
+                    page: 'admin_add_earning_methods'
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'earn_form' => $this->create->handle(),
@@ -78,8 +78,8 @@ class EarnService implements EarnServiceInterface
     public function forEdit(Earn $earn)
     {
         return $this->store->load(
-            key:$earn->title,
-            callback:[
+            key: $earn->title,
+            callback: [
                 ...$this->edit->handleMeta($earn),
                 'edit_form' => $this->edit->handle($earn),
             ]

@@ -9,11 +9,8 @@ use Inertia\Response;
 
 class ContactController extends Controller
 {
-
     /**
      * Contact Controller Instance
-     *
-     * @param FrontEndInterface $front
      */
     public function __construct(
         protected FrontEndInterface $front,
@@ -24,8 +21,8 @@ class ContactController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component:'FrontEnd/Contact',
-            props:$this->front->contact(),
+            component: 'FrontEnd/Contact',
+            props: $this->front->contact(),
         );
     }
 }

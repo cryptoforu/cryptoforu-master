@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library\Concerns;
 
@@ -13,10 +13,10 @@ trait Directories
         string $directory
     ) {
         $storage = Storage::allDirectories(public_path('images'));
-        $path = 'images/' . $directory;
+        $path = 'images/'.$directory;
         if (Arr::exists(
-            array:$storage,
-            key:$directory
+            array: $storage,
+            key: $directory
         )) {
             return $path;
         } else {

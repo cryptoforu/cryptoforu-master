@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\Library\DataObjects;
 
 use Spatie\LaravelData\Data;
@@ -15,8 +17,8 @@ class LibDeleteData extends Data
     public static function fromArray(array $attributes): self
     {
         return new self(
-            file_url:strval(data_get($attributes, 'file_url')),
-            file_conversions:[
+            file_url: strval(data_get($attributes, 'file_url')),
+            file_conversions: [
                 'lg' => strval(data_get($attributes, 'file_conversions.lg')),
                 'md' => strval(data_get($attributes, 'file_conversions.md')),
                 'sm' => strval(data_get($attributes, 'file_conversions.sm')),

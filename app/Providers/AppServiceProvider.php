@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -14,25 +14,25 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(
-            provider:SettingsProvider::class
+            provider: SettingsProvider::class
         );
         $this->app->register(
-            provider:LibraryProvider::class
+            provider: LibraryProvider::class
         );
         $this->app->register(
-            provider:BlogProvider::class
+            provider: BlogProvider::class
         );
         $this->app->register(
-            provider:EarnServiceProvider::class,
+            provider: EarnServiceProvider::class,
         );
         $this->app->register(
-            provider:CacheStoreProvider::class,
+            provider: CacheStoreProvider::class,
         );
         $this->app->register(
-            provider:FrontEndProvider::class,
+            provider: FrontEndProvider::class,
         );
         $this->app->register(
-            provider:SiteProvider::class,
+            provider: SiteProvider::class,
         );
     }
 

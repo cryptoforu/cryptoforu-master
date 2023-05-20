@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\Site\Actions;
 
 use App\Http\Requests\StoreSiteDataRequest;
@@ -10,7 +12,6 @@ use App\Services\Site\Concerns\Collectable;
 
 class StoreSiteData implements StoreDataContract
 {
-
     use Collectable;
 
     public function __construct(
@@ -18,10 +19,10 @@ class StoreSiteData implements StoreDataContract
     ) {
 
     }
+
     /**
      * Store Data
      *
-     * @param StoreSiteDataRequest $request
      * @return void
      */
     public function handle(
@@ -31,22 +32,22 @@ class StoreSiteData implements StoreDataContract
         $validated = $request->validated();
         if ($request->hasFile('image')) {
             $image = $this->library->store(
-                file:$request->file('image'),
-                directory:'misc'
+                file: $request->file('image'),
+                directory: 'misc'
             );
             $path = $image['file_name'];
             $this->library->save(
-                model:$query,
-                file:$image,
-                category:2,
+                model: $query,
+                file: $image,
+                category: 2,
             );
         }
         $data = $this->collectable(
-            attributes:$validated['data_values'],
-            data_values:$query->data_values,
-            image_path:$path ?? null,
+            attributes: $validated['data_values'],
+            data_values: $query->data_values,
+            image_path: $path ?? null,
         );
-        if (!empty($query) && isset($data['new_values'])) {
+        if (! empty($query) && isset($data['new_values'])) {
             $query->data_values[$data['key']] = $data['new_values'];
             cache()->store('site')->clear();
             $query->save();
@@ -61,5 +62,4 @@ class StoreSiteData implements StoreDataContract
         }
 
     }
-
 }

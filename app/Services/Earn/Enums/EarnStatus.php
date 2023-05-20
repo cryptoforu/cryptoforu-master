@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\Earn\Enums;
 
 use Illuminate\Support\Arr;
@@ -12,7 +14,6 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static self FEATURED()
  * @method static self PUBLISHED()
  */
-
 final class EarnStatus extends Enum
 {
     public static function options()
@@ -20,8 +21,8 @@ final class EarnStatus extends Enum
         return Arr::map(EarnStatus::cases(), function ($value, $key) {
             return
                 [
-                'name' => $value,
-            ];
+                    'name' => $value,
+                ];
         });
     }
 }

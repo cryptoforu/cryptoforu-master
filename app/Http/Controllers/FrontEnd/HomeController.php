@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\FrontEnd;
 
@@ -16,6 +16,7 @@ class HomeController extends Controller
     ) {
 
     }
+
     /**
      * Handle the incoming request.
      * Home Page
@@ -23,8 +24,8 @@ class HomeController extends Controller
     public function __invoke(): Response
     {
         return Inertia::render(
-            component:'FrontEnd/Home',
-            props:$this->front->home(),
+            component: 'FrontEnd/Home',
+            props: $this->front->home(),
         );
     }
 }

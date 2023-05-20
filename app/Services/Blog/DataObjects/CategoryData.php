@@ -1,12 +1,11 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Blog\DataObjects;
 
 use App\Models\Category;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -20,12 +19,12 @@ class CategoryData extends Data
     public function __construct(
         public int $id,
         public string $name,
-        public Optional | Lazy | string $slug,
-        public Optional | Lazy | string $description,
-        public Optional | Lazy | string $category_image,
-        public Optional | Lazy | string $category_thumb,
+        public Optional|Lazy|string $slug,
+        public Optional|Lazy|string $description,
+        public Optional|Lazy|string $category_image,
+        public Optional|Lazy|string $category_thumb,
         #[DataCollectionOf(PostData::class)]
-        public Lazy | DataCollection $posts,
+        public Lazy|DataCollection $posts,
     ) {
     }
 
@@ -34,11 +33,11 @@ class CategoryData extends Data
         return new self(
             $category->id,
             $category->name,
-            Lazy::create(fn() => $category->slug),
-            Lazy::create(fn() => $category->description),
-            Lazy::create(fn() => $category->category_image),
-            Lazy::create(fn() => $category->category_thumb),
-            Lazy::whenLoaded('posts', $category, fn() => PostData::collection($category->posts)),
+            Lazy::create(fn () => $category->slug),
+            Lazy::create(fn () => $category->description),
+            Lazy::create(fn () => $category->category_image),
+            Lazy::create(fn () => $category->category_thumb),
+            Lazy::whenLoaded('posts', $category, fn () => PostData::collection($category->posts)),
         );
     }
 
@@ -50,8 +49,8 @@ class CategoryData extends Data
             $category->slug,
             $category->description,
             $category->category_image,
-            Lazy::create(fn() => $category->category_thumb),
-            Lazy::whenLoaded('posts', $category, fn() => PostData::collection($category->posts)),
+            Lazy::create(fn () => $category->category_thumb),
+            Lazy::whenLoaded('posts', $category, fn () => PostData::collection($category->posts)),
         );
     }
 

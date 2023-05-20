@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -24,25 +24,22 @@ class LibraryController extends Controller
 {
     /**
      * Library Controller Instance
-     *
-     * @param LibraryResourceInterface $library
      */
     public function __construct(
         protected LibraryResourceInterface $library,
         protected LibraryActionsInterface $action,
         protected LibraryDeleteContract $delete,
-    ) {}
+    ) {
+    }
 
     /**
      * Index Page Resource
-     *
-     * @return Response
      */
     public function index(): Response
     {
         return Inertia::render(
-            component:'Admin/Library/LibraryIndex',
-            props:$this->library->forIndex(),
+            component: 'Admin/Library/LibraryIndex',
+            props: $this->library->forIndex(),
         );
     }
 
@@ -52,8 +49,8 @@ class LibraryController extends Controller
     public function create(): Response
     {
         return Inertia::render(
-            component:'Admin/Library/LibraryCreate',
-            props:$this->library->forCreate(),
+            component: 'Admin/Library/LibraryCreate',
+            props: $this->library->forCreate(),
         );
     }
 
@@ -63,8 +60,9 @@ class LibraryController extends Controller
     public function store(StoreLibraryRequest $request): RedirectResponse
     {
         $this->action->create(
-            request:$request
+            request: $request
         );
+
         return to_route('admin-library.index')->with('success', 'Uploaded Succesfully');
     }
 
@@ -93,8 +91,9 @@ class LibraryController extends Controller
     {
 
         $request->collect('selected')->except([0])
-            ->map(fn($lib) => $this->delete->handle(Library::find($lib['id'])));
+            ->map(fn ($lib) => $this->delete->handle(Library::find($lib['id'])));
         cache()->store('library')->clear();
+
         return back()->with('success', 'Deleted Succesfuly');
     }
 
@@ -105,7 +104,7 @@ class LibraryController extends Controller
     {
         try {
             $this->delete->handle(
-                library:$library
+                library: $library
             );
             $library->delete();
         } catch (Throwable $e) {
@@ -144,7 +143,7 @@ class LibraryController extends Controller
         // Store the file in a temporary location and return the location
         // for FilePond to use.
         return $file->store(
-            path:'tmp/' . now()->timestamp . '-' . Str::random(20)
+            path: 'tmp/'.now()->timestamp.'-'.Str::random(20)
         );
     }
 }

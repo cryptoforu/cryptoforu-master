@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -33,8 +33,8 @@ class EarnController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component:'Admin/Earn/EarnIndex',
-            props:$this->earn->forIndex(),
+            component: 'Admin/Earn/EarnIndex',
+            props: $this->earn->forIndex(),
         );
     }
 
@@ -44,8 +44,8 @@ class EarnController extends Controller
     public function create(): Response
     {
         return Inertia::render(
-            component:'Admin/Earn/EarnCreate',
-            props:$this->earn->forCreate(),
+            component: 'Admin/Earn/EarnCreate',
+            props: $this->earn->forCreate(),
         );
     }
 
@@ -56,11 +56,12 @@ class EarnController extends Controller
     {
         try {
             $this->action->store(
-                request:$request,
+                request: $request,
             );
+
             return new RedirectSuccess(
-                url:'admin-earn.index',
-                message:'Added New Method Succesfully'
+                url: 'admin-earn.index',
+                message: 'Added New Method Succesfully'
             );
         } catch (Throwable $e) {
             report($e);
@@ -83,9 +84,9 @@ class EarnController extends Controller
     public function edit(Earn $earn): Response
     {
         return Inertia::render(
-            component:'Admin/Earn/EarnEdit',
-            props:$this->earn->forEdit(
-                earn:$earn,
+            component: 'Admin/Earn/EarnEdit',
+            props: $this->earn->forEdit(
+                earn: $earn,
             )
         );
     }
@@ -96,12 +97,13 @@ class EarnController extends Controller
     public function update(UpdateEarnRequest $request, Earn $earn): RedirectSuccess
     {
         $this->action->update(
-            request:$request,
-            earn:$earn,
+            request: $request,
+            earn: $earn,
         );
+
         return new RedirectSuccess(
-            url:'admin-earn.index',
-            message:'Updated Succesfully'
+            url: 'admin-earn.index',
+            message: 'Updated Succesfully'
         );
     }
 
@@ -112,11 +114,12 @@ class EarnController extends Controller
     {
         try {
             $this->action->destroy(
-                earn:$earn,
+                earn: $earn,
             );
+
             return new RedirectSuccess(
-                url:'admin-earn.index',
-                message:'Deleted Succesfully',
+                url: 'admin-earn.index',
+                message: 'Deleted Succesfully',
             );
         } catch (Throwable $e) {
             report($e);

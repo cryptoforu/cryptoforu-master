@@ -1,15 +1,15 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EarnController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\Settings\AddSettingsController;
 use App\Http\Controllers\Admin\Settings\UpdateMetaController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\FrontEnd\ContactController;
 use App\Http\Controllers\FrontEnd\CryptoController;
@@ -49,17 +49,17 @@ Route::middleware('optimizeImages')->group(function () {
 Route::get('/placeholder/{width}/{height}', function (int $width = 1200, int $height = 800) {
     return Image::cache(function ($image) use ($width, $height) {
         return $image->canvas(
-            width:$width,
-            height:$height,
-            background:'#475569'
+            width: $width,
+            height: $height,
+            background: '#475569'
         );
-    }, lifetime:1048, returnObj:true)->response();
+    }, lifetime: 1048, returnObj: true)->response();
 });
-Route::middleware('auth:sanctum')->prefix('admin')->group(function (): void{
+Route::middleware('auth:sanctum')->prefix('admin')->group(function (): void {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::put('admin-settings/{page}', UpdateMetaController::class)->name('page.update');
     Route::post('admin-settings/create', AddSettingsController::class)->name('add.settings');
-    Route::controller(SettingsController::class)->group(function (): void{
+    Route::controller(SettingsController::class)->group(function (): void {
         Route::get('admin-settings', 'index')->name('admin-settings.index');
         Route::get('admin-settings/create', 'create')->name('admin-settings.create');
         Route::post('admin-settings/{action}', 'action')->name('admin-settings.action');
@@ -69,9 +69,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (): void{
     });
     Route::post('admin-library/process', [LibraryController::class, 'process'])->name('admin-library.process');
 
-    Route::prefix('admin-blog')->group(function (): void{
+    Route::prefix('admin-blog')->group(function (): void {
         Route::get('/', [PostController::class, 'index'])->name('admin-blog');
-        Route::match (['put', 'patch'], '/{post}', [PostController::class, 'status'])->name('post.status');
+        Route::match(['put', 'patch'], '/{post}', [PostController::class, 'status'])->name('post.status');
         Route::get('/create', [PostController::class, 'create'])->name('admin-blog.create');
         Route::get('/create/category', [CategoryController::class, 'create'])->name('admin-blog.category.create');
         Route::middleware('optimizeImages')->post('/', [PostController::class, 'store'])->name('admin-blog.post.store');

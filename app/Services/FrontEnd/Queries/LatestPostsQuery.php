@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\FrontEnd\Queries;
 
 use App\Enums\ColorScheme;
@@ -12,21 +14,19 @@ class LatestPostsQuery
 {
     /**
      * Latest Blog Posts
-     *
-     * @return Collection
      */
     public function handle(): Collection
     {
         return new Collection(
-            items:Post::ofStatus(
+            items: Post::ofStatus(
                 PostStatus::PUBLISHED()
             )->with('category')->take(3)
                 ->latest()
                 ->get()
-                ->map(fn($post) => PostData::fromData($post)
-                        ->additional([
-                            'color' => ColorScheme::randColor(),
-                        ])
+                ->map(fn ($post) => PostData::fromData($post)
+                    ->additional([
+                        'color' => ColorScheme::randColor(),
+                    ])
                 )
                 ->toArray()
         );

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library;
 
@@ -30,11 +30,11 @@ class LibraryResource implements LibraryResourceInterface
     {
         $data = $this->show->handle();
         $meta = $this->store->load(
-            key:'libraryIndex',
-            callback:[
+            key: 'libraryIndex',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_library'
+                    page_type: 'admin',
+                    page: 'admin_library'
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'select' => $data['select'],
@@ -45,24 +45,23 @@ class LibraryResource implements LibraryResourceInterface
         return [
             ...$meta,
             ...$this->store->withInertia(
-                collection:$data['data'],
+                collection: $data['data'],
             ),
 
         ];
     }
+
     /**
      * For Upload Page
-     *
-     * @return array
      */
     public function forCreate(): array
     {
         return $this->store->load(
-            key:'libraryCreate',
-            callback:[
+            key: 'libraryCreate',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_library_upload',
+                    page_type: 'admin',
+                    page: 'admin_library_upload',
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'categories' => $this->create->handle(),

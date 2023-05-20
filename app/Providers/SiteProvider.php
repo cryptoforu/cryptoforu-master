@@ -18,13 +18,13 @@ use Spatie\Valuestore\Valuestore;
 
 class SiteProvider extends ServiceProvider
 {
-
     public $bindings = [
         StoreDataContract::class => StoreSiteData::class,
         SiteInterface::class => SiteService::class,
         DeleteDataContract::class => DeleteSiteData::class,
         SocialLinksContract::class => GetSocialLinks::class,
     ];
+
     /**
      * Register services.
      */
@@ -37,8 +37,8 @@ class SiteProvider extends ServiceProvider
             CacheStoreContract::class,
         )->give(function () {
             return new CacheStoreService(
-                store:Cache::store('site'),
-                valuestore:Valuestore::make(storage_path('app/site_data.json'))
+                store: Cache::store('site'),
+                valuestore: Valuestore::make(storage_path('app/site_data.json'))
             );
         });
     }

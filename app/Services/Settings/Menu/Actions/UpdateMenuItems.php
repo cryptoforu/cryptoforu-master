@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings\Menu\Actions;
 
@@ -22,23 +22,23 @@ final class UpdateMenuItems implements UpdateMenuItemContract
 
     public function handle(
         UpdateMenuItemRequest $request,
-        string | int $id,
-    ): bool{
+        string|int $id,
+    ): bool {
         $validated = $request->validated();
         $nMenu = MenuItem::find($id);
         if ($request->hasFile('icon')) {
             $icon = $this->library->store(
-                file:$validated['icon'],
-                directory:'menu_icons'
+                file: $validated['icon'],
+                directory: 'menu_icons'
             );
-            if (!empty($nMenu->images)) {
+            if (! empty($nMenu->images)) {
                 foreach ($nMenu->images as $img) {
                     $this->library->delete($img);
                 }
                 $this->library->new(
-                    model:$nMenu,
-                    file:$icon,
-                    category:2,
+                    model: $nMenu,
+                    file: $icon,
+                    category: 2,
                 );
             }
             $nMenu->icon = $icon['file_name'];

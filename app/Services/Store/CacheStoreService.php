@@ -21,26 +21,29 @@ class CacheStoreService extends Valuestore implements CacheStoreContract
 
     public function load(string $key, $callback): mixed
     {
-        $uniqueKey = $this->generateKey(name:$key);
+        $uniqueKey = $this->generateKey(name: $key);
         $data = $this->store->rememberForever(
-            key:$uniqueKey,
-            callback:function () use ($callback) {
+            key: $uniqueKey,
+            callback: function () use ($callback) {
                 return $callback;
             }
         );
+
         return $data;
     }
 
-    public function generateKey(string | array $name): string
+    public function generateKey(string|array $name): string
     {
         $uniqueKey = uniqid();
         $value = '';
-        if ($this->valuestore->has(name:$name)) {
-            $value = $this->valuestore->get(name:$name);
+        if ($this->valuestore->has(name: $name)) {
+            $value = $this->valuestore->get(name: $name);
+
             return $value;
         } else {
-            $this->valuestore->put(name:$name, value:$uniqueKey);
-            $value = $this->valuestore->get(name:$name);
+            $this->valuestore->put(name: $name, value: $uniqueKey);
+            $value = $this->valuestore->get(name: $name);
+
             return $value;
         }
     }
@@ -49,8 +52,8 @@ class CacheStoreService extends Valuestore implements CacheStoreContract
         string $tag = '',
         string $action = 'all',
         string $key = ''
-    ): void{
-        $uniqueKey = $this->generateKey(name:$key);
+    ): void {
+        $uniqueKey = $this->generateKey(name: $key);
         switch ($action) {
             case 'all':
                 $this->store->clear();
@@ -59,26 +62,26 @@ class CacheStoreService extends Valuestore implements CacheStoreContract
                 break;
             case 'key':
                 $this->store->forget(
-                    key:$uniqueKey
+                    key: $uniqueKey
                 );
         }
     }
 
     public function withInertia(Collection $collection): array
     {
-        $first = $collection->take(1)->map(fn($item, $key) => fn() => $this->load(
-            key:$key,
-            callback:$item
+        $first = $collection->take(1)->map(fn ($item, $key) => fn () => $this->load(
+            key: $key,
+            callback: $item
         ))->all();
-        $rest = $collection->skip(1)->map(fn($item, $key) => Inertia::lazy(
-            fn() => $this->load(
-                key:$key,
-                callback:$item,
+        $rest = $collection->skip(1)->map(fn ($item, $key) => Inertia::lazy(
+            fn () => $this->load(
+                key: $key,
+                callback: $item,
             )
         ))->all();
 
         return (new Collection(
-            items:[...$first, ...$rest]
+            items: [...$first, ...$rest]
         ))->toArray();
     }
 }

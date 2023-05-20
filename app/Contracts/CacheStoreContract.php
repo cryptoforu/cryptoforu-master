@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Contracts;
 
@@ -26,7 +26,7 @@ interface CacheStoreContract
      * @return mixed|string
      */
     public function generateKey(
-        string | array $name,
+        string|array $name,
     ): string;
 
     /**

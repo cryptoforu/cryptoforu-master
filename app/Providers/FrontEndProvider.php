@@ -14,8 +14,8 @@ class FrontEndProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            abstract :FrontEndInterface::class,
-            concrete:FrontEndService::class,
+            abstract : FrontEndInterface::class,
+            concrete: FrontEndService::class,
         );
     }
 

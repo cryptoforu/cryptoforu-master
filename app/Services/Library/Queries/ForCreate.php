@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services\Library\Queries;
 
@@ -11,7 +12,7 @@ class ForCreate
     public function handle()
     {
         return LibraryCategoryData::collection(
-            items:LibraryCategory::all()
+            items: LibraryCategory::all()
         )->toArray();
     }
 }

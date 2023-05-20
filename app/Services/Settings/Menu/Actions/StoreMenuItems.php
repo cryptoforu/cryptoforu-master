@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings\Menu\Actions;
 
@@ -31,8 +31,8 @@ class StoreMenuItems implements StoreMenuItemContract
 
         if ($from->hasFile('icon')) {
             $icon = $this->library->store(
-                file:$validated['icon'],
-                directory:'menu_icons'
+                file: $validated['icon'],
+                directory: 'menu_icons'
             );
             $icon_path = $icon['file_name'];
         }
@@ -45,11 +45,12 @@ class StoreMenuItems implements StoreMenuItemContract
             'menu_id' => $validated['menu_id'],
         ]);
         $this->library->save(
-            model:$menu,
-            file:$icon,
-            category:2,
+            model: $menu,
+            file: $icon,
+            category: 2,
         );
         Cache::store('settings')->clear();
+
         return true;
     }
 }

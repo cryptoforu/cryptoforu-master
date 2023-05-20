@@ -18,35 +18,35 @@ class EarnData extends Data
     public function __construct(
         public int $id,
         public string $title,
-        public Optional | Lazy | string $content,
-        public Optional | Lazy | string $image,
-        public Optional | Lazy | string $thumb,
-        public Optional | Lazy | string $link,
-        public Optional | Lazy | FeaturedEnum $featured,
-        public Optional | Lazy | EarnStatus $status,
-        public Optional | Lazy | string $image_name,
-        public Optional | Lazy | int $earn_category_id,
-        public Optional | Lazy | string $main_features,
+        public Optional|Lazy|string $content,
+        public Optional|Lazy|string $image,
+        public Optional|Lazy|string $thumb,
+        public Optional|Lazy|string $link,
+        public Optional|Lazy|FeaturedEnum $featured,
+        public Optional|Lazy|EarnStatus $status,
+        public Optional|Lazy|string $image_name,
+        public Optional|Lazy|int $earn_category_id,
+        public Optional|Lazy|string $main_features,
         #[DataCollectionOf(EarnCategoryData::class)]
-        public Optional | Lazy | EarnCategoryData $earnCategory,
+        public Optional|Lazy|EarnCategoryData $earnCategory,
     ) {
     }
 
     public static function fromModel(Earn $earn): self
     {
         return new self(
-            id:$earn->id,
-            title:$earn->title,
-            content:Lazy::create(fn() => $earn->content),
-            image:Lazy::create(fn() => $earn->image),
-            thumb:Lazy::create(fn() => $earn->thumb),
-            link:Lazy::create(fn() => $earn->link),
-            featured:Lazy::create(fn() => $earn->featured),
-            status:Lazy::create(fn() => $earn->status),
-            image_name:Lazy::create(fn() => $earn->image_name),
-            earn_category_id:Lazy::create(fn() => $earn->earn_category_id),
-            main_features:Lazy::create(fn() => $earn->main_features),
-            earnCategory:Lazy::whenLoaded('earnCategory', $earn, fn() => EarnCategoryData::from($earn->earnCategory)),
+            id: $earn->id,
+            title: $earn->title,
+            content: Lazy::create(fn () => $earn->content),
+            image: Lazy::create(fn () => $earn->image),
+            thumb: Lazy::create(fn () => $earn->thumb),
+            link: Lazy::create(fn () => $earn->link),
+            featured: Lazy::create(fn () => $earn->featured),
+            status: Lazy::create(fn () => $earn->status),
+            image_name: Lazy::create(fn () => $earn->image_name),
+            earn_category_id: Lazy::create(fn () => $earn->earn_category_id),
+            main_features: Lazy::create(fn () => $earn->main_features),
+            earnCategory: Lazy::whenLoaded('earnCategory', $earn, fn () => EarnCategoryData::from($earn->earnCategory)),
         );
     }
 

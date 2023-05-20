@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library\Actions;
 
@@ -15,7 +15,7 @@ class CreateFile
     {
         $store = new StoreFile();
         $files = $request->validated('file');
-        if (!empty($files)) {
+        if (! empty($files)) {
             foreach ($files as $file) {
                 $category = LibraryCategory::find($request->validated('library_category_id'));
                 $fl = $store->handle($file, $category->directory);
@@ -31,9 +31,11 @@ class CreateFile
                 ]);
             }
             cache()->store('library')->clear();
+
             return true;
 
         }
+
         return false;
     }
 

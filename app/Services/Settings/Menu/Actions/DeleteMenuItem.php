@@ -7,21 +7,21 @@ use App\Models\MenuItem;
 
 class DeleteMenuItem
 {
-
     public function __construct(
         private LibraryActionsInterface $action,
     ) {
 
     }
+
     /**
      * Delete Menu Item
      */
-    public function handle(string | int $id): bool
+    public function handle(string|int $id): bool
     {
         $item = MenuItem::find($id);
 
         if ($item->exists) {
-            if (!empty($item->images)) {
+            if (! empty($item->images)) {
                 foreach ($item->images as $img) {
                     $this->action->delete($img);
                 }

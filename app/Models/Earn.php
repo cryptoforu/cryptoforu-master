@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -35,9 +35,9 @@ class Earn extends Model
     protected $casts = [
         'featured' => FeaturedEnum::class,
         'status' => EarnStatus::class,
-        'nullable_enum' => EarnStatus::class . ':nullable',
-        'array_of_enums' => EarnStatus::class . ':collection',
-        'nullable_array_of_enums' => EarnStatus::class . ':collection,nullable',
+        'nullable_enum' => EarnStatus::class.':nullable',
+        'array_of_enums' => EarnStatus::class.':collection',
+        'nullable_array_of_enums' => EarnStatus::class.':collection,nullable',
     ];
 
     protected $dataClass = EarnData::class;
@@ -61,6 +61,7 @@ class Earn extends Model
     {
         return $query->where('featured', $featured);
     }
+
     public function scopeOfStatus(Builder $query, EarnStatus $status)
     {
         return $query->where('status', $status);

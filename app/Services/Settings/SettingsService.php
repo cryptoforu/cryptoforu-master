@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings;
 
@@ -25,11 +25,11 @@ class SettingsService implements SettingsInterface
     public function forIndex(): array
     {
         $meta = $this->store->load(
-            key:'settingsIndex',
-            callback:[
+            key: 'settingsIndex',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_settings'
+                    page_type: 'admin',
+                    page: 'admin_settings'
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'menus' => $this->menu->show(),
@@ -40,7 +40,7 @@ class SettingsService implements SettingsInterface
         return [
             ...$meta,
             ...$this->store->withInertia(
-                collection:$this->page->show()['data']
+                collection: $this->page->show()['data']
             ),
         ];
     }
@@ -48,14 +48,14 @@ class SettingsService implements SettingsInterface
     public function forCreate(): array
     {
         return $this->store->load(
-            key:'settingsCreate',
-            callback:[
+            key: 'settingsCreate',
+            callback: [
                 'navigation' => $this->page->getAdminNavigation(),
                 'form' => $this->pageForm->handle(),
                 'menu_form' => $this->menuForm->handle(),
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_add_settings'
+                    page_type: 'admin',
+                    page: 'admin_add_settings'
                 ),
             ]
         );

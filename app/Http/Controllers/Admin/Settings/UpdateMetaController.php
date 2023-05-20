@@ -10,12 +10,12 @@ use Illuminate\Support\Arr;
 
 class UpdateMetaController extends Controller
 {
-
     public function __construct(
         protected LibraryActionsInterface $library,
     ) {
 
     }
+
     /**
      * Handle the incoming request.
      */
@@ -26,19 +26,19 @@ class UpdateMetaController extends Controller
         $images = $request->allFiles();
         Arr::map($images, function ($img, $key) use ($page) {
             $paths = $this->library->store(
-                file:$img,
-                directory:'meta'
+                file: $img,
+                directory: 'meta'
             );
-            $page->$key = strval(config('app.url') . '/' . $paths['path']);
+            $page->$key = strval(config('app.url').'/'.$paths['path']);
 
-            if (!empty($page->images)) {
+            if (! empty($page->images)) {
                 foreach ($page->images as $file) {
                     $this->library->delete($file);
                 }
                 $this->library->new(
-                    model:$page,
-                    file:$paths,
-                    category:8,
+                    model: $page,
+                    file: $paths,
+                    category: 8,
                 );
             }
         });
@@ -50,6 +50,7 @@ class UpdateMetaController extends Controller
         $page->page_name = $validated['page_name'];
         cache()->store('library')->clear();
         $page->save();
+
         return back()->with('success', 'Updated Meta Succsfully');
     }
 }

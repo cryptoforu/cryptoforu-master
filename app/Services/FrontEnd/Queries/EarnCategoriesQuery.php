@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\FrontEnd\Queries;
 
 use App\Enums\ColorScheme;
@@ -16,6 +18,7 @@ class EarnCategoriesQuery
                 $item->load(['earn' => function ($query) {
                     $query->ofStatus(EarnStatus::FEATURED());
                 }]);
+
                 return EarnCategoryData::from($item)
                     ->additional(['color' => ColorScheme::randColor()])
                     ->include('earn.{id,title,image_name,link,main_features}');

@@ -21,7 +21,7 @@ class GetMenu
         $items = MenuItem::whereBelongsTo($menu)->where('parent_id', '0')->with('childs')->get();
 
         return MenuItemsData::collection(
-            items:$items->map(fn ($item) => MenuItemsData::from($item))
+            items: $items->map(fn ($item) => MenuItemsData::from($item))
         )->toArray();
     }
 }

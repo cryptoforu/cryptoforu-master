@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -50,8 +50,8 @@ class SettingsController extends Controller
     public function index()
     {
         return Inertia::render(
-            component:'Admin/Settings/SettingsIndex',
-            props:$this->settings->forIndex()
+            component: 'Admin/Settings/SettingsIndex',
+            props: $this->settings->forIndex()
         );
     }
 
@@ -61,8 +61,8 @@ class SettingsController extends Controller
     public function create()
     {
         return Inertia::render(
-            component:'Admin/Settings/Create',
-            props:$this->settings->forCreate()
+            component: 'Admin/Settings/Create',
+            props: $this->settings->forCreate()
         );
     }
 
@@ -71,8 +71,8 @@ class SettingsController extends Controller
         ActionEnum $action,
     ) {
         $this->action->store(
-            from:$from,
-            action:$action
+            from: $from,
+            action: $action
         );
 
         return to_route('admin-settings.index')->with('success', 'Stored Settings Successfully');
@@ -84,7 +84,7 @@ class SettingsController extends Controller
     public function store(StoreMenuItemRequest $request)
     {
         $this->menuStore->handle(
-            from:$request,
+            from: $request,
         );
 
         return back()->with('success', 'Stored Settings Successfully');
@@ -109,19 +109,19 @@ class SettingsController extends Controller
      */
     public function updateMenu(
         UpdateMenuItemRequest $request,
-        string | int $id,
-    ): RedirectResponse | bool {
+        string|int $id,
+    ): RedirectResponse|bool {
         try {
             $update = $this->updateMenu->handle(
-                request:$request,
-                id:$id
+                request: $request,
+                id: $id
             );
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage());
 
             return false;
         }
-        if (!$update) {
+        if (! $update) {
             return back()->with('error', 'Something Went Wrong');
         }
 
@@ -143,15 +143,15 @@ class SettingsController extends Controller
     {
         try {
             $del = $this->action->destroy(
-                request:$request,
-                id:$id,
+                request: $request,
+                id: $id,
             );
         } catch (Throwable $e) {
             throw new Exception($e->getMessage());
 
             return false;
         }
-        if (!$del) {
+        if (! $del) {
             return back()->with('error', 'Something Went Wrong');
         }
 

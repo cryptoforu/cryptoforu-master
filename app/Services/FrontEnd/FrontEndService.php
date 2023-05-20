@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Services\FrontEnd;
 
 use App\Contracts\CacheStoreContract;
@@ -19,11 +21,11 @@ class FrontEndService implements FrontEndInterface
     public function home(): array
     {
         return $this->store->load(
-            key:'homePage',
-            callback:[
+            key: 'homePage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'home'
+                    page_type: 'front',
+                    page: 'home'
                 ),
                 ...$this->homeData->handle(),
             ]
@@ -33,24 +35,24 @@ class FrontEndService implements FrontEndInterface
     public function earn(): array
     {
         return $this->store->load(
-            key:'earnPage',
-            callback:[
+            key: 'earnPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'earn_crypto'
+                    page_type: 'front',
+                    page: 'earn_crypto'
                 ),
             ]
         );
     }
 
-    function list(): array
+    public function list(): array
     {
         return $this->store->load(
-            key:'listPage',
-            callback:[
+            key: 'listPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'faucets-lists'
+                    page_type: 'front',
+                    page: 'faucets-lists'
                 ),
             ]
         );
@@ -59,11 +61,11 @@ class FrontEndService implements FrontEndInterface
     public function learn(): array
     {
         return $this->store->load(
-            key:'learnPage',
-            callback:[
+            key: 'learnPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'learn_crypto'
+                    page_type: 'front',
+                    page: 'learn_crypto'
                 ),
             ]
         );
@@ -72,11 +74,11 @@ class FrontEndService implements FrontEndInterface
     public function crypto(): array
     {
         return $this->store->load(
-            key:'cryptoPage',
-            callback:[
+            key: 'cryptoPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'crypto'
+                    page_type: 'front',
+                    page: 'crypto'
                 ),
             ]
         );
@@ -85,11 +87,11 @@ class FrontEndService implements FrontEndInterface
     public function news(): array
     {
         return $this->store->load(
-            key:'newsPage',
-            callback:[
+            key: 'newsPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'crypto_news'
+                    page_type: 'front',
+                    page: 'crypto_news'
                 ),
             ]
         );
@@ -98,11 +100,11 @@ class FrontEndService implements FrontEndInterface
     public function markets(): array
     {
         return $this->store->load(
-            key:'marketsPage',
-            callback:[
+            key: 'marketsPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'crypto_exchanges'
+                    page_type: 'front',
+                    page: 'crypto_exchanges'
                 ),
             ]
         );
@@ -111,11 +113,11 @@ class FrontEndService implements FrontEndInterface
     public function contact(): array
     {
         return $this->store->load(
-            key:'contactPage',
-            callback:[
+            key: 'contactPage',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'front',
-                    page:'contact'
+                    page_type: 'front',
+                    page: 'contact'
                 ),
             ]
         );

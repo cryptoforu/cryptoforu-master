@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Interfaces\Library;
 
@@ -14,7 +14,7 @@ interface LibraryActionsInterface
     /**
      * Store File
      */
-    public function store($file, string $directory): Image | array;
+    public function store($file, string $directory): Image|array;
 
     /**
      * Destroy File
@@ -24,7 +24,7 @@ interface LibraryActionsInterface
     /**
      * Create New Model
      */
-    public function new (Model $model, array $file, int $category): bool;
+    public function new(Model $model, array $file, int $category): bool;
 
     /**
      * Save Image From Model
@@ -32,10 +32,10 @@ interface LibraryActionsInterface
      * @return void
      */
     public function save(Model $model, array $file, int $category);
+
     /**
      * Upload File
      *
-     * @param StoreLibraryRequest $request
      * @return void
      */
     public function create(StoreLibraryRequest $request);

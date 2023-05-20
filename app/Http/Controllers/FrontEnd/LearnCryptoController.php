@@ -9,11 +9,9 @@ use Inertia\Response;
 
 class LearnCryptoController extends Controller
 {
-/**
- * Learn Crypto Instance
- *
- * @param FrontEndInterface $front
- */
+    /**
+     * Learn Crypto Instance
+     */
     public function __construct(
         protected FrontEndInterface $front,
     ) {
@@ -23,8 +21,8 @@ class LearnCryptoController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component:'FrontEnd/Learn/LearnIndex',
-            props:$this->front->learn(),
+            component: 'FrontEnd/Learn/LearnIndex',
+            props: $this->front->learn(),
         );
     }
 }

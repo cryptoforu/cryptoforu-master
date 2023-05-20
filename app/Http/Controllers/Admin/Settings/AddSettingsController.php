@@ -13,6 +13,7 @@ class AddSettingsController extends Controller
     ) {
 
     }
+
     /**
      * Handle the incoming request.
      */
@@ -21,8 +22,8 @@ class AddSettingsController extends Controller
 
         if ($request->hasFile('image')) {
             $img = $this->action->store(
-                file:$request->file('image'),
-                directory:'misc'
+                file: $request->file('image'),
+                directory: 'misc'
             );
         }
         $data = $request->collect()->except(['image'])->all();
@@ -48,6 +49,7 @@ class AddSettingsController extends Controller
                 ]
             );
         }
+
         return back()->with('success', 'Stored values successfuly');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Settings\Page\Actions;
 
@@ -18,7 +18,7 @@ class ShowPageMeta
     /**
      * Handle Edit Page Meta Form
      */
-    public function handle(): Collection | array
+    public function handle(): Collection|array
     {
         $options = [
             'parent_id' => Page::parent()->get(['id', 'label'])->transform(function ($item, $key) {
@@ -29,26 +29,26 @@ class ShowPageMeta
             })->toArray(),
         ];
         $values = (new Collection(
-            items:Page::all()
-        ))->map(fn($item) => [
+            items: Page::all()
+        ))->map(fn ($item) => [
             'initialValues' => PageData::editSchema($item, 'initialValues'),
             'form_schema' => $this->generate(
-                items:(new Collection(items:PageData::editSchema($item, 'n'))),
-                options:$options
+                items: (new Collection(items: PageData::editSchema($item, 'n'))),
+                options: $options
             ),
             'form_route' => route('page.update', ['page' => $item->id], false),
-        ])->keyBy(fn(array $item, int $key) => Str::slug($item['initialValues']['page_name']));
+        ])->keyBy(fn (array $item, int $key) => Str::slug($item['initialValues']['page_name']));
 
         return collect([
             'data' => $values,
             'select' => [
                 'admin' => $this->selectable(
-                    collection:Page::ofType('admin')->get(['id', 'label', 'page_name'])->keyBy(fn($item, int $key) => $item['page_name']),
-                    keyFrom:'page_name',
+                    collection: Page::ofType('admin')->get(['id', 'label', 'page_name'])->keyBy(fn ($item, int $key) => $item['page_name']),
+                    keyFrom: 'page_name',
                 ),
                 'front' => $this->selectable(
-                    collection:Page::ofType('front')->get(['id', 'label', 'page_name'])->keyBy(fn($item, int $key) => $item['page_name']),
-                    keyFrom:'page_name',
+                    collection: Page::ofType('front')->get(['id', 'label', 'page_name'])->keyBy(fn ($item, int $key) => $item['page_name']),
+                    keyFrom: 'page_name',
                 ),
             ],
         ]);

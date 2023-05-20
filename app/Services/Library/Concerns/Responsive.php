@@ -8,6 +8,7 @@ use App\Services\Library\ImageFilters\SmFilter;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+
 trait Responsive
 {
     use Directories;
@@ -18,9 +19,9 @@ trait Responsive
         $md = new MdFilter();
         $sm = new SmFilter();
         $paths = [
-            'lg' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Lg.' . $file->getClientOriginalExtension(),
-            'md' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Md.' . $file->getClientOriginalExtension(),
-            'sm' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Sm.' . $file->getClientOriginalExtension(),
+            'lg' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Lg.'.$file->getClientOriginalExtension(),
+            'md' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Md.'.$file->getClientOriginalExtension(),
+            'sm' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Sm.'.$file->getClientOriginalExtension(),
         ];
 
         $image = Image::make($file);
@@ -35,6 +36,7 @@ trait Responsive
             'md_path' => $paths['md'],
             'sm_path' => $paths['sm'],
         ];
+
         return $paths;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Blog;
 
@@ -44,11 +44,11 @@ class BlogService implements BlogInterface
     public function forIndex()
     {
         return $this->store->load(
-            key:'blogIndex',
-            callback:[
+            key: 'blogIndex',
+            callback: [
                 'meta' => $this->page->getPageMeta(
-                    page_type:'admin',
-                    page:'admin_blog'
+                    page_type: 'admin',
+                    page: 'admin_blog'
                 ),
                 'navigation' => $this->page->getAdminNavigation(),
                 'post_table' => $this->show->handle(),
@@ -65,8 +65,8 @@ class BlogService implements BlogInterface
     {
         return [
             'meta' => $this->page->getPageMeta(
-                page_type:'admin',
-                page:'admin_add_post'
+                page_type: 'admin',
+                page: 'admin_add_post'
             ),
             'navigation' => $this->page->getAdminNavigation(),
             'post_form' => $this->create->handle(),
@@ -89,7 +89,7 @@ class BlogService implements BlogInterface
                 ],
             ]),
             'edit_form' => $this->edit->handle(
-                post:$post
+                post: $post
             ),
         ];
     }
@@ -101,19 +101,19 @@ class BlogService implements BlogInterface
     {
         return [
             'meta' => $this->page->getPageMeta(
-                page_type:'admin',
-                page:'admin_blog_categories'
+                page_type: 'admin',
+                page: 'admin_blog_categories'
             ),
             'navigation' => $this->page->getAdminNavigation(),
             ...$this->showCategories->handle(),
             'category_form' => $this->categoryForm->handle(),
             'category_table' => CategoryData::collection(
-                items:Category::all()->map(fn($category) => CategoryData::from($category)
-                        ->additional([
-                            'endpoints' => [
-                                'delete' => route('admin-categories.destroy', ['category' => $category]),
-                            ],
-                        ]))
+                items: Category::all()->map(fn ($category) => CategoryData::from($category)
+                    ->additional([
+                        'endpoints' => [
+                            'delete' => route('admin-categories.destroy', ['category' => $category]),
+                        ],
+                    ]))
             )->include('category_image'),
         ];
     }

@@ -14,7 +14,6 @@ use Throwable;
 
 class SiteController extends Controller
 {
-
     public function __construct(
         protected StoreDataContract $store,
         protected SiteInterface $site,
@@ -29,8 +28,8 @@ class SiteController extends Controller
     public function index()
     {
         return Inertia::render(
-            component:'Admin/Site/SiteIndex',
-            props:$this->site->forIndex(),
+            component: 'Admin/Site/SiteIndex',
+            props: $this->site->forIndex(),
         );
     }
 
@@ -40,8 +39,8 @@ class SiteController extends Controller
     public function create()
     {
         return Inertia::render(
-            component:'Admin/Site/SiteCreate',
-            props:$this->site->forCreate(),
+            component: 'Admin/Site/SiteCreate',
+            props: $this->site->forCreate(),
         );
     }
 
@@ -52,14 +51,16 @@ class SiteController extends Controller
     {
         try {
             $this->store->handle(
-                request:$request,
+                request: $request,
             );
+
             return new RedirectSuccess(
-                url:'site.index',
-                message:'Stored Data Successfully'
+                url: 'site.index',
+                message: 'Stored Data Successfully'
             );
         } catch (Throwable $e) {
             report($e);
+
             return false;
         }
 
@@ -100,11 +101,12 @@ class SiteController extends Controller
     public function delete(Request $request)
     {
         $this->delete->handle(
-            request:$request,
+            request: $request,
         );
+
         return new RedirectSuccess(
-            url:'site.index',
-            message:'Deleted Data Successfully'
+            url: 'site.index',
+            message: 'Deleted Data Successfully'
         );
     }
 }

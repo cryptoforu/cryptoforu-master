@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
@@ -9,16 +10,17 @@ class ErrorResponse implements Responsable
 {
     public function __construct(
         private string $message,
-        private  ? Throwable $exception = null,
+        private ?Throwable $exception = null,
         private int $code = Response::HTTP_INTERNAL_SERVER_ERROR,
         private array $headers = []
-    ) {}
+    ) {
+    }
 
     public function toResponse($request)
     {
         $response = ['message' => $this->message];
 
-        if (!is_null($this->exception) && config('app.debug')) {
+        if (! is_null($this->exception) && config('app.debug')) {
             $response['debug'] = [
                 'message' => $this->exception->getMessage(),
                 'file' => $this->exception->getFile(),

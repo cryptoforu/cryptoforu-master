@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library;
 
@@ -28,11 +28,11 @@ class LibraryService implements LibraryActionsInterface
     /**
      * Store File
      */
-    public function store($file, string $directory): Image | array
+    public function store($file, string $directory): Image|array
     {
         return $this->store->handle(
-            file:$file,
-            directory:$directory
+            file: $file,
+            directory: $directory
         );
     }
 
@@ -42,7 +42,7 @@ class LibraryService implements LibraryActionsInterface
     public function delete(Library $library): bool
     {
         if ($this->delete->handle(
-            library:$library
+            library: $library
         )) {
             return true;
             Cache::store('library')->clear();
@@ -51,11 +51,12 @@ class LibraryService implements LibraryActionsInterface
         return false;
     }
 
-    function new (Model $model, array $file, int $category): bool {
+    public function new(Model $model, array $file, int $category): bool
+    {
         return $this->new->handle(
-            model:$model,
-            file:$file,
-            category:$category
+            model: $model,
+            file: $file,
+            category: $category
         );
     }
 
@@ -67,16 +68,16 @@ class LibraryService implements LibraryActionsInterface
     public function save(Model $model, array $file, int $category = 2)
     {
         $this->create->save(
-            model:$model,
-            file:$file,
-            category:$category,
+            model: $model,
+            file: $file,
+            category: $category,
         );
     }
 
     public function create(StoreLibraryRequest $request)
     {
         $this->create->handle(
-            request:$request
+            request: $request
         );
     }
 }

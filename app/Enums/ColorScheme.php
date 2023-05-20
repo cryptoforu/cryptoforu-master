@@ -1,5 +1,7 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
+
 namespace App\Enums;
 
 use Closure;
@@ -14,7 +16,6 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static self BLUE()
  * @method static self RED()
  */
-
 final class ColorScheme extends Enum
 {
     public function color(): string
@@ -27,15 +28,18 @@ final class ColorScheme extends Enum
             ColorScheme::CYAN() => 'cyan',
         };
     }
+
     protected static function values(): Closure
     {
-        return function (string $name): string | int {
+        return function (string $name): string|int {
             return mb_strtolower($name);
         };
     }
+
     public static function randColor()
     {
         $colors = collect(ColorScheme::toValues());
+
         return self::tryFrom($colors->random());
     }
 }

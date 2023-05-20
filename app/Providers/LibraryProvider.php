@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -20,16 +20,16 @@ class LibraryProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            abstract :LibraryActionsInterface::class,
-            concrete:LibraryService::class
+            abstract : LibraryActionsInterface::class,
+            concrete: LibraryService::class
         );
         $this->app->bind(
-            abstract :LibraryResourceInterface::class,
-            concrete:LibraryResource::class,
+            abstract : LibraryResourceInterface::class,
+            concrete: LibraryResource::class,
         );
         $this->app->bind(
-            abstract :LibraryDeleteContract::class,
-            concrete:DeleteFile::class,
+            abstract : LibraryDeleteContract::class,
+            concrete: DeleteFile::class,
         );
     }
 

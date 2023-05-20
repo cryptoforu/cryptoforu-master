@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Library\Actions;
 
@@ -30,7 +30,7 @@ class DeleteFile implements LibraryDeleteContract
             ]);
             try {
                 $this->destroy(
-                    file:$file,
+                    file: $file,
                 );
                 session()->now('success', 'Destroyed File From Storage');
             } catch (Throwable $e) {
@@ -39,6 +39,7 @@ class DeleteFile implements LibraryDeleteContract
             }
             $library->delete();
             cache()->store('library')->clear();
+
             return true;
         }
 

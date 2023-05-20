@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Exceptions;
 
@@ -38,11 +38,12 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-/**
- * A list of error messages
- *
- * @var array<int, string>
- */
+
+    /**
+     * A list of error messages
+     *
+     * @var array<int, string>
+     */
     protected $messages = [
         500 => 'Something went wrong',
         503 => 'Service unavailable',
@@ -67,11 +68,11 @@ class Handler extends ExceptionHandler
             return $response;
         }
 
-        if (!array_key_exists($status, $this->messages)) {
+        if (! array_key_exists($status, $this->messages)) {
             return $response;
         }
 
-        if (!$request->isMethod('GET')) {
+        if (! $request->isMethod('GET')) {
             return back()
                 ->setStatusCode($status)
                 ->with('error', $this->messages[$status]);
@@ -84,6 +85,7 @@ class Handler extends ExceptionHandler
             ->toResponse($request)
             ->setStatusCode($status);
     }
+
     /**
      * Register the exception handling callbacks for the application.
      */

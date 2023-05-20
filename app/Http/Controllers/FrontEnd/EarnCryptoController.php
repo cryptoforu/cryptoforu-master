@@ -11,8 +11,6 @@ class EarnCryptoController extends Controller
 {
     /**
      * Earn Crypto Instance
-     *
-     * @param FrontEndInterface $front
      */
     public function __construct(
         protected FrontEndInterface $front,
@@ -23,15 +21,16 @@ class EarnCryptoController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component:'FrontEnd/Earn/EarnIndex',
-            props:$this->front->earn(),
+            component: 'FrontEnd/Earn/EarnIndex',
+            props: $this->front->earn(),
         );
     }
 
-    function list(): Response {
+    public function list(): Response
+    {
         return Inertia::render(
-            component:'FrontEnd/Earn/List',
-            props:$this->front->list(),
+            component: 'FrontEnd/Earn/List',
+            props: $this->front->list(),
         );
     }
 }

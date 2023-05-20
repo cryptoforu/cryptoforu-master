@@ -18,7 +18,9 @@ class Site extends Model
         'data_name',
         'data_values',
     ];
+
     protected $dataClass = PageData::class;
+
     /**
      * The attributes that should be cast.
      *
@@ -37,5 +39,4 @@ class Site extends Model
     {
         return $query->where('data_name', $data_name)->first();
     }
-
 }
