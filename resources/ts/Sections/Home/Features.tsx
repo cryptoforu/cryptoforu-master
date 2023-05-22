@@ -1,4 +1,4 @@
-import { Container, SimpleGrid } from '@chakra-ui/react';
+import { Container, SimpleGrid, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import { AnimatePresence } from 'framer-motion';
 import { SectionProvider } from '@/Providers';
 import { SectionWrapper } from '@/Components/Wrappers';
@@ -31,22 +31,24 @@ const Features = () => {
             <AnimatePresence>
               {features.map((feature) => (
                 <GlowCard key={feature.name}>
-                  <LazyImage
-                    boxProps={{
-                      width: '64px',
-                      height: '64px',
-                    }}
-                    imgProps={{
-                      img_name: feature.image,
-                      htmlHeight: '64px',
-                      htmlWidth: '64px',
-                      alt: `${feature.name}`,
-                    }}
-                  />
-                  <NavLink to={feature.link} mt="4">
-                    <SpanText size="lg">{feature.name}</SpanText>
-                  </NavLink>
-                  <Prose noOfLines={4}>{feature.description}</Prose>
+                  <LinkBox>
+                    <LazyImage
+                      boxProps={{
+                        width: '64px',
+                        height: '64px',
+                      }}
+                      imgProps={{
+                        img_name: feature.image,
+                        htmlHeight: '64px',
+                        htmlWidth: '64px',
+                        alt: `${feature.name}`,
+                      }}
+                    />
+                    <LinkOverlay as={NavLink} to={feature.link} mt="4">
+                      <SpanText size="lg">{feature.name}</SpanText>
+                    </LinkOverlay>
+                    <Prose noOfLines={4}>{feature.description}</Prose>
+                  </LinkBox>
                 </GlowCard>
               ))}
             </AnimatePresence>

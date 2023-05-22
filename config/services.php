@@ -32,5 +32,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'coingecko' => [
+        'base_url' => env('COINGECKO_BASE_URL', 'https://api.coingecko.com/api/v3/'),
+        'timeout' => env('COINGECKO_TIMEOUT', 10),
+        'connect_timeout' => env('COINGECKO_CONNECTION_TIMEOUT', 2),
+    ],
 
 ];

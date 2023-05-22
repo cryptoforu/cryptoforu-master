@@ -16,7 +16,7 @@ const Home = () => {
         isLazy={true}
         label="Crypto Academy"
       >
-        <SectionWrapper py="16">
+        <SectionWrapper py="32">
           <CryptoAcademy />
         </SectionWrapper>
       </SectionProvider>

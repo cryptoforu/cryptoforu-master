@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(
             provider: SiteProvider::class,
         );
+
+        $this->app->register(
+            provider: CryptoProvider::class,
+        );
     }
 
     /**
@@ -41,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //
     }
 }

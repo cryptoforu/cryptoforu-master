@@ -79,34 +79,83 @@ const Hero = () => {
             <Box position="relative">
               <Box
                 position="absolute"
-                top="-40"
+                top="-64"
                 right="-64"
-                width={1200}
-                height={2300}
+                width={530}
+                height={530}
+                opacity={0.5}
               >
                 <ResponsiveImage
-                  img_name="6456cef565b01.png"
+                  img_name="6456cef48ea15.webp"
                   loading="eager"
                   query={{
-                    sm: 600,
-                    md: 1200,
-                    lg: 2300,
+                    sm: 300,
+                    md: 600,
+                    lg: 1132,
                   }}
-                  filter="auto"
-                  blur="8px"
-                  opacity={0.5}
-                  brightness="40%"
                   alt=""
                 />
               </Box>
+              <Box
+                position="absolute"
+                bottom="-40"
+                right="-44"
+                width={530}
+                height={530}
+                opacity={0.5}
+              >
+                <ResponsiveImage
+                  img_name="6456ab874ce73.png"
+                  loading="eager"
+                  query={{
+                    sm: 300,
+                    md: 600,
+                    lg: 1132,
+                  }}
+                  alt=""
+                />
+              </Box>
+              <Box
+                position="absolute"
+                inset="0"
+                rounded="2xl"
+                bgGradient="linear(to-tr, #7dd3fc, rgba(125, 211, 252, 0.7), blue.300)"
+                opacity="0.1"
+                filter="auto"
+                blur="16px"
+              />
+              <Box
+                position="absolute"
+                inset="0"
+                rounded="2xl"
+                bgGradient="linear(to-tr, #7dd3fc, rgba(125, 211, 252, 0.7), blue.300)"
+                opacity="0.1"
+              />
               <Box
                 position="relative"
                 mx="auto"
                 h="full"
                 w="full"
                 maxWidth="md"
+                backdropFilter="auto"
                 backdropBlur="8px"
               >
+                <Box
+                  position="absolute"
+                  top="-1"
+                  left="20"
+                  right="11"
+                  height="1px"
+                  bgGradient="linear(to-r, rgba(110, 231, 183, 0), rgba(110, 231, 183, 0.7), rgba(110, 231, 183, 0))"
+                />
+                <Box
+                  position="absolute"
+                  bottom="-1"
+                  left="11"
+                  right="20"
+                  height="1px"
+                  bgGradient="linear(to-r, rgba(110, 231, 183, 0), rgba(110, 231, 183, 0.7), rgba(110, 231, 183, 0))"
+                />
                 <Box pl="4" pt="4">
                   <Logo
                     variant="baseLogo"

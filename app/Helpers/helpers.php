@@ -12,3 +12,42 @@ if (! function_exists('settings')) {
         return app(App\Services\Settings\SettingsResources::class)->get($key, $default);
     }
 }
+
+if (! function_exists('format_currency')) {
+    /**
+     * Format Currency
+     *
+     * @return void
+     */
+    function format_currency(
+        float $amount,
+        string $intl = 'en_US',
+        string $currency = 'USD',
+    ) {
+        return (new NumberFormatter(
+            $intl, NumberFormatter::CURRENCY)
+            )->formatCurrency(
+                $amount, $currency
+            );
+    }
+}
+
+if (! function_exists('format_percentage')) {
+    /**
+     * Format Percentage
+     *
+     * @return void
+     */
+    function format_percentage(
+        float $number,
+        int $divide = null,
+        string $intl = 'en_US',
+    ) {
+        $fmt = new NumberFormatter($intl, NumberFormatter::PERCENT);
+        $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, 2);
+        $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
+
+        return $fmt->format($number / $divide ?? 1);
+
+    }
+}
