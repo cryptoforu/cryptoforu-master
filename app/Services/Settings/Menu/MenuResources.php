@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Settings\Menu;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Settings\MenuInterface;
 use App\Services\Settings\Menu\Actions\GetMenu;
 use App\Services\Settings\Menu\Actions\ShowMenus;
@@ -14,7 +13,6 @@ final class MenuResources implements MenuInterface
     public function __construct(
         private readonly GetMenu $getMenu,
         private readonly ShowMenus $menus,
-        private readonly CacheStoreContract $store,
     ) {
     }
 
@@ -22,9 +20,9 @@ final class MenuResources implements MenuInterface
     {
         $menu = $this->getMenu->handle($position);
 
-        return $this->store->load(
+        return lazy_load()->load(
             key: $position,
-            callback: $menu,
+            callback: fn () => $menu,
         );
     }
 

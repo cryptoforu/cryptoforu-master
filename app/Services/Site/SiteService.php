@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Site;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Settings\PageInterface;
 use App\Interfaces\Site\SiteInterface;
-use App\Models\Site;
 use App\Services\Site\Queries\ShowData;
 
 final class SiteService implements SiteInterface
@@ -15,7 +13,6 @@ final class SiteService implements SiteInterface
     public function __construct(
         private PageInterface $page,
         private ShowData $show,
-        private CacheStoreContract $store,
     ) {
     }
 
@@ -25,21 +22,17 @@ final class SiteService implements SiteInterface
     public function forIndex(): array
     {
         $data = $this->show->handle();
-        $meta = $this->store->load(
-            key: 'siteIndex',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'site_data'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
-                'select' => $data['select'],
-            ]
+        $meta = lazy_load()->load(
+            key: 'admin_site_data',
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
+                'select' => $this->show->handle()['select'],
+            ])
         );
 
         return [
             ...$meta,
-            ...$this->store->withInertia(
+            ...lazy_load()->withInertia(
                 collection: $data['data'],
             ),
 
@@ -51,15 +44,11 @@ final class SiteService implements SiteInterface
      */
     public function forCreate(): array
     {
-        return $this->store->load(
-            key: 'siteCreate',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'site_create'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
-            ]
+        return lazy_load()->load(
+            key: 'admin_site_create',
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
+            ])
         );
     }
 }

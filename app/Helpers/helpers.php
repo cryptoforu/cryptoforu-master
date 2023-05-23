@@ -13,6 +13,17 @@ if ( ! function_exists('settings')) {
     }
 }
 
+if ( ! function_exists('lazy_load')) {
+    function lazy_load(?string $key = null, $default = null)
+    {
+        if (null === $key) {
+            return app(App\Services\Store\CacheStoreService::class);
+        }
+
+        return app(App\Services\Store\CacheStoreService::class)->get($key, $default);
+    }
+}
+
 if ( ! function_exists('format_currency')) {
     /**
      * Format Currency

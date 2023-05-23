@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Settings;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Settings\MenuInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Interfaces\Settings\SettingsInterface;
@@ -18,28 +17,23 @@ final class SettingsService implements SettingsInterface
         private readonly PageInterface $page,
         private readonly GetPageForm $pageForm,
         private readonly GetMenuForm $menuForm,
-        private readonly CacheStoreContract $store,
     ) {
     }
 
     public function forIndex(): array
     {
-        $meta = $this->store->load(
-            key: 'settingsIndex',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_settings'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
+        $meta = lazy_load()->load(
+            key: 'admin_settings_data',
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
                 'menus' => $this->menu->show(),
                 'select' => $this->page->show()['select'],
-            ]
+            ])
         );
 
         return [
             ...$meta,
-            ...$this->store->withInertia(
+            ...lazy_load()->withInertia(
                 collection: $this->page->show()['data']
             ),
         ];
@@ -47,17 +41,13 @@ final class SettingsService implements SettingsInterface
 
     public function forCreate(): array
     {
-        return $this->store->load(
+        return lazy_load()->load(
             key: 'settingsCreate',
-            callback: [
-                'navigation' => $this->page->getAdminNavigation(),
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
                 'form' => $this->pageForm->handle(),
                 'menu_form' => $this->menuForm->handle(),
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_add_settings'
-                ),
-            ]
+            ])
         );
     }
 }

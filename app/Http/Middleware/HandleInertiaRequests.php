@@ -7,7 +7,6 @@ namespace App\Http\Middleware;
 use App\Contracts\SharedPropsContract;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
 
 final class HandleInertiaRequests extends Middleware
 {
@@ -43,8 +42,6 @@ final class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $ziggy = new Ziggy($group = null, $request->url());
-        $ziggy = $ziggy->toArray();
 
         return array_merge(parent::share($request), [
             'auth' => [
@@ -54,7 +51,6 @@ final class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'warning' => fn () => $request->session()->get('warning'),
             ],
-            'ziggy' => $ziggy,
             'cookies' => $request->header('cookie', '') ?? '',
             ...$this->props->handle(),
         ]);

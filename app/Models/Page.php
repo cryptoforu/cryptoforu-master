@@ -68,7 +68,8 @@ final class Page extends Model
     {
         return $query->with('parents')
             ->where('page_type', $page_type)
-            ->where('page_name', $page);
+            ->where('page_name', $page)
+        ;
     }
 
     /**
@@ -82,8 +83,16 @@ final class Page extends Model
     /**
      * Scope query for current route
      */
-    public function scopeRoute(Builder $query, string $route): Builder
+    public function scopeRoute(Builder $query, string $route, ?string $fallback = null): Builder
     {
-        return $query->where('route', $route);
+        return $query->when(
+            $route,
+            function (Builder $builder) use ($route): void {
+                $builder->where('route', $route);
+            },
+            function (Builder $builder) use ($fallback): void {
+                $builder->where('route', $fallback);
+            }
+        );
     }
 }

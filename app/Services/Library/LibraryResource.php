@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Library;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Library\LibraryResourceInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Services\Library\Queries\ForCreate;
@@ -16,7 +15,6 @@ final class LibraryResource implements LibraryResourceInterface
      * Library Instance
      */
     public function __construct(
-        private readonly CacheStoreContract $store,
         private readonly ShowFiles $show,
         private readonly PageInterface $page,
         private readonly ForCreate $create,
@@ -29,21 +27,17 @@ final class LibraryResource implements LibraryResourceInterface
     public function forIndex(): array
     {
         $data = $this->show->handle();
-        $meta = $this->store->load(
-            key: 'libraryIndex',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_library'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
+        $meta = lazy_load()->load(
+            key: 'admin_library_data',
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
                 'select' => $data['select'],
-            ],
+            ]),
         );
 
         return [
             ...$meta,
-            ...$this->store->withInertia(
+            ...lazy_load()->withInertia(
                 collection: $data['data'],
             ),
 
@@ -55,16 +49,12 @@ final class LibraryResource implements LibraryResourceInterface
      */
     public function forCreate(): array
     {
-        return $this->store->load(
-            key: 'libraryCreate',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_library_upload',
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
+        return lazy_load()->load(
+            key: 'admin_library_create',
+            callback: fn () => array_merge([
+                ...$this->page->admin_meta(),
                 'categories' => $this->create->handle(),
-            ]
+            ])
         );
     }
 }

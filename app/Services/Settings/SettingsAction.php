@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Settings;
 
-use App\Contracts\CacheStoreContract;
 use App\Http\Requests\StorePageRequest;
 use App\Interfaces\Settings\SettingsActionInterface;
 use App\Services\Settings\Enums\ActionEnum;
@@ -14,6 +13,7 @@ use App\Services\Settings\Menu\Actions\StoreMenuItems;
 use App\Services\Settings\Page\Actions\DeletePageMeta;
 use App\Services\Settings\Page\Actions\StorePageMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 final class SettingsAction implements SettingsActionInterface
 {
@@ -24,7 +24,6 @@ final class SettingsAction implements SettingsActionInterface
         private readonly StoreMenuItems $menu,
         private readonly DeleteMenuItem $deleteMenuItem,
         private readonly DeletePageMeta $deletePageMeta,
-        private readonly CacheStoreContract $store,
     ) {
     }
 
@@ -45,7 +44,7 @@ final class SettingsAction implements SettingsActionInterface
         $this->page->handle(
             from: $from
         );
-        $this->store->flushCache();
+        Cache::flush();
     }
 
     public function destroy(Request $request, string|int $id): bool
@@ -55,7 +54,7 @@ final class SettingsAction implements SettingsActionInterface
             $this->deleteMenuItem->handle(
                 id: $id,
             );
-            $this->store->flushCache();
+            Cache::flush();
 
             return true;
         }
@@ -63,7 +62,7 @@ final class SettingsAction implements SettingsActionInterface
             $this->deletePageMeta->handle(
                 id: $id,
             );
-            $this->store->flushCache();
+            Cache::flush();
 
             return true;
         }

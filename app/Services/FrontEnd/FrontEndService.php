@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\FrontEnd;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\FrontEnd\FrontEndInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Services\FrontEnd\Queries\GetHomeData;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Cache;
 final class FrontEndService implements FrontEndInterface
 {
     public function __construct(
-        private readonly CacheStoreContract $store,
         private readonly PageInterface $page,
         private readonly GetHomeData $homeData,
     ) {
@@ -23,108 +21,63 @@ final class FrontEndService implements FrontEndInterface
     {
         return Cache::rememberForever(
             'home_page_data',
-            function () {
-                return array_merge(
-                    [
-                        'meta' => $this->page->getPageMeta(
-                            page_type: 'front',
-                            page: 'home'
-                        ),
-                        ...$this->homeData->handle(),
-                    ]
-                );
-            }
+            fn () => array_merge([...$this->homeData->handle()])
         );
     }
 
     public function earn(): array
     {
-        return $this->store->load(
-            key: 'earnPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'earn_crypto'
-                ),
-            ]
+        return lazy_load()->load(
+            'earn_page_data',
+            fn (): array => []
         );
     }
 
     public function list(): array
     {
-        return $this->store->load(
-            key: 'listPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'faucets-lists'
-                ),
-            ]
+        return lazy_load()->load(
+            'list_page_data',
+            fn (): array => []
         );
     }
 
     public function learn(): array
     {
-        return $this->store->load(
-            key: 'learnPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'learn_crypto'
-                ),
-            ]
+        return lazy_load()->load(
+            'learn_page_data',
+            fn (): array => []
         );
     }
 
     public function crypto(): array
     {
-        return $this->store->load(
-            key: 'cryptoPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'crypto'
-                ),
-            ]
+        return lazy_load()->load(
+            'crypto_page_data',
+            fn (): array => []
         );
     }
 
     public function news(): array
     {
-        return $this->store->load(
-            key: 'newsPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'crypto_news'
-                ),
-            ]
+        return lazy_load()->load(
+            'news_page_data',
+            fn (): array => []
         );
     }
 
     public function markets(): array
     {
-        return $this->store->load(
-            key: 'marketsPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'crypto_exchanges'
-                ),
-            ]
+        return lazy_load()->load(
+            'markets_page_data',
+            fn (): array => []
         );
     }
 
     public function contact(): array
     {
-        return $this->store->load(
-            key: 'contactPage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'contact'
-                ),
-            ]
+        return lazy_load()->load(
+            'contact_page_data',
+            fn (): array => []
         );
     }
 }

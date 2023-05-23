@@ -20,20 +20,30 @@ final class PageResource implements PageInterface
     }
 
     /**
-     * Get Page Meta Data
+     * Get Front Meta
      */
-    public function getPageMeta(string $page_type, string $page): mixed
+    public function front_meta(?string $page = null): array
     {
-        return $this->meta->handle(
-            page_type: $page_type,
-            page: $page,
-        );
+        return array_merge([
+            'meta' => $this->meta->handle(page_type: 'front', page: $page),
+        ]);
     }
 
-    public function show(): Collection|array
+    /**
+     * Get Admin Meta
+     */
+    public function admin_meta(?string $page = null): array
     {
-        return $this->pages->handle();
+        return array_merge([
+            'meta' => $this->meta->handle(page: $page),
+            'navigation' => $this->adminNavigation->handle(fallback: $page),
+        ]);
     }
+
+     public function show(): Collection|array
+     {
+         return $this->pages->handle();
+     }
 
     public function getAdminNavigation(): mixed
     {

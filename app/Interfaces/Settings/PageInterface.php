@@ -9,9 +9,14 @@ use Illuminate\Support\Collection;
 interface PageInterface
 {
     /**
-     * Get Page Meta Data
+     * Get Front Meta
      */
-    public function getPageMeta(string $page_type, string $page): mixed;
+    public function front_meta(?string $page = null): array;
+
+    /**
+     * Get Admin Meta
+     */
+    public function admin_meta(?string $page = null): array;
 
     /**
      * Show Pages Meta Data

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Settings\Page\Actions;
 
 use App\Models\Page;
+use Illuminate\Support\Facades\Route;
 
 final class GetPageMeta
 {
@@ -13,11 +14,11 @@ final class GetPageMeta
      */
     public function handle(
         string $page_type = 'admin',
-        string $page = 'dashboard'
+        ?string $page = 'dashboard'
     ): array {
-        return Page::page($page_type, $page)
-            ->first()
-            ->getData()
-            ->toArray();
+        return Page::ofType($page_type)
+            ->route(Route::currentRouteName(), $page)
+            ->first()->getData()->toArray()
+        ;
     }
 }

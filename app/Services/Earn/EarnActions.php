@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Earn;
 
-use App\Contracts\CacheStoreContract;
 use App\Http\Requests\StoreEarnRequest;
 use App\Http\Requests\UpdateEarnRequest;
 use App\Interfaces\Earn\EarnActionInterface;
@@ -12,6 +11,7 @@ use App\Models\Earn;
 use App\Services\Earn\Actions\DeleteEarn;
 use App\Services\Earn\Actions\StoreEarn;
 use App\Services\Earn\Actions\UpdateEarn;
+use Illuminate\Support\Facades\Cache;
 
 final class EarnActions implements EarnActionInterface
 {
@@ -22,7 +22,6 @@ final class EarnActions implements EarnActionInterface
         private readonly DeleteEarn $delete,
         private readonly StoreEarn $store,
         private readonly UpdateEarn $update,
-        private readonly CacheStoreContract $cacheStore,
     ) {
     }
 
@@ -35,7 +34,7 @@ final class EarnActions implements EarnActionInterface
             request: $request,
         );
         if ($store) {
-            $this->cacheStore->flushCache();
+            Cache::flush();
 
             return true;
         }
@@ -55,7 +54,7 @@ final class EarnActions implements EarnActionInterface
             earn: $earn,
         );
         if ($update) {
-            $this->cacheStore->flushCache();
+            Cache::flush();
 
             return true;
         }
@@ -74,7 +73,7 @@ final class EarnActions implements EarnActionInterface
             earn: $earn,
         );
         if ($delete) {
-            $this->cacheStore->flushCache();
+            Cache::flush();
 
             return true;
         }

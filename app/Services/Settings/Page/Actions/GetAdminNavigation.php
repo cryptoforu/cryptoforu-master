@@ -13,12 +13,13 @@ final class GetAdminNavigation
     /**
      * Admin Navigation
      */
-    public function handle(): array
+    public function handle(?string $fallback = null): array
     {
         $route = Route::currentRouteName();
-        $query = Page::route($route)
+        $query = Page::route($route, $fallback)
             ->with('childs')
-            ->first();
+            ->first()
+        ;
         if (0 !== $query->parent_id) {
             $query->load('parents');
         }

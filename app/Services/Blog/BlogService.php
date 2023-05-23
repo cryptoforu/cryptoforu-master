@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Blog;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Blog\BlogInterface;
 use App\Interfaces\Settings\MenuInterface;
 use App\Interfaces\Settings\PageInterface;
@@ -32,7 +31,6 @@ final class BlogService implements BlogInterface
         private readonly EditPost $edit,
         private readonly CategoryForm $categoryForm,
         private readonly ShowCategories $showCategories,
-        private readonly CacheStoreContract $store,
     ) {
     }
 
@@ -43,17 +41,16 @@ final class BlogService implements BlogInterface
      */
     public function forIndex()
     {
-        return $this->store->load(
-            key: 'blogIndex',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_blog'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
-                'post_table' => $this->show->handle(),
-            ]
+        return lazy_load()->load(
+            'admin_blog_index',
+            function () {
+                return array_merge([
+                    ...$this->page->admin_meta(),
+                    'post_table' => $this->show->handle(),
+                ]);
+            }
         );
+
     }
 
     /**
@@ -63,14 +60,15 @@ final class BlogService implements BlogInterface
      */
     public function forCreate()
     {
-        return [
-            'meta' => $this->page->getPageMeta(
-                page_type: 'admin',
-                page: 'admin_add_post'
-            ),
-            'navigation' => $this->page->getAdminNavigation(),
-            'post_form' => $this->create->handle(),
-        ];
+        lazy_load()->load(
+            'admin_blog_create',
+            function () {
+                return array_merge([
+                    ...$this->page->admin_meta(),
+                    'post_form' => $this->create->handle(),
+                ]);
+            }
+        );
     }
 
     /**
@@ -78,20 +76,25 @@ final class BlogService implements BlogInterface
      */
     public function forEdit(Post $post): array
     {
-        return [
-            'meta' => PageData::fromPost($post)->include('parents'),
-            'navigation' => AdminNavigation::from([
-                'label' => 'Blog Posts',
-                'route' => route('admin-blog', [], false),
-                'parents' => [
-                    'label' => 'Blog Posts',
-                    'route' => 'admin-blog',
-                ],
-            ]),
-            'edit_form' => $this->edit->handle(
-                post: $post
-            ),
-        ];
+        return lazy_load()->load(
+            'admin_blog_edit',
+            function () use ($post) {
+                return array_merge([
+                    'meta' => PageData::fromPost($post)->include('parents'),
+                    'navigation' => AdminNavigation::from([
+                        'label' => 'Blog Posts',
+                        'route' => route('admin-blog', [], false),
+                        'parents' => [
+                            'label' => 'Blog Posts',
+                            'route' => 'admin-blog',
+                        ],
+                    ]),
+                    'edit_form' => $this->edit->handle(
+                        post: $post
+                    ),
+                ]);
+            }
+        );
     }
 
     /**
@@ -99,22 +102,23 @@ final class BlogService implements BlogInterface
      */
     public function forCategories(): array
     {
-        return [
-            'meta' => $this->page->getPageMeta(
-                page_type: 'admin',
-                page: 'admin_blog_categories'
-            ),
-            'navigation' => $this->page->getAdminNavigation(),
-            ...$this->showCategories->handle(),
-            'category_form' => $this->categoryForm->handle(),
-            'category_table' => CategoryData::collection(
-                items: Category::all()->map(fn ($category) => CategoryData::from($category)
-                    ->additional([
-                        'endpoints' => [
-                            'delete' => route('admin-categories.destroy', ['category' => $category]),
-                        ],
-                    ]))
-            )->include('category_image'),
-        ];
+        return lazy_load()->load(
+            'admin_blog_categories',
+            function () {
+                return array_merge([
+                    ...$this->page->admin_meta(),
+                    ...$this->showCategories->handle(),
+                    'category_form' => $this->categoryForm->handle(),
+                    'category_table' => CategoryData::collection(
+                        items: Category::all()->map(fn ($category) => CategoryData::from($category)
+                            ->additional([
+                                'endpoints' => [
+                                    'delete' => route('admin-categories.destroy', ['category' => $category]),
+                                ],
+                            ]))
+                    )->include('category_image'),
+                ]);
+            }
+        );
     }
 }

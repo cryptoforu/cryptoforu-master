@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Earn;
 
-use App\Contracts\CacheStoreContract;
 use App\Interfaces\Earn\EarnServiceInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Models\Earn;
@@ -19,7 +18,6 @@ final class EarnService implements EarnServiceInterface
         private readonly ShowEarnData $show,
         private readonly GetEditForm $create,
         private readonly EditEarn $edit,
-        private readonly CacheStoreContract $store,
     ) {
     }
 
@@ -29,60 +27,51 @@ final class EarnService implements EarnServiceInterface
     public function forIndex(): array
     {
         $data = $this->show->handle();
-        $meta = $this->store->load(
-            key: 'earnIndex',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_earn'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
-                'select' => $data['select'],
-            ]
+        $meta = lazy_load()->load(
+            'admin_earn_data',
+            function () use ($data) {
+                return array_merge([
+                    ...$this->page->admin_meta(),
+                    'select' => $data['select'],
+                ]);
+            }
         );
 
-        return [
+        return array_merge([
             ...$meta,
-            ...$this->store->withInertia(
-                collection: $data['data']
-            ),
-
-        ];
+            ...lazy_load()->withInertia($data['data']),
+        ]);
     }
 
     /**
      * Create Page Data
-     *
-     * @return void
      */
-    public function forCreate()
+    public function forCreate(): void
     {
-        return $this->store->load(
-            key: 'earnCreate',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'admin_add_earning_methods'
-                ),
-                'navigation' => $this->page->getAdminNavigation(),
-                'earn_form' => $this->create->handle(),
-            ]
+        return lazy_load()->load(
+            'admin_earn_create',
+            function () {
+                return array_merge([
+                    ...$this->page->admin_meta(),
+                    'earn_form' => $this->create->handle(),
+                ]);
+            }
         );
     }
 
     /**
      * Edit Page Data
-     *
-     * @return void
      */
-    public function forEdit(Earn $earn)
+    public function forEdit(Earn $earn): void
     {
-        return $this->store->load(
-            key: $earn->title,
-            callback: [
-                ...$this->edit->handleMeta($earn),
-                'edit_form' => $this->edit->handle($earn),
-            ]
+        return lazy_load()->load(
+            $earn->title,
+            function () use ($earn) {
+                return array_merge([
+                    ...$this->edit->handleMeta($earn),
+                    'edit_form' => $this->edit->handle($earn),
+                ]);
+            }
         );
     }
 }
