@@ -15,8 +15,8 @@ trait SendGetRequest
     public function get(
         PendingRequest $request,
         string $method,
-        ?array $param = []): Collection
-    {
+        ?array $param = []
+    ): Collection {
         return $request->get(
             url: $method,
             query: $param

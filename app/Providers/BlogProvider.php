@@ -14,7 +14,7 @@ use App\Services\Blog\BlogActions;
 use App\Services\Blog\BlogService;
 use Illuminate\Support\ServiceProvider;
 
-class BlogProvider extends ServiceProvider
+final class BlogProvider extends ServiceProvider
 {
     /**
      * Register services.

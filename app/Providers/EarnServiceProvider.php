@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Interfaces\Earn\EarnActionInterface;
@@ -8,7 +10,7 @@ use App\Services\Earn\EarnActions;
 use App\Services\Earn\EarnService;
 use Illuminate\Support\ServiceProvider;
 
-class EarnServiceProvider extends ServiceProvider
+final class EarnServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -30,6 +32,6 @@ class EarnServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

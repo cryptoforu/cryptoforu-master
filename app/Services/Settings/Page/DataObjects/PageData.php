@@ -18,7 +18,7 @@ use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('PageMeta')]
-class PageData extends Data
+final class PageData extends Data
 {
     public function __construct(
         public string $label,
@@ -80,17 +80,17 @@ class PageData extends Data
     public static function fromAttributes(array $attributes): self
     {
         return new self(
-            label: strval(data_get($attributes, 'label')),
+            label: (string) (data_get($attributes, 'label')),
             route: Route::currentRouteName(),
-            meta_desc: strval(data_get($attributes, 'meta_desc')),
-            meta_image: strval(data_get($attributes, 'meta_image')),
+            meta_desc: (string) (data_get($attributes, 'meta_desc')),
+            meta_image: (string) (data_get($attributes, 'meta_image')),
             tw_image: Optional::create(),
             og_image: Optional::create(),
-            parent_id: intval(data_get($attributes, 'parent_id')),
-            page_type: strval(data_get($attributes, 'page_type')),
-            page_name: strval(data_get($attributes, 'page_name')),
+            parent_id: (int) (data_get($attributes, 'parent_id')),
+            page_type: (string) (data_get($attributes, 'page_type')),
+            page_name: (string) (data_get($attributes, 'page_name')),
             childs: Optional::create(),
-            parents: Lazy::create(fn () => PageData::fromModel(Page::find(intval(data_get($attributes, 'parent_id'))))),
+            parents: Lazy::create(fn () => PageData::fromModel(Page::find((int) (data_get($attributes, 'parent_id'))))),
         );
     }
 
@@ -100,9 +100,9 @@ class PageData extends Data
             'label' => ['required', 'string'],
             'route' => ['string'],
             'meta_desc' => ['required', 'string', 'max:180'],
-            'meta_image' => gettype($context->payload['meta_image']) === 'string' ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
-            'tw_image' => gettype($context->payload['tw_image']) === 'string' ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
-            'og_image' => gettype($context->payload['og_image']) === 'string' ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
+            'meta_image' => 'string' === gettype($context->payload['meta_image']) ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
+            'tw_image' => 'string' === gettype($context->payload['tw_image']) ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
+            'og_image' => 'string' === gettype($context->payload['og_image']) ? '' : ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg,webp', 'max:5048'],
             'parent_id' => ['required', 'integer'],
             'page_type' => ['required', 'string'],
             'page_name' => ['required', 'string'],
@@ -112,15 +112,15 @@ class PageData extends Data
     public static function schema(string $type = 'empty'): array
     {
         $schema = self::empty([
-            'label' => $type === 'empty' ? '' : 'textfield',
-            'route' => $type === 'empty' ? '' : 'textfield',
-            'meta_desc' => $type === 'empty' ? '' : 'textarea',
-            'meta_image' => $type === 'empty' ? null : 'file',
-            'tw_image' => $type === 'empty' ? null : 'file',
-            'og_image' => $type === 'empty' ? null : 'file',
-            'parent_id' => $type === 'empty' ? 0 : 'select',
-            'page_type' => $type === 'empty' ? '' : 'textfield',
-            'page_name' => $type === 'empty' ? '' : 'textfield',
+            'label' => 'empty' === $type ? '' : 'textfield',
+            'route' => 'empty' === $type ? '' : 'textfield',
+            'meta_desc' => 'empty' === $type ? '' : 'textarea',
+            'meta_image' => 'empty' === $type ? null : 'file',
+            'tw_image' => 'empty' === $type ? null : 'file',
+            'og_image' => 'empty' === $type ? null : 'file',
+            'parent_id' => 'empty' === $type ? 0 : 'select',
+            'page_type' => 'empty' === $type ? '' : 'textfield',
+            'page_name' => 'empty' === $type ? '' : 'textfield',
         ]);
 
         return Arr::except($schema, ['childs', 'parents']);
@@ -129,15 +129,15 @@ class PageData extends Data
     public static function editSchema(Page $page, string $type = 'initialValues')
     {
         $editSchema = self::empty([
-            'label' => $type === 'initialValues' ? $page->label : 'textfield',
-            'route' => $type === 'initialValues' ? $page->route : 'textfield',
-            'meta_desc' => $type === 'initialValues' ? $page->meta_desc : 'textarea',
-            'meta_image' => $type === 'initialValues' ? $page->meta_image : 'file',
-            'tw_image' => $type === 'initialValues' ? $page->tw_image : 'file',
-            'og_image' => $type === 'initialValues' ? $page->og_image : 'file',
-            'parent_id' => $type === 'initialValues' ? $page->parent_id : 'select',
-            'page_type' => $type === 'initialValues' ? $page->page_type : 'textfield',
-            'page_name' => $type === 'initialValues' ? $page->page_name : 'textfield',
+            'label' => 'initialValues' === $type ? $page->label : 'textfield',
+            'route' => 'initialValues' === $type ? $page->route : 'textfield',
+            'meta_desc' => 'initialValues' === $type ? $page->meta_desc : 'textarea',
+            'meta_image' => 'initialValues' === $type ? $page->meta_image : 'file',
+            'tw_image' => 'initialValues' === $type ? $page->tw_image : 'file',
+            'og_image' => 'initialValues' === $type ? $page->og_image : 'file',
+            'parent_id' => 'initialValues' === $type ? $page->parent_id : 'select',
+            'page_type' => 'initialValues' === $type ? $page->page_type : 'textfield',
+            'page_name' => 'initialValues' === $type ? $page->page_name : 'textfield',
         ]);
 
         return Arr::except($editSchema, ['childs', 'parents']);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Library\Concerns;
 
 use App\Services\Library\ImageFilters\LgFilter;
@@ -19,9 +21,9 @@ trait Responsive
         $md = new MdFilter();
         $sm = new SmFilter();
         $paths = [
-            'lg' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Lg.'.$file->getClientOriginalExtension(),
-            'md' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Md.'.$file->getClientOriginalExtension(),
-            'sm' => $this->directory($directory.'/'.'Conversions').'/'.uniqid().'Sm.'.$file->getClientOriginalExtension(),
+            'lg' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Lg.' . $file->getClientOriginalExtension(),
+            'md' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Md.' . $file->getClientOriginalExtension(),
+            'sm' => $this->directory($directory . '/' . 'Conversions') . '/' . uniqid() . 'Sm.' . $file->getClientOriginalExtension(),
         ];
 
         $image = Image::make($file);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class Crypto extends Model
+final class Crypto extends Model
 {
     use HasFactory, HasUlids;
 
@@ -23,18 +25,17 @@ class Crypto extends Model
 
     public function scopeOfName(Builder $query, string $data_name): Crypto|bool
     {
-        return $query->where('data_name', $data_name)->firstOr('*', function () {
-            return (bool) false;
-        });
+        return $query->where('data_name', $data_name)->firstOr('*', fn () => (bool) false);
     }
 
     /**
      * Get The Model or Create it if it doesn't exists
      */
-    public function scopeOfData(Builder $query,
+    public function scopeOfData(
+        Builder $query,
         string $data_name,
-        Collection $data_values): Crypto
-    {
+        Collection $data_values
+    ): Crypto {
         return $query->firstOrCreate(
             ['data_name' => $data_name],
             ['data_values' => $data_values],

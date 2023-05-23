@@ -7,7 +7,7 @@ namespace App\Services\Library\Queries;
 use App\Models\LibraryCategory;
 use App\Services\Library\DataObjects\LibraryCategoryData;
 
-class ForCreate
+final class ForCreate
 {
     public function handle()
     {

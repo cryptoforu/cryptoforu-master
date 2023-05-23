@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Crypto\Transformers;
 
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Transformers\Transformer;
 
-class PercentageTransformer implements Transformer
+final class PercentageTransformer implements Transformer
 {
     public function __construct(
         public ?int $divide = null,
@@ -16,8 +18,8 @@ class PercentageTransformer implements Transformer
 
     public function transform(
         DataProperty $property,
-        mixed $value): mixed
-    {
+        mixed $value
+    ): mixed {
         return format_percentage($value, $this->divide, $this->intl);
     }
 }

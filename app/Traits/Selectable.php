@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Support\Arr;
@@ -18,7 +20,7 @@ trait Selectable
         $keyType = gettype($keyFrom);
         $keyLength = Str::of($keyFrom)->length();
         $values = '';
-        if ($keyType !== 'string' || $keyLength < 2) {
+        if ('string' !== $keyType || $keyLength < 2) {
             return with('error', 'Plese provide string or  longer key');
         }
 

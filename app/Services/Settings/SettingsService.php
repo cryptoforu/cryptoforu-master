@@ -11,7 +11,7 @@ use App\Interfaces\Settings\SettingsInterface;
 use App\Services\Settings\Menu\Actions\GetMenuForm;
 use App\Services\Settings\Page\Actions\GetPageForm;
 
-class SettingsService implements SettingsInterface
+final class SettingsService implements SettingsInterface
 {
     public function __construct(
         private readonly MenuInterface $menu,

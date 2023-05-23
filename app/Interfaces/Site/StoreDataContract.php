@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Interfaces\Site;
 
 use App\Http\Requests\StoreSiteDataRequest;
@@ -11,5 +13,5 @@ interface StoreDataContract
      *
      * @return void
      */
-    public function handle(StoreSiteDataRequest $request);
+    public function handle(StoreSiteDataRequest $request): void;
 }

@@ -11,7 +11,7 @@ use App\Traits\Selectable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ShowPageMeta
+final class ShowPageMeta
 {
     use FormFactory, Selectable;
 

@@ -4,7 +4,12 @@
     "dev": "vite",
     "build": "vite build && vite build --ssr",
     "theme": "chakra-cli tokens resources/ts/Theme/theme.ts",
-    "theme:watch": "chakra-cli tokens resources/ts/Theme/theme.ts --watch"
+    "theme:watch": "chakra-cli tokens resources/ts/Theme/theme.ts --watch",
+    "lint": "npx eslint resources/ts",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier resources/ts --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",

@@ -9,7 +9,7 @@ use App\Services\Settings\Concerns\FormFactory;
 use App\Services\Settings\Page\DataObjects\PageData;
 use Illuminate\Support\Collection;
 
-class GetPageForm
+final class GetPageForm
 {
     use FormFactory;
 

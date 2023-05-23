@@ -10,16 +10,16 @@ use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 use Throwable;
 
-class StoreFile
+final class StoreFile
 {
     use Directories;
     use Responsive;
 
     public function handle(UploadedFile $file, string $directory)
     {
-        $file_name = uniqid().'.'.$file->getClientOriginalExtension();
-        $file_path = $this->directory($directory).'/'.$file_name;
-        $thumb_path = '/img/cache/sm/'.$file_name;
+        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
+        $file_path = $this->directory($directory) . '/' . $file_name;
+        $thumb_path = '/img/cache/sm/' . $file_name;
         $conversions = $this->responsive(
             file: $file,
             directory: $directory,

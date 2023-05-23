@@ -14,7 +14,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('CategoryData')]
-class CategoryData extends Data
+final class CategoryData extends Data
 {
     public function __construct(
         public int $id,
@@ -54,7 +54,7 @@ class CategoryData extends Data
         );
     }
 
-    public static function schema(Category $category = null, string $type = 'empty'): array
+    public static function schema(?Category $category = null, string $type = 'empty'): array
     {
         switch ($type) {
             case 'empty':

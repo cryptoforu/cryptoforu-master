@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\WithData;
 
-class Menu extends Model
+final class Menu extends Model
 {
     use HasFactory;
     use WithData;
@@ -33,5 +33,15 @@ class Menu extends Model
     public function scopeOfPosition(Builder $query, string $position): void
     {
         $query->where('position', $position);
+    }
+
+    public function scopeOfMain(
+        Builder $query,
+        string $position = 'front_main'
+    ): Model {
+        return $query
+            ->where('position', $position)
+            ->with('items')->first()
+        ;
     }
 }

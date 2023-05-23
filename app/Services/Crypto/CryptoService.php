@@ -8,7 +8,7 @@ use App\Services\Crypto\Concerns\SendGetRequest;
 use App\Services\Crypto\Concerns\SendPoolRequest;
 use Illuminate\Http\Client\PendingRequest;
 
-class CryptoService
+final class CryptoService
 {
     use SendGetRequest, SendPoolRequest;
 

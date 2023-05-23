@@ -8,7 +8,7 @@ use App\Services\Earn\Enums\EarnStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Enum\Laravel\Rules\EnumRule;
 
-class UpdateEarnRequest extends FormRequest
+final class UpdateEarnRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

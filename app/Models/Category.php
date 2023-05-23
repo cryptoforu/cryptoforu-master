@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Spatie\LaravelData\WithData;
 
-class Category extends Model
+final class Category extends Model
 {
     use HasFactory;
     use WithData;

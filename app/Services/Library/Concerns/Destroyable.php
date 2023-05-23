@@ -14,7 +14,7 @@ trait Destroyable
 
         if (Storage::fileExists($file->file_url)) {
             Storage::delete($file->file_url);
-            Arr::map($file->file_conversions, function ($value, $key) {
+            Arr::map($file->file_conversions, function ($value, $key): void {
                 Storage::delete($value);
             });
 

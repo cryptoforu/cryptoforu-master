@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Crypto\DataObjects;
 
 use App\Services\Crypto\Transformers\CurrencyTransformer;
@@ -10,7 +12,7 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('CryptoCategories')]
-class CryptoCategories extends Data
+final class CryptoCategories extends Data
 {
     public function __construct(
         public readonly ?string $id,
@@ -28,8 +30,8 @@ class CryptoCategories extends Data
     public static function fromArray(array $attributes): self
     {
         return new self(
-            id: strval(data_get($attributes, 'id')),
-            name: strval(data_get($attributes, 'name')),
+            id: (string) (data_get($attributes, 'id')),
+            name: (string) (data_get($attributes, 'name')),
             market_cap: data_get($attributes, 'market_cap'),
             market_cap_change_24h: (data_get($attributes, 'market_cap_change_24h')),
             top_3_coins: data_get($attributes, 'top_3_coins'),
@@ -40,7 +42,7 @@ class CryptoCategories extends Data
     public static function make(Collection $attributes): Collection
     {
         return $attributes->map(
-            fn ($item) => static::fromArray(
+            fn ($item) => self::fromArray(
                 attributes: $item
             )
         )->keyBy('id');

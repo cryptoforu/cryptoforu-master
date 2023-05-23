@@ -19,7 +19,7 @@ use App\Services\Blog\DataObjects\CategoryData;
 use App\Services\Settings\Page\DataObjects\AdminNavigation;
 use App\Services\Settings\Page\DataObjects\PageData;
 
-class BlogService implements BlogInterface
+final class BlogService implements BlogInterface
 {
     /**
      * Blog  Backend

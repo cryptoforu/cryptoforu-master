@@ -22,7 +22,7 @@ use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('PostData')]
-class PostData extends Data
+final class PostData extends Data
 {
     public function __construct(
         public int $id,
@@ -76,13 +76,13 @@ class PostData extends Data
     public static function schema(string $type = 'empty'): array
     {
         $schema = self::empty([
-            'title' => $type === 'empty' ? '' : 'textfield',
-            'introduction' => $type === 'empty' ? '' : 'textarea',
-            'content' => $type === 'empty' ? '' : 'md',
-            'featured_image' => $type === 'empty' ? null : 'file',
-            'status' => $type === 'empty' ? 'DRAFT' : 'select',
-            'category_id' => $type === 'empty' ? 0 : 'select',
-            'tags' => $type === 'empty' ? [] : 'tags',
+            'title' => 'empty' === $type ? '' : 'textfield',
+            'introduction' => 'empty' === $type ? '' : 'textarea',
+            'content' => 'empty' === $type ? '' : 'md',
+            'featured_image' => 'empty' === $type ? null : 'file',
+            'status' => 'empty' === $type ? 'DRAFT' : 'select',
+            'category_id' => 'empty' === $type ? 0 : 'select',
+            'tags' => 'empty' === $type ? [] : 'tags',
         ]);
 
         return Arr::except($schema, ['id', 'slug', 'thumb', 'created_at', 'updated_at', 'image_name', 'excerpt', 'category']);
@@ -91,13 +91,13 @@ class PostData extends Data
     public static function editSchema(Post $post, string $type = 'initial'): array
     {
         $schema = self::empty([
-            'title' => $type === 'initial' ? $post->title : 'textfield',
-            'introduction' => $type === 'initial' ? $post->introduction : 'textarea',
-            'content' => $type === 'initial' ? $post->content : 'md',
-            'featured_image' => $type === 'initial' ? null : 'file',
-            'status' => $type === 'initial' ? $post->status : 'select',
-            'category_id' => $type === 'initial' ? $post->category_id : 'select',
-            'tags' => $type === 'initial' ? static::filterTags($post->tags) : 'tags',
+            'title' => 'initial' === $type ? $post->title : 'textfield',
+            'introduction' => 'initial' === $type ? $post->introduction : 'textarea',
+            'content' => 'initial' === $type ? $post->content : 'md',
+            'featured_image' => 'initial' === $type ? null : 'file',
+            'status' => 'initial' === $type ? $post->status : 'select',
+            'category_id' => 'initial' === $type ? $post->category_id : 'select',
+            'tags' => 'initial' === $type ? self::filterTags($post->tags) : 'tags',
         ]);
 
         return Arr::except($schema, ['id', 'slug', 'thumb', 'created_at', 'updated_at', 'image_name', 'excerpt', 'category']);

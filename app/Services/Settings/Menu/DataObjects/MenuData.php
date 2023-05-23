@@ -12,7 +12,7 @@ use Spatie\LaravelData\Lazy;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('MenuData')]
-class MenuData extends Data
+final class MenuData extends Data
 {
     public function __construct(
         public int $id,

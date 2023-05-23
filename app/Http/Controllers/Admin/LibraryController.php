@@ -20,7 +20,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 
-class LibraryController extends Controller
+final class LibraryController extends Controller
 {
     /**
      * Library Controller Instance
@@ -143,7 +143,7 @@ class LibraryController extends Controller
         // Store the file in a temporary location and return the location
         // for FilePond to use.
         return $file->store(
-            path: 'tmp/'.now()->timestamp.'-'.Str::random(20)
+            path: 'tmp/' . now()->timestamp . '-' . Str::random(20)
         );
     }
 }

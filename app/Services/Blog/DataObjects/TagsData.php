@@ -12,7 +12,7 @@ use Spatie\LaravelData\Lazy;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('TagsData')]
-class TagsData extends Data
+final class TagsData extends Data
 {
     public function __construct(
         public int $id,

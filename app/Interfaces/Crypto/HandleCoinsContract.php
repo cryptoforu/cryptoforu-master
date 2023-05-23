@@ -13,5 +13,5 @@ interface HandleCoinsContract
      *
      * @return void
      */
-    public function handle(Collection $responses);
+    public function handle(Collection $responses): bool;
 }

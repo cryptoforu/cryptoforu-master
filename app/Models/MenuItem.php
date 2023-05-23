@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 
-class MenuItem extends Model
+final class MenuItem extends Model
 {
     use HasFactory;
     use WithData;
@@ -55,5 +55,13 @@ class MenuItem extends Model
     public function scopeParent(Builder $query): Builder
     {
         return $query->where('parent_id', 0);
+    }
+
+    public function scopeOfItems(Builder $query, Menu $menu)
+    {
+        return $query->whereBelongsTo($menu)
+            ->where('parent_id', 0)
+            ->with('childs')->get()
+        ;
     }
 }

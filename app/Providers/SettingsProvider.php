@@ -6,10 +6,12 @@ namespace App\Providers;
 
 use App\Interfaces\Settings\ActionContracts\StoreMenuItemContract;
 use App\Interfaces\Settings\ActionContracts\UpdateMenuItemContract;
+use App\Interfaces\Settings\GetMenuContract;
 use App\Interfaces\Settings\MenuInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Interfaces\Settings\SettingsActionInterface;
 use App\Interfaces\Settings\SettingsInterface;
+use App\Services\Settings\Menu\Actions\GetMenu;
 use App\Services\Settings\Menu\Actions\StoreMenuItems;
 use App\Services\Settings\Menu\Actions\UpdateMenuItems;
 use App\Services\Settings\Menu\MenuResources;
@@ -19,7 +21,7 @@ use App\Services\Settings\SettingsResources;
 use App\Services\Settings\SettingsService;
 use Illuminate\Support\ServiceProvider;
 
-class SettingsProvider extends ServiceProvider
+final class SettingsProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -57,6 +59,10 @@ class SettingsProvider extends ServiceProvider
         $this->app->bind(
             StoreMenuItemContract::class,
             StoreMenuItems::class,
+        );
+        $this->app->bind(
+            abstract: GetMenuContract::class,
+            concrete: GetMenu::class,
         );
     }
 

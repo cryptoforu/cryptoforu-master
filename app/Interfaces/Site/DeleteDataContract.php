@@ -13,5 +13,5 @@ interface DeleteDataContract
      *
      * @return void
      */
-    public function handle(Request $request);
+    public function handle(Request $request): void;
 }

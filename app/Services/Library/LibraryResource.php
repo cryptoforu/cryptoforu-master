@@ -10,7 +10,7 @@ use App\Interfaces\Settings\PageInterface;
 use App\Services\Library\Queries\ForCreate;
 use App\Services\Library\Queries\ShowFiles;
 
-class LibraryResource implements LibraryResourceInterface
+final class LibraryResource implements LibraryResourceInterface
 {
     /**
      * Library Instance
@@ -39,7 +39,6 @@ class LibraryResource implements LibraryResourceInterface
                 'navigation' => $this->page->getAdminNavigation(),
                 'select' => $data['select'],
             ],
-
         );
 
         return [

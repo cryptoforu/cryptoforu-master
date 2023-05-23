@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Http\Requests\UpdateCategoryRequest;
@@ -8,7 +10,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
-class UpdateCategory implements UpdateCategoryContract
+final class UpdateCategory implements UpdateCategoryContract
 {
     public function __construct(
         private readonly LibraryActionsInterface $library,
@@ -32,7 +34,7 @@ class UpdateCategory implements UpdateCategoryContract
             $category->category_image = $image['file_name'];
             $category->category_thumb = $image['thumb'];
 
-            if (! empty($category->image)) {
+            if ( ! empty($category->image)) {
                 $this->library->delete($category->image);
                 $this->library->new(
                     model: $category,
@@ -41,8 +43,8 @@ class UpdateCategory implements UpdateCategoryContract
                 );
             }
         }
-        $request->collect(['name', 'description'])->map(function ($item, $key) use ($category) {
-            $category->$key = $item;
+        $request->collect(['name', 'description'])->map(function ($item, $key) use ($category): void {
+            $category->{$key} = $item;
         });
         if (empty($request->safe())) {
             return false;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Earn\Actions;
 
 use App\Http\Requests\StoreEarnRequest;
@@ -7,7 +9,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Earn;
 use Illuminate\Support\Str;
 
-class StoreEarn
+final class StoreEarn
 {
     public function __construct(
         private readonly LibraryActionsInterface $library,

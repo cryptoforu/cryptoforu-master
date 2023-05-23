@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Http\Requests\StoreCategoryRequest;
@@ -8,7 +10,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
-class StoreCategory implements StoreCategoryContract
+final class StoreCategory implements StoreCategoryContract
 {
     public function __construct(
         private readonly LibraryActionsInterface $library,
@@ -17,7 +19,7 @@ class StoreCategory implements StoreCategoryContract
 
     public function handle(
         StoreCategoryRequest $request
-    ) {
+    ): void {
         $validated = $request->validated();
 
         if ($request->hasFile('category_image')) {

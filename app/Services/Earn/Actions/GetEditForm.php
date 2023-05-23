@@ -11,7 +11,7 @@ use App\Services\Earn\Enums\EarnStatus;
 use App\Services\Settings\Concerns\FormFactory;
 use Illuminate\Support\Collection;
 
-class GetEditForm
+final class GetEditForm
 {
     use FormFactory;
 

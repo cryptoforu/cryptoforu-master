@@ -8,7 +8,7 @@ use App\Models\Page;
 use App\Services\Settings\Page\DataObjects\AdminNavigation;
 use Illuminate\Support\Facades\Route;
 
-class GetAdminNavigation
+final class GetAdminNavigation
 {
     /**
      * Admin Navigation
@@ -19,7 +19,7 @@ class GetAdminNavigation
         $query = Page::route($route)
             ->with('childs')
             ->first();
-        if ($query->parent_id !== 0) {
+        if (0 !== $query->parent_id) {
             $query->load('parents');
         }
 

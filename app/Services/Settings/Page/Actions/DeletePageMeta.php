@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Settings\Page\Actions;
 
 use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Page;
 
-class DeletePageMeta
+final class DeletePageMeta
 {
     public function __construct(
         private LibraryActionsInterface $action,
@@ -19,7 +21,7 @@ class DeletePageMeta
     {
         $page = Page::ofName($id);
         if ($page->exists) {
-            if (! empty($page->images)) {
+            if ( ! empty($page->images)) {
                 foreach ($page->images as $img) {
                     $this->action->delete($img);
                 }

@@ -13,7 +13,7 @@ interface CryptoActionsInterface
      */
     public function updateOrCreateCategories(
         HandleCategoriesContract $action
-    );
+    ): void;
 
     /**
      * Update or Create Coins
@@ -22,5 +22,5 @@ interface CryptoActionsInterface
      */
     public function updateOrCreateCoins(
         HandleCoinsContract $action
-    );
+    ): void;
 }

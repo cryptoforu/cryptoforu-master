@@ -13,7 +13,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('AdminNavigation')]
-class AdminNavigation extends Data
+final class AdminNavigation extends Data
 {
     public function __construct(
         public string $label,
@@ -38,8 +38,8 @@ class AdminNavigation extends Data
     public static function fromAttributes(array $attributes): self
     {
         return new self(
-            label: strval(data_get($attributes, 'label')),
-            route: strval(data_get($attributes, 'route')),
+            label: (string) (data_get($attributes, 'label')),
+            route: (string) (data_get($attributes, 'route')),
             childs: Lazy::when(fn () => ! empty(data_get($attributes, 'childs')), fn () => AdminNavigation::from(data_get($attributes, 'childs'))),
             parents: Lazy::when(fn () => ! empty(data_get($attributes, 'parents')), fn () => AdminNavigation::from(data_get($attributes, 'parents'))),
         );

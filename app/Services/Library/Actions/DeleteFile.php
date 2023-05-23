@@ -10,7 +10,7 @@ use App\Services\Library\Concerns\Destroyable;
 use App\Services\Library\DataObjects\LibDeleteData;
 use Throwable;
 
-class DeleteFile implements LibraryDeleteContract
+final class DeleteFile implements LibraryDeleteContract
 {
     use Destroyable;
 

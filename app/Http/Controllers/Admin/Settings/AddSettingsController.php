@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Library\LibraryActionsInterface;
 use Illuminate\Http\Request;
 
-class AddSettingsController extends Controller
+final class AddSettingsController extends Controller
 {
     public function __construct(
         protected LibraryActionsInterface $action,
@@ -29,7 +31,8 @@ class AddSettingsController extends Controller
         $data = $request->collect()->except(['image'])->all();
         if (settings()->has($request->input('id'))) {
             $key = uniqid();
-            settings()->push($request->input('id'),
+            settings()->push(
+                $request->input('id'),
                 [
                     $key => [
                         'image' => $img['file_name'],
@@ -40,7 +43,8 @@ class AddSettingsController extends Controller
 
         } else {
             $key = uniqid();
-            settings()->put($request->input('id'),
+            settings()->put(
+                $request->input('id'),
                 [
                     $key => [
                         'image' => $img['file_name'],

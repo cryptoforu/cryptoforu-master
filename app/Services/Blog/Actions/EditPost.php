@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Models\Category;
@@ -12,7 +14,7 @@ use App\Services\Blog\Enums\PostStatus;
 use App\Services\Settings\Concerns\FormFactory;
 use Illuminate\Support\Collection;
 
-class EditPost
+final class EditPost
 {
     use FormFactory;
 

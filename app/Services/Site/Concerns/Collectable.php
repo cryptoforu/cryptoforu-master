@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 trait Collectable
 {
-    public function collectable(array $attributes, Collection $data_values, string $image_path = null): array
+    public function collectable(array $attributes, Collection $data_values, ?string $image_path = null): array
     {
         $initial = (new Collection(
             items: $attributes,
@@ -18,9 +18,10 @@ trait Collectable
                 $item['image'] = $image_path;
 
                 return $item;
-            } else {
-                return $item;
             }
+
+            return $item;
+
         });
 
         $key = Arr::get($initial, '0.id');
@@ -30,9 +31,7 @@ trait Collectable
 
             return $item;
         });
-        $filtered = $new_values->reject(function ($value, $key) {
-            return empty($value) || is_null($value);
-        });
+        $filtered = $new_values->reject(fn ($value, $key) => empty($value) || null === $value);
         $transform_initial = $initial->transform(function ($item, $key) {
             $item['id'] = uniqid($item['id']);
 

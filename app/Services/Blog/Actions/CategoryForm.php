@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Services\Blog\DataObjects\CategoryData;
 use App\Services\Settings\Concerns\FormFactory;
 use Illuminate\Support\Collection;
 
-class CategoryForm
+final class CategoryForm
 {
     use FormFactory;
 

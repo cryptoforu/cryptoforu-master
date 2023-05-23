@@ -13,7 +13,7 @@ use App\Services\Blog\Enums\PostStatus;
 use App\Services\Settings\Concerns\FormFactory;
 use Illuminate\Support\Collection;
 
-class GetPostForm
+final class GetPostForm
 {
     use FormFactory;
 

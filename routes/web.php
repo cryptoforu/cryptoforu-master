@@ -30,16 +30,16 @@ use Intervention\Image\Facades\Image;
 |
  */
 
-Route::middleware('optimizeImages')->group(function () {
+Route::middleware('optimizeImages')->group(function (): void {
     Route::get('/', HomeController::class)->name('home');
-    Route::controller(EarnCryptoController::class)->prefix('earn-crypto')->group(function () {
+    Route::controller(EarnCryptoController::class)->prefix('earn-crypto')->group(function (): void {
         Route::get('/', 'index')->name('earn-crypto');
         Route::get('/list', 'list')->name('faucets-lists');
     });
-    Route::controller(LearnCryptoController::class)->prefix('learn-crypto')->group(function () {
+    Route::controller(LearnCryptoController::class)->prefix('learn-crypto')->group(function (): void {
         Route::get('/', 'index')->name('learn-crypto');
     });
-    Route::controller(CryptoController::class)->prefix('crypto')->group(function () {
+    Route::controller(CryptoController::class)->prefix('crypto')->group(function (): void {
         Route::get('/', 'index')->name('crypto');
         Route::get('/news', 'news')->name('crypto-news');
         Route::get('/markets', 'markets')->name('crypto-markets');

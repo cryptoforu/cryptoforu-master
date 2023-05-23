@@ -13,16 +13,16 @@ trait Directories
         string $directory
     ) {
         $storage = Storage::allDirectories(public_path('images'));
-        $path = 'images/'.$directory;
+        $path = 'images/' . $directory;
         if (Arr::exists(
             array: $storage,
             key: $directory
         )) {
             return $path;
-        } else {
-            Storage::makeDirectory($path);
-
-            return $path;
         }
+        Storage::makeDirectory($path);
+
+        return $path;
+
     }
 }

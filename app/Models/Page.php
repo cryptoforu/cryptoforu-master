@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 
-class Page extends Model
+final class Page extends Model
 {
     use HasFactory;
     use WithData;

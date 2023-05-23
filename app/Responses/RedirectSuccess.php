@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
-class RedirectSuccess implements Responsable
+final class RedirectSuccess implements Responsable
 {
     /**
      * Redirect Success Response

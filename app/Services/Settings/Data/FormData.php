@@ -12,7 +12,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('FormData')]
-class FormData extends Data
+final class FormData extends Data
 {
     public function __construct(
         public ?string $label,

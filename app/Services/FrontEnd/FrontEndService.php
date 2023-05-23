@@ -8,8 +8,9 @@ use App\Contracts\CacheStoreContract;
 use App\Interfaces\FrontEnd\FrontEndInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Services\FrontEnd\Queries\GetHomeData;
+use Illuminate\Support\Facades\Cache;
 
-class FrontEndService implements FrontEndInterface
+final class FrontEndService implements FrontEndInterface
 {
     public function __construct(
         private readonly CacheStoreContract $store,
@@ -20,15 +21,19 @@ class FrontEndService implements FrontEndInterface
 
     public function home(): array
     {
-        return $this->store->load(
-            key: 'homePage',
-            callback: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'front',
-                    page: 'home'
-                ),
-                ...$this->homeData->handle(),
-            ]
+        return Cache::rememberForever(
+            'home_page_data',
+            function () {
+                return array_merge(
+                    [
+                        'meta' => $this->page->getPageMeta(
+                            page_type: 'front',
+                            page: 'home'
+                        ),
+                        ...$this->homeData->handle(),
+                    ]
+                );
+            }
         );
     }
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Crypto\Transformers;
 
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Transformers\Transformer;
 
-class CurrencyTransformer implements Transformer
+final class CurrencyTransformer implements Transformer
 {
     public function __construct(
         public ?string $currency = 'USD',
@@ -16,8 +18,8 @@ class CurrencyTransformer implements Transformer
 
     public function transform(
         DataProperty $property,
-        mixed $value): mixed
-    {
+        mixed $value
+    ): mixed {
         return format_currency($value, $this->intl, $this->currency);
     }
 }

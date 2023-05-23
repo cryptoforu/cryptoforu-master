@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Site\DataObjects\HomePage;
 
 use App\Models\Site;
@@ -8,7 +10,7 @@ use Illuminate\Support\Str;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 
-class HomePageData extends Data
+final class HomePageData extends Data
 {
     public function __construct(
         public HeroData $hero,
@@ -25,7 +27,7 @@ class HomePageData extends Data
             items: [
                 'title' => Str::headline($site->data_name),
                 'home_data' => [
-                    static::fromCollection(
+                    self::fromCollection(
                         col: $site->data_values
                     ),
                 ],
@@ -37,7 +39,7 @@ class HomePageData extends Data
     {
         $query = Site::ofData('home_page');
 
-        return static::fromCollection(
+        return self::fromCollection(
             col: $query->data_values,
         );
     }

@@ -9,7 +9,7 @@ use App\Interfaces\Crypto\HandleCategoriesContract;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-class Kernel extends ConsoleKernel
+final class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:process-crypto-coins')->hourly();
         $schedule->call(function (
             CryptoActionsInterface $action,
-            HandleCategoriesContract $handle) {
+            HandleCategoriesContract $handle
+        ): void {
             $action->updateOrCreateCategories(
                 action: $handle
             );
@@ -33,7 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

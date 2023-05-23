@@ -18,18 +18,18 @@ trait TransformKeys
     public function transform(array|Collection $values, $callback = 'headline', $type = 'key'): array|Collection
     {
         $str = new Str();
-        if (gettype($values) === 'array') {
+        if ('array' === gettype($values)) {
             return (new Collection(
                 items: $values
             ))->transform(function (int|string $item, int|string $key) use ($type, $callback, $str) {
-                $key = call_user_func_array([$str, $callback], [$type === 'key' ? $key : $item]);
+                $key = call_user_func_array([$str, $callback], ['key' === $type ? $key : $item]);
 
                 return collect([$key => $item]);
             })->collapse()->all();
         } else {
             $values->transform(
                 function (int|string $item, int|string $key) use ($type, $callback, $str) {
-                    $key = call_user_func_array([$str, $callback], [$type === 'key' ? $key : $item]);
+                    $key = call_user_func_array([$str, $callback], ['key' === $type ? $key : $item]);
 
                     return collect([$key => $item]);
                 }

@@ -9,13 +9,13 @@ use App\Models\Library;
 use App\Models\LibraryCategory;
 use Illuminate\Database\Eloquent\Model;
 
-class CreateFile
+final class CreateFile
 {
     public function handle(StoreLibraryRequest $request)
     {
         $store = new StoreFile();
         $files = $request->validated('file');
-        if (! empty($files)) {
+        if ( ! empty($files)) {
             foreach ($files as $file) {
                 $category = LibraryCategory::find($request->validated('library_category_id'));
                 $fl = $store->handle($file, $category->directory);
@@ -39,7 +39,7 @@ class CreateFile
         return false;
     }
 
-    public function save(Model $model, array $file, int $category = 2)
+    public function save(Model $model, array $file, int $category = 2): void
     {
         $model->images()->create([
             'file_name' => $file['file_name'],

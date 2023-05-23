@@ -16,7 +16,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 
-class EarnController extends Controller
+final class EarnController extends Controller
 {
     /**
      * Earn Controller Instance

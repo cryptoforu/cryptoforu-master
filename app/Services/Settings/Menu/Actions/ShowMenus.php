@@ -7,7 +7,7 @@ namespace App\Services\Settings\Menu\Actions;
 use App\Models\Menu;
 use App\Services\Settings\Menu\DataObjects\MenuData;
 
-class ShowMenus
+final class ShowMenus
 {
     /**
      * @var Menu

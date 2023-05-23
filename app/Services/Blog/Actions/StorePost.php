@@ -9,7 +9,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-class StorePost
+final class StorePost
 {
     /**
      * Store Post Instance

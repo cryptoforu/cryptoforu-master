@@ -18,12 +18,12 @@ interface EarnServiceInterface
      *
      * @return void
      */
-    public function forCreate();
+    public function forCreate(): void;
 
     /**
      * Edit Page Data
      *
      * @return void
      */
-    public function forEdit(Earn $earn);
+    public function forEdit(Earn $earn): void;
 }

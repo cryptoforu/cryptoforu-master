@@ -31,7 +31,7 @@ final class UpdateMenuItems implements UpdateMenuItemContract
                 file: $validated['icon'],
                 directory: 'menu_icons'
             );
-            if (! empty($nMenu->images)) {
+            if ( ! empty($nMenu->images)) {
                 foreach ($nMenu->images as $img) {
                     $this->library->delete($img);
                 }
@@ -44,7 +44,7 @@ final class UpdateMenuItems implements UpdateMenuItemContract
             $nMenu->icon = $icon['file_name'];
         } else {
             $request->collect()->map(function ($item, $key) use ($nMenu): void {
-                $nMenu->$key = $item;
+                $nMenu->{$key} = $item;
             });
         }
         $nMenu->save();

@@ -15,9 +15,9 @@ use App\Services\Settings\Page\Actions\DeletePageMeta;
 use App\Services\Settings\Page\Actions\StorePageMeta;
 use Illuminate\Http\Request;
 
-class SettingsAction implements SettingsActionInterface
+final class SettingsAction implements SettingsActionInterface
 {
-    protected $action;
+    private $action;
 
     public function __construct(
         private readonly StorePageMeta $page,
@@ -58,7 +58,8 @@ class SettingsAction implements SettingsActionInterface
             $this->store->flushCache();
 
             return true;
-        } elseif (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_page())) {
+        }
+        if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_page())) {
             $this->deletePageMeta->handle(
                 id: $id,
             );

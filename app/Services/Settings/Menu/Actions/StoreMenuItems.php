@@ -10,7 +10,7 @@ use App\Interfaces\Settings\ActionContracts\StoreMenuItemContract;
 use App\Models\MenuItem;
 use Illuminate\Support\Facades\Cache;
 
-class StoreMenuItems implements StoreMenuItemContract
+final class StoreMenuItems implements StoreMenuItemContract
 {
     /**
      * Construct Library

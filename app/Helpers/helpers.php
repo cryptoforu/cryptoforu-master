@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-if (! function_exists('settings')) {
+if ( ! function_exists('settings')) {
     function settings($key = null, $default = null)
     {
-        if ($key === null) {
+        if (null === $key) {
             return app(App\Services\Settings\SettingsResources::class);
         }
 
@@ -13,7 +13,7 @@ if (! function_exists('settings')) {
     }
 }
 
-if (! function_exists('format_currency')) {
+if ( ! function_exists('format_currency')) {
     /**
      * Format Currency
      *
@@ -25,14 +25,17 @@ if (! function_exists('format_currency')) {
         string $currency = 'USD',
     ) {
         return (new NumberFormatter(
-            $intl, NumberFormatter::CURRENCY)
+            $intl,
+            NumberFormatter::CURRENCY
+        )
             )->formatCurrency(
-                $amount, $currency
+                $amount,
+                $currency
             );
     }
 }
 
-if (! function_exists('format_percentage')) {
+if ( ! function_exists('format_percentage')) {
     /**
      * Format Percentage
      *
@@ -40,14 +43,17 @@ if (! function_exists('format_percentage')) {
      */
     function format_percentage(
         float $number,
-        int $divide = null,
+        ?int $divide = null,
         string $intl = 'en_US',
     ) {
         $fmt = new NumberFormatter($intl, NumberFormatter::PERCENT);
         $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, 2);
         $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
+        if (null === $divide) {
+            return $fmt->format($number);
+        }
 
-        return $fmt->format($number / $divide ?? 1);
+        return $fmt->format($number / $divide);
 
     }
 }

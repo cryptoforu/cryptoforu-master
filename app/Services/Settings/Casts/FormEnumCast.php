@@ -8,7 +8,7 @@ use App\Services\Settings\Enums\FormEnum;
 use Spatie\LaravelData\Casts\Cast;
 use Spatie\LaravelData\Support\DataProperty;
 
-class FormEnumCast implements Cast
+final class FormEnumCast implements Cast
 {
     public function cast(DataProperty $property, mixed $value, array $context): FormEnum
     {

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Site\DataObjects;
 
 use App\Models\Site;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-class PageData extends Data
+final class PageData extends Data
 {
     public function __construct(
         public string $data_name,

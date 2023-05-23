@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Site\Queries;
 
 use App\Models\Site;
@@ -8,7 +10,7 @@ use App\Traits\Selectable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ShowData
+final class ShowData
 {
     use Selectable;
 

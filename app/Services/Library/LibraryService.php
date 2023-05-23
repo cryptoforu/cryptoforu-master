@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Image;
 
-class LibraryService implements LibraryActionsInterface
+final class LibraryService implements LibraryActionsInterface
 {
     public function __construct(
         private readonly StoreFile $store,
@@ -65,7 +65,7 @@ class LibraryService implements LibraryActionsInterface
      *
      * @return void
      */
-    public function save(Model $model, array $file, int $category = 2)
+    public function save(Model $model, array $file, int $category = 2): void
     {
         $this->create->save(
             model: $model,
@@ -74,7 +74,7 @@ class LibraryService implements LibraryActionsInterface
         );
     }
 
-    public function create(StoreLibraryRequest $request)
+    public function create(StoreLibraryRequest $request): void
     {
         $this->create->handle(
             request: $request

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Earn\Actions;
 
 use App\Models\EarnCategory;
@@ -8,7 +10,7 @@ use App\Traits\Selectable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ShowEarnData
+final class ShowEarnData
 {
     use Selectable;
 

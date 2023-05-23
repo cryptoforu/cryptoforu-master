@@ -8,7 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Inertia\Inertia;
 use Throwable;
 
-class Handler extends ExceptionHandler
+final class Handler extends ExceptionHandler
 {
     /**
      * A list of exception types with their corresponding custom log levels.
@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($request, Throwable $e)
     {
@@ -68,11 +68,11 @@ class Handler extends ExceptionHandler
             return $response;
         }
 
-        if (! array_key_exists($status, $this->messages)) {
+        if ( ! array_key_exists($status, $this->messages)) {
             return $response;
         }
 
-        if (! $request->isMethod('GET')) {
+        if ( ! $request->isMethod('GET')) {
             return back()
                 ->setStatusCode($status)
                 ->with('error', $this->messages[$status]);

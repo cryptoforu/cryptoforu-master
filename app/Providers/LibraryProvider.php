@@ -12,7 +12,7 @@ use App\Services\Library\LibraryResource;
 use App\Services\Library\LibraryService;
 use Illuminate\Support\ServiceProvider;
 
-class LibraryProvider extends ServiceProvider
+final class LibraryProvider extends ServiceProvider
 {
     /**
      * Register services.

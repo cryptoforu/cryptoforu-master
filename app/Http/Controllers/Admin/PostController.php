@@ -18,7 +18,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 
-class PostController extends Controller
+final class PostController extends Controller
 {
     protected $blog;
 

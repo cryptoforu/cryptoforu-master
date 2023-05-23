@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Models\Category;
@@ -9,7 +11,7 @@ use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\LazyProp;
 
-class ShowCategories
+final class ShowCategories
 {
     use FormFactory;
 
@@ -29,7 +31,7 @@ class ShowCategories
         ])->keyBy(fn (array $item, int $key) => $item['initialValues']['name']);
 
         return $values->map(
-            fn ($item, $key) => $key === 'DeFi' ? fn () => $item
+            fn ($item, $key) => 'DeFi' === $key ? fn () => $item
                 : Inertia::lazy(
                     fn () => $item
                 )

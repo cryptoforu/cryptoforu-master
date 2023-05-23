@@ -12,7 +12,7 @@ use App\Services\Earn\Actions\EditEarn;
 use App\Services\Earn\Actions\GetEditForm;
 use App\Services\Earn\Actions\ShowEarnData;
 
-class EarnService implements EarnServiceInterface
+final class EarnService implements EarnServiceInterface
 {
     public function __construct(
         private readonly PageInterface $page,

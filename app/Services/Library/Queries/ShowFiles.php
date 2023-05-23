@@ -10,7 +10,7 @@ use App\Traits\Selectable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ShowFiles
+final class ShowFiles
 {
     use Selectable;
 

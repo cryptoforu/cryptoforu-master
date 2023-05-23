@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Earn\DataObjects;
 
 use App\Models\Earn;
@@ -13,7 +15,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('EarnData')]
-class EarnData extends Data
+final class EarnData extends Data
 {
     public function __construct(
         public int $id,
@@ -53,13 +55,13 @@ class EarnData extends Data
     public static function schema(string $type = 'empty'): array
     {
         $schema = self::empty([
-            'title' => $type === 'empty' ? '' : 'textfield',
-            'content' => $type === 'empty' ? '' : 'md',
-            'main_features' => $type === 'empty' ? '' : 'md',
-            'link' => $type === 'empty' ? '' : 'textfield',
-            'image' => $type === 'empty' ? null : 'file',
-            'status' => $type === 'empty' ? '' : 'select',
-            'earn_category_id' => $type === 'empty' ? 0 : 'select',
+            'title' => 'empty' === $type ? '' : 'textfield',
+            'content' => 'empty' === $type ? '' : 'md',
+            'main_features' => 'empty' === $type ? '' : 'md',
+            'link' => 'empty' === $type ? '' : 'textfield',
+            'image' => 'empty' === $type ? null : 'file',
+            'status' => 'empty' === $type ? '' : 'select',
+            'earn_category_id' => 'empty' === $type ? 0 : 'select',
         ]);
 
         return Arr::except($schema, ['id', 'thumb', 'image_name', 'earnCategory', 'featured']);
@@ -68,13 +70,13 @@ class EarnData extends Data
     public static function editSchema(Earn $earn, string $type = 'initial'): array
     {
         $schema = self::empty([
-            'title' => $type === 'initial' ? $earn->title : 'textfield',
-            'content' => $type === 'initial' ? $earn->content : 'md',
-            'main_features' => $type === 'initial' ? $earn->main_features : 'md',
-            'link' => $type === 'initial' ? $earn->link : 'textfield',
-            'image' => $type === 'initial' ? null : 'file',
-            'status' => $type === 'initial' ? $earn->status : 'select',
-            'earn_category_id' => $type === 'initial' ? $earn->earn_category_id : 'select',
+            'title' => 'initial' === $type ? $earn->title : 'textfield',
+            'content' => 'initial' === $type ? $earn->content : 'md',
+            'main_features' => 'initial' === $type ? $earn->main_features : 'md',
+            'link' => 'initial' === $type ? $earn->link : 'textfield',
+            'image' => 'initial' === $type ? null : 'file',
+            'status' => 'initial' === $type ? $earn->status : 'select',
+            'earn_category_id' => 'initial' === $type ? $earn->earn_category_id : 'select',
         ]);
 
         return Arr::except($schema, ['id', 'thumb', 'image_name', 'earnCategory', 'featured']);

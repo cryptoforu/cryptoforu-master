@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Interfaces\FrontEnd\FrontEndInterface;
 use App\Services\FrontEnd\FrontEndService;
 use Illuminate\Support\ServiceProvider;
 
-class FrontEndProvider extends ServiceProvider
+final class FrontEndProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -24,6 +26,6 @@ class FrontEndProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

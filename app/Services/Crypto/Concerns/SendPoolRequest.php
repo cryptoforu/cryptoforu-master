@@ -36,7 +36,9 @@ trait SendPoolRequest
             }
         );
         for ($page = 0; $page < $nbPages; $page++) {
-            $col->put(...$collect[$page]->collect()->toArray());
+            if ($collect[$page]->successful()) {
+                $col->push($collect[$page]->collect());
+            }
         }
 
         return $col;

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\WithData;
 
-class LibraryCategory extends Model
+final class LibraryCategory extends Model
 {
     use HasFactory, WithData;
 

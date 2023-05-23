@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Site\DataObjects\HomePage;
 
 use Spatie\LaravelData\Data;
 
-class FeaturesData extends Data
+final class FeaturesData extends Data
 {
     public function __construct(
         public string $name,

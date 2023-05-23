@@ -9,7 +9,7 @@ use App\Interfaces\Settings\PageInterface;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class DashboardController extends Controller
+final class DashboardController extends Controller
 {
     protected $page;
 

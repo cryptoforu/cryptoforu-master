@@ -10,7 +10,7 @@ use App\Interfaces\Site\StoreDataContract;
 use App\Models\Site;
 use App\Services\Site\Concerns\Collectable;
 
-class StoreSiteData implements StoreDataContract
+final class StoreSiteData implements StoreDataContract
 {
     use Collectable;
 
@@ -27,7 +27,7 @@ class StoreSiteData implements StoreDataContract
      */
     public function handle(
         StoreSiteDataRequest $request
-    ) {
+    ): void {
         $query = Site::ofData($request->validated('data_name'));
         $validated = $request->validated();
         if ($request->hasFile('image')) {
@@ -47,7 +47,7 @@ class StoreSiteData implements StoreDataContract
             data_values: $query->data_values,
             image_path: $path ?? null,
         );
-        if (! empty($query) && isset($data['new_values'])) {
+        if ( ! empty($query) && isset($data['new_values'])) {
             $query->data_values[$data['key']] = $data['new_values'];
             cache()->store('site')->clear();
             $query->save();

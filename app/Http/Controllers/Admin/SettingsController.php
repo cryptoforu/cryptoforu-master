@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Throwable;
 
-class SettingsController extends Controller
+final class SettingsController extends Controller
 {
     /**
      * Undocumented variable
@@ -121,7 +121,7 @@ class SettingsController extends Controller
 
             return false;
         }
-        if (! $update) {
+        if ( ! $update) {
             return back()->with('error', 'Something Went Wrong');
         }
 
@@ -131,9 +131,9 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(): void
     {
-        //
+
     }
 
     /**
@@ -151,7 +151,7 @@ class SettingsController extends Controller
 
             return false;
         }
-        if (! $del) {
+        if ( ! $del) {
             return back()->with('error', 'Something Went Wrong');
         }
 

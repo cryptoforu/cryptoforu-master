@@ -75,6 +75,10 @@ return [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data/frontend'),
         ],
+        'shared_props' => [
+            'driver' => 'file',
+            'path' => storage_path('framework/cache/data/shared_props'),
+        ],
         'site' => [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data/site'),
@@ -130,6 +134,6 @@ return [
     |
      */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache_'),
 
 ];

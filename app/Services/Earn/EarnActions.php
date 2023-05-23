@@ -13,7 +13,7 @@ use App\Services\Earn\Actions\DeleteEarn;
 use App\Services\Earn\Actions\StoreEarn;
 use App\Services\Earn\Actions\UpdateEarn;
 
-class EarnActions implements EarnActionInterface
+final class EarnActions implements EarnActionInterface
 {
     /**
      * Earn Action Instance

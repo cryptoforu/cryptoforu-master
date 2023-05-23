@@ -9,7 +9,7 @@ use App\Interfaces\FrontEnd\FrontEndInterface;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class HomeController extends Controller
+final class HomeController extends Controller
 {
     public function __construct(
         protected FrontEndInterface $front,

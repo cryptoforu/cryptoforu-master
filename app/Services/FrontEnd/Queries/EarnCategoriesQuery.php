@@ -9,13 +9,13 @@ use App\Models\EarnCategory;
 use App\Services\Earn\DataObjects\EarnCategoryData;
 use App\Services\Earn\Enums\EarnStatus;
 
-class EarnCategoriesQuery
+final class EarnCategoriesQuery
 {
     public function handle()
     {
         $query = EarnCategory::whereIn('id', [1, 2, 7, 8])->get()->map(
             function ($item, $key) {
-                $item->load(['earn' => function ($query) {
+                $item->load(['earn' => function ($query): void {
                     $query->ofStatus(EarnStatus::FEATURED());
                 }]);
 

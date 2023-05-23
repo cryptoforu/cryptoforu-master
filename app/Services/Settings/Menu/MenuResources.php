@@ -9,7 +9,7 @@ use App\Interfaces\Settings\MenuInterface;
 use App\Services\Settings\Menu\Actions\GetMenu;
 use App\Services\Settings\Menu\Actions\ShowMenus;
 
-class MenuResources implements MenuInterface
+final class MenuResources implements MenuInterface
 {
     public function __construct(
         private readonly GetMenu $getMenu,

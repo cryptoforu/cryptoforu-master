@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\LaravelData\WithData;
 
-class Library extends Model
+final class Library extends Model
 {
     use HasFactory, WithData;
 

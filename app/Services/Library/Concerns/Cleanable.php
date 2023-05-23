@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Library\Concerns;
 
 use Illuminate\Support\Arr;
@@ -17,30 +19,30 @@ trait Cleanable
                     Storage::delete($value);
 
                     return true;
-                } else {
-                    $f = Arr::get($files, "*.{$value}");
-                    if (! empty($f)) {
-                        Storage::delete($f);
-
-                        return true;
-                    }
-
-                    return false;
                 }
+                $f = Arr::get($files, "*.{$value}");
+                if ( ! empty($f)) {
+                    Storage::delete($f);
+
+                    return true;
+                }
+
+                return false;
+
             });
         } else {
             if (Str::of($file)->startsWith('images/')) {
                 Storage::delete($file);
 
                 return true;
-            } else {
-                $f = Arr::get($files, "*.{$file}");
-                if (! empty($f)) {
-                    Storage::delete($f);
-                }
-
-                return false;
             }
+            $f = Arr::get($files, "*.{$file}");
+            if ( ! empty($f)) {
+                Storage::delete($f);
+            }
+
+            return false;
+
         }
     }
 }

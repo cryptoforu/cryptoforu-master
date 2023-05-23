@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Actions\GetSharedProps;
 use App\Contracts\CacheStoreContract;
+use App\Contracts\SharedPropsContract;
 use App\Services\Blog\BlogService;
 use App\Services\Earn\EarnActions;
 use App\Services\Earn\EarnService;
@@ -16,7 +20,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Valuestore\Valuestore;
 
-class CacheStoreProvider extends ServiceProvider
+final class CacheStoreProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -45,7 +49,8 @@ class CacheStoreProvider extends ServiceProvider
                     Cache::store('settings'),
                     Valuestore::make(storage_path('app/store/settings/settings-data.json'))
                 );
-            });
+            })
+        ;
 
         $this->app->when(BlogService::class)->needs(
             CacheStoreContract::class,
@@ -73,6 +78,11 @@ class CacheStoreProvider extends ServiceProvider
                 valuestore: Valuestore::make(storage_path('app/store/frontend/front-data.json'))
             );
         });
+
+        $this->app->bind(
+            abstract: SharedPropsContract::class,
+            concrete: GetSharedProps::class,
+        );
     }
 
     /**
@@ -80,6 +90,17 @@ class CacheStoreProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Cache::macro('lazy', function (string $key, mixed $callback, int $minutes = 1440) {
+            if (Cache::has($key)) {
+                $data = Cache::get($key);
+
+                return $data;
+            }
+            $data = $callback();
+            Cache::set($key, $data, $minutes);
+
+            return $data;
+
+        });
     }
 }

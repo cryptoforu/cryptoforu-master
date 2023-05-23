@@ -16,7 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class CategoryController extends Controller
+final class CategoryController extends Controller
 {
     use Cleanable;
 

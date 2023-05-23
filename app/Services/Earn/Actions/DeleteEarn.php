@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Earn\Actions;
 
 use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Earn;
 
-class DeleteEarn
+final class DeleteEarn
 {
     public function __construct(
         private LibraryActionsInterface $action,

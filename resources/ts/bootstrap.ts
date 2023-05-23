@@ -10,7 +10,8 @@ import axios from 'axios';
 (window as any).axios = axios;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+(window as any).axios.defaults.headers.common['X-Requested-With'] =
+  'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

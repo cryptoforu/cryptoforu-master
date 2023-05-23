@@ -10,7 +10,7 @@ use App\Interfaces\Site\SiteInterface;
 use App\Models\Site;
 use App\Services\Site\Queries\ShowData;
 
-class SiteService implements SiteInterface
+final class SiteService implements SiteInterface
 {
     public function __construct(
         private PageInterface $page,

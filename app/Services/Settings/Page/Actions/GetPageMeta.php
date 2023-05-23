@@ -6,7 +6,7 @@ namespace App\Services\Settings\Page\Actions;
 
 use App\Models\Page;
 
-class GetPageMeta
+final class GetPageMeta
 {
     /**
      * Handle Page Meta Data

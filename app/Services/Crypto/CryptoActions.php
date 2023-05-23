@@ -10,7 +10,7 @@ use App\Interfaces\Crypto\HandleCoinsContract;
 use App\Services\Crypto\DataObjects\CryptoCategories;
 use App\Services\Crypto\DataObjects\CryptoCoin;
 
-class CryptoActions implements CryptoActionsInterface
+final class CryptoActions implements CryptoActionsInterface
 {
     public function __construct(
         private readonly CryptoService $service,
@@ -26,7 +26,7 @@ class CryptoActions implements CryptoActionsInterface
      */
     public function updateOrCreateCategories(
         HandleCategoriesContract $action
-    ) {
+    ): void {
         $action->handle(
             data_values: CryptoCategories::make(
                 attributes: $this->service
@@ -43,7 +43,7 @@ class CryptoActions implements CryptoActionsInterface
      */
     public function updateOrCreateCoins(
         HandleCoinsContract $action
-    ) {
+    ): void {
         $action->handle(
             responses: CryptoCoin::make(
                 attributes: $this->service->crypto()->coins()

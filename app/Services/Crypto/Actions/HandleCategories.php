@@ -8,7 +8,7 @@ use App\Interfaces\Crypto\HandleCategoriesContract;
 use App\Models\Crypto;
 use Illuminate\Support\Collection;
 
-class HandleCategories implements HandleCategoriesContract
+final class HandleCategories implements HandleCategoriesContract
 {
     /**
      * Handle Crypto Categories
@@ -21,14 +21,13 @@ class HandleCategories implements HandleCategoriesContract
             ]);
 
             return true;
-        } else {
-            Crypto::create([
-                'data_name' => 'categories',
-                'data_values' => $data_values,
-            ]);
-
-            return true;
         }
+        Crypto::create([
+            'data_name' => 'categories',
+            'data_values' => $data_values,
+        ]);
+
+        return true;
 
         return false;
     }

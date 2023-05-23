@@ -12,7 +12,7 @@ use App\Services\Blog\DataObjects\TagsData;
 use App\Services\Site\DataObjects\HomePage\HomePageData;
 use Illuminate\Support\Collection;
 
-class GetHomeData
+final class GetHomeData
 {
     public function __construct(
         private readonly EarnCategoriesQuery $earn_categories,
@@ -26,10 +26,12 @@ class GetHomeData
         return [
             'data' => HomePageData::fromData(),
             'categories' => (new Collection(
-                items: Category::all()->map(fn ($cat) => CategoryData::fromData($cat)->additional(
-                    ['color' => ColorScheme::randColor()]
+                items: Category::all()->map(
+                    fn ($cat) => CategoryData::fromData($cat)->additional(
+                        ['color' => ColorScheme::randColor()]
+                    )
                 )
-                )))->only([5, 8, 9])->toArray(),
+            ))->only([5, 8, 9])->toArray(),
             'posts' => $this->latest_posts->handle(),
             'tags' => (new Collection(
                 items: Tag::all()->map(fn ($t) => TagsData::from($t))

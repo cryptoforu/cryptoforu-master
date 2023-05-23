@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
 use Spatie\Enum\Laravel\Rules\EnumRule;
 
-class StorePostRequest extends FormRequest
+final class StorePostRequest extends FormRequest
 {
     use TransformsEnums;
 

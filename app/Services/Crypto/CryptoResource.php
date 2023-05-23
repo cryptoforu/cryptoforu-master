@@ -7,7 +7,7 @@ namespace App\Services\Crypto;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 
-class CryptoResource
+final class CryptoResource
 {
     public function __construct(
         private readonly CryptoService $service,
@@ -49,7 +49,7 @@ class CryptoResource
                 'per_page' => '250',
                 'page' => '',
             ],
-            nbPages: 3,
+            nbPages: 5,
             key: 'page',
         );
     }

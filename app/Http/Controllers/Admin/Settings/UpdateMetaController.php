@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +10,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Page;
 use Illuminate\Support\Arr;
 
-class UpdateMetaController extends Controller
+final class UpdateMetaController extends Controller
 {
     public function __construct(
         protected LibraryActionsInterface $library,
@@ -24,14 +26,14 @@ class UpdateMetaController extends Controller
 
         $validated = $request->validated();
         $images = $request->allFiles();
-        Arr::map($images, function ($img, $key) use ($page) {
+        Arr::map($images, function ($img, $key) use ($page): void {
             $paths = $this->library->store(
                 file: $img,
                 directory: 'meta'
             );
-            $page->$key = strval(config('app.url').'/'.$paths['path']);
+            $page->{$key} = (string) (config('app.url') . '/' . $paths['path']);
 
-            if (! empty($page->images)) {
+            if ( ! empty($page->images)) {
                 foreach ($page->images as $file) {
                     $this->library->delete($file);
                 }

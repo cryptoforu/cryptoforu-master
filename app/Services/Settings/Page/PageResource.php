@@ -10,7 +10,7 @@ use App\Services\Settings\Page\Actions\GetPageMeta;
 use App\Services\Settings\Page\Actions\ShowPageMeta;
 use Illuminate\Support\Collection;
 
-class PageResource implements PageInterface
+final class PageResource implements PageInterface
 {
     public function __construct(
         private readonly GetPageMeta $meta,

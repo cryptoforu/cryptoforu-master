@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Crypto\DataObjects;
 
 use App\Models\Crypto;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 
-class CryptoData extends Data
+final class CryptoData extends Data
 {
     public function __construct(
         public readonly string $data_name,

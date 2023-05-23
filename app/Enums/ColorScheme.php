@@ -31,9 +31,7 @@ final class ColorScheme extends Enum
 
     protected static function values(): Closure
     {
-        return function (string $name): string|int {
-            return mb_strtolower($name);
-        };
+        return fn (string $name): string|int => mb_strtolower($name);
     }
 
     public static function randColor()

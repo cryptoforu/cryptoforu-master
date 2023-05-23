@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Interfaces\Settings\MenuInterface;
-use App\Interfaces\Site\SocialLinksContract;
+use App\Contracts\SharedPropsContract;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
-class HandleInertiaRequests extends Middleware
+final class HandleInertiaRequests extends Middleware
 {
     public function __construct(
-        private readonly MenuInterface $menu,
-        protected SocialLinksContract $social,
+        protected SharedPropsContract $props,
     ) {
+        $this->props = $props;
     }
 
     /**
@@ -47,7 +45,6 @@ class HandleInertiaRequests extends Middleware
     {
         $ziggy = new Ziggy($group = null, $request->url());
         $ziggy = $ziggy->toArray();
-        $admin_path = Str::of($request->path())->startsWith('admin');
 
         return array_merge(parent::share($request), [
             'auth' => [
@@ -59,9 +56,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'ziggy' => $ziggy,
             'cookies' => $request->header('cookie', '') ?? '',
-            'admin_sidebar' => $admin_path ? $this->menu->getMenu('admin_sidebar') : null,
-            'main_menu' => $this->menu->getMenu('front_main'),
-            'social' => $this->social->handle(),
+            ...$this->props->handle(),
         ]);
     }
 }

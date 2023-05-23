@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Earn\DataObjects;
 
 use App\Models\EarnCategory;
@@ -11,7 +13,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('EarnCategory')]
-class EarnCategoryData extends Data
+final class EarnCategoryData extends Data
 {
     public function __construct(
         public int $id,

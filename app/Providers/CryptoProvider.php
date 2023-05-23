@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
@@ -12,7 +14,7 @@ use App\Services\Crypto\CryptoService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
-class CryptoProvider extends ServiceProvider
+final class CryptoProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -21,9 +23,7 @@ class CryptoProvider extends ServiceProvider
     {
         $this->app->singleton(
             abstract: CryptoService::class,
-            concrete: function () {
-                return new CryptoService(Http::coingecko());
-            }
+            concrete: fn () => new CryptoService(Http::coingecko())
         );
         $this->app->bind(
             abstract: HandleCategoriesContract::class,
@@ -44,6 +44,6 @@ class CryptoProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

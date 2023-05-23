@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 
-class Post extends Model
+final class Post extends Model
 {
     use HasFactory;
     use WithData;
@@ -36,9 +36,9 @@ class Post extends Model
 
     protected $casts = [
         'status' => PostStatus::class,
-        'nullable_enum' => PostStatus::class.':nullable',
-        'array_of_enums' => PostStatus::class.':collection',
-        'nullable_array_of_enums' => PostStatus::class.':collection,nullable',
+        'nullable_enum' => PostStatus::class . ':nullable',
+        'array_of_enums' => PostStatus::class . ':collection',
+        'nullable_array_of_enums' => PostStatus::class . ':collection,nullable',
     ];
 
     public function category(): BelongsTo

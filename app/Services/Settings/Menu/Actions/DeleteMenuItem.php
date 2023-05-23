@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Settings\Menu\Actions;
 
 use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\MenuItem;
 
-class DeleteMenuItem
+final class DeleteMenuItem
 {
     public function __construct(
         private LibraryActionsInterface $action,
@@ -21,7 +23,7 @@ class DeleteMenuItem
         $item = MenuItem::find($id);
 
         if ($item->exists) {
-            if (! empty($item->images)) {
+            if ( ! empty($item->images)) {
                 foreach ($item->images as $img) {
                     $this->action->delete($img);
                 }

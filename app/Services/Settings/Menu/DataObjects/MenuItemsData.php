@@ -6,6 +6,7 @@ namespace App\Services\Settings\Menu\DataObjects;
 
 use App\Models\MenuItem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\WithoutValidation;
 use Spatie\LaravelData\Data;
@@ -15,7 +16,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('MenuItems')]
-class MenuItemsData extends Data
+final class MenuItemsData extends Data
 {
     public function __construct(
         #[WithoutValidation]
@@ -66,13 +67,20 @@ class MenuItemsData extends Data
     public static function schema(string $type = 'empty'): array
     {
         $schema = self::empty([
-            'label' => $type === 'empty' ? '' : 'textfield',
-            'route' => $type === 'empty' ? '' : 'textfield',
-            'icon' => $type === 'empty' ? null : 'file',
-            'parent_id' => $type === 'empty' ? 0 : 'select',
-            'menu_id' => $type === 'empty' ? '' : 'select',
+            'label' => 'empty' === $type ? '' : 'textfield',
+            'route' => 'empty' === $type ? '' : 'textfield',
+            'icon' => 'empty' === $type ? null : 'file',
+            'parent_id' => 'empty' === $type ? 0 : 'select',
+            'menu_id' => 'empty' === $type ? '' : 'select',
         ]);
 
         return Arr::except($schema, ['id', 'childs', 'menu']);
+    }
+
+    public static function make(Collection $items): array
+    {
+        return $items->map(
+            fn ($item) => self::from($item),
+        )->toArray();
     }
 }

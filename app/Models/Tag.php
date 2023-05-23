@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\WithData;
 
-class Tag extends Model
+final class Tag extends Model
 {
     use HasFactory;
     use WithData;

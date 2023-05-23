@@ -8,7 +8,7 @@ use App\Models\Post;
 use App\Services\Blog\DataObjects\PostData;
 use App\Services\Blog\Enums\PostStatus;
 
-class ShowPosts
+final class ShowPosts
 {
     /**
      * Get Post Table Data

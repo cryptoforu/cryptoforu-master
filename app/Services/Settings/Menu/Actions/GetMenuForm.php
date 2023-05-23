@@ -11,7 +11,7 @@ use App\Services\Settings\Menu\DataObjects\MenuData;
 use App\Services\Settings\Menu\DataObjects\MenuItemsData;
 use Illuminate\Support\Collection;
 
-class GetMenuForm
+final class GetMenuForm
 {
     use FormFactory;
 

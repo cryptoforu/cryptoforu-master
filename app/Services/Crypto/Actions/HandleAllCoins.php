@@ -8,26 +8,23 @@ use App\Interfaces\Crypto\HandleCoinsContract;
 use App\Models\Crypto;
 use Illuminate\Support\Collection;
 
-class HandleAllCoins implements HandleCoinsContract
+final class HandleAllCoins implements HandleCoinsContract
 {
-    public function handle(Collection $responses)
+    public function handle(Collection $responses): bool
     {
         $query = Crypto::ofName('all_coins');
         if ($query) {
-            $collect = $query->data_values->merge($responses);
-            $query->data_values = $collect;
+            $query->data_values = $responses;
             $query->save();
 
             return true;
-        } else {
-            Crypto::create([
-                'data_name' => 'all_coins',
-                'data_values' => $responses,
-            ]);
-
-            return true;
         }
+        Crypto::create([
+            'data_name' => 'all_coins',
+            'data_values' => $responses,
+        ]);
 
-        return false;
+        return true;
+
     }
 }

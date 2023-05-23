@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Throwable;
 
-class ErrorResponse implements Responsable
+final class ErrorResponse implements Responsable
 {
     public function __construct(
         private string $message,
@@ -20,7 +22,7 @@ class ErrorResponse implements Responsable
     {
         $response = ['message' => $this->message];
 
-        if (! is_null($this->exception) && config('app.debug')) {
+        if (null !== $this->exception && config('app.debug')) {
             $response['debug'] = [
                 'message' => $this->exception->getMessage(),
                 'file' => $this->exception->getFile(),

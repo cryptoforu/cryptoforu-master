@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\Actions;
 
 use App\Http\Requests\UpdatePostRequest;
@@ -7,7 +9,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-class UpdatePost
+final class UpdatePost
 {
     /**
      * Update Post Instance
@@ -29,7 +31,7 @@ class UpdatePost
             $post->featured_image = $image['path'];
             $post->image_name = $image['file_name'];
             $post->thumb = $image['thumb'];
-            if (! empty($post->images)) {
+            if ( ! empty($post->images)) {
                 foreach ($post->images as $img) {
                     $this->library->delete($img);
                 }
@@ -40,8 +42,8 @@ class UpdatePost
                 );
             }
         }
-        $request->collect()->except(['_method'])->map(function ($item, $key) use ($post) {
-            $post->$key = $item;
+        $request->collect()->except(['_method'])->map(function ($item, $key) use ($post): void {
+            $post->{$key} = $item;
         });
         if (empty($request->safe())) {
             return false;

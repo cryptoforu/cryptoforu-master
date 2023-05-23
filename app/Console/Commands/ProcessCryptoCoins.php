@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
 
-class ProcessCryptoCoins extends Command
+final class ProcessCryptoCoins extends Command
 {
     /**
      * The name and signature of the console command.

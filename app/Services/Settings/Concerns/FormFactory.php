@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 trait FormFactory
 {
-    public function generate(Collection $items, array $options = null)
+    public function generate(Collection $items, ?array $options = null)
     {
         $formData = $items->map(function ($value, $key) use ($options) {
             if (

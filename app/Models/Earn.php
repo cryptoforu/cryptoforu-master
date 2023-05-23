@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 
-class Earn extends Model
+final class Earn extends Model
 {
     use HasFactory, WithData;
 
@@ -35,9 +35,9 @@ class Earn extends Model
     protected $casts = [
         'featured' => FeaturedEnum::class,
         'status' => EarnStatus::class,
-        'nullable_enum' => EarnStatus::class.':nullable',
-        'array_of_enums' => EarnStatus::class.':collection',
-        'nullable_array_of_enums' => EarnStatus::class.':collection,nullable',
+        'nullable_enum' => EarnStatus::class . ':nullable',
+        'array_of_enums' => EarnStatus::class . ':collection',
+        'nullable_array_of_enums' => EarnStatus::class . ':collection,nullable',
     ];
 
     protected $dataClass = EarnData::class;

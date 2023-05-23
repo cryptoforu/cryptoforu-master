@@ -11,7 +11,7 @@ use App\Models\Post;
 use App\Services\Blog\Actions\StorePost;
 use App\Services\Blog\Actions\UpdatePost;
 
-class BlogActions implements BlogActionInterface
+final class BlogActions implements BlogActionInterface
 {
     /**
      * Blog Actions Instance

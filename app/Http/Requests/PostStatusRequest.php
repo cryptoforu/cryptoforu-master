@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
 use Spatie\Enum\Laravel\Rules\EnumRule;
 
-class PostStatusRequest extends FormRequest
+final class PostStatusRequest extends FormRequest
 {
     use TransformsEnums;
 

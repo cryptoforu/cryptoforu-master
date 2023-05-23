@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\WithData;
 
-class EarnCategory extends Model
+final class EarnCategory extends Model
 {
     use HasFactory, WithData;
 

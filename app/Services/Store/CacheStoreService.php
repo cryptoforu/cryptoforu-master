@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Store;
 
 use App\Contracts\CacheStoreContract;
@@ -8,7 +10,7 @@ use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Spatie\Valuestore\Valuestore;
 
-class CacheStoreService extends Valuestore implements CacheStoreContract
+final class CacheStoreService extends Valuestore implements CacheStoreContract
 {
     /**
      * @var string
@@ -24,9 +26,7 @@ class CacheStoreService extends Valuestore implements CacheStoreContract
         $uniqueKey = $this->generateKey(name: $key);
         $data = $this->store->rememberForever(
             key: $uniqueKey,
-            callback: function () use ($callback) {
-                return $callback;
-            }
+            callback: fn () => $callback
         );
 
         return $data;
@@ -40,12 +40,12 @@ class CacheStoreService extends Valuestore implements CacheStoreContract
             $value = $this->valuestore->get(name: $name);
 
             return $value;
-        } else {
-            $this->valuestore->put(name: $name, value: $uniqueKey);
-            $value = $this->valuestore->get(name: $name);
-
-            return $value;
         }
+        $this->valuestore->put(name: $name, value: $uniqueKey);
+        $value = $this->valuestore->get(name: $name);
+
+        return $value;
+
     }
 
     public function flushCache(

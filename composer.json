@@ -15,6 +15,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
+        "predis/predis": "^2.1",
         "spatie/async": "^1.5",
         "spatie/enum": "^3.13",
         "spatie/guzzle-rate-limiter-middleware": "^2.0",

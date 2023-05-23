@@ -6,7 +6,7 @@ namespace App\Services\Site\DataObjects\HomePage;
 
 use Spatie\LaravelData\Data;
 
-class SocialLinksData extends Data
+final class SocialLinksData extends Data
 {
     public function __construct(
         public string $name,

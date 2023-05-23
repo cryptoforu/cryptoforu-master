@@ -15,7 +15,7 @@ use App\Services\Settings\Page\DataObjects\PageData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class EditEarn
+final class EditEarn
 {
     use FormFactory;
 

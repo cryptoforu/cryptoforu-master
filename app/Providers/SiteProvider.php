@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Contracts\CacheStoreContract;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Valuestore\Valuestore;
 
-class SiteProvider extends ServiceProvider
+final class SiteProvider extends ServiceProvider
 {
     public $bindings = [
         StoreDataContract::class => StoreSiteData::class,
@@ -48,6 +50,6 @@ class SiteProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

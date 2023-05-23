@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Library\ImageFilters;
 
 use Intervention\Image\Filters\FilterInterface;
 use Intervention\Image\Image;
 
-class MetaFilter implements FilterInterface
+final class MetaFilter implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-        return $image->fit(1200, 630, function ($constraint) {
+        return $image->fit(1200, 630, function ($constraint): void {
             $constraint->upsize();
         })->encode('jpg', 75);
     }
