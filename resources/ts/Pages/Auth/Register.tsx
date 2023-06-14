@@ -1,9 +1,10 @@
-import { FormEvent } from 'react';
-import AuthLayout from '@/Layouts/AuthLayout';
+import { Button, Checkbox, HStack, Input, Stack } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
+import { FormEvent } from 'react';
+
 import { Label } from '@/Components/Elements/Forms';
-import { Button, Checkbox, HStack, Stack, Input } from '@chakra-ui/react';
-import { NavLink } from '@/Components/Elements/Navigation';
+import { NavigationLink } from '@/Components/Elements/Navigation';
+import AuthLayout from '@/Layouts/AuthLayout';
 import { useRoute } from '@/Providers/RouteProvider';
 
 const Register = () => {
@@ -75,7 +76,9 @@ const Register = () => {
           </Stack>
           <HStack spacing={'4'}>
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <NavLink to="password.request">Forgot Password?</NavLink>
+            <NavigationLink to="password.request">
+              Forgot Password?
+            </NavigationLink>
           </HStack>
           <Stack>
             <Button

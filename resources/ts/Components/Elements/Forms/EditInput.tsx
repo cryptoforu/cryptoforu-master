@@ -1,21 +1,23 @@
-import { PropsWithChildren } from 'react';
+import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import {
-  IconButton,
   ButtonGroup,
   Flex,
-  useColorModeValue as mode,
+  IconButton,
   Text,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { BtnLink } from '../Navigation';
-import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { PropsWithChildren } from 'react';
+
 import {
-  useSetInput,
-  useIsEditing,
-  useInputValues,
   useEditId,
+  useInputValues,
+  useIsEditing,
+  useSetInput,
 } from '@/Store/useEditInputStore';
-import { LazyImage } from '../Content';
 import type { EditMenuProps } from '@/types';
+
+import { LazyImage } from '../Content';
+import { ButtonLink } from '../Navigation';
 function InputControls({ index }: EditMenuProps) {
   const setInput = useSetInput();
   const isEditing = useIsEditing(index);
@@ -24,13 +26,10 @@ function InputControls({ index }: EditMenuProps) {
 
   return isEditing ? (
     <ButtonGroup justifyContent="center" size="sm">
-      <BtnLink
-        component={IconButton}
+      <IconButton
+        as={ButtonLink}
         aria-label="check"
-        iconProps={{
-          icon: <CheckIcon />,
-          'aria-label': 'Edit',
-        }}
+        icon={<CheckIcon />}
         to="admin-settings.menu"
         routeParams={false}
         params={id}

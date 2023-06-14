@@ -1,6 +1,7 @@
 import { Button, ButtonGroup } from '@chakra-ui/react';
+
+import { ButtonLink } from '@/Components/Elements/Navigation';
 import { useSelectAll } from '@/Store/useLibraryStore';
-import { BtnLink } from '@/Components/Elements/Navigation';
 import { useMenuSelectContext } from '@/Store/useMenuSelect';
 const SelectAll = () => {
   const { selected, toogleSelect, clearSelected } = useSelectAll();
@@ -8,7 +9,7 @@ const SelectAll = () => {
   return (
     <ButtonGroup gap={6}>
       {selected.length > 1 && (
-        <BtnLink
+        <ButtonLink
           to="admin-library.destroyMultiple"
           options={{
             method: 'delete',
@@ -24,7 +25,7 @@ const SelectAll = () => {
           colorScheme="red"
         >
           Delete
-        </BtnLink>
+        </ButtonLink>
       )}
       <Button onClick={() => toogleSelect()}>Select</Button>
     </ButtonGroup>

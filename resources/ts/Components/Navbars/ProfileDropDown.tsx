@@ -1,29 +1,31 @@
 import {
   Avatar,
   Box,
+  Button,
   HStack,
   Menu,
+  MenuButton,
   MenuItem,
   MenuList,
-  MenuButton,
+  Portal,
   Text,
   useColorModeValue as mode,
-  Portal,
-  Button,
 } from '@chakra-ui/react';
-import { router } from '@inertiajs/react';
+
 import { useRoute } from '@/Providers/RouteProvider';
 import type { InertiaSharedProps } from '@/types';
+
 const UserAvatar = () => (
-  <Avatar w="8" h="8" src="/img/cache/original/male_user.svg" name="User" />
+  <Avatar w="8" h="8" src="/api/img/cache/original/male_user.svg" name="User" />
 );
 
 type Props = {
   auth: InertiaSharedProps['auth'];
 };
 const ProfileDropDown = ({ auth }: Props) => {
-  const { route } = useRoute();
+  const { route, navigate, isPending } = useRoute();
   const { user } = auth;
+
   return (
     <Menu>
       <MenuButton
@@ -52,11 +54,26 @@ const ProfileDropDown = ({ auth }: Props) => {
               </Text>
             </Box>
           </HStack>
-          <MenuItem fontWeight="medium">Your Profile</MenuItem>
+          <MenuItem
+            isDisabled={isPending}
+            _hover={{ bg: mode('emerald.50', 'slate.800') }}
+            fontWeight="medium"
+            onClick={() => navigate(route('admin:profile'))}
+          >
+            Your Profile
+          </MenuItem>
           <MenuItem fontWeight="medium">Feedback & Support</MenuItem>
           <MenuItem fontWeight="medium">Account Settings</MenuItem>
           <MenuItem
-            onClick={() => router.post(route('logout'))}
+            onClick={() =>
+              navigate(
+                route('logout'),
+                {},
+                {
+                  method: 'post',
+                }
+              )
+            }
             fontWeight="medium"
             color={mode('red.500', 'red.300')}
           >

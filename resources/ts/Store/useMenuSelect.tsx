@@ -1,23 +1,24 @@
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  useTransition,
-  useRef,
-  useContext,
-  createContext,
-  PropsWithChildren,
-  useDeferredValue,
-} from 'react';
-import { router } from '@inertiajs/react';
-import { createStore, useStore } from 'zustand';
-import {
+  Button,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Button,
-  useColorModeValue as mode,
+  MenuList,
   Portal,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { router } from '@inertiajs/react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useDeferredValue,
+  useRef,
+  useTransition,
+} from 'react';
+import { createStore, useStore } from 'zustand';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
 
 type SelectProps = {
@@ -110,7 +111,7 @@ export function MenuSelect() {
     <Menu placement="bottom-end">
       <MenuButton
         as={Button}
-        variant="primaryBtn"
+        colorScheme={'emerald'}
         rightIcon={<ChevronDownIcon />}
         isLoading={isPending}
       >

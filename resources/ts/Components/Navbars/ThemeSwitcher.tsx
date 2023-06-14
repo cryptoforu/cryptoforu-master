@@ -1,14 +1,20 @@
 import {
-  useColorMode,
   chakra,
+  Icon,
+  IconButton,
   shouldForwardProp,
-  Button,
-  Avatar,
+  useColorMode,
 } from '@chakra-ui/react';
+import {
+  AnimatePresence,
+  isValidMotionProp,
+  m,
+  useAnimate,
+  usePresence,
+} from 'framer-motion';
+import { useEffect } from 'react';
 
-import { m, isValidMotionProp, AnimatePresence } from 'framer-motion';
-
-const ToogleButton = chakra(m(Button), {
+const ToogleButton = chakra(m(IconButton), {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
   baseStyle: {
@@ -17,79 +23,73 @@ const ToogleButton = chakra(m(Button), {
   },
 });
 
-const MotionIcon = chakra(m(Avatar), {
-  shouldForwardProp: (prop) =>
-    isValidMotionProp(prop) || shouldForwardProp(prop),
-  baseStyle: {
-    width: '8',
-    height: '8',
-  },
-});
+function AnimatedIcon({ path }: { path: string }) {
+  const [isPresent, safeToRemove] = usePresence();
+  const [scope, animate] = useAnimate();
 
-const variants = {
-  enter: (direction: string) => {
-    return {
-      y: direction === 'dark' ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    y: 0,
-    opacity: 1,
-  },
-  exit: (direction: string) => {
-    return {
-      zIndex: 0,
-      y: direction === 'light' ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
+  useEffect(() => {
+    if (isPresent) {
+      const enterAnimation = async () => {
+        await animate(
+          'path',
+          { pathLength: 1 },
+          { duration: 0.3, ease: 'easeIn' }
+        );
+      };
+      enterAnimation();
+    } else {
+      const exitAnimation = async () => {
+        await animate(
+          'path',
+          { pathLength: 0 },
+          { duration: 0.3, ease: 'easeOut' }
+        );
+        safeToRemove();
+      };
+
+      exitAnimation();
+    }
+  }, [animate, isPresent, safeToRemove, scope]);
+  return (
+    <Icon
+      ref={scope}
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentcolor"
+      width="24px"
+      height="24px"
+      fill="none"
+    >
+      <chakra.path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d={path}
+        pathLength={0}
+      />
+    </Icon>
+  );
+}
+
+const paths = {
+  dark: 'M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z',
+  light:
+    'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z',
 };
 
 const ThemeSwitcher = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const current = paths[colorMode];
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence mode="wait">
       <ToogleButton
+        key={current}
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.2 }}
         aria-label="Theme Switcher"
         variant={'ghost'}
         onClick={toggleColorMode}
       >
-        {colorMode === 'dark' ? (
-          <MotionIcon
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore no problem in operation, although type error appears.
-            transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
-              opacity: { duration: 1 },
-            }}
-            src="/img/cache/original/fog_240px.png"
-            name="Theme Switcher"
-          />
-        ) : (
-          <MotionIcon
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore no problem in operation, although type error appears.
-            transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
-              opacity: { duration: 1 },
-            }}
-            src="/img/cache/original/cool_240px.png"
-            name="Theme Switcher"
-          />
-        )}
+        <AnimatedIcon path={current} />
       </ToogleButton>
     </AnimatePresence>
   );

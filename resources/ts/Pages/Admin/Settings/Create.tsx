@@ -1,27 +1,28 @@
-import { Suspense, lazy } from 'react';
-import pMinDelay from 'p-min-delay';
-import { Skeleton } from '@chakra-ui/react';
-import AppHead from '@/Components/AppHead';
-import AdminLayout from '@/Layouts/AdminLayout';
-import PanelWrapper from '@/PageContainers/PanelWrapper';
-import FormProvider from '@/Store/useFormProvider';
 import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  useColorModeValue as mode,
-  Grid,
-  GridItem,
-  TabIndicator,
+  Box,
   Card,
   CardBody,
   CardHeader,
-  Box,
+  Grid,
+  GridItem,
+  Skeleton,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
-import type { FormData } from '@/Types/generated';
+import pMinDelay from 'p-min-delay';
+import { lazy, Suspense } from 'react';
+
+import AppHead from '@/Components/AppHead';
 import { ProseHeadings } from '@/Components/Elements/Typography';
+import AdminLayout from '@/Layouts/AdminLayout';
+import PanelWrapper from '@/PageContainers/PanelWrapper';
+import FormProvider from '@/Store/useFormProvider';
+import type { FormData } from '@/Types/generated';
 
 const DynamicForm = lazy(() =>
   pMinDelay(import(`@/Forms/DynamicForm.js`), 1000)
@@ -62,12 +63,7 @@ const CreateSettings = (props: CreateSettingsProps) => {
       <PanelWrapper>
         <Card variant={'containerCard'}>
           <CardBody p="0">
-            <Tabs
-              orientation="vertical"
-              position="relative"
-              variant="main"
-              isLazy
-            >
+            <Tabs orientation="vertical" position="relative" isLazy>
               <Grid templateColumns={{ lg: 'repeat(12, 1fr)' }} minW={'full'}>
                 <GridItem
                   colSpan={3}
@@ -76,8 +72,32 @@ const CreateSettings = (props: CreateSettingsProps) => {
                   borderColor={mode('slate.100', 'slate.800')}
                 >
                   <TabList>
-                    <Tab>Menu Settings</Tab>
-                    <Tab>Page Meta Data</Tab>
+                    <Tab
+                      _hover={{ bg: mode('emerald.100', 'slateAlpha.500') }}
+                      _selected={{
+                        bg: mode('emerald.100', 'slateAlpha.500'),
+                        borderLeft: '2.5px solid teal',
+                      }}
+                      textAlign={'left'}
+                      minWidth={'full'}
+                      display={'flex'}
+                      justifyContent={'start'}
+                    >
+                      Menu Settings
+                    </Tab>
+                    <Tab
+                      _hover={{ bg: mode('emerald.100', 'slateAlpha.500') }}
+                      _selected={{
+                        bg: mode('emerald.100', 'slateAlpha.500'),
+                        borderLeft: '2.5px solid teal',
+                      }}
+                      textAlign={'left'}
+                      minWidth={'full'}
+                      display={'flex'}
+                      justifyContent={'start'}
+                    >
+                      Page Meta Data
+                    </Tab>
                   </TabList>
                   <TabIndicator />
                 </GridItem>
@@ -138,5 +158,6 @@ const CreateSettings = (props: CreateSettingsProps) => {
     </>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 CreateSettings.layout = (page: string) => <AdminLayout children={page} />;
 export default CreateSettings;

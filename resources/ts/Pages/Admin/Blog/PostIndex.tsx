@@ -1,21 +1,23 @@
+import { Container } from '@chakra-ui/react';
+
 import AppHead from '@/Components/AppHead';
+import { PostsTable } from '@/Components/Table';
 import AdminLayout from '@/Layouts/AdminLayout';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
-import { Box } from '@chakra-ui/react';
-import { PostsTable } from '@/Components/Table';
 
 const PostIndex = () => {
   return (
     <>
       <AppHead />
       <PanelWrapper>
-        <Box position={'relative'} mx={'auto'} maxWidth="8xl">
+        <Container position={'relative'} mx={'auto'} maxWidth="8xl">
           <PostsTable />
-        </Box>
+        </Container>
       </PanelWrapper>
     </>
   );
 };
 
+// eslint-disable-next-line react/no-children-prop
 PostIndex.layout = (page: string) => <AdminLayout children={page} />;
 export default PostIndex;

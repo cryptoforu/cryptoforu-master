@@ -1,8 +1,9 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
-import LazyImage from './LazyImage';
-import { ProseHeadings, ProsePa, MarkDown } from '../Typography';
-import { BtnLink } from '../Navigation';
 import { EditIcon } from '@chakra-ui/icons';
+import { Box, Flex } from '@chakra-ui/react';
+
+import { ButtonLink } from '../Navigation';
+import { MarkDown, ProseHeadings, ProsePa } from '../Typography';
+import LazyImage from './LazyImage';
 type ImgCardProps = {
   image?: string;
   title?: string;
@@ -42,17 +43,16 @@ const ImgCard = ({
         </ProseHeadings>
         <MarkDown content={description as string} />
         <Flex justifyContent="space-between">
-          <BtnLink
+          <ButtonLink
             to={to}
             params={params}
-            component={Button}
             rightIcon={<EditIcon />}
             variant="outline"
             colorScheme="emerald"
             size="md"
           >
             Edit
-          </BtnLink>
+          </ButtonLink>
         </Flex>
       </Flex>
     </Flex>

@@ -3,8 +3,9 @@ import {
   cookieStorageManagerSSR,
   localStorageManager,
 } from '@chakra-ui/react';
-import { theme } from '@/Theme';
 import { PropsWithChildren } from 'react';
+
+import { theme } from '@/Theme';
 
 interface ThemeProps extends PropsWithChildren {
   cookies: string;

@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './bootstrap';
 import 'unfonts.css';
-import { StrictMode } from 'react';
-import { hydrateRoot } from 'react-dom/client';
+
 import { createInertiaApp } from '@inertiajs/react';
-import { CacheProvider } from '@emotion/react';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { AnimatePresence, LazyMotion } from 'framer-motion';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { LazyMotion, AnimatePresence } from 'framer-motion';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
 import { AppProvider, RouteProvider, ThemeProvider } from './Providers';
-import createEmotionCache from './createEmotionCache';
 
 const loadFeatures = () =>
   import('@/Motion/features.js').then((res) => res.default);
 
-const clientSideEmotionCache = createEmotionCache();
 createInertiaApp({
   title: (title) => `${title} - Cryptoforu`,
   resolve: (name) =>
@@ -28,20 +26,17 @@ createInertiaApp({
     showSpinner: true,
   },
   setup({ el, App, props }) {
-    hydrateRoot(
-      el,
+    createRoot(el).render(
       <StrictMode>
         <LazyMotion features={loadFeatures}>
           <ThemeProvider cookies={props.initialPage.props.cookies as string}>
-            <CacheProvider value={clientSideEmotionCache}>
-              <AppProvider>
-                <RouteProvider route={(window as any).route}>
-                  <AnimatePresence mode="wait">
-                    <App {...props} />
-                  </AnimatePresence>
-                </RouteProvider>
-              </AppProvider>
-            </CacheProvider>
+            <AppProvider>
+              <RouteProvider route={(window as any).route}>
+                <AnimatePresence mode="wait">
+                  <App {...props} />
+                </AnimatePresence>
+              </RouteProvider>
+            </AppProvider>
           </ThemeProvider>
         </LazyMotion>
       </StrictMode>

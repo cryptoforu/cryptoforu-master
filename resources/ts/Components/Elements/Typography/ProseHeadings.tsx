@@ -1,9 +1,9 @@
 import {
+  chakra,
+  forwardRef,
   HTMLChakraProps,
   ThemingProps,
   useStyleConfig,
-  chakra,
-  forwardRef,
 } from '@chakra-ui/react';
 
 type HeadingComponent = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

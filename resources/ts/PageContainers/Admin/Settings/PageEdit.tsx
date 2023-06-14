@@ -1,6 +1,7 @@
-import { useTransition } from 'react';
+import { CloseIcon, EditIcon } from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/react';
-import { EditIcon, CloseIcon } from '@chakra-ui/icons';
+import { useTransition } from 'react';
+
 import { useEditing } from '@/Store/usePageSettings';
 
 const PageEdit = () => {

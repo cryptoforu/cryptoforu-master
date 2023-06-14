@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Earn\DataObjects;
 
+use App\Enums\ColorScheme;
 use App\Models\EarnCategory;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
@@ -34,5 +35,12 @@ final class EarnCategoryData extends Data
             category_image: $earnCategory->category_image,
             earn: Lazy::whenLoaded('earn', $earnCategory, fn () => EarnData::collection($earnCategory->earn)),
         );
+    }
+
+    public function with(): array
+    {
+        return [
+            'color' => ColorScheme::randColor(),
+        ];
     }
 }

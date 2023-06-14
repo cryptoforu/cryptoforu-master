@@ -60,7 +60,8 @@ final class StorePageMeta
                     model: $page,
                     file: $img,
                     category: 8
-                ));
+                ))
+            ;
         }
 
     }

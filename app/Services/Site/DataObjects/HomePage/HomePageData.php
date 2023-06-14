@@ -21,7 +21,7 @@ final class HomePageData extends Data
     ) {
     }
 
-    public static function fromModel(Site $site)
+    public static function fromModel(Site $site): Collection
     {
         return new Collection(
             items: [
@@ -35,7 +35,7 @@ final class HomePageData extends Data
         );
     }
 
-    public static function fromData()
+    public static function fromData(): HomePageData
     {
         $query = Site::ofData('home_page');
 

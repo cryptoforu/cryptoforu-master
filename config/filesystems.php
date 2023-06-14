@@ -77,6 +77,7 @@ return [
         public_path('front_images') => storage_path('app/front_images'),
         public_path('tmp') => storage_path('app/public/tmp'),
         resource_path('ts/images/') => storage_path('app/images'),
+        base_path('frontend/public') => storage_path('app/public'),
     ],
 
 ];

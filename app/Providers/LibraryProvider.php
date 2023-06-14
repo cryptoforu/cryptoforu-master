@@ -7,7 +7,9 @@ namespace App\Providers;
 use App\Interfaces\Library\LibraryActionsInterface;
 use App\Interfaces\Library\LibraryDeleteContract;
 use App\Interfaces\Library\LibraryResourceInterface;
+use App\Interfaces\Library\LibraryUpdateContract;
 use App\Services\Library\Actions\DeleteFile;
+use App\Services\Library\Actions\UpdateFile;
 use App\Services\Library\LibraryResource;
 use App\Services\Library\LibraryService;
 use Illuminate\Support\ServiceProvider;
@@ -20,16 +22,20 @@ final class LibraryProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            abstract : LibraryActionsInterface::class,
+            abstract: LibraryActionsInterface::class,
             concrete: LibraryService::class
         );
         $this->app->bind(
-            abstract : LibraryResourceInterface::class,
+            abstract: LibraryResourceInterface::class,
             concrete: LibraryResource::class,
         );
         $this->app->bind(
-            abstract : LibraryDeleteContract::class,
+            abstract: LibraryDeleteContract::class,
             concrete: DeleteFile::class,
+        );
+        $this->app->bind(
+            abstract: LibraryUpdateContract::class,
+            concrete: UpdateFile::class
         );
     }
 

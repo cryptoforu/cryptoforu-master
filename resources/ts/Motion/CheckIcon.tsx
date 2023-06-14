@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/react';
-import { m, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 
 const AnimatedCheckIcon = ({ isChecked }: { isChecked: boolean }) => {
   return (

@@ -1,9 +1,9 @@
 import {
-  useMultiStyleConfig,
-  createStylesContext,
   Box,
   BoxProps,
+  createStylesContext,
   ThemingProps,
+  useMultiStyleConfig,
 } from '@chakra-ui/react';
 
 export const [StylesProvider, useStyles] =

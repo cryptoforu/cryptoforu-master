@@ -1,22 +1,25 @@
-import { Fragment, useCallback } from 'react';
-import { Formik, Form, FieldArray, FormikHelpers } from 'formik';
-import { useFormBuilder } from '@/Store/useFormBuilder';
+import { Button, HStack, VStack } from '@chakra-ui/react';
+import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { AnimatePresence } from 'framer-motion';
+import { Fragment, useCallback } from 'react';
+
 import {
-  TextField,
-  TextAreaField,
-  SelectField,
-  MarkDownEditor,
-  TagsInput,
-  SwitchField,
-  CheckBoxField,
   ChakraPond,
+  CheckBoxField,
+  Label,
+  MarkDownEditor,
+  SelectField,
+  SwitchField,
+  TagsInput,
+  TextAreaField,
+  TextField,
 } from '@/Components/Elements/Forms';
-import FormWrapper from './FormWrapper';
-import { VStack, Button, HStack } from '@chakra-ui/react';
-import { Label } from '@/Components/Elements/Forms';
-import { useRoute } from '@/Providers/RouteProvider';
 import { MotionBox, notifyVariants } from '@/Motion';
+import { useRoute } from '@/Providers/RouteProvider';
+import { useFormBuilder } from '@/Store/useFormBuilder';
+
+import FormWrapper from './FormWrapper';
+
 interface IArrayFormProps {
   data_name: string;
   data_values: [
@@ -38,7 +41,7 @@ const ArrayDataForm = () => {
   const handleSubmit = useCallback(
     (values: IArrayFormProps, action: FormikHelpers<IArrayFormProps>) => {
       navigate(
-        route('site.store'),
+        route('admin:site.store'),
         { ...values },
         {
           forceFormData: true,
@@ -69,7 +72,7 @@ const ArrayDataForm = () => {
             <VStack spacing={4} align="stretch">
               <TextField name="data_name" label="Data Name" />
               <FieldArray name="data_values">
-                {({ insert, remove, push }) => (
+                {() => (
                   <VStack align="stretch" spacing={6}>
                     <AnimatePresence initial={false}>
                       {values.data_values.map((v, index) => (
@@ -160,12 +163,6 @@ const ArrayDataForm = () => {
                                       name={`data_values.${index}.${value.name}`}
                                       label={value.label}
                                       value={v[value.name as string] as string}
-                                      onChange={(e) =>
-                                        setFieldValue(
-                                          value.name,
-                                          e.target.value
-                                        )
-                                      }
                                     />
                                   </MotionBox>
                                 );

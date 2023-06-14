@@ -11,7 +11,7 @@ use Inertia\Response;
 
 final class DashboardController extends Controller
 {
-    protected $page;
+    protected PageInterface $page;
 
     /**
      * Admin Dashboard
@@ -26,12 +26,7 @@ final class DashboardController extends Controller
     {
         return Inertia::render(
             component: 'Admin/Dashboard',
-            props: [
-                'meta' => $this->page->getPageMeta(
-                    page_type: 'admin',
-                    page: 'dashboard'
-                ),
-            ]
+            props: $this->page->admin_meta(),
         );
     }
 }

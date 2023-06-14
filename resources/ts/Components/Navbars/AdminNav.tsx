@@ -1,19 +1,22 @@
 import {
-  Flex,
   Box,
-  HStack,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   Card,
   CardBody,
+  Flex,
+  HStack,
 } from '@chakra-ui/react';
+
 import { AvatarButton } from '@/Components/Elements/Content';
-import { ProfileDropDown, ThemeSwitcher, AdminNavigation } from './index';
-import { NavLink } from '@/Components/Elements/Navigation';
+import { NavigationLink } from '@/Components/Elements/Navigation';
 import { usePageProps } from '@/Hooks/useTypedPage';
 import type { Auth } from '@/types';
+
 import type { AdminNavigation as A } from '../../Types/generated';
+import { AdminNavigation, ProfileDropDown, ThemeSwitcher } from './index';
+
 interface AdminNavProps {
   auth: Auth;
   navigation: A;
@@ -22,18 +25,23 @@ interface AdminNavProps {
 const AdminNav = () => {
   const { auth, navigation } = usePageProps<AdminNavProps>();
   return (
-    <Card variant={'containerCard'} bg="slateAlpha.900">
+    <Card bg="slateAlpha.900" mt="4" mr="2">
       <CardBody>
         <Flex justify="space-between" align="center" w="full">
           <Box mb={{ sm: '8px', md: '0px' }}>
-            <NavLink to={'admin.dashboard'} fontWeight={'bold'} fontSize={'lg'}>
+            <NavigationLink
+              to={'admin.dashboard'}
+              fontWeight={'bold'}
+              fontSize={'lg'}
+              variant="colored"
+            >
               Dashboard
-            </NavLink>
+            </NavigationLink>
             {navigation && navigation?.parents ? (
               <Breadcrumb>
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    as={NavLink}
+                    as={NavigationLink}
                     to={navigation?.route as string}
                     routeParams={true}
                   >
@@ -42,7 +50,7 @@ const AdminNav = () => {
                 </BreadcrumbItem>
                 <BreadcrumbItem isCurrentPage>
                   <BreadcrumbLink
-                    as={NavLink}
+                    as={NavigationLink}
                     to={navigation?.route as string}
                     routeParams={true}
                   >
@@ -54,7 +62,7 @@ const AdminNav = () => {
               <Breadcrumb>
                 <BreadcrumbItem isCurrentPage>
                   <BreadcrumbLink
-                    as={NavLink}
+                    as={NavigationLink}
                     to={navigation?.route as string}
                     routeParams={true}
                   >
@@ -69,7 +77,7 @@ const AdminNav = () => {
 
             <ThemeSwitcher />
             <AvatarButton
-              avatar="/img/cache/original/notification.png"
+              avatar="/api/img/cache/original/notification.png"
               name="Admin Notifications"
               notify="2"
             />

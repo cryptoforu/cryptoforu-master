@@ -13,24 +13,24 @@ use Illuminate\Support\Collection;
 
 final class GetMenuForm
 {
-    use FormFactory;
+  use FormFactory;
 
-    public function handle()
-    {
-        $initialValues = (new Collection(items: MenuItemsData::schema()));
-        $options = [
-            'parent_id' => MenuItem::parent()->get(['id', 'label'])->toArray(),
-            'menu_id' => MenuData::collection(Menu::all(['id', 'label']))->toArray(),
-        ];
-        $schema = $this->generate(
-            items: (new Collection(items: MenuItemsData::schema(type: 'n'))),
-            options: $options
-        );
+  public function handle(): array
+  {
+    $initialValues = (new Collection(items: MenuItemsData::schema()));
+    $options = [
+      'parent_id' => MenuItem::parent()->get(['id', 'label'])->toArray(),
+      'menu_id' => MenuData::collection(Menu::all(['id', 'label']))->toArray(),
+    ];
+    $schema = $this->generate(
+      items: (new Collection(items: MenuItemsData::schema(type: 'n'))),
+      options: $options
+    );
 
-        return [
-            'initialValues' => $initialValues,
-            'form_schema' => $schema,
-            'form_route' => route('admin-settings.store'),
-        ];
-    }
+    return [
+      'initialValues' => $initialValues,
+      'form_schema' => $schema,
+      'form_route' => route('admin:settings:store'),
+    ];
+  }
 }

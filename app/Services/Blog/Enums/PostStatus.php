@@ -19,23 +19,23 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 final class PostStatus extends Enum
 {
-    public function color(): string
-    {
-        return match ($this) {
-            PostStatus::DRAFT() => 'grey',
-            PostStatus::PUBLISHED() => 'green',
-            PostStatus::PREVIEW() => 'blue',
-            PostStatus::ARCHIVED() => 'red',
-        };
-    }
+  public static function options(): array
+  {
+    return Arr::map(self::cases(), static function ($value, $key) {
+      return
+        [
+          'name' => $value,
+        ];
+    });
+  }
 
-    public static function options()
-    {
-        return Arr::map(PostStatus::cases(), function ($value, $key) {
-            return
-                [
-                    'name' => $value,
-                ];
-        });
-    }
+  public function color(): string
+  {
+    return match ($this) {
+      PostStatus::DRAFT() => 'grey',
+      PostStatus::PUBLISHED() => 'green',
+      PostStatus::PREVIEW() => 'blue',
+      PostStatus::ARCHIVED() => 'red',
+    };
+  }
 }

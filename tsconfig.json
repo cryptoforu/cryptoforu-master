@@ -24,5 +24,6 @@
     }
   },
   "include": ["resources/ts"],
+  "exclude": ["frontend"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

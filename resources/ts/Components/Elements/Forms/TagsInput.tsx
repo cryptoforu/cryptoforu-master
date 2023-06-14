@@ -1,43 +1,59 @@
 import {
-  Box,
   chakra,
+  Flex,
   Stack,
-  useColorModeValue as mode,
   useCheckbox,
   useCheckboxGroup,
   UseCheckboxProps,
-  ThemingProps,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { useFormikContext } from 'formik';
 import { useEffect } from 'react';
-import { useMultiStyleConfig } from '@chakra-ui/react';
+
+import { ProsePa } from '../Typography';
 import { Label } from './';
 import type { LabelProps as L } from './FormTypes';
 
-type LabelProps = UseCheckboxProps &
-  ThemingProps & {
-    label: string;
-  };
+type LabelProps = UseCheckboxProps & {
+  label: string;
+};
 
 const Tags = ({ label, ...props }: LabelProps) => {
-  const { size, variant } = props;
-
-  const styles = useMultiStyleConfig('TagsInput', { size, variant });
   const { getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
     useCheckbox(props);
   return (
-    <chakra.label __css={styles.container} {...htmlProps}>
+    <chakra.label
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      gridColumnGap={2}
+      maxW="40"
+      bg="green.50"
+      border="1px solid"
+      borderColor="green.500"
+      rounded="lg"
+      px={3}
+      py={1}
+      cursor="pointer"
+      {...htmlProps}
+    >
       <input {...getInputProps()} hidden />
-      <Box __css={styles.control} {...getCheckboxProps()} />
-      <Box __css={styles.label} {...getLabelProps()}>
-        {label}
-      </Box>
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        border="2px solid"
+        borderColor="green.500"
+        w={4}
+        h={4}
+        {...getCheckboxProps()}
+      />
+      <ProsePa {...getLabelProps()}>{label}</ProsePa>
     </chakra.label>
   );
 };
 
 interface ItemProps {
-  id: string | number;
+  id?: string | number;
   name: string;
 }
 
@@ -48,7 +64,6 @@ interface CheckBoxData<T> extends UseCheckboxProps {
 
 function TagsInput<T extends ItemProps>({
   items,
-  label,
   ...props
 }: CheckBoxData<T> & L) {
   const { value, getCheckboxProps } = useCheckboxGroup();
@@ -73,10 +88,9 @@ function TagsInput<T extends ItemProps>({
         gap="4"
       >
         <>
-          {items?.map((tag, index) => (
+          {items?.map((tag) => (
             <Tags
               key={tag.id}
-              label={tag.name}
               {...getCheckboxProps({ value: tag.id })}
               {...props}
             />

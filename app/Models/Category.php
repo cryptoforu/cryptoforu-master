@@ -8,6 +8,7 @@ use App\Services\Blog\DataObjects\CategoryData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\WithData;
 
 final class Category extends Model
@@ -34,6 +35,15 @@ final class Category extends Model
     public function image(): MorphOne
     {
         return $this->morphOne(Library::class, 'imageable');
+    }
+
+    public function scopeOfData(): Collection
+    {
+        return $this->all()
+            ->map(
+                fn ($category) => CategoryData::fromData($category)
+            )
+        ;
     }
 
     /**

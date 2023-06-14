@@ -1,12 +1,12 @@
-import { forwardRef } from 'react';
 import {
   Avatar,
-  Center,
-  CenterProps,
   Box,
   Button,
   ButtonProps,
+  Center,
+  CenterProps,
 } from '@chakra-ui/react';
+import { forwardRef } from 'react';
 
 interface AvatarButtonProps extends ButtonProps {
   avatar: string | undefined;

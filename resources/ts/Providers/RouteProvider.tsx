@@ -1,13 +1,13 @@
+import type { RequestPayload, VisitOptions } from '@inertiajs/core';
+import { router } from '@inertiajs/react';
 import React, {
   createContext,
-  useContext,
-  useCallback,
   PropsWithChildren,
+  useCallback,
+  useContext,
   useTransition,
 } from 'react';
 import r from 'ziggy-js';
-import { router } from '@inertiajs/react';
-import type { VisitOptions, RequestPayload } from '@inertiajs/core';
 
 type RouteContextData = {
   route: typeof r;

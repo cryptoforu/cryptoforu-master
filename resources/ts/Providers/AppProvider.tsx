@@ -1,12 +1,12 @@
-import { PropsWithChildren, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import {
-  Box,
   AbsoluteCenter,
-  Heading,
+  Box,
   Button,
+  Heading,
   Spinner,
 } from '@chakra-ui/react';
+import { PropsWithChildren, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const FallbackWrapper = ({ children }: PropsWithChildren) => {
   return (
@@ -23,7 +23,7 @@ const ErrorFallback = () => {
         Ooops, something went wrong
       </Heading>
       <Button
-        variant="gradLime"
+        colorScheme="emerald"
         onClick={() => window.location.assign(window.location.origin)}
       >
         Refresh

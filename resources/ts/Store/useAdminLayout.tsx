@@ -1,11 +1,12 @@
+import { useBreakpointValue } from '@chakra-ui/react';
+import { useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
-import { useAnimate } from 'framer-motion';
-import { useBreakpointValue } from '@chakra-ui/react';
 
 type WidthProps = '80px' | '256px';
 type PaddingProps = '80px' | '266px';
+
 interface AdminLayoutProps {
   widthState: boolean;
   widthSize: WidthProps;
@@ -50,13 +51,9 @@ const useAdminLayoutStore = create<AdminLayoutProps>((set, get) => ({
   toogleSidebar: () => set((prev) => ({ widthState: !prev.widthState })),
 }));
 
-export const useAdminLayoutAnimation = () => {
+export function useMenuAnimation(isOpen: boolean) {
   const [scope, animate] = useAnimate();
-  const collapsed = useAdminLayoutStore((state) => state.widthState);
 
-  const { width, paddingLeft } = useAdminLayoutStore((state) =>
-    state.getStyle()
-  );
   const display = useBreakpointValue(
     { base: 'none', md: 'block' },
     {
@@ -66,56 +63,42 @@ export const useAdminLayoutAnimation = () => {
 
   const padding = useBreakpointValue({
     base: '0',
-    md: paddingLeft,
+    md: isOpen ? '80px' : '266px',
   });
-
   useEffect(() => {
-    scope.current &&
-      animate(
-        'aside',
-        {
-          width: width,
-          display: display,
-        },
-        {
-          duration: 1,
-          delay: collapsed ? 0.1 : 0.5,
-        }
-      );
     animate(
-      'main',
+      'aside',
+      { width: isOpen ? '80px' : '256px', display: display },
       {
-        paddingLeft: padding,
-      },
-      {
-        duration: 1,
-        delay: collapsed ? 0.2 : 0.3,
+        ease: [0.08, 0.65, 0.53, 0.96],
+        duration: 0.6,
+        delay: isOpen ? 0.1 : 0.5,
       }
     );
-  }, [animate, collapsed, display, padding, scope, width]);
+    animate(
+      'main',
+      { paddingLeft: padding },
+      {
+        ease: [0.08, 0.65, 0.53, 0.96],
+        duration: 1,
+        delay: isOpen ? 0.2 : 0.3,
+      }
+    );
+  }, [animate, display, isOpen, padding, scope]);
 
   return scope;
-};
+}
 
-export const useToogleSidebar = () =>
-  useAdminLayoutStore((state) => state.toogleSidebar);
-
-const useAdminLayout = () => {
+export const useAdminLayoutAnimation = () => {
   const [widthState, toogleSidebar] = useAdminLayoutStore(
     (state) => [state.widthState, state.toogleSidebar],
     shallow
   );
-  const paddingLeft = useAdminLayoutStore((state) => state.paddingLeft);
-  const widthSize = useAdminLayoutStore((state) => state.widthSize);
-
   return {
     toogleSidebar,
     widthState,
-    widthSize,
-    paddingLeft,
   };
 };
-export default useAdminLayout;
 
 export const useWidthState = () =>
   useAdminLayoutStore((state) => state.widthState);
@@ -131,5 +114,3 @@ export const usePopoverState = () => {
 
   return { popoverOpen, onPopClose, onPopOpen };
 };
-export const usePopoverId = () =>
-  useAdminLayoutStore((state) => state.popoverId);

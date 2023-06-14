@@ -1,10 +1,11 @@
 import {
-  useMultiStyleConfig,
-  ThemingProps,
-  HTMLChakraProps,
   Box,
   HStack,
+  HTMLChakraProps,
+  ThemingProps,
+  useMultiStyleConfig,
 } from '@chakra-ui/react';
+
 import { ProseHeadings } from '@/Components/Elements/Typography';
 interface PageHeaderProps extends ThemingProps, HTMLChakraProps<'div'> {
   title: string;

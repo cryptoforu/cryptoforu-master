@@ -1,10 +1,11 @@
+import { Card, CardBody } from '@chakra-ui/react';
+
 import AppHead from '@/Components/AppHead';
+import DataTabs from '@/Components/Elements/Content/DataTabs';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { SuspenseWrapper } from '@/Motion';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
-import DataTabs from '@/Components/Elements/Content/DataTabs';
 import { useLibraryForms } from '@/Store/useLibraryForms';
-import { Card, CardBody } from '@chakra-ui/react';
 
 const LibraryCreate = () => {
   const data = useLibraryForms();
@@ -23,5 +24,6 @@ const LibraryCreate = () => {
     </>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 LibraryCreate.layout = (page: string) => <AdminLayout children={page} />;
 export default LibraryCreate;

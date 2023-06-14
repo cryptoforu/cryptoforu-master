@@ -28,6 +28,36 @@ final class Crypto extends Model
         return $query->where('data_name', $data_name)->firstOr('*', fn () => (bool) false);
     }
 
+    public function scopeOfValues(Builder $query)
+    {
+        return $query->where(
+            'data_name',
+            'all_coins'
+        )->select('data_values')
+            ->first()
+        ;
+    }
+
+    public function scopeOfCategories(Builder $query)
+    {
+        return $query->where(
+            'data_name',
+            'categories'
+        )->select('data_values')
+            ->first()
+        ;
+    }
+
+    public function scopeOfExchanges(Builder $query)
+    {
+        return $query->where(
+            'data_name',
+            'exchanges'
+        )->select('data_values')
+            ->first()
+        ;
+    }
+
     /**
      * Get The Model or Create it if it doesn't exists
      */

@@ -1,14 +1,17 @@
+import { Button, VStack } from '@chakra-ui/react';
+import { Form, Formik } from 'formik';
+import { memo, useMemo } from 'react';
+import { FilePondProps } from 'react-filepond';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { usePageProps } from '@/Hooks/useTypedPage';
-import { ChakraPond, SelectField, Label } from '@/Components/Elements/Forms';
-import { Formik, Form } from 'formik';
+
+import { ChakraPond, Label, SelectField } from '@/Components/Elements/Forms';
 import { FormWrapper } from '@/Forms';
-import type { LibraryCategory } from '@/Types/generated';
+import { usePageProps } from '@/Hooks/useTypedPage';
 import { useRoute } from '@/Providers/RouteProvider';
-import { VStack, Button } from '@chakra-ui/react';
-import { FilePondProps } from 'react-filepond';
-import { useMemo } from 'react';
+import { useDetails } from '@/Store/useLibraryStore';
+import { useMenuSelectContext } from '@/Store/useMenuSelect';
+import type { LibraryCategory, LibraryData } from '@/Types/generated';
 
 type LibraryFormState = {
   single: {
@@ -18,6 +21,10 @@ type LibraryFormState = {
   multiple: {
     file: FilePondProps['name'][];
     library_category_id: number;
+  };
+  update: {
+    _method: string;
+    file: FilePondProps['name'] | null;
   };
 };
 
@@ -37,12 +44,76 @@ const useLibraryFormStore = create<LibraryFormStore>()(
       file: [],
       library_category_id: 0,
     },
+    update: {
+      _method: 'put',
+      file: null,
+    },
     getForm: (index) => {
       const data = get()[index];
       return data;
     },
   }))
 );
+export const UpdateForm = memo(function UpdateForm({
+  id,
+  setEditing,
+  data,
+}: {
+  id: string | number;
+  setEditing: () => void;
+  data: LibraryData;
+}) {
+  const form = useLibraryFormStore((state) => state.update);
+  const { navigate: submit, route } = useRoute();
+  const selected = useMenuSelectContext((state) => state.selected);
+  const { setValues } = useDetails();
+  return (
+    <Formik
+      initialValues={form}
+      onSubmit={(values, formikHelpers) => {
+        submit(
+          route('admin.library.update', id),
+          { ...values },
+          {
+            method: 'post',
+            only: [selected],
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+              formikHelpers.setSubmitting(false);
+              setEditing();
+              setValues(data);
+            },
+          }
+        );
+      }}
+    >
+      {({ setFieldValue, isSubmitting }) => (
+        <Form>
+          <Label name="file" label="Files">
+            <ChakraPond
+              name="file"
+              allowMultiple={false}
+              onupdatefiles={(files) => setFieldValue('file', files[0].file)}
+            />
+          </Label>
+          <VStack mt="8">
+            <Button
+              type="submit"
+              colorScheme={'emerald'}
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
+              loadingText="Uploading"
+              width="full"
+            >
+              Update
+            </Button>
+          </VStack>
+        </Form>
+      )}
+    </Formik>
+  );
+});
 
 function Multiple({
   categories,
@@ -66,7 +137,7 @@ function Multiple({
         enableReinitialize
         onSubmit={(values, action) => {
           submit(
-            route('admin-library.store'),
+            route('admin.library.store'),
             { ...values },
             {
               method: 'post',

@@ -9,10 +9,10 @@ use App\Services\Library\DataObjects\LibraryCategoryData;
 
 final class ForCreate
 {
-    public function handle()
-    {
-        return LibraryCategoryData::collection(
-            items: LibraryCategory::all()
-        )->toArray();
-    }
+  public function handle(): array
+  {
+    return LibraryCategoryData::collection(
+      items: LibraryCategory::all()
+    )->toArray();
+  }
 }

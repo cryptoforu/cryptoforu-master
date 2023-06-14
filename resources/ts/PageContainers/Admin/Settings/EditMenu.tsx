@@ -1,7 +1,8 @@
-import { EditInput } from '@/Components/Elements/Forms';
 import { Input } from '@chakra-ui/react';
-import { useInputChange, useSetFile } from '@/Store/useEditInputStore';
+
+import { EditInput } from '@/Components/Elements/Forms';
 import { ChakraPond } from '@/Components/Elements/Forms';
+import { useInputChange, useSetFile } from '@/Store/useEditInputStore';
 import type { EditMenuProps } from '@/types';
 
 const EditMenu = ({ ...props }: EditMenuProps) => {

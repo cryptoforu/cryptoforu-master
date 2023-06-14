@@ -10,8 +10,6 @@ interface DeleteDataContract
 {
     /**
      * Delete Data
-     *
-     * @return void
      */
     public function handle(Request $request): void;
 }

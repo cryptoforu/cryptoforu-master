@@ -1,10 +1,12 @@
+import { Button, Spacer } from '@chakra-ui/react';
+import { m, MotionProps, useAnimate } from 'framer-motion';
 import React, { useEffect } from 'react';
-import { useAnimate } from 'framer-motion';
-import { ProsePa } from '../Elements/Typography';
-import useAdminLayout from '@/Store/useAdminLayout';
-import { m, MotionProps } from 'framer-motion';
-import { Spacer, Button } from '@chakra-ui/react';
+
+import { useWidthState } from '@/Store/useAdminLayout';
+
 import { LazyImage } from '../Elements/Content';
+import { ProsePa } from '../Elements/Typography';
+
 interface SidebarLabelProps extends MotionProps {
   label: string;
   onTap?: (e: MouseEvent) => void;
@@ -13,7 +15,7 @@ interface SidebarLabelProps extends MotionProps {
 }
 
 const SidebarLabel = ({ label, onTap, icon, children }: SidebarLabelProps) => {
-  const { widthState } = useAdminLayout();
+  const widthState = useWidthState();
   const [scope, animate] = useAnimate();
   useEffect(() => {
     animate(

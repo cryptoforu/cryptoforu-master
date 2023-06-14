@@ -1,10 +1,11 @@
-import AdminLayout from '@/Layouts/AdminLayout';
 import AppHead from '@/Components/AppHead';
+import AdminLayout from '@/Layouts/AdminLayout';
 import { SuspenseWrapper } from '@/Motion';
-import PanelWrapper from '@/PageContainers/PanelWrapper';
 import ActionHeader from '@/PageContainers/Admin/ActionHeader';
-import { MenuSelectProvider, MenuSelect } from '@/Store/useMenuSelect';
 import { ContextGrid } from '@/PageContainers/Admin/EarnMethods';
+import PanelWrapper from '@/PageContainers/PanelWrapper';
+import { MenuSelect, MenuSelectProvider } from '@/Store/useMenuSelect';
+
 type SelectProps = {
   select: [
     {
@@ -34,5 +35,6 @@ const EarnIndex = ({ select }: SelectProps) => {
     </>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 EarnIndex.layout = (page: string) => <AdminLayout children={page} />;
 export default EarnIndex;

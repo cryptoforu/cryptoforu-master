@@ -1,5 +1,5 @@
 import { chakra, shouldForwardProp } from '@chakra-ui/react';
-import { m, isValidMotionProp } from 'framer-motion';
+import { isValidMotionProp, m } from 'framer-motion';
 import { PropsWithChildren } from 'react';
 const Panel = chakra(m.div, {
   shouldForwardProp: (prop) =>

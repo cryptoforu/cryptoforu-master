@@ -1,12 +1,11 @@
-import pMinDelay from 'p-min-delay';
-import { lazy, Suspense, useRef, useState } from 'react';
 import { Box, Skeleton } from '@chakra-ui/react';
 import type { MDEditorProps } from '@uiw/react-md-editor';
-import Label from './Label';
+import pMinDelay from 'p-min-delay';
+import { lazy, Suspense, useRef, useState } from 'react';
+
 import type { LabelProps } from './FormTypes';
-const MDEditor = lazy(() =>
-  pMinDelay(import('@uiw/react-md-editor/esm/index.js'), 1000)
-);
+import Label from './Label';
+const MDEditor = lazy(() => pMinDelay(import('@uiw/react-md-editor'), 1000));
 
 function MarkdownEditor({ ...props }: MDEditorProps & LabelProps) {
   const mdRef = useRef(null);

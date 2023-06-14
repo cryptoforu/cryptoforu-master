@@ -1,11 +1,13 @@
-import { PropsWithChildren } from 'react';
 import {
   FormControl,
-  FormLabel,
   FormErrorMessage,
+  FormLabel,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
+import { PropsWithChildren } from 'react';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
+
 import type { LabelProps } from './FormTypes';
 
 const Label = ({ children, ...props }: PropsWithChildren<LabelProps>) => {

@@ -1,16 +1,16 @@
-import { Suspense, PropsWithChildren, useCallback } from 'react';
 import {
-  Skeleton,
-  Spinner,
-  Box,
   AbsoluteCenter,
-  Button,
   Alert,
   AlertIcon,
   AlertTitle,
+  Box,
+  Button,
+  Skeleton,
+  Spinner,
 } from '@chakra-ui/react';
-import { useErrorBoundary, ErrorBoundary } from 'react-error-boundary';
 import { router } from '@inertiajs/react';
+import { PropsWithChildren, Suspense, useCallback } from 'react';
+import { ErrorBoundary, useErrorBoundary } from 'react-error-boundary';
 
 interface WrapperProps extends PropsWithChildren {
   def?: keyof typeof defProps;

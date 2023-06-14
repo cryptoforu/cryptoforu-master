@@ -1,21 +1,22 @@
-import { PropsWithChildren, Fragment } from 'react';
+import { DeleteIcon } from '@chakra-ui/icons';
 import {
+  Box,
   Card,
   CardBody,
+  Flex,
+  Heading,
+  IconButton,
   Stack,
   StackDivider,
   Text,
-  Box,
-  Heading,
   useColorModeValue as mode,
-  Flex,
-  IconButton,
 } from '@chakra-ui/react';
-import { toHeadline } from '@/utils/toHeadline';
-import { usePageForm } from '@/Store/usePageSettings';
+import { Fragment, PropsWithChildren } from 'react';
+
 import { LazyImage } from '@/Components/Elements/Content';
-import { BtnLink } from '@/Components/Elements/Navigation';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { ButtonLink } from '@/Components/Elements/Navigation';
+import { usePageForm } from '@/Store/usePageSettings';
+import { toHeadline } from '@/utils/toHeadline';
 const PageCard = ({ children }: PropsWithChildren) => {
   return (
     <Card variant={'primary'}>
@@ -71,7 +72,7 @@ function Delete({ id }: { id?: string }) {
   const { setPage } = usePageForm();
   return (
     <Box position="absolute" right="2" top="-2" py="4">
-      <BtnLink
+      <ButtonLink
         as={IconButton}
         icon={<DeleteIcon />}
         size="sm"

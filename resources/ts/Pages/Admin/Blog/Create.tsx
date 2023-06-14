@@ -1,11 +1,11 @@
-import { Suspense, lazy } from 'react';
+import { Container, Skeleton } from '@chakra-ui/react';
 import pMinDelay from 'p-min-delay';
-import { Skeleton } from '@chakra-ui/react';
+import { lazy, Suspense } from 'react';
+
 import AppHead from '@/Components/AppHead';
-import { Container } from '@chakra-ui/react';
+import { usePageProps } from '@/Hooks/useTypedPage';
 import AdminLayout from '@/Layouts/AdminLayout';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
-import { usePageProps } from '@/Hooks/useTypedPage';
 import FormProvider from '@/Store/useFormProvider';
 import type { FormData } from '@/Types/generated';
 
@@ -32,6 +32,7 @@ interface CreateProps {
 
 const PostCreate = () => {
   const { post_form } = usePageProps<CreateProps>();
+  console.log(post_form);
   return (
     <>
       <AppHead />

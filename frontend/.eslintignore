@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+# testing
+
+
+
+# next.js
+/.next/
+
+# production
+
+
+# misc
+
+
+# debug
+
+
+# local env files
+.env.local
+
+# vercel
+
+
+# typescript
+
+next-env.d.ts

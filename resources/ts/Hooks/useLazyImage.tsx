@@ -1,5 +1,5 @@
+import { animate, cubicBezier } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { cubicBezier, animate } from 'framer-motion';
 const useLazyImage = ({ imgId }: { imgId: string }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const handleImageOnLoad = () => {

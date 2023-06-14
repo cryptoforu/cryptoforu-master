@@ -1,22 +1,24 @@
-import { Formik, Form } from 'formik';
+import { Button, VStack } from '@chakra-ui/react';
+import { Form, Formik } from 'formik';
+
 import {
-  TextField,
-  TextAreaField,
-  SelectField,
-  MarkDownEditor,
-  TagsInput,
-  SwitchField,
-  CheckBoxField,
   ChakraPond,
+  CheckBoxField,
+  CheckBoxGroup,
+  Label,
+  MarkDownEditor,
+  SelectField,
+  SwitchField,
+  TextAreaField,
+  TextField,
 } from '@/Components/Elements/Forms';
 import { useFormContext } from '@/Store/useFormProvider';
+
 import FormWrapper from './FormWrapper';
-import { VStack, Button } from '@chakra-ui/react';
-import { Label } from '@/Components/Elements/Forms';
+
 const DynamicForm = () => {
   const { initialValues, form_schema, handleSubmit, withButton, form_id } =
     useFormContext();
-  console.log(initialValues);
   return (
     <FormWrapper title="" desc="">
       <Formik
@@ -85,10 +87,9 @@ const DynamicForm = () => {
                     );
                   case 'tags':
                     return (
-                      <TagsInput
+                      <CheckBoxGroup
                         key={value.name}
                         name={value.name}
-                        label={value.name}
                         items={value.options}
                       />
                     );
@@ -123,7 +124,7 @@ const DynamicForm = () => {
               {withButton && (
                 <Button
                   type="submit"
-                  variant={'gradLime'}
+                  colorScheme={'emerald'}
                   isLoading={isSubmitting}
                   loadingText="Processing"
                   fontWeight="500"

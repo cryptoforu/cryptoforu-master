@@ -45,6 +45,6 @@ final class CryptoCategories extends Data
             fn ($item) => self::fromArray(
                 attributes: $item
             )
-        )->keyBy('id');
+        )->keyBy('id')->sortByDesc('market_cap')->values();
     }
 }

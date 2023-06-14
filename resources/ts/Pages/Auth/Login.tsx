@@ -1,20 +1,30 @@
-import { FormEvent } from 'react';
-import AuthLayout from '@/Layouts/AuthLayout';
-import { useForm } from '@inertiajs/react';
-import { Label } from '@/Components/Elements/Forms';
-import { Button, Checkbox, HStack, Stack, Input } from '@chakra-ui/react';
-import { NavLink } from '@/Components/Elements/Navigation';
-import { useRoute } from '@/Providers/RouteProvider';
-const Login = () => {
-  const { route } = useRoute();
+import { Button, HStack, Stack } from '@chakra-ui/react';
+import { Form, Formik, FormikHelpers } from 'formik';
 
-  const { data, setData, post, processing, errors } = useForm({
+import { CheckBoxField, TextField } from '@/Components/Elements/Forms';
+import { NavigationLink } from '@/Components/Elements/Navigation';
+import AuthLayout from '@/Layouts/AuthLayout';
+import { useRoute } from '@/Providers/RouteProvider';
+import { InertiaSharedProps } from '@/types';
+
+const Login = ({ errors }: InertiaSharedProps) => {
+  const { route, navigate } = useRoute();
+
+  const initialValues = {
     email: '',
     password: '',
-  });
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    post(route('login'));
+    remember: false,
+  };
+  const handleSubmit = (
+    values: typeof initialValues,
+    action: FormikHelpers<typeof initialValues>
+  ) => {
+    navigate(route('login'), values, {
+      method: 'post',
+      onSuccess: () => {
+        action.setSubmitting(false);
+      },
+    });
   };
   return (
     <AuthLayout
@@ -23,44 +33,53 @@ const Login = () => {
       label="Sign Up"
       to={'register'}
     >
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={'6'}>
-          <Stack spacing={'4'}>
-            <Label errors={errors} label="Login" name="email">
-              <Input
-                name="email"
-                type="text"
-                placeholder="E-mail"
-                value={data.email}
-                onChange={(e) => setData('email', e.target.value)}
-              />
-            </Label>
-            <Label label="Password" errors={errors} name="password">
-              <Input
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={data.password}
-                onChange={(e) => setData('password', e.target.value)}
-              />
-            </Label>
-          </Stack>
-          <HStack spacing={'4'}>
-            <Checkbox defaultChecked>Remember me</Checkbox>
-            <NavLink to="password.request">Forgot Password?</NavLink>
-          </HStack>
-          <Stack>
-            <Button
-              variant="primaryBtn"
-              type="submit"
-              isLoading={processing}
-              loadingText="Submitting"
-            >
-              Sign In
-            </Button>
-          </Stack>
-        </Stack>
-      </form>
+      <Formik
+        initialValues={{ email: '', password: '', remember: false }}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Stack spacing={'6'}>
+              <Stack spacing={'4'}>
+                <TextField
+                  name={'email'}
+                  label={'Your Email'}
+                  errors={errors}
+                  type={'text'}
+                  placeholder={'Email'}
+                />
+                <TextField
+                  name={'password'}
+                  label={'password'}
+                  errors={errors}
+                  type={'password'}
+                  placeholder={'Password'}
+                />
+                <HStack spacing={'4'}>
+                  <CheckBoxField
+                    name={'remember'}
+                    label={'Remember Me'}
+                    errors={errors}
+                  />
+                  <NavigationLink to="password.request">
+                    Forgot Password?
+                  </NavigationLink>
+                </HStack>
+                <Stack>
+                  <Button
+                    colorScheme="twitter"
+                    type="submit"
+                    isLoading={isSubmitting}
+                    loadingText="Submitting"
+                  >
+                    Sign In
+                  </Button>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
     </AuthLayout>
   );
 };

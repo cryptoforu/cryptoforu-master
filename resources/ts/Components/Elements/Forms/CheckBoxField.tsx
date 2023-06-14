@@ -1,15 +1,51 @@
+import {
+  Box,
+  chakra,
+  Flex,
+  Text,
+  useCheckbox,
+  UseCheckboxProps,
+} from '@chakra-ui/react';
 import { useField } from 'formik';
-import { Label } from './';
-import type { FieldProps } from './FormTypes';
-import { Checkbox } from '@chakra-ui/react';
 
-const CheckBoxField = ({ ...props }: FieldProps) => {
-  const [field] = useField({ name: props.name, type: 'checkbox' });
+import type { FieldProps } from './FormTypes';
+
+type CheckProps = FieldProps & UseCheckboxProps;
+
+const CheckBoxField = ({ ...props }: CheckProps) => {
+  const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
+    useCheckbox(props);
+  const [{ ...field }] = useField({
+    name: props.name,
+    type: 'checkbox',
+    checked: state.isChecked,
+  });
 
   return (
-    <Label name={props.name} label={props.label} errors={props.errors}>
-      <Checkbox colorScheme="emerald" size="md" {...field} {...props} />
-    </Label>
+    <chakra.label
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      gridColumnGap={2}
+      maxW="36"
+      {...htmlProps}
+    >
+      <input {...getInputProps({ ...field })} hidden />
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        border="2px solid"
+        borderColor="green.500"
+        w={4}
+        h={4}
+        {...getCheckboxProps()}
+      >
+        {state.isChecked && <Box w={2} h={2} bg="green.500" />}
+      </Flex>
+      <Text color="gray.700" {...getLabelProps()}>
+        {props.label}
+      </Text>
+    </chakra.label>
   );
 };
 

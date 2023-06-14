@@ -1,18 +1,20 @@
-import { useTransition } from 'react';
-import type { Settings } from '@/types';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
+  Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuGroup,
   MenuDivider,
-  Button,
-  useColorModeValue as mode,
+  MenuGroup,
+  MenuItem,
+  MenuList,
   Portal,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useTransition } from 'react';
+
 import { usePageForm } from '@/Store/usePageSettings';
+import type { Settings } from '@/types';
+
 const PageSelect = ({ admin, front }: Settings['select']) => {
   const [isPending, startTransition] = useTransition();
   const { label, setPage } = usePageForm();
@@ -21,7 +23,7 @@ const PageSelect = ({ admin, front }: Settings['select']) => {
     <Menu placement="bottom-end">
       <MenuButton
         as={Button}
-        variant="primaryBtn"
+        colorScheme={'emerald'}
         rightIcon={<ChevronDownIcon />}
         isLoading={isPending}
       >

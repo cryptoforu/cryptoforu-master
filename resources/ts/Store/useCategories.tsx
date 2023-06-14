@@ -1,7 +1,8 @@
+import { router } from '@inertiajs/react';
 import { useTransition } from 'react';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
-import { router } from '@inertiajs/react';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
 import type { FormData } from '@/Types/generated';
 
@@ -35,7 +36,7 @@ type CategoryForm = {
   };
 };
 
-const useCategoriesStore = create<CategoriesStore>((set, get) => ({
+const useCategoriesStore = create<CategoriesStore>((set) => ({
   category: 'category_form',
   isDrawerOpen: false,
   openDrawer: () => set(() => ({ isDrawerOpen: true })),
@@ -66,11 +67,13 @@ export const useCategory = () => {
     category === 'category_form'
       ? 'Add New Category'
       : `Edit ${values?.initialValues.name}`;
+
   function selectCategory(payload: string) {
     startTransition(() => {
       setCategory(payload);
     });
   }
+
   const method = category === 'category_form' ? undefined : 'patch';
   return {
     values,

@@ -12,23 +12,23 @@ use Illuminate\Support\Str;
 
 final class ShowData
 {
-    use Selectable;
+  use Selectable;
 
-    public function handle()
-    {
-        $query = Site::all();
-        $data = (
-            new Collection(
-                items: PageData::collection(
-                    items: $query->map(fn ($item) => $item->getData())
-                )
-            )
-        )->keyBy(fn (array $i) => Str::slug($i['data_name']));
+  public function handle(): Collection
+  {
+    $query = Site::all();
+    $data = (
+    new Collection(
+      items: PageData::collection(
+        items: $query->map(fn($item) => $item->getData())
+      )
+    )
+    )->keyBy(fn(array $i) => Str::slug($i['data_name']));
 
-        return collect([
-            'data' => $data,
-            'select' => $this->selectable($data, 'data_name'),
-        ]);
+    return collect([
+      'data' => $data,
+      'select' => $this->selectable($data, 'data_name'),
+    ]);
 
-    }
+  }
 }

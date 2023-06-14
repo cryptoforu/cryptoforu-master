@@ -9,17 +9,21 @@ use Spatie\LaravelData\Transformers\Transformer;
 
 final class PercentageTransformer implements Transformer
 {
-    public function __construct(
-        public ?int $divide = null,
-        public ?string $intl = 'en_US'
-    ) {
+  /**
+   * @param  int|null  $divide
+   * @param  string|null  $intl
+   */
+  public function __construct(
+    public ?int $divide = null,
+    public ?string $intl = 'en_US'
+  ) {
 
-    }
+  }
 
-    public function transform(
-        DataProperty $property,
-        mixed $value
-    ): mixed {
-        return format_percentage($value, $this->divide, $this->intl);
-    }
+  public function transform(
+    DataProperty $property,
+    mixed $value
+  ): mixed {
+    return format_percentage($value, $this->divide, $this->intl);
+  }
 }

@@ -1,12 +1,13 @@
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  Td,
+  Button,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Button,
+  MenuList,
+  Td,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+
 import useRouter from '@/Hooks/useRouter';
 
 type StatusProps = 'DRAFT' | 'PUBLISHED' | 'PREVIEW' | 'ARCHIVED';

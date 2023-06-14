@@ -10,8 +10,6 @@ interface StoreDataContract
 {
     /**
      * Store Data
-     *
-     * @return void
      */
     public function handle(StoreSiteDataRequest $request): void;
 }

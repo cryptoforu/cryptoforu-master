@@ -1,9 +1,10 @@
+import { router } from '@inertiajs/react';
 import { useDeferredValue } from 'react';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
-import { router } from '@inertiajs/react';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
-import type { PageMeta, FormData } from '@/Types/generated';
+import type { FormData, PageMeta } from '@/Types/generated';
 
 type OptionsProps = {
   id: string | number;
@@ -27,7 +28,7 @@ interface SettingsStore {
   setEditing: (action: boolean) => void;
 }
 
-const usePageSettings = create<SettingsStore>((set, get) => ({
+const usePageSettings = create<SettingsStore>((set) => ({
   page: 'dashboard',
   setPage: (page) => {
     router.reload({

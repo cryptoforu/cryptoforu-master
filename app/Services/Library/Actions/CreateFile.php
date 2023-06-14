@@ -30,7 +30,7 @@ final class CreateFile
                     'library_category_id' => $request->validated('library_category_id'),
                 ]);
             }
-            cache()->store('library')->clear();
+            cache()->flush();
 
             return true;
 

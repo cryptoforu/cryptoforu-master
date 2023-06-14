@@ -1,13 +1,14 @@
-import { lazy } from 'react';
+import { Container } from '@chakra-ui/react';
 import pMinDelay from 'p-min-delay';
+import { lazy } from 'react';
+
 import AppHead from '@/Components/AppHead';
-import AdminLayout from '@/Layouts/AdminLayout';
-import PanelWrapper from '@/PageContainers/PanelWrapper';
 import { usePageProps } from '@/Hooks/useTypedPage';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { SuspenseWrapper } from '@/Motion';
+import PanelWrapper from '@/PageContainers/PanelWrapper';
 import FormProvider from '@/Store/useFormProvider';
 import type { FormData } from '@/Types/generated';
-import { Container } from '@chakra-ui/react';
-import { SuspenseWrapper } from '@/Motion';
 
 const DynamicForm = lazy(() =>
   pMinDelay(import(`@/Forms/DynamicForm.js`), 1000)
@@ -52,6 +53,7 @@ const EarnCreate = () => {
     </>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 EarnCreate.layout = (page: string) => <AdminLayout children={page} />;
 
 export default EarnCreate;

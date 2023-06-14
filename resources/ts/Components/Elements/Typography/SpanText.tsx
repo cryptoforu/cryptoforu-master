@@ -1,9 +1,9 @@
 import {
+  chakra,
+  forwardRef,
   HTMLChakraProps,
   ThemingProps,
   useStyleConfig,
-  chakra,
-  forwardRef,
 } from '@chakra-ui/react';
 
 export interface GradientProps extends HTMLChakraProps<'span'>, ThemingProps {}

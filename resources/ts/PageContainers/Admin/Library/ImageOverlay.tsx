@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
-import { useAnimate } from 'framer-motion';
-import { Box, IconButton } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { BtnLink } from '@/Components/Elements/Navigation';
+import { Box, IconButton } from '@chakra-ui/react';
+import { useAnimate } from 'framer-motion';
+import { useEffect } from 'react';
+
+import { ButtonLink } from '@/Components/Elements/Navigation';
 import { useMenuSelectContext } from '@/Store/useMenuSelect';
 interface OverlayProps {
   isHovered: boolean;
@@ -64,7 +65,7 @@ const ImageOverlay = ({ isHovered, id }: OverlayProps) => {
         justifyContent="end"
         key={id}
       >
-        <BtnLink
+        <ButtonLink
           as={IconButton}
           icon={<DeleteIcon />}
           colorScheme="red"

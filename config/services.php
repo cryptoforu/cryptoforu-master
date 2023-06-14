@@ -37,5 +37,11 @@ return [
         'timeout' => env('COINGECKO_TIMEOUT', 10),
         'connect_timeout' => env('COINGECKO_CONNECTION_TIMEOUT', 2),
     ],
+    'coinstats' => [
+        'base_url' => env('COINSTATS_BASE_URL', 'https://api.coinstats.app/public/v1/'),
+    ],
+    'descrypt' => [
+        'base_url' => env('DECRYPT_BASE_URL', 'https://decrypt.co/feed'),
+    ],
 
 ];

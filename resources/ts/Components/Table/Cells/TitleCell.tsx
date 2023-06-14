@@ -1,5 +1,6 @@
-import { ProseHeadings } from '../../Elements/Typography';
 import { Td } from '@chakra-ui/react';
+
+import { ProseHeadings } from '../../Elements/Typography';
 
 const TitleCell = (title: string) => {
   return (

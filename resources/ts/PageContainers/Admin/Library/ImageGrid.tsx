@@ -1,37 +1,46 @@
 import {
-  SimpleGrid,
-  Container,
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  GridItem,
-  useColorModeValue as mode,
-  VStack,
-  Stack,
-  StackDivider,
   Alert,
   AlertIcon,
+  Box,
+  Button,
+  Container,
+  GridItem,
   HStack,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  SimpleGrid,
+  Stack,
+  StackDivider,
+  useColorModeValue as mode,
+  VStack,
 } from '@chakra-ui/react';
-import { usePageProps } from '@/Hooks/useTypedPage';
-import { ImageOverlay } from './';
 import { m } from 'framer-motion';
-import { useSelectedValues } from '@/Store/useMenuSelect';
+
 import { LazyImage } from '@/Components/Elements/Content';
-import type { LibraryCategory, LibraryData } from '@/Types/generated';
-import { useHovered, useChecked, useDetails } from '@/Store/useLibraryStore';
-import { AnimatedCheckIcon } from '@/Motion';
-import { toHeadline } from '@/utils/toHeadline';
-import { bytesToSize } from '@/utils/convertBytes';
-import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
 import { Clipboard } from '@/Components/Elements/Forms';
+import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
+import { usePageProps } from '@/Hooks/useTypedPage';
+import { AnimatedCheckIcon } from '@/Motion';
+import { UpdateForm } from '@/Store/useLibraryForms';
+import {
+  useChecked,
+  useDetails,
+  useHovered,
+  useIsEditing,
+} from '@/Store/useLibraryStore';
+import { useSelectedValues } from '@/Store/useMenuSelect';
+import type { LibraryCategory, LibraryData } from '@/Types/generated';
+import { bytesToSize } from '@/utils/convertBytes';
+import { toHeadline } from '@/utils/toHeadline';
+
+import { ImageOverlay } from './';
+
 interface ModalDetailsProps {
   values: LibraryData;
   toogleDetails: () => void;
@@ -43,6 +52,8 @@ const ModalDetails = ({
   toogleDetails,
   showingDetails,
 }: ModalDetailsProps) => {
+  const { isEditing, isPending, onEditChange } = useIsEditing();
+  const { setValues } = useDetails();
   return (
     <Modal
       isOpen={showingDetails}
@@ -63,19 +74,34 @@ const ModalDetails = ({
         <ModalBody>
           <SimpleGrid columns={{ base: 1, sm: 12 }} spacing={6}>
             <GridItem colSpan={{ sm: 4, lg: 5 }}>
-              <LazyImage
-                boxProps={{
-                  rounded: 'md',
-                  overflow: 'hidden',
-                  bg: mode('gray.100', 'gray.900'),
-                  __css: { aspectRatio: 2 / 3 },
-                }}
-                imgProps={{
-                  img_name: values.file_name,
-                  alt: '',
-                  objectFit: 'cover',
-                }}
-              />
+              <VStack position={'sticky'} top={'0'} align={'stretch'}>
+                {isEditing ? (
+                  <UpdateForm
+                    id={values.id}
+                    setEditing={onEditChange}
+                    data={values}
+                  />
+                ) : (
+                  <LazyImage
+                    boxProps={{
+                      rounded: 'md',
+                      overflow: 'hidden',
+                      bg: mode('gray.100', 'gray.900'),
+                      __css: { aspectRatio: 2 / 3 },
+                    }}
+                    imgProps={{
+                      img_name: values.file_name,
+                      alt: '',
+                      objectFit: 'cover',
+                    }}
+                  />
+                )}
+                <Stack mt={'4'}>
+                  <Button isDisabled={isPending} onClick={() => onEditChange()}>
+                    {isEditing ? 'Cancel' : 'Edit'}
+                  </Button>
+                </Stack>
+              </VStack>
             </GridItem>
             <GridItem colSpan={{ sm: 8, lg: 7 }}>
               <Stack
@@ -211,7 +237,7 @@ const ImageGrid = () => {
                 <>
                   {errors &&
                     Object.entries(errors).map(([key, val]) => (
-                      <Alert status="error">
+                      <Alert key={key} status="error">
                         <AlertIcon />
                         {val}
                       </Alert>
@@ -225,9 +251,9 @@ const ImageGrid = () => {
                         id: file.id,
                         file_name: file.file_name,
                         conversions: {
-                          lg_name: file.conversions.lg_name,
-                          md_name: file.conversions.md_name,
-                          sm_name: file.conversions.sm_name,
+                          lg: file.conversions.lg_name,
+                          md: file.conversions.md_name,
+                          sm: file.conversions.sm_name,
                         },
                         mime_type: file.mime_type,
                         size: file.size,

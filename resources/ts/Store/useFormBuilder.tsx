@@ -1,12 +1,13 @@
-import { useRef, useEffect, useCallback, ChangeEvent } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { useRoute } from '@/Providers/RouteProvider';
-import type { FormData, FormType } from '@/Types/generated';
 import { shallow } from 'zustand/shallow';
 
+import { useRoute } from '@/Providers/RouteProvider';
+import type { FormData, FormType } from '@/Types/generated';
+
 type SelectOptions = {
-  id: string | number;
+  id?: string | number;
   name: string;
 };
 
@@ -59,7 +60,7 @@ const useFormStore = create<BuilderStore>()(
         type: 'textfield',
       },
     },
-    form_route: 'add.settings',
+    form_route: 'admin:settings:add.settings',
     addValue: (key, value, payload) =>
       set((state) => {
         const current = get().initialValues;

@@ -1,9 +1,12 @@
+import { useColorModeValue, Wrap, WrapItem } from '@chakra-ui/react';
+import { stagger, useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
-import { useAnimate, stagger } from 'framer-motion';
+
+import { usePopoverState, useWidthState } from '@/Store/useAdminLayout';
 import { MenuItems } from '@/Types/generated';
-import { Wrap, WrapItem, useColorModeValue } from '@chakra-ui/react';
+
 import { SidebarLink } from './';
-import useAdminLayout, { usePopoverState } from '@/Store/useAdminLayout';
+
 const staggerMenuItems = stagger(0.1, { startDelay: 0.5 });
 
 const useDropAnimation = ({ isOpen }: { isOpen: boolean }) => {
@@ -52,7 +55,7 @@ interface SidebarDropProps {
 
 const SidebarDropDown = ({ menu }: SidebarDropProps) => {
   const { popoverOpen } = usePopoverState();
-  const { widthState } = useAdminLayout();
+  const widthState = useWidthState();
   const isOpen = popoverOpen(menu.id as string | number);
   const scope = useDropAnimation({ isOpen: isOpen });
   const bg = useColorModeValue('slate.100', 'blackAlpha.300');

@@ -1,9 +1,10 @@
-import { useDeferredValue } from 'react';
-import { Textarea, Progress, Flex, Spacer, Box } from '@chakra-ui/react';
+import { Box, Flex, Progress, Spacer, Textarea } from '@chakra-ui/react';
 import { useField } from 'formik';
+import { useDeferredValue } from 'react';
+
+import { ProseHeadings } from '../Typography';
 import { Label } from './';
 import type { FieldProps } from './FormTypes';
-import { ProseHeadings } from '../Typography';
 
 const TextAreaField = ({ ...props }: FieldProps) => {
   const [field] = useField(props);

@@ -12,8 +12,6 @@ trait Selectable
 {
     /**
      * Simple Helper for Menu Component
-     *
-     * @var string
      */
     public function selectable(array|Collection $collection, $keyFrom): array
     {

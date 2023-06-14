@@ -14,10 +14,10 @@ final class GetMenu implements GetMenuContract
 {
     public function handle(string $position = 'front_main'): array
     {
-        return Cache::rememberForever($position, function () {
+        return Cache::rememberForever($position, function () use ($position) {
             return MenuItemsData::make(
                 items: MenuItem::ofItems(
-                    Menu::ofMain()
+                    Menu::ofMain($position)
                 )
             );
         });

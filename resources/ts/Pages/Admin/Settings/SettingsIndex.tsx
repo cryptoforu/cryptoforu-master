@@ -1,28 +1,30 @@
-import { lazy } from 'react';
-import pMinDelay from 'p-min-delay';
-import AppHead from '@/Components/AppHead';
-import { SettingsIcon, HamburgerIcon, DragHandleIcon } from '@chakra-ui/icons';
-import AdminLayout from '@/Layouts/AdminLayout';
-import PanelWrapper from '@/PageContainers/PanelWrapper';
-import { SuspenseWrapper } from '@/Motion';
-import type { Settings as S } from '@/types';
+import { DragHandleIcon, HamburgerIcon, SettingsIcon } from '@chakra-ui/icons';
 import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  useColorModeValue as mode,
-  Grid,
-  GridItem,
+  Box,
   Card,
   CardBody,
+  Grid,
+  GridItem,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useColorModeValue as mode,
   useMediaQuery,
-  Box,
 } from '@chakra-ui/react';
-import { usePageForm, useEditing } from '@/Store/usePageSettings';
+import pMinDelay from 'p-min-delay';
+import { lazy } from 'react';
+
+import AppHead from '@/Components/AppHead';
 import { DynamicForm } from '@/Forms';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { SuspenseWrapper } from '@/Motion';
+import PanelWrapper from '@/PageContainers/PanelWrapper';
 import FormProvider from '@/Store/useFormProvider';
+import { useEditing, usePageForm } from '@/Store/usePageSettings';
+import type { Settings as S } from '@/types';
+
 const MenuContent = lazy(() =>
   pMinDelay(import(`@/PageContainers/Admin/Settings/MenuContent.js`), 500)
 );
@@ -58,14 +60,12 @@ const Settings = ({ select }: S) => {
     <SuspenseWrapper>
       <AppHead />
       <PanelWrapper>
-        <Card variant={'containerCard'}>
+        <Card>
           <CardBody p="0">
             <Tabs
               orientation={isLargerThan800 ? 'vertical' : 'horizontal'}
               position="relative"
-              variant={isLargerThan800 ? 'primary' : 'line'}
               isLazy
-              mx={{ base: '2', xl: 'none' }}
             >
               <Grid
                 templateColumns={{ xl: 'repeat(12, 1fr)' }}
@@ -83,22 +83,52 @@ const Settings = ({ select }: S) => {
                     xl: mode('slate.100', 'slate.800'),
                   }}
                 >
-                  <TabList>
-                    <Tab>
+                  <TabList display={'flex'} flexDirection={'column'}>
+                    <Tab
+                      _hover={{ bg: mode('emerald.100', 'slateAlpha.500') }}
+                      _selected={{
+                        bg: mode('emerald.100', 'slateAlpha.500'),
+                        borderLeft: '2.5px solid teal',
+                      }}
+                      textAlign={'left'}
+                      minWidth={'full'}
+                      display={'flex'}
+                      justifyContent={'start'}
+                    >
                       <TabButton
                         icon={SettingsIcon}
                         title="General Settings"
                         desc="Application General Settings"
                       />
                     </Tab>
-                    <Tab>
+                    <Tab
+                      _hover={{ bg: mode('emerald.100', 'slateAlpha.500') }}
+                      _selected={{
+                        bg: mode('emerald.100', 'slateAlpha.500'),
+                        borderLeft: '2.5px solid teal',
+                      }}
+                      textAlign={'left'}
+                      minWidth={'full'}
+                      display={'flex'}
+                      justifyContent={'start'}
+                    >
                       <TabButton
                         icon={HamburgerIcon}
                         title="Menu Settings"
                         desc="Application Menus"
                       />
                     </Tab>
-                    <Tab>
+                    <Tab
+                      _hover={{ bg: mode('emerald.100', 'slateAlpha.500') }}
+                      _selected={{
+                        bg: mode('emerald.100', 'slateAlpha.500'),
+                        borderLeft: '2.5px solid teal',
+                      }}
+                      textAlign={'left'}
+                      minWidth={'full'}
+                      display={'flex'}
+                      justifyContent={'start'}
+                    >
                       <TabButton
                         icon={DragHandleIcon}
                         title="Page Settings"
@@ -165,5 +195,6 @@ const Settings = ({ select }: S) => {
     </SuspenseWrapper>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 Settings.layout = (page: string) => <AdminLayout children={page} />;
 export default Settings;

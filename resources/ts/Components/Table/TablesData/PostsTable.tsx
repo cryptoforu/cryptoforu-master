@@ -1,7 +1,9 @@
-import { usePageProps } from '@/Hooks/useTypedPage';
-import { DataTable } from '@/Components/Table';
 import { createColumnHelper } from '@tanstack/react-table';
-import { ImageTitleCell, ActionCell, StatusCell, TextCell } from '../Cells';
+
+import { DataTable } from '@/Components/Table';
+import { usePageProps } from '@/Hooks/useTypedPage';
+
+import { ActionCell, ImageTitleCell, StatusCell, TextCell } from '../Cells';
 import type { PostsTable as P } from '../Types/tables';
 
 const PostsTable = () => {

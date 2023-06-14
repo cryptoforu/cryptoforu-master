@@ -1,6 +1,8 @@
-import remarkGfm from 'remark-gfm';
-import { ProseHeadings, ProsePa, Prose } from './';
 import { Link, TextProps } from '@chakra-ui/react';
+import remarkGfm from 'remark-gfm';
+
+import { Prose, ProseHeadings, ProsePa } from './';
+
 interface MarkDownProps extends TextProps {
   content: string;
 }
@@ -8,26 +10,27 @@ interface MarkDownProps extends TextProps {
 const MarkDown = ({ content, ...rest }: MarkDownProps) => {
   return (
     <Prose
+      /* eslint-disable-next-line react/no-children-prop */
       children={content}
       remarkPlugins={[remarkGfm]}
       components={{
-        p({ node, ...props }) {
+        p({ ...props }) {
           return <ProsePa {...props} {...rest} />;
         },
-        a: ({ node, ...props }) => <Link {...props} />,
-        h1: ({ node, ...props }) => (
+        a: ({ ...props }) => <Link {...props} />,
+        h1: ({ ...props }) => (
           <ProseHeadings component="h1" size="xxl" {...props} />
         ),
-        h2: ({ node, ...props }) => (
+        h2: ({ ...props }) => (
           <ProseHeadings component="h2" size="xl" {...props} />
         ),
-        h3: ({ node, ...props }) => (
+        h3: ({ ...props }) => (
           <ProseHeadings component="h3" size="lg" {...props} />
         ),
-        h4: ({ node, ...props }) => (
+        h4: ({ ...props }) => (
           <ProseHeadings component="h4" size="md" {...props} />
         ),
-        h5: ({ node, ...props }) => (
+        h5: ({ ...props }) => (
           <ProseHeadings component="h5" size="sm" {...props} />
         ),
       }}

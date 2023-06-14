@@ -5,10 +5,11 @@ import {
   useColorModeValue,
   useMergeRefs,
 } from '@chakra-ui/react';
+import { cubicBezier, useAnimate } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
 import { ResponsiveImage } from './';
 import type { IResponsiveImage } from './ResponsiveImage';
-import { useEffect, useState } from 'react';
-import { useAnimate, cubicBezier } from 'framer-motion';
 
 export interface IImageProps {
   imgProps: IResponsiveImage;
@@ -60,6 +61,7 @@ const LazyImage = forwardRef(({ imgProps, boxProps }: IImageProps, ref) => {
       <ResponsiveImage
         style={{ opacity: 0 }}
         onLoad={handleLoad}
+        loading="lazy"
         {...imgProps}
       />
     </Box>

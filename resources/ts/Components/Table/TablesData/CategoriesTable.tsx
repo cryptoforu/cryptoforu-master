@@ -1,9 +1,12 @@
-import { usePageProps } from '@/Hooks/useTypedPage';
-import { DataTable } from '@/Components/Table';
 import { createColumnHelper } from '@tanstack/react-table';
+
+import { DataTable } from '@/Components/Table';
+import { usePageProps } from '@/Hooks/useTypedPage';
+import { useCategory } from '@/Store/useCategories';
+
 import { ActionCell, ImageTitleCell } from '../Cells';
 import type { CategoryTable } from '../Types/tables';
-import { useCategory } from '@/Store/useCategories';
+
 const CategoriesTable = () => {
   const { category_table } = usePageProps<Array<CategoryTable>>();
   const columnHelper = createColumnHelper<CategoryTable>();

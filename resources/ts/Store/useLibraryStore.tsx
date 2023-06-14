@@ -1,8 +1,9 @@
+import { useEffect, useRef, useTransition } from 'react';
 import { create } from 'zustand';
-import { useEffect, useRef } from 'react';
 import { immer } from 'zustand/middleware/immer';
-import type { LibraryData } from '@/Types/generated';
 import { shallow } from 'zustand/shallow';
+
+import type { LibraryData } from '@/Types/generated';
 
 type SelectedProps = {
   id?: number;
@@ -14,6 +15,7 @@ type LibraryState = {
   showingDetails: boolean;
   selectAll: boolean;
   selected: Array<SelectedProps>;
+  isEditing: boolean;
 };
 
 type LibraryActions = {
@@ -25,6 +27,7 @@ type LibraryActions = {
   isChecked: (id: number) => boolean;
   toogleSelect: () => void;
   clearSelected: () => void;
+  setEditing: () => void;
 };
 
 interface LibraryStore extends LibraryState, LibraryActions {}
@@ -48,6 +51,7 @@ const useLibraryStore = create<LibraryStore>()(
     showingDetails: false,
     selected: [],
     selectAll: false,
+    isEditing: false,
     isHovered: (id) => {
       const hovered = get().hoveredId === id;
       return hovered;
@@ -87,6 +91,10 @@ const useLibraryStore = create<LibraryStore>()(
     clearSelected: () =>
       set((state) => {
         state.selected = [];
+      }),
+    setEditing: () =>
+      set((prev) => {
+        prev.isEditing = !prev.isEditing;
       }),
   }))
 );
@@ -152,5 +160,25 @@ export const useDetails = () => {
     toogleDetails,
     setValues,
     showingDetails,
+  };
+};
+
+export const useIsEditing = () => {
+  const [isEditing, setEditing] = useLibraryStore(
+    (state) => [state.isEditing, state.setEditing],
+    shallow
+  );
+  const [isPending, startTransition] = useTransition();
+
+  function onEditChange() {
+    startTransition(() => {
+      setEditing();
+    });
+  }
+
+  return {
+    isEditing,
+    isPending,
+    onEditChange,
   };
 };

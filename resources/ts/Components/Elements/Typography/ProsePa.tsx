@@ -1,9 +1,9 @@
 import {
-  ThemingProps,
-  useStyleConfig,
+  chakra,
   forwardRef,
   HTMLChakraProps,
-  chakra,
+  ThemingProps,
+  useStyleConfig,
 } from '@chakra-ui/react';
 
 export interface ProsePaProps extends HTMLChakraProps<'p'>, ThemingProps {}

@@ -1,5 +1,7 @@
-import { mode } from '@chakra-ui/theme-tools';
+import type { ThemeConfig } from '@chakra-ui/react';
 import type { StyleFunctionProps } from '@chakra-ui/styled-system';
+import { mode } from '@chakra-ui/theme-tools';
+
 export const styles = {
   global: (props: StyleFunctionProps) => ({
     body: {
@@ -23,4 +25,15 @@ export const styles = {
       bgImage: '-webkit-linear-gradient(45deg, #6366f1, #22d3ee)',
     },
   }),
+};
+export const config: ThemeConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: true,
+};
+export const fonts = {
+  body: 'Space Mono, monospace',
+  heading: 'Space Mono, monospace',
+  '.fontsource-space-mono': {
+    'font-family': 'Space Mono, monospace',
+  },
 };

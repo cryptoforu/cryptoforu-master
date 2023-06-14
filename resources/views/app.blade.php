@@ -12,6 +12,7 @@
     <meta name="msapplication-TileColor" content="#00aba9">
     <meta name="theme-color" content="#ffffff">
     <title inertia>{{ config('app.name', 'Cryptoforu') }}</title>
+    <link rel="preload" fetchpriority="high" as="image" href="/img/cache/pnglg/6456ab884b1f8Lg.png?w=1200&&q=100" type="image/webp">
     <!-- Scripts -->
     @routes
     @viteReactRefresh

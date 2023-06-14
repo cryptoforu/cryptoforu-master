@@ -1,10 +1,11 @@
+import { Switch } from '@chakra-ui/react';
 import { useField } from 'formik';
+
 import { Label } from './';
 import type { FieldProps } from './FormTypes';
-import { Switch } from '@chakra-ui/react';
 
 const SwitchField = ({ ...props }: FieldProps) => {
-  const [field, meta, helpers] = useField(props.name);
+  const [, meta, helpers] = useField(props.name);
   const { value } = meta;
   const { setValue } = helpers;
   return (

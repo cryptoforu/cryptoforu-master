@@ -21,7 +21,7 @@ final class Site extends Model
         'data_values',
     ];
 
-    protected $dataClass = PageData::class;
+    protected string $dataClass = PageData::class;
 
     /**
      * The attributes that should be cast.
@@ -37,8 +37,13 @@ final class Site extends Model
         return $this->morphMany(Library::class, 'imageable');
     }
 
-    public function scopeOfData(Builder $query, string $data_name): Site
+    public function scopeOfData(Builder $query, string $data_name): Builder|Model
     {
         return $query->where('data_name', $data_name)->first();
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'data_name';
     }
 }

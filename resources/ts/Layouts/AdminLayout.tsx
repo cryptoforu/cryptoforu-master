@@ -1,16 +1,18 @@
-import React from 'react';
-import { Flex, Box, Container } from '@chakra-ui/react';
-import { MainSidebar } from '@/Components/Sidebar';
-import { AdminNav } from '@/Components/Navbars';
-import useTypedPage from '@/Hooks/useTypedPage';
-import { useToast } from '@/Store/useToastProvider';
-import { useAdminLayoutAnimation } from '@/Store/useAdminLayout';
+import { Box, Container, Flex } from '@chakra-ui/react';
 import { m } from 'framer-motion';
+import React from 'react';
+
+import { AdminNav } from '@/Components/Navbars';
+import { MainSidebar } from '@/Components/Sidebar';
+import useTypedPage from '@/Hooks/useTypedPage';
+import { useMenuAnimation, useWidthState } from '@/Store/useAdminLayout';
+import { useToast } from '@/Store/useToastProvider';
+
 const AdminLayout = ({ children }: React.PropsWithChildren) => {
   useToast();
   const { url } = useTypedPage();
-  const scope = useAdminLayoutAnimation();
-
+  const isOpen = useWidthState();
+  const scope = useMenuAnimation(isOpen);
   return (
     <>
       <Flex height="full" ref={scope}>
@@ -31,7 +33,7 @@ const AdminLayout = ({ children }: React.PropsWithChildren) => {
               variants={{ visible: { transition: { staggerChildren: 0.3 } } }}
               as={m.div}
               key={url}
-              variant="panel"
+              minW="full"
             >
               {children}
             </Container>

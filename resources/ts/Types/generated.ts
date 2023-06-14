@@ -1,3 +1,4 @@
+export type Nullable<T> = T | null;
 export type AdminNavigation = {
   label: string;
   route: string;
@@ -7,17 +8,45 @@ export type AdminNavigation = {
 export type CategoryData = {
   id: number;
   name: string;
-  color: string;
-  slug?: string;
-  description?: string;
+  slug: string;
+  description: string;
   category_image: string;
   category_thumb?: string;
+  color: ColorScheme;
   posts?: Array<PostData>;
+};
+export type ColorScheme = 'emerald' | 'teal' | 'cyan' | 'blue' | 'red';
+export type CryptoCategories = {
+  id: Nullable<string>;
+  name: Nullable<string>;
+  market_cap: Nullable<number>;
+  market_cap_change_24h: Nullable<number>;
+  top_3_coins: Nullable<string[]>;
+  volume_24h: Nullable<number>;
+};
+export type CryptoCoin = {
+  id: string;
+  name: string;
+  image: string;
+  current_price: string;
+  market_cap: Nullable<number>;
+  market_cap_rank: Nullable<number>;
+  total_volume: Nullable<number>;
+  high_24h: Nullable<number>;
+  low_24h: Nullable<number>;
+  price_change_24h: Nullable<number>;
+  price_change_percentage_24h: string;
+  price_change_percentage_1h_in_currency: Nullable<number>;
+  price_change_percentage_24h_in_currency: Nullable<number>;
+  price_change_percentage_7d_in_currency: Nullable<number>;
+  symbol: string;
+  color: string;
+  current_color: string;
 };
 export type EarnCategory = {
   id: number;
   name: string;
-  color: string;
+  color: ColorScheme;
   description?: string;
   category_image?: string;
   earn?: Array<EarnData>;
@@ -30,15 +59,17 @@ export type EarnData = {
   thumb?: string;
   link?: string;
   featured?: FeaturedEarn;
+  status?: EarnStatus;
   image_name?: string;
   earn_category_id?: number;
   main_features?: string;
   earnCategory?: EarnCategory;
 };
+export type EarnStatus = 'DRAFT' | 'FEATURED' | 'PUBLISHED';
 export type FeaturedEarn = '1' | '2';
-export type FormData<T extends object> = {
-  label: string;
-  name: string;
+export type FormData<T = object> = T & {
+  label: Nullable<string>;
+  name: Nullable<string>;
   type: FormType;
   options?: Array<T>;
 };
@@ -58,9 +89,7 @@ export type LibraryCategory = {
   media: Array<LibraryData>;
 };
 export type Conversions = {
-  lg_name: string;
-  md_name: string;
-  sm_name: string;
+  [x: string]: string;
 };
 export type LibraryData = {
   id: number;
@@ -74,13 +103,13 @@ export type LibraryData = {
   imageable_id?: number;
   library_category_id?: number;
   imageable_type?: string;
-  imageable?: unknown;
+  imageable?: Array<object>;
   libraryCategory?: LibraryCategory;
 };
 export type MenuData = {
   id: number;
   label: string;
-  position: string;
+  position: Nullable<string>;
   items?: Array<MenuItems>;
 };
 export type MenuItems = {
@@ -94,13 +123,13 @@ export type MenuItems = {
   menu?: Array<MenuData>;
 };
 export type PageMeta = {
-  id: 'form-meta';
+  id: 'page-meta';
   label: string;
   route?: string;
   meta_desc: string;
-  meta_image?: string;
-  tw_image?: string;
-  og_image?: string;
+  meta_image?: Nullable<string>;
+  tw_image?: Nullable<string>;
+  og_image?: Nullable<string>;
   parent_id?: number;
   page_type?: string;
   page_name?: string;
@@ -131,21 +160,13 @@ export type TagsData = {
   name: string;
   posts?: Array<PostData>;
 };
-export type SiteData<T extends object> = {
-  data_name: string;
-  data_values: T;
-};
-
-export type HeroData = {
-  id: string | number;
-  title: string;
-  description: string;
-};
-
-export type FeaturesData = {
-  id: string | number;
+export type ExchangesData = {
+  id: string;
   name: string;
+  year_established: string;
+  url: string;
   image: string;
-  description: string;
-  link: string;
+  trust_score: number;
+  trust_rank: number;
+  trade_volume_24h_btc: string;
 };

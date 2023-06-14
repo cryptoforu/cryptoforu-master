@@ -1,31 +1,36 @@
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  IconButton,
-  Icon,
   Box,
   Flex,
-  useColorModeValue,
+  Icon,
+  IconButton,
   Stack,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { usePageProps } from '@/Hooks/useTypedPage';
-import { Separator } from '@/Components/Elements/Content';
-import useAdminLayout, { usePopoverState } from '@/Store/useAdminLayout';
-import { Logo } from '@/Components/Elements/Content';
 import {
-  ArrowsPointingOutIcon,
-  ArrowsPointingInIcon,
   ArrowLeftOnRectangleIcon,
+  ArrowsPointingInIcon,
+  ArrowsPointingOutIcon,
 } from '@heroicons/react/24/outline/index.js';
 import { m } from 'framer-motion';
+
+import { Logo, Separator } from '@/Components/Elements/Content';
+import { usePageProps } from '@/Hooks/useTypedPage';
+import {
+  useAdminLayoutAnimation,
+  usePopoverState,
+} from '@/Store/useAdminLayout';
 import type { MenuItems } from '@/Types/generated';
-import { NavLink, BtnLink } from '../Elements/Navigation';
-import { SidebarLink, SidebarLabel, SidebarDropDown } from './';
+
+import { ButtonLink, NavigationLink } from '../Elements/Navigation';
+import { SidebarDropDown, SidebarLabel, SidebarLink } from './';
 
 const MainSidebar = () => {
   const { admin_sidebar } = usePageProps<MenuItems[]>();
-  const { widthState, toogleSidebar } = useAdminLayout();
+
   const { onPopOpen } = usePopoverState();
+  const { toogleSidebar, widthState } = useAdminLayoutAnimation();
   const footerColor = useColorModeValue('gray.100', 'gray.900');
   const mainColor = useColorModeValue('slate.100', 'slate.900');
   const borderColor = useColorModeValue('slate.50', 'slate.800');
@@ -63,13 +68,9 @@ const MainSidebar = () => {
           pt="12px"
           mb="12px"
         >
-          <NavLink to="/" order={widthState ? 2 : 1}>
-            <Logo
-              alt="Cryptoforu"
-              lazy={false}
-              variant={widthState ? 'baseLogo' : 'navLogo'}
-            />
-          </NavLink>
+          <NavigationLink to="/" order={widthState ? 2 : 1}>
+            <Logo variant={widthState ? 'baseLogo' : 'navLogo'} />
+          </NavigationLink>
           <IconButton
             as={m.button}
             whileTap={{ scale: 1.1 }}
@@ -126,7 +127,7 @@ const MainSidebar = () => {
           justify="center"
           bg={footerColor}
         >
-          <BtnLink
+          <ButtonLink
             colorScheme="emerald"
             to="logout"
             options={{
@@ -138,7 +139,7 @@ const MainSidebar = () => {
             ) : (
               <Icon as={ArrowLeftOnRectangleIcon} />
             )}
-          </BtnLink>
+          </ButtonLink>
         </Flex>
       </Flex>
     </Flex>

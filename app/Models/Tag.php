@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Services\Blog\DataObjects\TagsData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\WithData;
 
 final class Tag extends Model
@@ -23,6 +24,13 @@ final class Tag extends Model
     public function posts()
     {
         return $this->belongsToMany(Post::class);
+    }
+
+    public function scopeOfData(): Collection
+    {
+        return $this->all()->map(
+            fn ($tag) => $tag->getData()
+        );
     }
 
     /**

@@ -4,3 +4,6 @@
 build
 node_modules
 .gitattributes
+*.css
+vite.config.ts
+/frontend

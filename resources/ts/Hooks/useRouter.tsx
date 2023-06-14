@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { router } from '@inertiajs/react';
 import type { Method, VisitOptions } from '@inertiajs/core';
+import { router } from '@inertiajs/react';
+import { useCallback } from 'react';
 
 const useRouter = () => {
   const navigate = useCallback(

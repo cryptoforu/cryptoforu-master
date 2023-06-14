@@ -1,4 +1,5 @@
 import { Td } from '@chakra-ui/react';
+
 import { ProsePa } from '@/Components/Elements/Typography';
 
 const TextCell = (label: string) => {

@@ -1,6 +1,6 @@
-import { chakra, shouldForwardProp, BoxProps } from '@chakra-ui/react';
-import { m, isValidMotionProp, Variants } from 'framer-motion';
-import React, { PropsWithChildren } from 'react';
+import { BoxProps, chakra, shouldForwardProp } from '@chakra-ui/react';
+import { isValidMotionProp, m, Variants } from 'framer-motion';
+import { PropsWithChildren } from 'react';
 
 export interface IMotionBoxProps extends PropsWithChildren<BoxProps> {
   variants?: Variants;

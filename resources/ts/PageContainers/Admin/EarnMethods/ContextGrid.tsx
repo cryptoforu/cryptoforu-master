@@ -1,6 +1,7 @@
 import { Flex, Grid } from '@chakra-ui/react';
-import { useSelectedValues } from '@/Store/useMenuSelect';
+
 import { ImgCard } from '@/Components/Elements/Content';
+import { useSelectedValues } from '@/Store/useMenuSelect';
 import type { EarnCategory } from '@/Types/generated';
 
 const ContextGrid = () => {

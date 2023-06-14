@@ -1,9 +1,9 @@
 import {
+  chakra,
+  forwardRef,
   HTMLChakraProps,
   ThemingProps,
   useStyleConfig,
-  forwardRef,
-  chakra,
 } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import type { ReactMarkdownOptions } from 'react-markdown/lib/react-markdown';

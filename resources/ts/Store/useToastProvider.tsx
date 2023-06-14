@@ -1,10 +1,11 @@
+import { ToastId, useToast as useChakraToast } from '@chakra-ui/react';
 import { useCallback, useEffect, useRef } from 'react';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { ToastId, useToast as useChakraToast } from '@chakra-ui/react';
+import { shallow } from 'zustand/shallow';
+
 import useTypedPage, { usePageProps } from '@/Hooks/useTypedPage';
 import { Flash } from '@/types';
-import { shallow } from 'zustand/shallow';
 
 type ToastState = {
   isToastOpen: boolean;
@@ -22,7 +23,7 @@ type ToastActions = {
 export interface ToastStore extends ToastState, ToastActions {}
 
 const useToastProvider = create<ToastStore>()(
-  immer((set, get) => ({
+  immer((set) => ({
     isToastOpen: false,
     status: 'success',
     description: '',

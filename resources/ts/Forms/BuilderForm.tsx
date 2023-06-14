@@ -1,16 +1,18 @@
-import { FormWrapper } from './';
-import { useInitial } from '@/Store/useFormBuilder';
-import { toHeadline } from '@/utils/toHeadline';
 import {
-  VStack,
-  HStack,
   Button,
-  Input,
-  Select,
   FormControl,
   FormLabel,
+  HStack,
+  Input,
+  Select,
+  VStack,
 } from '@chakra-ui/react';
+
+import { useInitial } from '@/Store/useFormBuilder';
 import { useFormBuilder } from '@/Store/useFormBuilder';
+import { toHeadline } from '@/utils/toHeadline';
+
+import { FormWrapper } from './';
 
 const FormBuilder = () => {
   const { handleAdd } = useFormBuilder();

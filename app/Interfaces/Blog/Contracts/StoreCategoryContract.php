@@ -10,8 +10,6 @@ interface StoreCategoryContract
 {
     /**
      * Store Category
-     *
-     * @return void
      */
     public function handle(StoreCategoryRequest $request): void;
 }

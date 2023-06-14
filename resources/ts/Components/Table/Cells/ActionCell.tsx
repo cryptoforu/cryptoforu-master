@@ -1,9 +1,9 @@
-import { Td, Flex, Icon } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { ProsePa } from '@/Components/Elements/Typography';
+import { Button, Td } from '@chakra-ui/react';
 import { Method } from '@inertiajs/core';
-import { Button } from '@chakra-ui/react';
-import { BtnLink } from '@/Components/Elements/Navigation';
+
+import { ButtonLink } from '@/Components/Elements/Navigation';
+
 type ActionProps = {
   action: 'edit' | 'delete' | 'state';
   href?: string;
@@ -18,7 +18,7 @@ const ActionCell = (props: ActionProps) => {
     case 'edit': {
       return (
         <Td>
-          <BtnLink
+          <ButtonLink
             to={href as string}
             options={{
               method: method,
@@ -27,33 +27,28 @@ const ActionCell = (props: ActionProps) => {
             colorScheme="emerald"
             variant="ghost"
             size="sm"
+            leftIcon={<EditIcon />}
           >
-            <Flex cursor="pointer" align="center">
-              <Icon as={EditIcon} color="emerald.500" me="4px" />
-              <ProsePa>Edit</ProsePa>
-            </Flex>
-          </BtnLink>
+            Edit
+          </ButtonLink>
         </Td>
       );
     }
     case 'delete': {
       return (
         <Td>
-          <BtnLink
+          <ButtonLink
             to={href as string}
             options={{
               method: method,
             }}
             aria-label="action cell"
             colorScheme="red"
-            variant="ghost"
             size="sm"
+            leftIcon={<DeleteIcon />}
           >
-            <Flex cursor="pointer" align="center">
-              <Icon as={DeleteIcon} color="red.500" me="4px" />
-              <ProsePa>Delete</ProsePa>
-            </Flex>
-          </BtnLink>
+            Delete
+          </ButtonLink>
         </Td>
       );
     }
@@ -66,11 +61,9 @@ const ActionCell = (props: ActionProps) => {
             variant="ghost"
             size="sm"
             isLoading={isPending}
+            leftIcon={<EditIcon />}
           >
-            <Flex cursor="pointer" align="center">
-              <Icon as={EditIcon} color="emerald.500" me="4px" />
-              <ProsePa>Edit</ProsePa>
-            </Flex>
+            Edit
           </Button>
         </Td>
       );

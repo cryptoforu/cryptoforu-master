@@ -12,45 +12,46 @@ use Illuminate\Support\Facades\Cache;
 
 final class StoreMenuItems implements StoreMenuItemContract
 {
-    /**
-     * Construct Library
-     */
-    public function __construct(
-        private readonly LibraryActionsInterface $library,
-    ) {
+  /**
+   * Construct Library
+   */
+  public function __construct(
+    private readonly LibraryActionsInterface $library,
+  ) {
+  }
+
+  /**
+   * Store Menu Items
+   *
+   * @param  StoreMenuItemRequest  $from
+   * @return bool
+   */
+  public function handle(StoreMenuItemRequest $from): bool
+  {
+    $validated = $from->validated();
+
+    if ($from->hasFile('icon')) {
+      $icon = $this->library->store(
+        file: $validated['icon'],
+        directory: 'menu_icons'
+      );
+      $icon_path = $icon['file_name'];
     }
 
-    /**
-     * Store Menu Items
-     *
-     * @param  StoreMenuItemRequest  $request
-     */
-    public function handle(StoreMenuItemRequest $from): bool
-    {
-        $validated = $from->validated();
+    $menu = MenuItem::create([
+      'label' => $validated['label'],
+      'route' => $validated['route'],
+      'icon' => empty($icon_path) ? null : $icon_path,
+      'parent_id' => $validated['parent_id'],
+      'menu_id' => $validated['menu_id'],
+    ]);
+    $this->library->save(
+      model: $menu,
+      file: $icon,
+      category: 2,
+    );
+    Cache::flush();
 
-        if ($from->hasFile('icon')) {
-            $icon = $this->library->store(
-                file: $validated['icon'],
-                directory: 'menu_icons'
-            );
-            $icon_path = $icon['file_name'];
-        }
-
-        $menu = MenuItem::create([
-            'label' => $validated['label'],
-            'route' => $validated['route'],
-            'icon' => empty($icon_path) ? null : $icon_path,
-            'parent_id' => $validated['parent_id'],
-            'menu_id' => $validated['menu_id'],
-        ]);
-        $this->library->save(
-            model: $menu,
-            file: $icon,
-            category: 2,
-        );
-        Cache::store('settings')->clear();
-
-        return true;
-    }
+    return true;
+  }
 }

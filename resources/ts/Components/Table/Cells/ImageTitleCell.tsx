@@ -1,6 +1,8 @@
 import { Flex, Td } from '@chakra-ui/react';
+
 import { LazyImage } from '@/Components/Elements/Content';
 import { ProseHeadings } from '@/Components/Elements/Typography';
+
 interface ImageTitleCellProps {
   title: string;
   image: string;
@@ -16,7 +18,7 @@ const ImageTitleCell = ({ title, image }: ImageTitleCellProps) => {
             me: '18px',
           }}
           imgProps={{
-            src: `/img/cache/original/${image}`,
+            img_name: image,
             rounded: 'md',
           }}
         />

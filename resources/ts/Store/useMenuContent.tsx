@@ -1,7 +1,8 @@
-import { MenuData } from '@/Types/generated';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
+import { MenuData } from '@/Types/generated';
 
 interface MenuStore {
   activeId: number;

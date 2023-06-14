@@ -6,6 +6,7 @@ namespace App\Console;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCategoriesContract;
+use App\Interfaces\Crypto\HandleExchangesInterface;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,6 +19,24 @@ final class Kernel extends ConsoleKernel
     {
         $schedule->command('telescope:prune')->daily();
         $schedule->command('app:process-crypto-coins')->hourly();
+        $schedule->command('app:process-crypto-coins')->hourlyAt(5);
+        $schedule->command('app:process-crypto-coins')->hourlyAt(10);
+        $schedule->command('app:process-categories')->hourlyAt(15);
+        $schedule->command('app:process-categories')->hourlyAt(20);
+        $schedule->command('app:process-categories')->hourlyAt(25);
+        $schedule->command('app:process-categories')->hourlyAt(30);
+        $schedule->command('app:process-categories')->hourlyAt(35);
+        $schedule->command('app:process-categories')->hourlyAt(40);
+
+        $schedule->call(function (
+            CryptoActionsInterface $action,
+            HandleExchangesInterface $handle,
+        ): void {
+            $action->updateOrCreateExchanges(
+                action: $handle
+            );
+        })->saturdays()->name('Exchanges');
+
         $schedule->call(function (
             CryptoActionsInterface $action,
             HandleCategoriesContract $handle
@@ -25,7 +44,7 @@ final class Kernel extends ConsoleKernel
             $action->updateOrCreateCategories(
                 action: $handle
             );
-        })->weekly();
+        })->weekly()->name('Categories');
 
     }
 

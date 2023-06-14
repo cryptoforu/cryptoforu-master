@@ -15,15 +15,11 @@ interface EarnServiceInterface
 
     /**
      * Create Page Data
-     *
-     * @return void
      */
-    public function forCreate(): void;
+    public function forCreate(): array;
 
     /**
      * Edit Page Data
-     *
-     * @return void
      */
-    public function forEdit(Earn $earn): void;
+    public function forEdit(Earn $earn): array;
 }

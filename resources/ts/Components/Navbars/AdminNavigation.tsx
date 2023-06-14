@@ -1,11 +1,9 @@
-import { Hide, Show } from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
-import {
-  PrimaryButton,
-  SecondaryButton,
-} from '@/Components/Elements/Navigation';
-import type { AdminNavigation as A } from '@/Types/generated';
+import { Hide, Show } from '@chakra-ui/react';
+
+import { ButtonLink } from '@/Components/Elements/Navigation';
 import { usePageProps } from '@/Hooks/useTypedPage';
+import type { AdminNavigation as A } from '@/Types/generated';
 
 const AdminNavigation = () => {
   const { navigation } = usePageProps<A>();
@@ -17,7 +15,8 @@ const AdminNavigation = () => {
   return (
     <>
       {navigation?.parents ? (
-        <PrimaryButton
+        <ButtonLink
+          variant="primary"
           key={navigation.route}
           to={navigation?.parents?.route as string}
           aria-label="navigation"
@@ -26,10 +25,11 @@ const AdminNavigation = () => {
           <Show below="sm">
             <SettingsIcon w={6} h={6} />
           </Show>
-        </PrimaryButton>
+        </ButtonLink>
       ) : (
         navigation.childs?.map((child) => (
-          <SecondaryButton
+          <ButtonLink
+            variant="secondary"
             key={child.label}
             to={child?.route as string}
             aria-label="navigation"
@@ -38,7 +38,7 @@ const AdminNavigation = () => {
             <Show below="sm">
               <SettingsIcon w={6} h={6} />
             </Show>
-          </SecondaryButton>
+          </ButtonLink>
         ))
       )}
     </>

@@ -1,7 +1,5 @@
-
-/dist
-*.scss
 *.css
 /node_modules
-/build
+/public/build
 vite.config.ts
+/frontend

@@ -1,4 +1,5 @@
-import { RefObject, useRef, useEffect } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
+
 import useIsomorphicEffect from './useIsomorphicEffect';
 
 // MediaQueryList Event based useEventListener interface

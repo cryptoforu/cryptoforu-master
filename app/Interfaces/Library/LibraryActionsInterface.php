@@ -28,15 +28,11 @@ interface LibraryActionsInterface
 
     /**
      * Save Image From Model
-     *
-     * @return void
      */
     public function save(Model $model, array $file, int $category): void;
 
     /**
      * Upload File
-     *
-     * @return void
      */
     public function create(StoreLibraryRequest $request): void;
 }

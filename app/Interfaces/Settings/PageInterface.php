@@ -8,25 +8,25 @@ use Illuminate\Support\Collection;
 
 interface PageInterface
 {
-    /**
-     * Get Front Meta
-     */
-    public function front_meta(?string $page = null): array;
+  /**
+   * Get Front Meta
+   */
+  public function front_meta(?string $page = null): array;
 
-    /**
-     * Get Admin Meta
-     */
-    public function admin_meta(?string $page = null): array;
+  /**
+   * Get Admin Meta
+   */
+  public function admin_meta(?string $page = null): array;
 
-    /**
-     * Show Pages Meta Data
-     *
-     * @return array
-     */
-    public function show(): Collection|array;
+  /**
+   * Show Pages Meta Data
+   *
+   * @return Collection|array
+   */
+  public function show(): Collection|array;
 
-    /**
-     * Undocumented function
-     */
-    public function getAdminNavigation(): mixed;
+  /**
+   * Undocumented function
+   */
+  public function getAdminNavigation(): array;
 }

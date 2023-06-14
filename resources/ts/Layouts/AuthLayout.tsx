@@ -1,8 +1,9 @@
-import { Text, Stack, Heading, HStack, Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 import * as React from 'react';
-import { Logo } from '@/Components/Elements/Content';
-import { NavLink } from '@/Components/Elements/Navigation';
+
 import AppHead from '@/Components/AppHead';
+import { Logo } from '@/Components/Elements/Content';
+import { NavigationLink } from '@/Components/Elements/Navigation';
 
 interface Props {
   title?: string;
@@ -63,7 +64,7 @@ const AuthLayout = ({
                 fontSize="md"
               >
                 <Text>{desc}</Text>
-                <NavLink url={to}>{label}</NavLink>
+                <NavigationLink to={to}>{label}</NavigationLink>
               </HStack>
             </Box>
             <Flex
@@ -82,7 +83,7 @@ const AuthLayout = ({
           </Flex>
 
           <Box
-            display={{ base: 'none', md: 'block' }}
+            display={{ base: 'none', xl: 'block' }}
             h="100%"
             minH="100vh"
             w={{ lg: '50vw', '2xl': '44vw' }}
@@ -91,12 +92,7 @@ const AuthLayout = ({
           >
             <Stack spacing="6">
               <Box maxW={'full'} h="auto" mx={'auto'}>
-                <Logo
-                  objectFit="cover"
-                  variant="baseLogo"
-                  lazy={true}
-                  alt={'Cryptoforu'}
-                />
+                <Logo objectFit="cover" variant="baseLogo" />
               </Box>
             </Stack>
           </Box>

@@ -1,7 +1,8 @@
-import { create } from 'zustand';
-import { shallow } from 'zustand/shallow';
-import { immer } from 'zustand/middleware/immer';
 import { useMotionValueEvent, useScroll } from 'framer-motion';
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+import { shallow } from 'zustand/shallow';
+
 import { usePageProps } from '@/Hooks/useTypedPage';
 import type { MenuItems } from '@/Types/generated';
 

@@ -1,8 +1,9 @@
-import { PropsWithChildren } from 'react';
 import { Head } from '@inertiajs/react';
-import useTypedPage from '@/Hooks/useTypedPage';
+import { PropsWithChildren } from 'react';
+
+import useTypedPage, { usePageProps } from '@/Hooks/useTypedPage';
 import type { PageMeta } from '@/Types/generated';
-import { usePageProps } from '@/Hooks/useTypedPage';
+
 const AppHead = ({ children }: PropsWithChildren) => {
   const { url } = useTypedPage();
   const { meta } = usePageProps<PageMeta>();

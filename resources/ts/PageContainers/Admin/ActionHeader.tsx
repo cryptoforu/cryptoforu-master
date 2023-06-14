@@ -1,7 +1,8 @@
-import { Flex, Stack, Spacer } from '@chakra-ui/react';
-import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
-import { Separator } from '@/Components/Elements/Content';
+import { Flex, Spacer, Stack } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
+
+import { Separator } from '@/Components/Elements/Content';
+import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
 
 interface ActionHeaderProps extends PropsWithChildren {
   title: string;

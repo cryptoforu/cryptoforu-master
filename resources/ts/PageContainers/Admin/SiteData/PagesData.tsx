@@ -1,26 +1,43 @@
+import { CloseIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Button, ButtonGroup, Flex } from '@chakra-ui/react';
+
+import { LazyImage } from '@/Components/Elements/Content';
+import { ButtonLink } from '@/Components/Elements/Navigation';
+import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
+import {
+  useInputValues,
+  useIsEditing,
+  useSetInput,
+  useSetValues,
+} from '@/Store/useEditInputStore';
 import { useSelectedValues } from '@/Store/useMenuSelect';
-import type { SiteData, HeroData, FeaturesData } from '@/Types/generated';
-import { Flex, Button, ButtonGroup } from '@chakra-ui/react';
+import { toHeadline } from '@/utils/toHeadline';
+
+import PageHeader from '../Settings/PageHeader';
 import SettingsContent, {
   SettingsBody,
   SettingsRow,
   SettingsRowBody,
 } from '../SettingsContent';
-import PageHeader from '../Settings/PageHeader';
-import { BtnLink } from '@/Components/Elements/Navigation';
-import {
-  useInputValues,
-  useSetInput,
-  useIsEditing,
-  useSetValues,
-} from '@/Store/useEditInputStore';
-import { toHeadline } from '@/utils/toHeadline';
-import { ProseHeadings, ProsePa } from '@/Components/Elements/Typography';
-import { LazyImage } from '@/Components/Elements/Content';
-import { EditIcon, DeleteIcon, CloseIcon } from '@chakra-ui/icons';
+
+type SiteData<T> = {
+  data_name: string;
+  data_values: T;
+};
+
 export interface IPagesDataProps {
-  hero: HeroData[];
-  features: FeaturesData[];
+  hero: {
+    id: string;
+    title: string;
+    description: string;
+  }[];
+  features: {
+    id: string;
+    name: string;
+    image: string;
+    link: string;
+    description: string;
+  }[];
 }
 
 function Editing({ id, payload }: { id: string | number; payload: object }) {
@@ -33,10 +50,9 @@ function Editing({ id, payload }: { id: string | number; payload: object }) {
       <Button type="button" colorScheme="emerald">
         <EditIcon />
       </Button>
-      <BtnLink
-        component={Button}
+      <ButtonLink
         colorScheme="red"
-        to="site.delete"
+        to="admin:site.delete"
         data={{ ...values }}
         options={{
           method: 'post',
@@ -49,7 +65,7 @@ function Editing({ id, payload }: { id: string | number; payload: object }) {
         }}
       >
         <DeleteIcon />
-      </BtnLink>
+      </ButtonLink>
       <Button onClick={() => setInput(0)}>
         <CloseIcon />
       </Button>
@@ -91,7 +107,7 @@ const PagesData = () => {
                     />
                   </Flex>
                   {Object.entries(h).map(([key, data]) => (
-                    <SettingsRow>
+                    <SettingsRow key={key}>
                       <ProseHeadings component="h4">
                         {toHeadline(key)}
                       </ProseHeadings>

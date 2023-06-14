@@ -1,27 +1,28 @@
-import { Suspense, lazy } from 'react';
-import pMinDelay from 'p-min-delay';
-import AppHead from '@/Components/AppHead';
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Container } from '@chakra-ui/react';
-import PanelWrapper from '@/PageContainers/PanelWrapper';
 import {
-  useCategory,
-  useDrawerState,
-  useCloseDrawer,
-} from '@/Store/useCategories';
-import FormProvider from '@/Store/useFormProvider';
-import {
+  Box,
+  Button,
+  Container,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button,
-  Box,
 } from '@chakra-ui/react';
 import { Method } from '@inertiajs/core';
+import pMinDelay from 'p-min-delay';
+import { lazy, Suspense } from 'react';
+
+import AppHead from '@/Components/AppHead';
+import AdminLayout from '@/Layouts/AdminLayout';
+import PanelWrapper from '@/PageContainers/PanelWrapper';
+import {
+  useCategory,
+  useCloseDrawer,
+  useDrawerState,
+} from '@/Store/useCategories';
+import FormProvider from '@/Store/useFormProvider';
 
 const CategoriesTable = lazy(() =>
   pMinDelay(import(`@/Components/Table/TablesData/CategoriesTable.js`), 500)
@@ -98,5 +99,6 @@ const Categories = () => {
     </>
   );
 };
+// eslint-disable-next-line react/no-children-prop
 Categories.layout = (page: string) => <AdminLayout children={page} />;
 export default Categories;

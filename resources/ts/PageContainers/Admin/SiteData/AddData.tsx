@@ -1,5 +1,6 @@
-import { BuilderForm, ArrayDataForm } from '@/Forms';
-import { Grid, GridItem, Card, CardBody, Flex } from '@chakra-ui/react';
+import { Card, CardBody, Flex, Grid, GridItem } from '@chakra-ui/react';
+
+import { ArrayDataForm, BuilderForm } from '@/Forms';
 
 const AddData = () => {
   return (

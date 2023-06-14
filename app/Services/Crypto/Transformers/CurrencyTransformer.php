@@ -9,17 +9,21 @@ use Spatie\LaravelData\Transformers\Transformer;
 
 final class CurrencyTransformer implements Transformer
 {
-    public function __construct(
-        public ?string $currency = 'USD',
-        public ?string $intl = 'en_US'
-    ) {
+  /**
+   * @param  string|null  $currency
+   * @param  string|null  $intl
+   */
+  public function __construct(
+    public ?string $currency = 'USD',
+    public ?string $intl = 'en_US'
+  ) {
 
-    }
+  }
 
-    public function transform(
-        DataProperty $property,
-        mixed $value
-    ): mixed {
-        return format_currency($value, $this->intl, $this->currency);
-    }
+  public function transform(
+    DataProperty $property,
+    mixed $value
+  ): mixed {
+    return format_currency($value, $this->intl, $this->currency);
+  }
 }

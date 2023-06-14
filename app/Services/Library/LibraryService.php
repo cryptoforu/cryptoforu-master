@@ -17,67 +17,65 @@ use Intervention\Image\Image;
 
 final class LibraryService implements LibraryActionsInterface
 {
-    public function __construct(
-        private readonly StoreFile $store,
-        private readonly DeleteFile $delete,
-        private readonly NewFile $new,
-        private readonly CreateFile $create,
-    ) {
+  public function __construct(
+    private readonly StoreFile $store,
+    private readonly DeleteFile $delete,
+    private readonly NewFile $new,
+    private readonly CreateFile $create,
+  ) {
+  }
+
+  /**
+   * Store File
+   */
+  public function store($file, string $directory): Image|array
+  {
+    return $this->store->handle(
+      file: $file,
+      directory: $directory
+    );
+  }
+
+  /**
+   * Destroy File
+   */
+  public function delete(Library $library): bool
+  {
+    if ($this->delete->handle(
+      library: $library
+    )) {
+      Cache::flush();
+      return true;
     }
 
-    /**
-     * Store File
-     */
-    public function store($file, string $directory): Image|array
-    {
-        return $this->store->handle(
-            file: $file,
-            directory: $directory
-        );
-    }
+    return false;
+  }
 
-    /**
-     * Destroy File
-     */
-    public function delete(Library $library): bool
-    {
-        if ($this->delete->handle(
-            library: $library
-        )) {
-            return true;
-            Cache::store('library')->clear();
-        }
+  public function new(Model $model, array $file, int $category): bool
+  {
+    return $this->new->handle(
+      model: $model,
+      file: $file,
+      category: $category
+    );
+  }
 
-        return false;
-    }
+  /**
+   * Save image from model
+   */
+  public function save(Model $model, array $file, int $category = 2): void
+  {
+    $this->create->save(
+      model: $model,
+      file: $file,
+      category: $category,
+    );
+  }
 
-    public function new(Model $model, array $file, int $category): bool
-    {
-        return $this->new->handle(
-            model: $model,
-            file: $file,
-            category: $category
-        );
-    }
-
-    /**
-     * Save image from model
-     *
-     * @return void
-     */
-    public function save(Model $model, array $file, int $category = 2): void
-    {
-        $this->create->save(
-            model: $model,
-            file: $file,
-            category: $category,
-        );
-    }
-
-    public function create(StoreLibraryRequest $request): void
-    {
-        $this->create->handle(
-            request: $request
-        );
-    }
+  public function create(StoreLibraryRequest $request): void
+  {
+    $this->create->handle(
+      request: $request
+    );
+  }
 }

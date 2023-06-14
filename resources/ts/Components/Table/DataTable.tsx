@@ -1,24 +1,24 @@
-import { Fragment, useState } from 'react';
+import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  chakra,
   Card,
   CardBody,
   CardHeader,
+  chakra,
+  Table,
+  Tbody,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
-  useReactTable,
+  ColumnDef,
   flexRender,
   getCoreRowModel,
-  ColumnDef,
-  SortingState,
   getSortedRowModel,
+  SortingState,
+  useReactTable,
 } from '@tanstack/react-table';
+import { Fragment, useState } from 'react';
 
 import { ProseHeadings } from '@/Components/Elements/Typography';
 
@@ -48,7 +48,9 @@ function DataTable<Data extends object>({
   return (
     <Card
       overflowX={{ sm: 'scroll', xl: 'hidden' }}
-      variant={'containerCard'}
+      bg="gray.900"
+      borderRadius="15px"
+      minWidth="full"
       p="8"
     >
       <CardHeader p="6px 0px 22px 0px">

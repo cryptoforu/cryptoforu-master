@@ -9,14 +9,14 @@ use App\Services\Settings\Menu\DataObjects\MenuData;
 
 final class ShowMenus
 {
-    /**
-     * @var Menu
-     * @var MenuData
-     */
-    public function handle()
-    {
-        return MenuData::collection(
-            items: Menu::with('items')->get()
-        )->toArray();
-    }
+  /**
+   * @return array
+   *
+   */
+  public function handle(): array
+  {
+    return MenuData::collection(
+      items: Menu::with('items')->get()
+    )->toArray();
+  }
 }

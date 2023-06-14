@@ -1,11 +1,11 @@
-import { PropsWithChildren } from 'react';
 import {
+  Box,
   Flex,
   Heading,
-  Box,
   Text,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
+import { PropsWithChildren } from 'react';
 
 export type FormWrapperProps = {
   title: string;

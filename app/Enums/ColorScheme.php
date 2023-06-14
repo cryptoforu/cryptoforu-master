@@ -12,21 +12,18 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 /**
  * @method static self EMERALD()
  * @method static self TEAL()
+ * @method static self SLATE()
  * @method static self CYAN()
- * @method static self BLUE()
- * @method static self RED()
+ * @method static self DANGER()
+ * @method static self GREEN()
  */
 final class ColorScheme extends Enum
 {
-    public function color(): string
+    public static function randColor()
     {
-        return match ($this) {
-            ColorScheme::EMERALD() => 'emerald',
-            ColorScheme::TEAL() => 'teal',
-            ColorScheme::BLUE() => 'blue',
-            ColorScheme::RED() => 'red',
-            ColorScheme::CYAN() => 'cyan',
-        };
+        $colors = collect(ColorScheme::toValues());
+
+        return self::tryFrom($colors->random());
     }
 
     protected static function values(): Closure
@@ -34,10 +31,15 @@ final class ColorScheme extends Enum
         return fn (string $name): string|int => mb_strtolower($name);
     }
 
-    public static function randColor()
+    public function color(): string
     {
-        $colors = collect(ColorScheme::toValues());
-
-        return self::tryFrom($colors->random());
+        return match ($this) {
+            ColorScheme::EMERALD() => 'emerald',
+            ColorScheme::TEAL() => 'teal',
+            ColorScheme::SLATE() => 'slate',
+            ColorScheme::DANGER() => 'danger',
+            ColorScheme::CYAN() => 'cyan',
+            ColorScheme::GREEN() => 'green',
+        };
     }
 }

@@ -1,27 +1,29 @@
-import { Fragment, useTransition } from 'react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
-  useColorModeValue as mode,
+  Button,
+  IconButton,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Button,
+  MenuList,
   Portal,
-  IconButton,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
+import { Fragment, useTransition } from 'react';
+
+import { ButtonLink } from '@/Components/Elements/Navigation';
+import { ProseHeadings } from '@/Components/Elements/Typography';
+import { useMenuContent } from '@/Store/useMenuContent';
+
 import SettingsContent, {
   SettingsBody,
   SettingsRow,
   SettingsRowBody,
 } from '../SettingsContent';
-import { BtnLink } from '@/Components/Elements/Navigation';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useMenuContent } from '@/Store/useMenuContent';
-import { ProseHeadings } from '@/Components/Elements/Typography';
 import EditMenu from './EditMenu';
 import PageHeader from './PageHeader';
-import { DeleteIcon } from '@chakra-ui/icons';
 
 function MenuHeader() {
   const [isPending, startTransition] = useTransition();
@@ -63,7 +65,7 @@ function MenuHeader() {
 function Delete({ id }: { id: number }) {
   return (
     <Box position="absolute" right="2" top="-2" py="4">
-      <BtnLink
+      <ButtonLink
         as={IconButton}
         icon={<DeleteIcon />}
         size="sm"

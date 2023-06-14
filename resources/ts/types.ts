@@ -1,10 +1,11 @@
 import type { InputProps } from '@chakra-ui/react';
+
 import type {
+  EarnCategory,
   FormData,
+  MenuData,
   MenuItems,
   PageMeta,
-  MenuData,
-  EarnCategory,
 } from './Types/generated';
 
 export type SettingsForms<T = object> = T & {
@@ -68,6 +69,7 @@ export interface Session {
 export interface ApiToken {
   id: number;
   name: string;
+  token: string;
   abilities: string[];
   last_used_ago: Nullable<DateTime>;
   created_at: DateTime;
@@ -95,6 +97,20 @@ export interface TeamInvitation {
   role: Nullable<string>;
   created_at: DateTime;
   updated_at: DateTime;
+}
+
+export interface Profile {
+  auth: Auth;
+  status: Session;
+  social: SocialLinks[];
+  tokens: ApiToken[];
+}
+
+export interface SocialLinks {
+  id: string;
+  href: string;
+  name: string;
+  image: string;
 }
 
 export interface AppHeadProps {

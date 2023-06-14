@@ -8,8 +8,6 @@ interface CryptoActionsInterface
 {
     /**
      * Update or Create Crypto Categories
-     *
-     * @return void
      */
     public function updateOrCreateCategories(
         HandleCategoriesContract $action
@@ -17,10 +15,16 @@ interface CryptoActionsInterface
 
     /**
      * Update or Create Coins
-     *
-     * @return void
      */
     public function updateOrCreateCoins(
         HandleCoinsContract $action
+    ): void;
+
+    public function updateOrCreateCategory(
+        HandleCoinsContract $action
+    ): void;
+
+    public function updateOrCreateExchanges(
+        HandleExchangesInterface $action,
     ): void;
 }

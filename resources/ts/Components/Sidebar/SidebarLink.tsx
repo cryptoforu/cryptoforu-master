@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
 import { Flex, useColorModeValue } from '@chakra-ui/react';
-import { LazyImage } from '../Elements/Content';
-import { BtnLink } from '../Elements/Navigation';
-import useActive from '@/Hooks/useActive';
-import useAdminLayout from '@/Store/useAdminLayout';
 import { useAnimate } from 'framer-motion';
+import { useEffect } from 'react';
+
+import useActive from '@/Hooks/useActive';
+import { useWidthState } from '@/Store/useAdminLayout';
+
+import { LazyImage } from '../Elements/Content';
+import { ButtonLink } from '../Elements/Navigation';
 import { ProsePa } from '../Elements/Typography';
+
 type SidebarLinkProps = {
   to: string;
   icon?: string;
@@ -15,7 +18,7 @@ type SidebarLinkProps = {
 const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
   const isActive = useActive();
   const [scope, animate] = useAnimate();
-  const { widthState } = useAdminLayout();
+  const widthState = useWidthState();
   const inactiveBg = useColorModeValue('white', 'gray.700');
   const activeColor = useColorModeValue('gray.700', 'white');
   const inactiveColor = useColorModeValue('gray.400', 'gray.400');
@@ -31,7 +34,7 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
   }, [animate, scope, widthState]);
 
   return (
-    <BtnLink
+    <ButtonLink
       to={to}
       my={widthState ? '2px' : '4px'}
       bg={widthState ? 'transparent' : 'inherit'}
@@ -63,7 +66,7 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
           {label}
         </ProsePa>
       </Flex>
-    </BtnLink>
+    </ButtonLink>
   );
 };
 export default SidebarLink;
