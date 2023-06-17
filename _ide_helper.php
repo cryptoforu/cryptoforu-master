@@ -18275,13 +18275,28 @@
          * @param int $total
          * @param int $page
          * @param string $pageName
-         * @return array 
+         * @return \LengthAwarePaginator 
          * @see \App\Providers\CollectionPaginationProvider::boot()
          * @static 
          */ 
         public static function colPaginate($perPage, $total = null, $page = null, $pageName = 'page')
         {
                         return \Illuminate\Support\Collection::colPaginate($perPage, $total, $page, $pageName);
+        }
+                    /**
+         * Cursor Paginate a standard Laravel Collection.
+         *
+         * @param int $perPage
+         * @param int $total
+         * @param int $page
+         * @param string $pageName
+         * @return array 
+         * @see \App\Providers\CursorPaginationProvider::boot()
+         * @static 
+         */ 
+        public static function cursorCol($perPage, $total = null, $page = null, $pageName = 'page')
+        {
+                        return \Illuminate\Support\Collection::cursorCol($perPage, $total, $page, $pageName);
         }
          
     }

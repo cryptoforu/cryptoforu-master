@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import { Link } from 'react-aria-components'
@@ -37,7 +37,7 @@ type ListCardRowProps = {
   icon: string
   title: string
   link?: string
-  date?: string
+  date?: string | ReactNode
   price?: string
   change?: string
   linkLabel?: string
@@ -53,7 +53,7 @@ export function ListCardRow({
   linkLabel,
 }: ListCardRowProps) {
   return (
-    <div className="flex items-center gap-4 px-4 py-3">
+    <div className="flex h-16 items-center gap-4 px-4 py-3">
       <div className={'flex-none rounded-full'}>
         <Image
           src={icon}

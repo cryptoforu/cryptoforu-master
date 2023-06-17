@@ -12,7 +12,7 @@ use TiMacDonald\JsonApi\JsonApiResourceCollection;
 final class CollectionResponse extends Response
 {
     public function __construct(
-        protected readonly Collection|JsonApiResource|JsonApiResourceCollection $data,
+        protected readonly Collection|JsonApiResource|JsonApiResourceCollection|array $data,
         protected readonly Http $status = Http::OK,
     ) {
     }

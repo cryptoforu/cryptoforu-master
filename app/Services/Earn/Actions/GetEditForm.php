@@ -13,31 +13,31 @@ use Illuminate\Support\Collection;
 
 final class GetEditForm
 {
-  use FormFactory;
+    use FormFactory;
 
-  /**
-   * Get Edit Form
-   */
-  public function handle(): array
-  {
-    $initialValues = (new Collection(items: EarnData::schema()));
-    $options = [
-      'earn_category_id' => EarnCategoryData::collection(
-        items: EarnCategory::all()->map(
-          fn($e) => $e->getData()
-        )
-      )->toArray(),
-      'status' => EarnStatus::options(),
-    ];
-    $schema = $this->generate(
-      items: (new Collection(items: EarnData::schema(type: 'n'))),
-      options: $options
-    );
+    /**
+     * Get Edit Form
+     */
+    public function handle(): array
+    {
+        $initialValues = (new Collection(items: EarnData::schema()));
+        $options = [
+            'earn_category_id' => EarnCategoryData::collection(
+                items: EarnCategory::all()->map(
+                    fn ($e) => $e->getData()
+                )
+            )->toArray(),
+            'status' => EarnStatus::options(),
+        ];
+        $schema = $this->generate(
+            items: (new Collection(items: EarnData::schema(type: 'n'))),
+            options: $options
+        );
 
-    return [
-      'initialValues' => $initialValues,
-      'form_schema' => $schema,
-      'form_route' => route('admin:earn.store', [], false),
-    ];
-  }
+        return [
+            'initialValues' => $initialValues,
+            'form_schema' => $schema,
+            'form_route' => route('admin:earn.store', [], false),
+        ];
+    }
 }

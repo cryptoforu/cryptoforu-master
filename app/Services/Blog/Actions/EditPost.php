@@ -16,30 +16,33 @@ use Illuminate\Support\Collection;
 
 final class EditPost
 {
-  use FormFactory;
+    use FormFactory;
 
-  public function handle(Post $post): array
-  {
-    $initialValues = (new Collection(items: PostData::editSchema($post)));
-    $options = [
-      'category_id' => CategoryData::collection(items: Category::all()->map(fn(
-        $category
-      ) => $category->getData()))->toArray(),
-      'tags' => TagsData::collection(items: Tag::all()->map(fn($tag
-      ) => $tag->getData()))->toArray(),
-      'status' => PostStatus::options(),
-    ];
+    public function handle(Post $post): array
+    {
+        $initialValues = (new Collection(items: PostData::editSchema($post)));
+        $options = [
+            'category_id' => CategoryData::collection(items: Category::all()->map(fn (
+                $category
+            ) => $category->getData()))->toArray(),
+            'tags' => TagsData::collection(items: Tag::all()->map(fn (
+                $tag
+            ) => $tag->getData()))->toArray(),
+            'status' => PostStatus::options(),
+        ];
 
-    $schema = $this->generate(
-      items: (new Collection(items: PostData::editSchema(post: $post,
-        type: 'n'))),
-      options: $options
-    );
+        $schema = $this->generate(
+            items: (new Collection(items: PostData::editSchema(
+                post: $post,
+                type: 'n'
+            ))),
+            options: $options
+        );
 
-    return [
-      'initialValues' => $initialValues,
-      'form_schema' => $schema,
-      'form_route' => route('admin:blog:post.update', ['post' => $post], false),
-    ];
-  }
+        return [
+            'initialValues' => $initialValues,
+            'form_schema' => $schema,
+            'form_route' => route('admin:blog:post.update', ['post' => $post], false),
+        ];
+    }
 }

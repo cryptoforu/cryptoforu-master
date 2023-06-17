@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Cache;
 
 final class SettingsAction implements SettingsActionInterface
 {
-  private $action;
 
   public function __construct(
     private readonly StorePageMeta $page,
@@ -25,16 +24,9 @@ final class SettingsAction implements SettingsActionInterface
   ) {
   }
 
-  public function setAction(ActionEnum $action): void
-  {
-    $this->action = $action;
-  }
 
   /**
    * Store Menu or Page Meta
-   *
-   * @param  StorePageRequest  $from
-   * @param  ActionEnum  $action
    */
   public function store(
     StorePageRequest $from,

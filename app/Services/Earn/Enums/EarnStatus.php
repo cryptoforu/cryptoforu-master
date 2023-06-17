@@ -16,13 +16,13 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 final class EarnStatus extends Enum
 {
-  public static function options(): array
-  {
-    return Arr::map(self::cases(), static function ($value, $key) {
-      return
-        [
-          'name' => $value,
-        ];
-    });
-  }
+    public static function options(): array
+    {
+        return Arr::map(self::cases(), static function ($value, $key) {
+            return
+              [
+                  'name' => $value,
+              ];
+        });
+    }
 }

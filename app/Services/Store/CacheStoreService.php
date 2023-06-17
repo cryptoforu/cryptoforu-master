@@ -4,50 +4,68 @@ declare(strict_types=1);
 
 namespace App\Services\Store;
 
+use App\Contracts\CacheContract;
 use Closure;
+use DateInterval;
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Spatie\Valuestore\Valuestore;
 
-final class CacheStoreService extends Valuestore
+final class CacheStoreService extends Valuestore implements CacheContract
 {
-    public function withInertia(Collection $collection): array
-    {
-        $first = $collection->take(1)->map(fn ($item, $key) => fn () => $this->load(
-            key: $key,
-            callback: fn () => $item,
-        ))->all();
-        $rest = $collection->skip(1)->map(fn ($item, $key) => Inertia::lazy(
-            fn () => $this->load(
-                key: $key,
-                callback: fn () => $item,
-            )
-        ))->all();
+  public function withInertia(Collection $collection): array
+  {
+    $first = $collection->take(1)->map(fn($item, $key) => fn() => $this->load(
+      key: $key,
+      callback: fn() => $item,
+    ))->all();
+    $rest = $collection->skip(1)->map(fn($item, $key) => Inertia::lazy(
+      fn() => $this->load(
+        key: $key,
+        callback: fn() => $item,
+      )
+    ))->all();
 
-        return (new Collection(
-            items: [...$first, ...$rest]
-        ))->toArray();
-    }
+    return (new Collection(
+      items: [...$first, ...$rest]
+    ))->toArray();
+  }
 
-    public function load(string $key, Closure $callback, int $ttl = 1440): mixed
-    {
-        return Cache::remember(
-            key: $this->get($key) ?? $this->generate_key($key),
-            ttl: $ttl,
-            callback: $callback,
-        );
-    }
+  /**
+   * Lazy Load Data
+   * @param  string  $key
+   * @param  Closure  $callback
+   * @param  Closure|DateInterval|DateTimeInterface|int|null  $ttl
+   * @return mixed
+   */
+  public function load(
+    string $key,
+    Closure $callback,
+    Closure|DateInterval|DateTimeInterface|int|null $ttl = 1440
+  ): mixed {
+    return Cache::remember(
+      key: $this->get($key) ?? $this->generate_key($key),
+      ttl: $ttl,
+      callback: $callback,
+    );
+  }
 
-    private function generate_key(string $key)
-    {
-        $this->put(
-            name: $key,
-            value: (string) Str::orderedUuid()
-        );
+  /**
+   * Generate Unique Cache Key
+   * @param  string  $key
+   * @return mixed
+   */
+  private function generate_key(string $key): mixed
+  {
+    $this->put(
+      name: $key,
+      value: (string) Str::orderedUuid()
+    );
 
-        return $this->get(name: $key);
+    return $this->get(name: $key);
 
-    }
+  }
 }

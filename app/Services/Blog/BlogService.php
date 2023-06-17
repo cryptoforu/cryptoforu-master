@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Blog;
 
+use App\Contracts\CacheContract;
 use App\Interfaces\Blog\BlogInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Models\Category;
@@ -29,17 +30,16 @@ final class BlogService implements BlogInterface
     private readonly EditPost $edit,
     private readonly CategoryForm $categoryForm,
     private readonly ShowCategories $showCategories,
+    private readonly CacheContract $cache,
   ) {
   }
 
   /**
    * Backend Index Page Data
-   *
-   * @return array
    */
   public function forIndex(): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: 'admin:blog_index',
       callback: fn() => array_merge([
         ...$this->page->admin_meta(),
@@ -53,7 +53,7 @@ final class BlogService implements BlogInterface
    */
   public function forCreate(): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: 'admin:blog_create',
       callback: fn() => array_merge([
         ...$this->page->admin_meta(),
@@ -67,7 +67,7 @@ final class BlogService implements BlogInterface
    */
   public function forEdit(Post $post): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: 'admin:blog_edit',
       callback: function () use ($post) {
         return array_merge([
@@ -93,10 +93,10 @@ final class BlogService implements BlogInterface
    */
   public function forCategories(): array
   {
-    $show = lazy_load()->withInertia(
+    $show = $this->cache->withInertia(
       collection: $this->showCategories->handle()
     );
-    $rest = lazy_load()->load(
+    $rest = $this->cache->load(
       key: 'admin_blog_categories',
       callback: fn() => array_merge([
         ...$this->page->admin_meta(),
@@ -105,8 +105,8 @@ final class BlogService implements BlogInterface
           items: Category::all()
         )->include('category_image')->toArray(),
       ])
-
     );
+
     return [
       ...$show,
       ...$rest,
