@@ -30,9 +30,14 @@ class CollectionPaginationProvider extends ServiceProvider
          * @param  int  $total
          * @param  int  $page
          * @param  string  $pageName
-         * @return array
+         * @return LengthAwarePaginator
          */
-        Collection::macro('colPaginate', function ($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
+        Collection::macro('colPaginate', function (
+            $perPage,
+            $total = null,
+            $page = null,
+            $pageName = 'page'
+        ): LengthAwarePaginator {
             /** @var Collection $this */
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 

@@ -11,3 +11,8 @@ export const createQuery = (name: string, value: string) => {
 
   return params.toString()
 }
+
+export const parseFloatNumber = (value: string) => {
+  const floatValue = parseFloat(value)
+  return !isNaN(floatValue) ? floatValue : ''
+}

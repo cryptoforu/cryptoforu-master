@@ -8,12 +8,8 @@ use Illuminate\Support\Collection;
 
 interface HandleCoinsContract
 {
-  /**
-   * HandleAllCoins
-   *
-   * @param  Collection  $responses
-   * @param  string  $data_name
-   * @return bool
-   */
-  public function handle(Collection $responses, string $data_name): bool;
+    /**
+     * HandleAllCoins
+     */
+    public function handle(Collection $responses, string $data_name): bool;
 }

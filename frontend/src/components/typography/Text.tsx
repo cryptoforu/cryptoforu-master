@@ -4,13 +4,16 @@ import React, { forwardRef } from 'react'
 
 type TextLevel = 'p' | 'span' | 'div'
 
-const text = cva('font-medium tracking-tight', {
+const text = cva('font-medium', {
   variants: {
     variant: {
-      primary: 'text-slate-700 dark:text-slate-300',
+      primary: 'tracking-tight text-slate-700 dark:text-slate-300',
       gradient:
-        'bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-teal-400 to-emerald-200',
-      emerald: 'text-emerald-600 dark:text-emerald-400',
+        'tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-teal-400 to-emerald-200',
+      emerald: 'tracking-tight text-emerald-600 dark:text-emerald-400',
+      number: 'lining-nums text-slate-700 dark:text-slate-300',
+      danger: 'text-danger',
+      success: 'text-success',
     },
     size: {
       md: 'text-md',

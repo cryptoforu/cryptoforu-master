@@ -35,7 +35,6 @@ class PostResource extends JsonApiResource
             'image_name' => $this->image_name,
             'category_id' => $this->category_id,
             'status' => $this->status,
-
         ];
     }
 

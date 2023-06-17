@@ -9,7 +9,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    domains: ['assets.coingecko.com', 'img.decrypt.co'],
+    domains: ['assets.coingecko.com', 'img.decrypt.co', 'cdn.jwplayer.com'],
   },
 }
 

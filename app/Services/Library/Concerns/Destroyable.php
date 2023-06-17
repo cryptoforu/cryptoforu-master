@@ -9,18 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 trait Destroyable
 {
-  public function destroy(object $file): bool
-  {
+    public function destroy(object $file): bool
+    {
 
-    if (Storage::fileExists($file->file_url)) {
-      Storage::delete($file->file_url);
-      Arr::map($file->file_conversions, static function ($value, $key): void {
-        Storage::delete($value);
-      });
+        if (Storage::fileExists($file->file_url)) {
+            Storage::delete($file->file_url);
+            Arr::map($file->file_conversions, static function ($value, $key): void {
+                Storage::delete($value);
+            });
 
-      return true;
+            return true;
+        }
+
+        return false;
     }
-
-    return false;
-  }
 }

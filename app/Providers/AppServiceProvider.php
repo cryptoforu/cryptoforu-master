@@ -6,7 +6,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use TiMacDonald\JsonApi\JsonApiResource;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +46,9 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->register(
             provider: CollectionPaginationProvider::class,
         );
+        $this->app->register(
+            provider: CursorPaginationProvider::class
+        );
     }
 
     /**
@@ -60,6 +62,6 @@ final class AppServiceProvider extends ServiceProvider
 
             return (int) max(1, $minutesToRead);
         });
-        JsonApiResource::minimalAttributes();
+
     }
 }

@@ -15,20 +15,27 @@ export type CryptoCoin = {
   name: string
   image: string
   current_price: string
-  market_cap: Nullable<number>
+  market_cap: string
   market_cap_rank: Nullable<number>
   total_volume: Nullable<number>
-  high_24h: Nullable<number>
-  low_24h: Nullable<number>
-  price_change_24h: Nullable<number>
+  high_24h: Nullable<string>
+  low_24h: Nullable<string>
+  price_change_24h: Nullable<string>
   price_change_percentage_24h: string
-  price_change_percentage_1h_in_currency: Nullable<number>
-  price_change_percentage_24h_in_currency: Nullable<number>
-  price_change_percentage_7d_in_currency: Nullable<number>
+  price_change_percentage_1h_in_currency: string
+  price_change_percentage_24h_in_currency: string
+  price_change_percentage_7d_in_currency: string
   symbol: string
   color: string
   current_color: string
 }
+
+export interface CryptoDataProps {
+  id: string
+  type: string
+  attributes: CryptoCoin
+}
+
 export type DecryptNews = {
   title: string
   link: string
@@ -47,7 +54,7 @@ export type Exchanges = {
   url: string
   image: string
   trust_score: number
-  trust_rank: number
+  trust_score_rank: number
   trade_volume_24h_btc: string
 }
 

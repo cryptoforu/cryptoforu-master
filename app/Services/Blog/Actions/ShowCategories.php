@@ -11,23 +11,27 @@ use Illuminate\Support\Collection;
 
 final class ShowCategories
 {
-  use FormFactory;
+    use FormFactory;
 
-  /**
-   * Blog Categories
-   */
-  public function handle(): Collection
-  {
-    return (new Collection(
-      items: Category::all()
-    ))->map(fn($category) => [
-      'initialValues' => CategoryData::schema(category: $category,
-        type: 'edit'),
-      'form_schema' => $this->generate(
-        items: (new Collection(items: CategoryData::schema(type: 'fields')))
-      ),
-      'form_route' => route('admin:blog:category.update',
-        ['category' => $category]),
-    ])->keyBy(fn(array $item, int $key) => $item['initialValues']['name']);
-  }
+    /**
+     * Blog Categories
+     */
+    public function handle(): Collection
+    {
+        return (new Collection(
+            items: Category::all()
+        ))->map(fn ($category) => [
+            'initialValues' => CategoryData::schema(
+                category: $category,
+                type: 'edit'
+            ),
+            'form_schema' => $this->generate(
+                items: (new Collection(items: CategoryData::schema(type: 'fields')))
+            ),
+            'form_route' => route(
+                'admin:blog:category.update',
+                ['category' => $category]
+            ),
+        ])->keyBy(fn (array $item, int $key) => $item['initialValues']['name']);
+    }
 }

@@ -11,27 +11,27 @@ use Illuminate\Support\Collection;
 
 final class GetPageForm
 {
-  use FormFactory;
+    use FormFactory;
 
-  public function handle(): array
-  {
-    $initialValues = (new Collection(items: PageData::schema()));
-    $options = [
-      'parent_id' => Page::parent()
-        ->get(['id', 'label'])->toArray(),
-    ];
-    $schema = $this->generate(
-      items: (new Collection(items: PageData::schema(type: 'n'))),
-      options: $options
-    );
+    public function handle(): array
+    {
+        $initialValues = (new Collection(items: PageData::schema()));
+        $options = [
+            'parent_id' => Page::parent()
+                ->get(['id', 'label'])->toArray(),
+        ];
+        $schema = $this->generate(
+            items: (new Collection(items: PageData::schema(type: 'n'))),
+            options: $options
+        );
 
-    return [
-      'initialValues' => $initialValues,
-      'form_schema' => $schema,
-      'form_route' => route(
-        'admin:settings:action',
-        ['action' => 'store_page']
-      ),
-    ];
-  }
+        return [
+            'initialValues' => $initialValues,
+            'form_schema' => $schema,
+            'form_route' => route(
+                'admin:settings:action',
+                ['action' => 'store_page']
+            ),
+        ];
+    }
 }

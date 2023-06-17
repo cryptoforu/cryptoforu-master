@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Settings;
 
+use App\Contracts\CacheContract;
 use App\Interfaces\Settings\MenuInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Interfaces\Settings\SettingsInterface;
@@ -17,12 +18,13 @@ final class SettingsService implements SettingsInterface
     private readonly PageInterface $page,
     private readonly GetPageForm $pageForm,
     private readonly GetMenuForm $menuForm,
+    private readonly CacheContract $cache,
   ) {
   }
 
   public function forIndex(): array
   {
-    $meta = lazy_load()->load(
+    $meta = $this->cache->load(
       key: 'admin:settings_data',
       callback: fn() => array_merge([
         ...$this->page->admin_meta(),
@@ -33,7 +35,7 @@ final class SettingsService implements SettingsInterface
 
     return [
       ...$meta,
-      ...lazy_load()->withInertia(
+      ...$this->cache->withInertia(
         collection: $this->page->show()['data']
       ),
     ];
@@ -41,7 +43,7 @@ final class SettingsService implements SettingsInterface
 
   public function forCreate(): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: 'admin:settings_create',
       callback: fn() => array_merge([
         ...$this->page->admin_meta(),

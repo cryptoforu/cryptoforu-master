@@ -8,7 +8,6 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 final class Handler extends ExceptionHandler
@@ -58,7 +57,6 @@ final class Handler extends ExceptionHandler
    * Render an exception into an HTTP response.
    *
    * @param  Request  $request
-   * @return Response
    *
    * @throws Throwable
    */
@@ -97,12 +95,6 @@ final class Handler extends ExceptionHandler
     $this->reportable(function (Throwable $e): void {
     });
 
-    $this->renderable(function (NotFoundHttpException $e, Request $request) {
-      if ($request->is('api/*')) {
-        return response()->json([
-          'message' => 'Record not found.'
-        ], 404);
-      }
-    });
+
   }
 }

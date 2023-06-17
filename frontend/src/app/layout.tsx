@@ -17,7 +17,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           id={'theme-script'}
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
-        <title></title>
       </head>
       <body
         className={`${space_grotesk.className} flex h-full flex-col overflow-x-hidden bg-primary-white antialiased dark:bg-primary-dark`}

@@ -14,7 +14,9 @@ final class HandleAllCoins implements HandleCoinsContract
     {
         $query = Crypto::ofName($data_name);
         if ($query) {
-            $query->data_values = $query->data_values->merge($responses);
+
+            $merged = $query->data_values->merge($responses);
+            $query->data_values = $merged;
             $query->save();
 
             return true;

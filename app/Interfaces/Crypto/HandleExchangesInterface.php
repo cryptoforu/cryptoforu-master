@@ -8,9 +8,5 @@ use Illuminate\Support\Collection;
 
 interface HandleExchangesInterface
 {
-  /**
-   * @param  Collection  $responses
-   * @return bool
-   */
-  public function handle(Collection $responses): bool;
+    public function handle(Collection $responses): bool;
 }

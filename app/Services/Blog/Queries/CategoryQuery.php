@@ -12,16 +12,19 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CategoryQuery implements CategoryQueryContract
 {
-    public function handle(): Collection|array
-    {
-        return QueryBuilder::for(
-            subject: Category::class
-        )
-            ->allowedFilters([
-                AllowedFilter::exact('id'), AllowedFilter::exact('name'),
-            ])
-            ->allowedIncludes(includes: ['posts'])
-            ->get()
-        ;
-    }
+  /**
+   * Query Builder For Category Api Resource
+   * @return Collection|array
+   */
+  public function handle(): Collection|array
+  {
+    return QueryBuilder::for(
+      subject: Category::class
+    )
+      ->allowedFilters([
+        AllowedFilter::exact('id'), AllowedFilter::exact('name'),
+      ])
+      ->allowedIncludes(includes: ['posts'])
+      ->get();
+  }
 }

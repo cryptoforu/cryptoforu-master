@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Earn;
 
+use App\Contracts\CacheContract;
 use App\Interfaces\Earn\EarnServiceInterface;
 use App\Interfaces\Settings\PageInterface;
 use App\Models\Earn;
@@ -18,6 +19,7 @@ final class EarnService implements EarnServiceInterface
     private readonly ShowEarnData $show,
     private readonly GetEditForm $create,
     private readonly EditEarn $edit,
+    private readonly CacheContract $cache,
   ) {
   }
 
@@ -27,7 +29,7 @@ final class EarnService implements EarnServiceInterface
   public function forIndex(): array
   {
     $data = $this->show->handle();
-    $meta = lazy_load()->load(
+    $meta = $this->cache->load(
       key: 'admin:earn_data',
       callback: function () use ($data) {
         return array_merge([
@@ -39,7 +41,7 @@ final class EarnService implements EarnServiceInterface
 
     return array_merge([
       ...$meta,
-      ...lazy_load()->withInertia($data['data']),
+      ...$this->cache->withInertia($data['data']),
     ]);
   }
 
@@ -48,7 +50,7 @@ final class EarnService implements EarnServiceInterface
    */
   public function forCreate(): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: 'admin_earn_create',
       callback: function () {
         return array_merge([
@@ -64,7 +66,7 @@ final class EarnService implements EarnServiceInterface
    */
   public function forEdit(Earn $earn): array
   {
-    return lazy_load()->load(
+    return $this->cache->load(
       key: $earn->title,
       callback: function () use ($earn) {
         return array_merge([

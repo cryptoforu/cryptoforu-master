@@ -18,11 +18,7 @@ export default async function Home() {
       <Hero />
       <Suspense fallback={<LoadingSection />}>
         <Features />
-      </Suspense>
-      <Suspense fallback={<LoadingSection />}>
         <Crypto />
-      </Suspense>
-      <Suspense fallback={<LoadingSection />}>
         <CryptoAcademy />
       </Suspense>
     </>
