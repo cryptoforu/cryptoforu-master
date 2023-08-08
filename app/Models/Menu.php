@@ -6,10 +6,35 @@ namespace App\Models;
 
 use App\Services\Settings\Menu\DataObjects\MenuData;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Spatie\LaravelData\WithData;
 
+/**
+ * App\Models\Menu
+ *
+ * @property int $id
+ * @property string $label
+ * @property string $position
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, MenuItem> $items
+ * @property-read int|null $items_count
+ *
+ * @method static Builder|Menu newModelQuery()
+ * @method static Builder|Menu newQuery()
+ * @method static Builder|Menu ofMain(string $position = 'front_main')
+ * @method static Builder|Menu ofPosition(string $position)
+ * @method static Builder|Menu query()
+ * @method static Builder|Menu whereCreatedAt($value)
+ * @method static Builder|Menu whereId($value)
+ * @method static Builder|Menu whereLabel($value)
+ * @method static Builder|Menu wherePosition($value)
+ * @method static Builder|Menu whereUpdatedAt($value)
+ */
 final class Menu extends Model
 {
     use HasFactory;
@@ -22,7 +47,7 @@ final class Menu extends Model
 
     protected $dataClass = MenuData::class;
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(MenuItem::class);
     }

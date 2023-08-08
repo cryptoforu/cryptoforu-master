@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use App\Responses\ErrorResponse;
 use Exception;
 use Illuminate\Http\Request;
 use JustSteveKing\StatusCode\Http;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class NoRecordsFoundException extends Exception
 {
@@ -22,16 +24,16 @@ class NoRecordsFoundException extends Exception
    * Render the exception into an HTTP response.
    */
   public function render(
-    NotFoundHttpException $e,
+    HttpException $e,
     Request $request
   ): ErrorResponse|bool {
     if ($request->is('api/*')) {
       return new ErrorResponse(
         message: 'Records Not Found',
-        exception: $e,
-        code: Http::NOT_FOUND
+        code: Http::NOT_FOUND()
       );
     }
+
     return false;
   }
 }

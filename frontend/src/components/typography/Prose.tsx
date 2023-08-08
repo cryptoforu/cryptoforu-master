@@ -1,34 +1,46 @@
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { clsx } from 'clsx'
+import { forwardRef, HTMLAttributes } from 'react'
+import { cva, VariantProps } from 'class-variance-authority'
+import { cn } from '@/lib/utils'
 
-interface ProseProps {
-  content: string
-  className?: string
-}
+const prose = cva(
+  'prose prose-slate dark:prose-invert dark:text-slate-400 dark:prose-hr:border-slate-800',
+  {
+    variants: {
+      img: {
+        base: 'prose-img:rounded-lg prose-img:shadow-lg dark:prose-img:shadow-slate-950',
+      },
+      link: {
+        emerald:
+          'prose-a:text-emerald-600 prose-a:dark:text-emerald-300 prose-a:transition prose-a:duration-500 prose-a:hover:text-emerald-900 prose-a:dark:hover-text-emerald-100 prose-a:hover:underline prose-a:hover:decoration-emerald-600/30 prose-a:dark:hover:decoration-emerald-400/50',
+        slate:
+          'prose-a:text-slate-700 prose-a:dark:text-slate-300 prose-a:transition prose-a:duration-500 prose-a:hover:text-slate-900 prose-a:dark:hover:text-slate-100 prose-a:hover:underline prose-a:hover:decoration-inherit',
+      },
+      headings: {
+        base: 'prose-headings:scroll-mt-28 prose-headings:font-display  lg:prose-headings:scroll-mt-[8.5rem]',
+      },
+    },
+    defaultVariants: {
+      img: 'base',
+      link: 'emerald',
+      headings: 'base',
+    },
+  }
+)
 
-const Prose = ({ content, className }: ProseProps) => {
-  const proseClass = clsx(
-    'prose prose-slate max-w-none dark:prose-invert dark:text-slate-400',
-    // headings
-    'prose-headings:font-normal',
-    // lead
-    'prose-lead:text-slate-500 dark:prose-lead:text-slate-400',
-    // links
-    'prose-a:font-semibold dark:prose-a:text-emerald-400',
-    // link underline
-    'prose-a:no-underline prose-a:shadow-[inset_0_-2px_0_0_var(--tw-prose-background,#fff),inset_0_calc(-1*(var(--tw-prose-underline-size,4px)+2px))_0_0_var(--tw-prose-underline,theme(colors.emerald.300))] hover:prose-a:[--tw-prose-underline-size:6px] dark:[--tw-prose-background:theme(colors.slate.900)] dark:prose-a:shadow-[inset_0_calc(-1*var(--tw-prose-underline-size,2px))_0_0_var(--tw-prose-underline,theme(colors.emerald.800))] dark:hover:prose-a:[--tw-prose-underline-size:6px]',
-    // pre
-    'prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10',
-    // hr
-    'dark:prose-hr:border-slate-800',
-    className
-  )
+export interface IProseProps
+  extends VariantProps<typeof prose>,
+    HTMLAttributes<HTMLElement> {}
+
+const Prose = forwardRef<HTMLDivElement, IProseProps>(function Prose(
+  props,
+  ref
+) {
+  const { className, img, link, children, ...rest } = props
+  const proseClass = cn(prose({ img, link, className }))
   return (
-    <article className={proseClass}>
-      {/* eslint-disable-next-line react/no-children-prop */}
-      <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+    <article ref={ref} className={proseClass}>
+      {props.children}
     </article>
   )
-}
+})
 export default Prose

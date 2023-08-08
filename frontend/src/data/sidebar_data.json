@@ -1,0 +1,41 @@
+{
+  "category_page": [
+    {
+      "label": "Social",
+      "side_type": "social",
+      "component": "SidebarSocial"
+    },
+    {
+      "label": "Popular Tags",
+      "side_type": "tags",
+      "component": "SideBarTags"
+    },
+    {
+      "label": "Advertisement",
+      "side_type": "ads",
+      "component": "AdPlaceholder"
+    }
+  ],
+  "post": [
+    {
+      "label": "Popular Tags",
+      "side_type": "tags",
+      "component": "SideBarTags"
+    },
+    {
+      "label": "Advertisement",
+      "side_type": "ads",
+      "component": "AdPlaceholder"
+    },
+    {
+      "label": "Search",
+      "side_type": "search",
+      "component": "SidebarSearch"
+    },
+    {
+      "label": "Social",
+      "side_type": "social",
+      "component": "SidebarSocial"
+    }
+  ]
+}

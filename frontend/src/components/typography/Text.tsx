@@ -7,18 +7,23 @@ type TextLevel = 'p' | 'span' | 'div'
 const text = cva('font-medium', {
   variants: {
     variant: {
-      primary: 'tracking-tight text-slate-700 dark:text-slate-300',
+      primary: ' text-slate-700 dark:text-slate-300',
+      secondary: 'tracking-tight text-slate-600 dark:text-slate-500',
       gradient:
         'tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-teal-400 to-emerald-200',
       emerald: 'tracking-tight text-emerald-600 dark:text-emerald-400',
       number: 'lining-nums text-slate-700 dark:text-slate-300',
       danger: 'text-danger',
       success: 'text-success',
+      prose: 'prose prose-slate dark:prose-invert',
+      darker: 'text-white font-bold tracking-tight',
     },
     size: {
+      sm: 'text-sm',
       md: 'text-md',
       lg: 'text-lg',
       xl: 'text-2xl sm:text-4xl',
+      prose: '',
     },
   },
   defaultVariants: {

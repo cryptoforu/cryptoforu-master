@@ -27,10 +27,18 @@ final class TagsData extends Data
         return new self(
             $tag->id,
             $tag->name,
-            Lazy::whenLoaded('posts', $tag, fn () => PostData::collection($tag->posts)),
+            Lazy::whenLoaded(
+                'posts',
+                $tag,
+                fn () => PostData::collection($tag->posts)
+            ),
         );
     }
 
+    public static function allowedRequestIncludes(): ?array
+    {
+        return null;
+    }
     // public static function make(Tag $tag)
     // {
     //     return new Collection(

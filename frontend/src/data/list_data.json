@@ -1,0 +1,111 @@
+{
+  "tabs": [
+    {
+      "id": "top_hundred",
+      "label": "Top Hundred",
+      "image": "top-hundred.png"
+    },
+    {
+      "id": "new_faucets",
+      "label": "New Faucets",
+      "image": "new-faucets.png"
+    },
+    {
+      "id": "BTC",
+      "label": "BTC",
+      "image": "btc.png"
+    },
+    {
+      "id": "ETH",
+      "label": "ETH",
+      "image": "eth.png"
+    },
+    {
+      "id": "DOGE",
+      "label": "DOGE",
+      "image": "doge.png"
+    },
+    {
+      "id": "LTC",
+      "label": "LTC",
+      "image": "ltc.png"
+    },
+    {
+      "id": "BCH",
+      "label": "BCH",
+      "image": "bch.png"
+    },
+    {
+      "id": "DASH",
+      "label": "DASH",
+      "image": "dash.png"
+    },
+    {
+      "id": "DGB",
+      "label": "DGB",
+      "image": "dgb.png"
+    },
+    {
+      "id": "TRX",
+      "label": "TRX",
+      "image": "trx.png"
+    },
+    {
+      "id": "USDT",
+      "label": "USDT",
+      "image": "usdt.png"
+    },
+    {
+      "id": "FEY",
+      "label": "FEY",
+      "image": "fey.png"
+    },
+    {
+      "id": "ZEC",
+      "label": "ZEC",
+      "image": "zec.png"
+    },
+    {
+      "id": "BNB",
+      "label": "BNB",
+      "image": "bnb.png"
+    },
+    {
+      "id": "SOL",
+      "label": "SOL",
+      "image": "sol.png"
+    },
+    {
+      "id": "XRP",
+      "label": "XRP",
+      "image": "xrp.png"
+    },
+    {
+      "id": "MATIC",
+      "label": "MATIC",
+      "image": "matic.png"
+    }
+  ],
+  "page_size": [
+    {
+      "id": 1,
+      "size": "10"
+    },
+    {
+      "id": 2,
+      "size": "25"
+    },
+    {
+      "id": 3,
+      "size": "50"
+    },
+    {
+      "id": 4,
+      "size": "75"
+    },
+    {
+      "id": 5,
+      "size": "100"
+    }
+  ]
+}

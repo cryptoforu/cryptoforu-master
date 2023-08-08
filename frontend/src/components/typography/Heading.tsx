@@ -10,6 +10,8 @@ const heading = cva('font-bold tracking-tight', {
       primary: 'text-primary-dark dark:text-primary-white',
       slate: 'text-slate-800 dark:text-slate-200',
       gradient: 'bg-clip-text text-transparent bg-primary-gradient',
+      gradientFrom:
+        'bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-emerald-400',
       secondary: 'text-slate-600 dark:text-slate-400',
       emerald: 'text-emerald-600 dark:text-emerald-400',
     },

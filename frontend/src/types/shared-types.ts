@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 export interface PageProps {
   [key: string]: unknown
 }
@@ -10,30 +8,34 @@ export type S<T = object> = T &
   }
 
 export type Nullable<T> = T | null
-export type CryptoCoin = {
-  id: string
-  name: string
-  image: string
-  current_price: string
-  market_cap: string
-  market_cap_rank: Nullable<number>
-  total_volume: Nullable<number>
-  high_24h: Nullable<string>
-  low_24h: Nullable<string>
-  price_change_24h: Nullable<string>
-  price_change_percentage_24h: string
-  price_change_percentage_1h_in_currency: string
-  price_change_percentage_24h_in_currency: string
-  price_change_percentage_7d_in_currency: string
-  symbol: string
-  color: string
-  current_color: string
+
+export type Crumbs = {
+  label: string
+  route: string
+  meta_desc: string
 }
 
-export interface CryptoDataProps {
-  id: string
-  type: string
-  attributes: CryptoCoin
+export interface BreadcrumbsProps extends Crumbs {
+  parents: Nullable<Crumbs>
+}
+
+export type PaginationProps = {
+  current_page: number
+  first_page_url?: string
+  from: number
+  last_page?: number
+  last_page_url?: string
+  links: {
+    url: string | null
+    label: string
+    active: boolean
+  }[]
+  next_page_url: string | null
+  path?: string
+  per_page?: number
+  prev_page_url: string | null
+  to: number
+  total: number
 }
 
 export type DecryptNews = {
@@ -58,51 +60,26 @@ export type Exchanges = {
   trade_volume_24h_btc: string
 }
 
-export type Features = {
-  name: string
-  link: string
-  image: string
-  description: ReactNode
-}
+export type ColorScheme = 'emerald' | 'teal' | 'cyan' | 'blue' | 'red'
 
-export type SocialLinks = {
-  name: string
-  href: string
-  image: string
-}
-
-export type PostData = {
+export type EarnData = {
   id: number
   title: string
-  slug?: string
-  introduction?: string
-  content?: string
-  featured_image?: string
-  thumb?: string
-  status?: PostStatus
-  category_id?: number
-  created_at?: string
-  updated_at?: string
-  image_name?: string
-  excerpt?: string
-  category?: CategoryData
-  tags?: Array<TagsData>
+  link: string
+  image_name: string
+  main_features: string
 }
-export type PostStatus = 'DRAFT' | 'PREVIEW' | 'PUBLISHED' | 'ARCHIVED'
-export type TagsData = {
+export type EarnCategory = {
   id: number
   name: string
-  posts?: Array<PostData>
-}
-
-export type CategoryData = {
-  id: number
-  name: string
-  slug: string
   description: string
   category_image: string
-  category_thumb?: string
-  color: ColorScheme
-  posts?: Array<PostData>
+  earn: Array<EarnData>
 }
-export type ColorScheme = 'emerald' | 'teal' | 'cyan' | 'blue' | 'red'
+
+export interface EarningMethods {
+  data: {
+    id: string
+    attributes: EarnCategory
+  }[]
+}

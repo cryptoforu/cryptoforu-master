@@ -1,0 +1,50 @@
+{
+  "footer_nav": [
+    {
+      "id": "footer_nav6490ec3e339d86.61985565",
+      "href": "/contact",
+      "name": "Contact"
+    },
+    {
+      "id": "footer_nav6490ec21ab96e9.339026246490ec3e339df2.51953873",
+      "href": "/terms-of-service",
+      "name": "Terms of Service"
+    },
+    {
+      "id": "footer_nav6490ebf3810bb6.624547556490ec21ab9731.772065946490ec3e339e19.73931751",
+      "href": "/privacy-policy",
+      "name": "Privacy Policy"
+    },
+    {
+      "id": "footer_nav6490eb830763f5.461168846490ebf3810c03.434846686490ec21ab9769.204119046490ec3e339e44.77078529",
+      "href": "/learn-crypto",
+      "name": "Learn Crypto"
+    }
+  ],
+  "social_links": [
+    {
+      "id": "social_links6462b93291a48",
+      "href": "https://twitter.com/CryptoforuEarn",
+      "name": "Twitter",
+      "image": "6462b9327c509.png"
+    },
+    {
+      "id": "social_links6462b900e8b5c6462b93291a4b",
+      "href": "https://github.com/cryptoforu",
+      "name": "GitHub",
+      "image": "6462b900cc042.png"
+    },
+    {
+      "id": "social_links6462b8ce7fb456462b900e8b5f6462b93291a4c",
+      "href": "https://www.reddit.com/user/CryptoforuLE",
+      "name": "Reddit",
+      "image": "6462b8ce67ccc.png"
+    },
+    {
+      "id": "social_links6462b7ff32db96462b8ce7fb486462b900e8b616462b93291a4e",
+      "href": "https://www.facebook.com/cryptoforu",
+      "name": "Facebook",
+      "image": "6462b7ff19904.png"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "fb": {
+    "link": "https://www.facebook.com/sharer.php?u=",
+    "label": "Facebook",
+    "icon": "fb",
+    "description": "Facebook share post link"
+  },
+  "tw": {
+    "link": "https://twitter.com/share?url=",
+    "label": "Twitter",
+    "icon": "tw",
+    "description": "Twitter share post link"
+  },
+  "pinterest": {
+    "link": "https://pinterest.com/pin/create/bookmarklet/?media=",
+    "label": "Pinterest",
+    "icon": "pinterest",
+    "description": "Pinterest share post url"
+  },
+  "linkedin": {
+    "link": "https://www.linkedin.com/shareArticle?url=",
+    "label": "LinkedIn",
+    "icon": "linkedin",
+    "description": "LinkedIn share post"
+  },
+  "reddit": {
+    "link": "https://reddit.com/submit?url=",
+    "label": "Reddit",
+    "icon": "reddit",
+    "description": "Reddit share post"
+  }
+}

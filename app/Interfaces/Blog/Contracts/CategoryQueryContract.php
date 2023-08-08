@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Interfaces\Blog\Contracts;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 interface CategoryQueryContract
 {
-    public function handle(): Collection|array;
+    public function handle(Builder $query): Builder;
 }

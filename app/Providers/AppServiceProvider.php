@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -49,6 +50,15 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->register(
             provider: CursorPaginationProvider::class
         );
+        $this->app->register(
+            provider: ApiCacheProvider::class
+        );
+        $this->app->register(
+            provider: ApiServiceProvider::class
+        );
+        $this->app->register(
+            provider: FaucetPayProvider::class
+        );
     }
 
     /**
@@ -62,6 +72,6 @@ final class AppServiceProvider extends ServiceProvider
 
             return (int) max(1, $minutesToRead);
         });
-
+        Model::preventLazyLoading( ! $this->app->isProduction());
     }
 }

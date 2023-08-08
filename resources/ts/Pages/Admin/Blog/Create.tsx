@@ -6,8 +6,8 @@ import AppHead from '@/Components/AppHead';
 import { usePageProps } from '@/Hooks/useTypedPage';
 import AdminLayout from '@/Layouts/AdminLayout';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
+import type { FormData } from '@/Store/useFormProvider';
 import FormProvider from '@/Store/useFormProvider';
-import type { FormData } from '@/Types/generated';
 
 const DynamicForm = lazy(() =>
   pMinDelay(import(`@/Forms/DynamicForm.js`), 1000)
@@ -25,7 +25,7 @@ interface CreateProps {
     };
     form_route: string;
     form_schema: {
-      id: FormData<OptionsProps>;
+      id: FormData;
     };
   };
 }
@@ -43,6 +43,10 @@ const PostCreate = () => {
               initialValues={post_form.initialValues}
               form_route={post_form.form_route}
               form_schema={post_form.form_schema}
+              options={{
+                preserveState: true,
+                preserveScroll: true,
+              }}
             >
               <DynamicForm />
             </FormProvider>

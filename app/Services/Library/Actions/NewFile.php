@@ -24,13 +24,7 @@ final class NewFile
             return true;
         }
         $new = new Library([
-            'file_name' => $file['file_name'],
-            'mime_type' => $file['mime'],
-            'conversions' => $file['conversions'],
-            'size' => $file['size'],
-            'width' => $file['width'],
-            'height' => $file['height'],
-            'image_url' => $file['path'],
+            ...$file,
             'library_category_id' => $category,
         ]);
         $model->images()->save($new);

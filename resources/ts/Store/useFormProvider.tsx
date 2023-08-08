@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 import useRouter from '@/Hooks/useRouter';
-import { FormData } from '@/Types/generated';
+import { FormType } from '@/Types/generated';
 
 type FormID = {
   id: string;
@@ -20,10 +20,18 @@ type Options = {
   value?: string;
 };
 
+export type FormData = {
+  id: string | number;
+  label: string;
+  name: string;
+  type: FormType;
+  options: Array<Options>;
+};
+
 type FormContextData<FormItem extends FormID> = {
   initialValues: FormItem;
   form_schema: {
-    [Property in keyof FormItem]: FormData<Options>;
+    [Property in keyof FormItem]: FormData;
   };
   form_route: string;
   handleSubmit: (values: FormItem, action: FormikHelpers<FormItem>) => void;
@@ -36,7 +44,7 @@ const FormContext = createContext<FormContextData<FormID> | null>(null);
 type FormProviderProps<FormItem extends FormID> = {
   initialValues: FormItem;
   form_schema: {
-    [Property in keyof FormItem]: FormData<Options>;
+    [Property in keyof FormItem]: FormData;
   };
   form_route: string;
   method?: Method;
@@ -68,6 +76,7 @@ function FormProvider<FormItem extends FormID>({
         onSuccess: () => {
           action.setSubmitting(false);
           action.resetForm();
+          console.log(values);
         },
         ...options,
       });

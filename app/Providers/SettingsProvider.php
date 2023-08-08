@@ -29,31 +29,32 @@ final class SettingsProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            abstract : SettingsResources::class,
-            concrete: fn () => SettingsResources::make(storage_path('app/settings.json'))
+            abstract: SettingsResources::class,
+            concrete: fn (
+            ) => SettingsResources::make(storage_path('app/settings.json'))
         );
 
         $this->app->bind(
-            abstract : UpdateMenuItemContract::class,
+            abstract: UpdateMenuItemContract::class,
             concrete: UpdateMenuItems::class,
         );
 
         $this->app->bind(
-            abstract : SettingsInterface::class,
+            abstract: SettingsInterface::class,
             concrete: SettingsService::class
         );
 
         $this->app->bind(
-            abstract : MenuInterface::class,
+            abstract: MenuInterface::class,
             concrete: MenuResources::class
         );
 
         $this->app->bind(
-            abstract : PageInterface::class,
+            abstract: PageInterface::class,
             concrete: PageResource::class
         );
         $this->app->bind(
-            abstract : SettingsActionInterface::class,
+            abstract: SettingsActionInterface::class,
             concrete: SettingsAction::class
         );
         $this->app->bind(

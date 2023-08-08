@@ -1,9 +1,11 @@
 'use client'
 
-import { useDateFormatter } from '@react-aria/i18n'
+import { useDateFormatter } from 'react-aria'
 
 export const DateFormatter = ({ date }: { date?: string }) => {
-  let formatter = useDateFormatter()
+  let formatter = useDateFormatter({
+    dateStyle: 'full',
+  })
   return (
     <>
       {date ? formatter.format(new Date(date)) : formatter.format(new Date())}

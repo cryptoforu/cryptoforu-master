@@ -1,6 +1,6 @@
 import AppHead from '@/Components/AppHead';
+import { FormArray } from '@/Forms';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { AddData } from '@/PageContainers/Admin/SiteData';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
 
 const SiteCreate = () => {
@@ -8,7 +8,7 @@ const SiteCreate = () => {
     <>
       <AppHead />
       <PanelWrapper>
-        <AddData />
+        <FormArray />
       </PanelWrapper>
     </>
   );

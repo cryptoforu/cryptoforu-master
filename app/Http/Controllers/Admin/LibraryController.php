@@ -15,7 +15,6 @@ use App\Models\Library;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -107,8 +106,9 @@ final class LibraryController extends Controller
         return back()->with('success', 'Deleted Successfully');
     }
 
-    public function process(Request $request): string
+    public function process(Request $request)
     {
+
         // We don't know the name of the file input, so we need to grab
         // all the files from the request and grab the first file.
         /** @var UploadedFile[] $files */
@@ -134,9 +134,9 @@ final class LibraryController extends Controller
 
         // Store the file in a temporary location and return the location
         // for FilePond to use.
-        return $file->store(
-            path: 'tmp/' . now()->timestamp . '-' . Str::random(20)
-        );
+        $uploaded = $this->action->store($file, '');
+
+        return Inertia::share('file', $uploaded);
     }
 
     /**

@@ -24,7 +24,7 @@ import { ProseHeadings } from '@/Components/Elements/Typography';
 
 export type DataTableProps<Data extends object> = {
   data: Data[];
-  columns: ColumnDef<Data, unknown>[];
+  columns: ColumnDef<Data, any>[];
   title: string;
 };
 

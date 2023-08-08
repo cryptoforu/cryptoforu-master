@@ -1,15 +1,19 @@
-import { EditIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, Flex } from '@chakra-ui/react';
+
+import { useMenuSelectContext } from '@/Store/useMenuSelect';
 
 import { ButtonLink } from '../Navigation';
 import { MarkDown, ProseHeadings, ProsePa } from '../Typography';
 import LazyImage from './LazyImage';
+
 type ImgCardProps = {
   image?: string;
   title?: string;
   category?: string;
   description?: string;
   to: string;
+  destroy: string;
   params?: string | number;
   srcSet?: string;
 };
@@ -21,7 +25,9 @@ const ImgCard = ({
   description,
   to,
   params,
+  destroy,
 }: ImgCardProps) => {
+  const selected = useMenuSelectContext((state) => state.selected);
   return (
     <Flex direction="column">
       <Box mb="20px" position="relative" borderRadius="15px" maxHeight="300px">
@@ -46,12 +52,31 @@ const ImgCard = ({
           <ButtonLink
             to={to}
             params={params}
+            options={{
+              preserveState: true,
+              preserveScroll: true,
+              only: [selected],
+            }}
             rightIcon={<EditIcon />}
             variant="outline"
             colorScheme="emerald"
             size="md"
           >
             Edit
+          </ButtonLink>
+          <ButtonLink
+            to={destroy}
+            params={params}
+            options={{
+              method: 'delete',
+              preserveState: true,
+              preserveScroll: true,
+              only: [selected],
+            }}
+            rightIcon={<DeleteIcon />}
+            colorScheme={'red'}
+          >
+            Delete
           </ButtonLink>
         </Flex>
       </Flex>

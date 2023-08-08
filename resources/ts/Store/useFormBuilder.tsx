@@ -6,11 +6,6 @@ import { shallow } from 'zustand/shallow';
 import { useRoute } from '@/Providers/RouteProvider';
 import type { FormData, FormType } from '@/Types/generated';
 
-type SelectOptions = {
-  id?: string | number;
-  name: string;
-};
-
 type InitialValues = {
   id: string;
   [x: string]: string | number | [];
@@ -27,17 +22,13 @@ type FormBuilder = {
   initial: InitialProps;
   initialValues: InitialValues;
   form_schema: {
-    [Property in keyof InitialValues]: FormData<SelectOptions>;
+    [Property in keyof InitialValues]: FormData;
   };
   form_route: string;
 };
 
 export interface BuilderStore extends FormBuilder {
-  addValue: (
-    key: string,
-    value: string,
-    payload: FormData<SelectOptions>
-  ) => void;
+  addValue: (key: string, value: string, payload: FormData) => void;
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   addRoute: (route: string) => void;
   clearForm: () => void;
@@ -82,8 +73,7 @@ const useFormStore = create<BuilderStore>()(
     handleChange: (e) =>
       set((state) => {
         const key = e.target.name;
-        const value = e.target.value;
-        state.initial[key] = value;
+        state.initial[key] = e.target.value;
       }),
     addRoute: (route) =>
       set((state) => {

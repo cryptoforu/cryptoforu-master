@@ -8,12 +8,8 @@ use Closure;
 
 interface CacheContract
 {
-  /**
-   * Lazy Load Data
-   * @param  string  $key
-   * @param  Closure  $callback
-   * @param  int  $ttl
-   * @return mixed
-   */
-  public function load(string $key, Closure $callback, int $ttl = 1440): mixed;
+    /**
+     * Lazy Load Data
+     */
+    public function load(string $key, Closure $callback, int $ttl = 1440): mixed;
 }

@@ -1,8 +1,10 @@
-import { Button, HStack, Stack } from '@chakra-ui/react';
+import { Button, Flex, HStack, Image, Stack } from '@chakra-ui/react';
 import { Form, Formik, FormikHelpers } from 'formik';
 
 import { CheckBoxField, TextField } from '@/Components/Elements/Forms';
 import { NavigationLink } from '@/Components/Elements/Navigation';
+import github from '@/images/social/github_240px.png';
+import google from '@/images/social/google_240px.png';
 import AuthLayout from '@/Layouts/AuthLayout';
 import { useRoute } from '@/Providers/RouteProvider';
 import { InertiaSharedProps } from '@/types';
@@ -26,6 +28,7 @@ const Login = ({ errors }: InertiaSharedProps) => {
       },
     });
   };
+
   return (
     <AuthLayout
       title="Admin Login"
@@ -80,6 +83,38 @@ const Login = ({ errors }: InertiaSharedProps) => {
           </Form>
         )}
       </Formik>
+      <Flex
+        direction={'column'}
+        maxW={'full'}
+        gap={'4'}
+        mt={8}
+        align={'center'}
+      >
+        <form action={'/login/github'} className={'mt-8'}>
+          <Button w={'full'} maxW={'md'} type={'submit'}>
+            <Image
+              w={'24px'}
+              h={'24px'}
+              align={'center'}
+              src={github}
+              mr={'2'}
+            />
+            Login With Github
+          </Button>
+        </form>
+        <form action={'/login/google'} className={'mt-8'}>
+          <Button w={'full'} maxW={'md'} variant={'outline'} type={'submit'}>
+            <Image
+              w={'24px'}
+              h={'24px'}
+              align={'center'}
+              src={google}
+              mr={'2'}
+            />
+            Login With Google
+          </Button>
+        </form>
+      </Flex>
     </AuthLayout>
   );
 };

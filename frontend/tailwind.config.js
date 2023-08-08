@@ -1,4 +1,4 @@
-/** @type {import("tailwindcss").Config} */
+/** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
@@ -11,6 +11,9 @@ module.exports = {
     colors: {
       'primary-dark': '#00040f',
       'primary-white': '#f0fdfa',
+      'fb-blue': '#3b5998',
+      'tw-blue': '#1DA1F2',
+      'reddit-orange': '#FF5700',
       white: colors.white,
       black: colors.black,
       danger: '#e11d48',
@@ -23,7 +26,9 @@ module.exports = {
       teal: colors.teal,
       green: colors.green,
       cyan: colors.cyan,
+      gray: colors.gray,
     },
+
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -36,6 +41,7 @@ module.exports = {
       },
       maxWidth: {
         '8xl': '88rem',
+        '9xl': '92rem',
       },
       opacity: {
         1: '0.01',

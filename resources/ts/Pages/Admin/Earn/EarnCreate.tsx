@@ -7,17 +7,12 @@ import { usePageProps } from '@/Hooks/useTypedPage';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { SuspenseWrapper } from '@/Motion';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
+import type { FormData } from '@/Store/useFormProvider';
 import FormProvider from '@/Store/useFormProvider';
-import type { FormData } from '@/Types/generated';
 
 const DynamicForm = lazy(() =>
   pMinDelay(import(`@/Forms/DynamicForm.js`), 1000)
 );
-
-type OptionsProps = {
-  id: string | number;
-  name: string;
-};
 
 interface EarnCreateProps {
   earn_form: {
@@ -26,7 +21,7 @@ interface EarnCreateProps {
     };
     form_route: string;
     form_schema: {
-      id: FormData<OptionsProps>;
+      id: FormData;
     };
   };
 }

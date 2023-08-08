@@ -85,3 +85,45 @@ if (!function_exists('format_percentage')) {
 
   }
 }
+
+if (!function_exists('cal_percentage')) {
+
+  function cal_percentage(
+    float $num_amount,
+    float $num_total,
+    string $intl = 'en_US'
+  ): false|string {
+    $count1 = ($num_amount / $num_total) * 100;
+    $count2 = $count1 / 100;
+    $fmt = new NumberFormatter($intl, NumberFormatter::PERCENT);
+    $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, 2);
+    $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
+    return $fmt->format($count2);
+  }
+
+}
+
+if (!function_exists('format_satoshi')) {
+
+  /**
+   * @param  float  $amount
+   * @param  string  $intl
+   * @return false|string
+   */
+  function format_satoshi(float $amount, string $intl = 'en_US',)
+  {
+    $fmt = new NumberFormatter(
+      locale: $intl,
+      style: NumberFormatter::DECIMAL
+    );
+    $fmt->setAttribute(
+      attribute: NumberFormatter::MIN_FRACTION_DIGITS,
+      value: 8
+    );
+
+    return $fmt->format(
+      num: $amount
+    );
+  }
+
+}

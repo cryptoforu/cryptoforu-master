@@ -15,13 +15,12 @@ class CoinQuery implements CoinQueryContract
     public function handle(): Collection
     {
         return QueryBuilder::for(
-            subject: Crypto::class
+            subject: Crypto::query()->value('data')
         )
             ->allowedFilters([
                 AllowedFilter::exact('data_name'),
-                'data_values',
+                AllowedFilter::exact('coins.id'),
             ])
-            ->allowedFields(['data_name', 'data_values'])
             ->value('data_values')
         ;
     }

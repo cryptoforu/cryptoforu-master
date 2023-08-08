@@ -15,7 +15,7 @@ final class CryptoService
     use Replaceable, RequestState, SendGetRequest, SendPoolRequest;
 
     public function __construct(
-        private PendingRequest $client
+        private readonly PendingRequest $client
     ) {
     }
 

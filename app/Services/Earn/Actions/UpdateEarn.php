@@ -25,12 +25,11 @@ final class UpdateEarn
         if ($request->hasFile('image')) {
             $image = $this->library->store(
                 file: $validated['image'],
-                directory: 'earning'
+                directory: '/earning'
             );
 
-            $earn->image = $image['path'];
+            $earn->image = $image['image_url'];
             $earn->image_name = $image['file_name'];
-            $earn->thumb = $image['thumb'];
             if ( ! empty($earn->images)) {
                 foreach ($earn->images as $img) {
                     $this->library->delete($img);
@@ -43,7 +42,9 @@ final class UpdateEarn
             }
         }
 
-        $request->collect()->except(['_method'])->map(function ($item, $key) use ($earn): void {
+        $request->collect()->except(['_method'])->map(function ($item, $key) use (
+            $earn
+        ): void {
             $earn->{$key} = $item;
         });
         if (empty($request->safe())) {

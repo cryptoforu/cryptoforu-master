@@ -14,7 +14,6 @@ use App\Responses\RedirectSuccess;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
-use Throwable;
 
 final class EarnController extends Controller
 {
@@ -55,20 +54,14 @@ final class EarnController extends Controller
     public function store(
         StoreEarnRequest $request
     ): RedirectSuccess|RedirectResponse {
-        try {
-            $this->action->store(
-                request: $request,
-            );
+        $this->action->store(
+            request: $request,
+        );
 
-            return new RedirectSuccess(
-                url: 'admin-earn.index',
-                message: 'Added New Method Succesfully'
-            );
-        } catch (Throwable $e) {
-            report($e);
-
-            return back()->with('error', 'Something Went Wrong');
-        }
+        return new RedirectSuccess(
+            url: 'admin:earn.index',
+            message: 'Added New Method Successfully'
+        );
 
     }
 
@@ -105,7 +98,7 @@ final class EarnController extends Controller
         );
 
         return new RedirectSuccess(
-            url: 'admin-earn.index',
+            url: 'admin:earn.index',
             message: 'Updated Successfully'
         );
     }
@@ -115,19 +108,10 @@ final class EarnController extends Controller
      */
     public function destroy(Earn $earn): RedirectResponse|RedirectSuccess
     {
-        try {
-            $this->action->destroy(
-                earn: $earn,
-            );
+        $this->action->destroy(
+            earn: $earn,
+        );
 
-            return new RedirectSuccess(
-                url: 'admin-earn.index',
-                message: 'Deleted Successfully',
-            );
-        } catch (Throwable $e) {
-            report($e);
-
-            return back()->with('error', 'Something Went Wrong');
-        }
+        return back()->with('success', 'Destroyed Successfully');
     }
 }

@@ -16,48 +16,46 @@ use Illuminate\Support\Facades\Cache;
 
 final class SettingsAction implements SettingsActionInterface
 {
-
-  public function __construct(
-    private readonly StorePageMeta $page,
-    private readonly DeleteMenuItem $deleteMenuItem,
-    private readonly DeletePageMeta $deletePageMeta,
-  ) {
-  }
-
-
-  /**
-   * Store Menu or Page Meta
-   */
-  public function store(
-    StorePageRequest $from,
-    ActionEnum $action
-  ): void {
-    $this->page->handle(
-      from: $from
-    );
-    Cache::flush();
-  }
-
-  public function destroy(Request $request, string|int $id): bool
-  {
-    $enum = $request->input('delete');
-    if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_menu())) {
-      $this->deleteMenuItem->handle(
-        id: $id,
-      );
-      Cache::flush();
-
-      return true;
-    }
-    if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_page())) {
-      $this->deletePageMeta->handle(
-        id: $id,
-      );
-      Cache::flush();
-
-      return true;
+    public function __construct(
+        private readonly StorePageMeta $page,
+        private readonly DeleteMenuItem $deleteMenuItem,
+        private readonly DeletePageMeta $deletePageMeta,
+    ) {
     }
 
-    return false;
-  }
+    /**
+     * Store Menu or Page Meta
+     */
+    public function store(
+        StorePageRequest $from,
+        ActionEnum $action
+    ): void {
+        $this->page->handle(
+            from: $from
+        );
+        Cache::flush();
+    }
+
+    public function destroy(Request $request, string|int $id): bool
+    {
+        $enum = $request->input('delete');
+        if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_menu())) {
+            $this->deleteMenuItem->handle(
+                id: $id,
+            );
+            Cache::flush();
+
+            return true;
+        }
+        if (DeleteEnum::tryFrom($enum)->equals(DeleteEnum::delete_page())) {
+            $this->deletePageMeta->handle(
+                id: $id,
+            );
+            Cache::flush();
+
+            return true;
+        }
+
+        return false;
+    }
 }

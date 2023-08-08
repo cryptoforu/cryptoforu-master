@@ -96,9 +96,7 @@ export function useMenuSelectContext<T>(
 export function useSelectedValues<T>() {
   const selected = useMenuSelectContext((state) => state.selected);
   const values = usePageProps<SelectedProps<T>>()[selected];
-  const initial = useDeferredValue(values);
-
-  return initial;
+  return useDeferredValue(values);
 }
 
 export function MenuSelect() {

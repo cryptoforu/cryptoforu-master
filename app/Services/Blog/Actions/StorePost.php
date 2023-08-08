@@ -25,39 +25,45 @@ final class StorePost
     public function handle(StorePostRequest $request): bool
     {
         $validated = $request->validated();
-
-        if ($request->hasFile('featured_image')) {
-            $image = $this->library->store(
-                file: $validated['featured_image'],
-                directory: '/posts'
-            );
-            $image_path = $image['path'];
-            $image_name = $image['file_name'];
-            $image_thumb = $image['thumb'];
-        }
-
-        $post = Post::create([
+        $image = $this->library->store(
+            file: $validated['featured_image'],
+            directory: 'posts'
+        );
+        $image_path = $image['image_url'];
+        $image_name = $image['file_name'];
+        $count = Str::wordCount($validated['title']);
+        $words = Str::of($validated['title'])->words($count / 2, '');
+        $slice = Str::of($validated['title'])->replaceFirst($words, $words . ' |');
+        $post = Post::query()->create([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']),
             'introduction' => $validated['introduction'],
             'content' => $validated['content'],
             'featured_image' => $image_path,
-            'thumb' => $image_thumb,
             'category_id' => $validated['category_id'],
             'status' => $validated['status'],
             'image_name' => $image_name,
-            'excerpt' => Str::of($validated['introduction'])->limit(165, '...'),
+            'excerpt' => 'a',
+            'headline' => $slice,
         ]);
 
         if ($request->has('tags')) {
             $post->tags()->attach($validated['tags']);
         }
 
-        $this->library->save(
-            model: $post,
-            file: $image,
-            category: 1
+        $post->post_links = [
+            'post_link' => '/learn-crypto/' . $post->category->slug . '/' . $post->slug,
+            'next' => Post::query()->ofNext($post->id),
+            'prev' => Post::query()->ofPrev($post->id),
+        ];
+        $post->images()->create(
+            attributes: [
+                ...$image,
+                'library_category_id' => 1,
+            ]
         );
+        cache()->flush();
+        $post->save();
 
         return true;
     }

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CorsMiddleware;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\ForceJsonMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -51,6 +54,8 @@ final class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        ForceJsonMiddleware::class,
+        CorsMiddleware::class,
     ];
 
     /**
@@ -74,11 +79,14 @@ final class Kernel extends HttpKernel
             EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class . ':api',
             SubstituteBindings::class,
+            AdminMiddleware::class,
         ],
     ];
 
     protected $routeMiddleware = [
         'optimizeImages' => OptimizeImages::class,
+        'json.response' => ForceJsonMiddleware::class,
+        'cors' => CorsMiddleware::class,
     ];
 
     /**

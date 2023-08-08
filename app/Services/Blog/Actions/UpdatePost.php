@@ -28,9 +28,8 @@ final class UpdatePost
                 file: $validated['featured_image'],
                 directory: '/posts'
             );
-            $post->featured_image = $image['path'];
+            $post->featured_image = $image['image_url'];
             $post->image_name = $image['file_name'];
-            $post->thumb = $image['thumb'];
             if ( ! empty($post->images)) {
                 foreach ($post->images as $img) {
                     $this->library->delete($img);
@@ -42,7 +41,10 @@ final class UpdatePost
                 );
             }
         }
-        $request->collect()->except(['_method'])->map(function ($item, $key) use (
+        $request->collect()->except(['_method', 'tags'])->map(function (
+            $item,
+            $key
+        ) use (
             $post
         ): void {
             $post->{$key} = $item;
@@ -50,10 +52,20 @@ final class UpdatePost
         if (empty($request->safe())) {
             return false;
         }
+        $count = Str::wordCount($validated['title']);
+        $words = Str::of($validated['title'])->words($count / 2, '');
+        $slice = Str::of($validated['title'])->replaceFirst($words, $words . ' |');
+        $post->headline = $slice;
         $post->slug = Str::slug($validated['title']);
-        $post->excerpt = Str::of($validated['introduction'])->limit(165, '...');
+        $post->excerpt = Str::of($validated['introduction'])->excerpt(' ');
+        $post->post_links = [
+            'post_link' => '/learn-crypto/' . $post->category->slug . '/' . $post->slug,
+            'next' => Post::query()->ofNext($post->id),
+            'prev' => Post::query()->ofPrev($post->id),
+        ];
         if ($request->has('tags')) {
-            $post->tags()->attach($validated['tags']);
+            $post->tags()->sync($validated['tags']);
+
         }
         $post->save();
 

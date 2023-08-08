@@ -10,7 +10,7 @@ use App\Models\Earn;
 final class DeleteEarn
 {
     public function __construct(
-        private LibraryActionsInterface $action,
+        private readonly LibraryActionsInterface $action,
     ) {
 
     }

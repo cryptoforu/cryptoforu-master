@@ -9,8 +9,28 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    domains: ['assets.coingecko.com', 'img.decrypt.co', 'cdn.jwplayer.com'],
+    domains: [
+      'assets.coingecko.com',
+      'img.decrypt.co',
+      'cdn.jwplayer.com',
+      'res.cloudinary.com',
+    ],
+  },
+  experimental: {
+    typedRoutes: true,
+    serverActions: true,
+  },
+  reactStrictMode: true,
+  swcMinify: true,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://localhost:80/api/*`,
+      },
+    ]
   },
 }
+const { withContentlayer } = require('next-contentlayer')
 
-module.exports = nextConfig
+module.exports = withContentlayer(nextConfig)

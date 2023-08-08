@@ -1,29 +1,23 @@
+'use client'
 import Image, { ImageProps } from 'next/image'
-import nav_logo from '@/images/nav_logo.webp'
-import base_logo from '@/images/logo_gr.webp'
+import { useAppLogo } from '@/store/controllers/useThemeController'
 
 interface IAppLogoProps extends Partial<ImageProps> {
   variant?: 'nav_logo' | 'base_logo'
 }
 
-const logo_variants = {
-  nav_logo: {
-    src: nav_logo,
-    alt: 'Cryptoforu Navigation Logo',
-  },
-  base_logo: {
-    src: base_logo,
-    alt: 'Cryptoforu Logo',
-  },
-}
-
 const AppLogo = (props: IAppLogoProps) => {
+  const { nav_logo, base_logo } = useAppLogo()
+  let logo = {
+    nav_logo: nav_logo,
+    base_logo: base_logo,
+  }
   const { variant = 'base_logo', ...rest } = props
   return (
     <Image
-      src={logo_variants[variant].src}
-      alt={logo_variants[variant].alt}
-      {...props}
+      src={logo[variant]}
+      alt={'Cryptoforu Learn and earn Crypto'}
+      {...rest}
     />
   )
 }

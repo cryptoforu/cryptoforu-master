@@ -1,0 +1,52 @@
+{
+  "page": [
+    {
+      "route": "\/",
+      "label": "Learn and",
+      "gradLabel": "Earn Crypto",
+      "meta_desc": "Cryptoforu is a place where you can learn, earn and share your knowledge about crypto. Get the latest insights from the crypto world and start building your crypto portofolio"
+    },
+    {
+      "route": "\/earn-crypto",
+      "label": "Earn",
+      "gradLabel": "Crypto",
+      "meta_desc": "Earn crypto online with the best crypto earning methods currently available online. Stay up-to-date with the latest crypto faucets and many other legitimate earning opportunities."
+    },
+    {
+      "route": "\/earn-crypto\/faucets-lists",
+      "label": "Cryptoforu FaucetPay",
+      "gradLabel": "Faucets List",
+      "meta_desc": "The Faucets List displays the top-paying faucets right now. The most recent faucet information is updated in the table every ten minutes. The table can be modified and filtered."
+    },
+    {
+      "route": "\/learn-crypto",
+      "label": "Learn",
+      "gradLabel": "Crypto",
+      "meta_desc": "Explore our crypto academy and learn everything you need to know about blockchain technology. We cover everything from the basics of blockchain technology to advanced strategies"
+    },
+    {
+      "route": "\/crypto",
+      "label": "Cryptocurrency prices,",
+      "gradLabel": "markets and news",
+      "meta_desc": "Stay up-to-date with the latest cryptocurrency news and market updates in one convenient location, and explore exciting new opportunities like NFT collections and DeFI"
+    },
+    {
+      "route": "\/crypto\/crypto-news",
+      "label": "Latest",
+      "gradLabel": "Cryptocurrency News",
+      "meta_desc": "Get the most recent and breaking cryptocurrency news. Watch videos, read top news, and articles on cryptocurrency, DeFI, NFTs, and other topics."
+    },
+    {
+      "route": "\/crypto\/crypto-markets",
+      "label": "Top Cryptocurrency",
+      "gradLabel": "Exchanges",
+      "meta_desc": "Popular cryptocurrency exchanges and markets available online right now. These prominent sites enable you to purchase and sell cryptocurrencies at the best possible prices."
+    },
+    {
+      "route": "\/contact",
+      "label": "Contact",
+      "gradLabel": "Us",
+      "meta_desc": "Cryptoforu is a place where you can learn, earn and share your knowledge about crypto."
+    }
+  ]
+}

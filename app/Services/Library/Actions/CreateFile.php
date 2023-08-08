@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 final class CreateFile
 {
-    public function handle(StoreLibraryRequest $request)
+    public function handle(StoreLibraryRequest $request): bool
     {
         $store = new StoreFile();
         $files = $request->validated('file');

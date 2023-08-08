@@ -123,7 +123,7 @@ const ArrayDataForm = () => {
                                         name={`data_values.${index}.${value.name}`}
                                         onupdatefiles={(files) =>
                                           setFieldValue(
-                                            value.name,
+                                            value.name as string,
                                             files[0].file
                                           )
                                         }
@@ -142,10 +142,10 @@ const ArrayDataForm = () => {
                                       name={`data_values.${index}.${value.name}`}
                                       value={v[value.name as string] as string}
                                       textareaProps={{
-                                        name: value.name,
+                                        name: value.name as string,
                                         onChange: (e) =>
                                           setFieldValue(
-                                            value.name,
+                                            value.name as string,
                                             e.target.value
                                           ),
                                       }}
@@ -175,7 +175,7 @@ const ArrayDataForm = () => {
                                     <TagsInput
                                       key={value.name}
                                       name={`data_values.${index}.${value.name}`}
-                                      label={value.name}
+                                      label={value.name as string}
                                       items={value.options}
                                     />
                                   </MotionBox>
@@ -218,7 +218,9 @@ const ArrayDataForm = () => {
                                   >
                                     <TextField
                                       key={value.name}
-                                      name={`data_values.${index}.${value.name}`}
+                                      name={`data_values.${index}.${
+                                        value.name as string
+                                      }`}
                                       label={value.label}
                                       value={v[value.name as string] as string}
                                     />

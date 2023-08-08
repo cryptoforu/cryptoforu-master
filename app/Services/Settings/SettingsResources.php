@@ -9,40 +9,35 @@ use Spatie\Valuestore\Valuestore;
 
 final class SettingsResources extends Valuestore
 {
+    public function load($key, $callback)
+    {
+        if ($this->has($key)) {
+            $value = $this->get($key);
 
-  public function load($key, $callback)
-  {
-    if ($this->has($key)) {
-      $value = $this->get($key);
-      $data = $this->lazyLoad(
-        key: $value,
-        callback: $callback
-      );
+            return $this->lazyLoad(
+                key: $value,
+                callback: $callback
+            );
+        }
+        $this->put($key, uniqid($key, true));
+        $value = $this->get($key);
 
-      return $data;
+        return $this->lazyLoad(
+            key: $value,
+            callback: $callback,
+        );
+
     }
-    $this->put($key, uniqid($key, true));
-    $value = $this->get($key);
-    $data = $this->lazyLoad(
-      key: $value,
-      callback: $callback,
-    );
 
-    return $data;
+    public function lazyLoad($key, $callback)
+    {
+        if (Cache::tags(['settings', $key])->has($key)) {
+            return Cache::get($key);
+        }
+        $data = $callback;
+        Cache::tags(['settings', $key])->put($key, $data, 86400);
 
-  }
+        return $data;
 
-  public function lazyLoad($key, $callback)
-  {
-    if (Cache::store('settings')->has($key)) {
-      $data = Cache::store('settings')->get($key);
-
-      return $data;
     }
-    $data = $callback;
-    Cache::store('settings')->set($key, $data, 86400);
-
-    return $data;
-
-  }
 }

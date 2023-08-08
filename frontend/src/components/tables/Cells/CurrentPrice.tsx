@@ -1,50 +1,33 @@
-import { Cell, CellProps } from 'react-aria-components'
-import { parseFloatNumber } from '@/lib/utils'
-import { useAnimate } from 'framer-motion'
-import { useEffect } from 'react'
-import usePrev from '@/hooks/usePrev'
 import { Text } from '@/components/typography'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { Currency } from '@/components/misc/NumberFormatter'
+import { clsx } from 'clsx'
+import { useDeferredValue } from 'react'
 
-interface CurrentPriceCellProps extends CellProps {
-  nextPrice: string
-}
-
-function useColorAnimation(price: number, prev: number | undefined) {
-  const [scope, animate] = useAnimate()
-
-  useEffect(() => {
-    if (prev && scope.current) {
-      animate(
-        scope.current,
-        { color: prev > price ? '#e11d48' : '#22c55e' },
-        { duration: 1 }
-      )
-    }
-  }, [animate, prev, price, scope])
-  return scope
+interface CurrentPriceCellProps {
+  nextPrice: number
+  color: string
 }
 
 const CurrentPrice = (props: CurrentPriceCellProps) => {
-  const current = parseFloatNumber(props.nextPrice) as number
-  const prev = usePrev(current)
-  const scope = useColorAnimation(current, prev)
+  let colors = useDeferredValue(props.color) as 'danger' | 'success'
+
   return (
-    <Cell textValue={props.nextPrice} id={props.id} className={'px-4 py-3'}>
+    <>
       <Text
-        ref={scope}
-        variant={'number'}
-        className={'inline-flex items-center'}
+        variant={colors}
+        className={clsx(
+          'inline-flex items-center transition duration-500 ease-in-out'
+        )}
       >
-        {prev && prev > current ? (
+        {colors === 'danger' ? (
           <ChevronDownIcon className={'h-5 w-5'} />
         ) : (
           <ChevronUpIcon className={'h-5 w-5'} />
         )}
-        <Currency value={props.children as string} currency={'USD'} />
+        <Currency value={props.nextPrice} currency={'USD'} />
       </Text>
-    </Cell>
+    </>
   )
 }
 export default CurrentPrice

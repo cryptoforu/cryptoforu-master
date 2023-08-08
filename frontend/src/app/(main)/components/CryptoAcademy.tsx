@@ -1,36 +1,33 @@
 import { Container, Section } from '@/components/wrappers'
-import { Card, SectionHeader } from '@/components/content'
-import { Badge, Link, SolidButton } from '@/components/elements'
-import { getData, preload } from '@/lib/getData'
-import { CategoryData } from '@/types/shared-types'
-import Image from 'next/image'
-import { Heading } from '@/components/typography'
-import Prose from '@/components/typography/Prose'
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardImage,
+  SectionHeader,
+} from '@/components/content'
+import { Badge, Button, InternalLink } from '@/components/elements'
+import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
+import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import SectionGrid from '@/components/patterns/SectionGrid'
+import { Heading, ProseMarkdown } from '@/components/typography'
+import { Route } from 'next'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
-import Lines from '@/components/patterns/Lines'
-import PolygonBlur from '@/components/patterns/PolygonBlur'
 
-preload(
-  'blog/categories?filter[id]=1,7,9&fields[categories]=id,name,description,category_image'
-)
-
-const CryptoAcademy = async () => {
-  const categories: {
-    id: string
-    attributes: CategoryData
-  }[] = await getData(
-    'blog/categories?filter[id]=1,7,9&fields[categories]=id,name,description,category_image'
-  )
+const CryptoAcademy = async ({
+  categories,
+}: {
+  categories: CategoryApiResource[]
+}) => {
   return (
     <Section
       id={'crypto-academy'}
       ariaLabel={'Crypto Academy'}
-      className={
-        'relative border-t border-t-cyan-50 bg-emerald-50 dark:border-slate-900 dark:bg-gradient-to-b dark:from-primary-dark dark:to-black'
-      }
+      className={'relative border-t border-t-cyan-50 dark:border-t-slate-950'}
     >
+      <SectionGrid />
       <Container className={'relative'}>
-        <PolygonBlur />
         <div
           className={
             'flex min-w-max flex-col items-center justify-between gap-8 px-8 md:flex-row'
@@ -50,9 +47,14 @@ const CryptoAcademy = async () => {
             />
           </div>
           <div className={'py-2'}>
-            <SolidButton solid={'secondary'} className={'mr-8'}>
-              Browse All
-            </SolidButton>
+            <Button
+              colorScheme={'secondary'}
+              className={'mr-8'}
+              href={'/learn-crypto'}
+            >
+              Browse All{''}
+              <ArrowSmallRightIcon className={'h-5 w-5'} />
+            </Button>
           </div>
         </div>
         <div
@@ -60,63 +62,53 @@ const CryptoAcademy = async () => {
             'relative mt-8 grid grid-cols-1 gap-8 px-8 md:grid-cols-2 lg:grid-cols-3'
           }
         >
-          <Lines />
           {categories.map((category) => (
             <Card
               key={category.id}
+              variant={'outlineSlate'}
+              size={'none'}
               className={'mx-0 my-5 shadow-[6px_6px_0px_#10b981] md:mx-5'}
             >
-              <div
-                className={'border-b border-b-cyan-100 dark:border-b-slate-900'}
-              >
-                <div className={'relative max-h-[230px] w-full items-center'}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_IMG_URL}${category.attributes.category_image}`}
-                    alt={category.attributes.name}
-                    width={1366}
-                    height={786}
-                    className={'min-w-full'}
-                  />
-                </div>
-              </div>
-              <div className={'p-4'}>
-                <div className={'flex justify-center p-2'}>
+              <CardHeader variant={'paper'}>
+                <CardImage
+                  image={category.category_image}
+                  alt={category.name}
+                  width={1366}
+                  height={786}
+                  imageClass={'min-w-full rounded-t-xl'}
+                  className={'relative max-h-[230px] w-full items-center'}
+                />
+              </CardHeader>
+              <CardBody variant={'article'} className={'p-4'}>
+                <div className={'flex justify-start'}>
                   <Badge variant={'primary'} size={'md'}>
-                    {category.attributes.name}
+                    {category.name === 'NFT' ? 'Popular' : 'Beginners'}
                   </Badge>
                 </div>
                 <Heading
                   as={'h3'}
                   size={'md'}
-                  className={'line-clamp-1'}
+                  className={'mt-4 line-clamp-1'}
                   variant={'gradient'}
                 >
-                  {category.attributes.name}
+                  {category.name}
                 </Heading>
-                <Prose
-                  content={category.attributes.description}
-                  className={'line-clamp-3'}
-                />
-              </div>
-              <div
-                className={'border-t border-t-cyan-50 dark:border-t-slate-900'}
-              >
-                <div
-                  className={
-                    'flex w-full cursor-pointer items-center justify-between rounded-b-sm p-4'
-                  }
+                <ProseMarkdown className={'line-clamp-3'}>
+                  {category.description}
+                </ProseMarkdown>
+              </CardBody>
+              <CardFooter border={'slate'} size={'sm'}>
+                <InternalLink
+                  href={category.category_links.category_link as Route}
+                  hover={'no_underline'}
+                  className={'p-4'}
                 >
-                  <Link
-                    isInternal={true}
-                    href={''}
-                    label={'View More'}
-                    solid={'transparent'}
-                  />
-                  <ArrowRightIcon
-                    className={'h-5 w-5 text-slate-900 dark:text-primary-white'}
-                  />
-                </div>
-              </div>
+                  <span>View More</span>
+                </InternalLink>
+                <ArrowRightIcon
+                  className={'h-5 w-5 text-slate-900 dark:text-primary-white'}
+                />
+              </CardFooter>
             </Card>
           ))}
         </div>

@@ -1,10 +1,15 @@
-import { Button, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Stack,
+  VStack,
+} from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 
 import {
   ChakraPond,
   CheckBoxField,
-  CheckBoxGroup,
   Label,
   MarkDownEditor,
   SelectField,
@@ -87,11 +92,33 @@ const DynamicForm = () => {
                     );
                   case 'tags':
                     return (
-                      <CheckBoxGroup
-                        key={value.name}
-                        name={value.name}
-                        items={value.options}
-                      />
+                      <CheckboxGroup key={value.name}>
+                        <Stack
+                          direction={['column', 'row']}
+                          flexWrap={'wrap'}
+                          gap={6}
+                        >
+                          {value.options?.map((tag) => (
+                            <Checkbox
+                              key={tag.id}
+                              name={value.name}
+                              type={'checkbox'}
+                              value={
+                                values[value.id as keyof typeof initialValues]
+                              }
+                              onChange={() =>
+                                (
+                                  values[
+                                    value.name as keyof typeof initialValues
+                                  ] as unknown as number[]
+                                ).push(tag.id as number)
+                              }
+                            >
+                              {tag.name}
+                            </Checkbox>
+                          ))}
+                        </Stack>
+                      </CheckboxGroup>
                     );
                   case 'textarea':
                     return (

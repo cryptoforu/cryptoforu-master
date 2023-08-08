@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Policies\ApiRequestPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 final class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,7 @@ final class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**
@@ -24,5 +26,11 @@ final class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+        Gate::before(static function (User $user, string $ability) {
+            if ('super-admin' === $user->roles()->value('name')) {
+                return true;
+            }
+        });
+        Gate::define('view-resource', [ApiRequestPolicy::class, 'viewResource']);
     }
 }

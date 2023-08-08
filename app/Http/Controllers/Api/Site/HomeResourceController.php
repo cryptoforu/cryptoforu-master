@@ -9,14 +9,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Responses\CollectionResponse;
 use App\Responses\ErrorResponse;
-use App\Services\Site\ApiResource\HomeResource;
+use App\Services\Site\ApiResource\SiteResource;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 final class HomeResourceController extends Controller
 {
   /**
    * Home Api Resource Instance
-   * @param  CacheContract  $cache
    */
   public function __construct(
     private readonly CacheContract $cache,
@@ -30,11 +31,12 @@ final class HomeResourceController extends Controller
     Request $request,
     Site $site
   ): CollectionResponse|ErrorResponse {
+    $data = QueryBuilder::for($site)
+      ->allowedFilters([AllowedFilter::exact('data_name')])
+      ->allowedFields(['data_values'])
+      ->find($site->id);
     return new CollectionResponse(
-      data: $this->cache->load(
-        key: $request->query('fields[sites]') ?? $site->data_name,
-        callback: fn() => HomeResource::make($site),
-      )
+      data: SiteResource::make($data)
     );
   }
 }

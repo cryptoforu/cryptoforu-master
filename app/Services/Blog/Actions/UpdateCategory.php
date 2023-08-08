@@ -43,16 +43,20 @@ final class UpdateCategory implements UpdateCategoryContract
                 );
             }
         }
-        $request->collect(['name', 'description'])->map(function ($item, $key) use (
-            $category
-        ): void {
-            $category->{$key} = $item;
-        });
+
         if (empty($request->safe())) {
             return false;
         }
+        $category->name = $request->validated('name');
+        $category->description = $request->validated('description');
         $category->slug = Str::slug($request->validated('name'));
+        $category->category_links = [
+            'category_link' => '/learn-crypto/' . $category->slug,
+            'next' => Category::query()->ofNext($category->id),
+            'prev' => Category::query()->ofPrev($category->id),
+        ];
         $category->save();
+        cache()->flush();
 
         return true;
     }

@@ -2,8 +2,11 @@
 
 import { useEffect } from 'react'
 import { AnimatePresence, useAnimate, usePresence } from 'framer-motion'
-import { useIconPaths, useTheme } from '@/store/useThemeStore'
-import { SolidButton } from '@/components/elements/Button'
+import {
+  useIconPaths,
+  useThemeController,
+} from '@/store/controllers/useThemeController'
+import { Button } from '@/components/elements'
 
 function AnimatedIcon({ path }: { path?: string }) {
   const [isPresent, safeToRemove] = usePresence()
@@ -54,17 +57,17 @@ function AnimatedIcon({ path }: { path?: string }) {
 
 const ThemeToggle = () => {
   const path = useIconPaths()
-  const setTheme = useTheme()
+  const setTheme = useThemeController()
   return (
     <AnimatePresence mode="wait">
-      <SolidButton
-        solid={'secondary'}
+      <Button
+        colorScheme={'secondary'}
         key={path()}
         aria-label="Theme Switcher"
         onClick={() => setTheme()}
       >
         <AnimatedIcon path={path()} />
-      </SolidButton>
+      </Button>
     </AnimatePresence>
   )
 }

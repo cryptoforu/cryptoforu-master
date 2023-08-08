@@ -8,8 +8,7 @@ use App\Http\Requests\StoreCategoryRequest;
 
 interface StoreCategoryContract
 {
-    /**
-     * Store Category
-     */
-    public function handle(StoreCategoryRequest $request): void;
+    public function handle(
+        StoreCategoryRequest $request
+    ): void;
 }

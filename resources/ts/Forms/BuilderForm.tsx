@@ -8,9 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
-import { useInitial } from '@/Store/useFormBuilder';
-import { useFormBuilder } from '@/Store/useFormBuilder';
-import { toHeadline } from '@/utils/toHeadline';
+import { useFormBuilder, useInitial } from '@/Store/useFormBuilder';
 
 import { FormWrapper } from './';
 
@@ -24,12 +22,7 @@ const FormBuilder = () => {
           <HStack spacing={2}>
             <FormControl>
               <FormLabel>Key</FormLabel>
-              <Input
-                type="text"
-                name="key"
-                value={initial.key}
-                onChange={handleChange}
-              />
+              <Input name="key" value={initial.key} onChange={handleChange} />
             </FormControl>
             <FormControl>
               <FormLabel>Value</FormLabel>
@@ -67,7 +60,7 @@ const FormBuilder = () => {
             variant="submitBtn"
             onClick={() =>
               handleAdd(initial.key, initial.value, {
-                label: toHeadline(initial.key),
+                label: initial.key,
                 name: initial.key,
                 type: initial.type,
               })

@@ -4,6 +4,7 @@ import { clsx } from 'clsx'
 const sectionVariants = {
   primary: 'relative py-20 sm:py-24',
   secondary: 'relative md:py-24 py-16',
+  small: 'relative py-4 sm:py-8',
 }
 
 export interface ISectionProps extends React.HTMLAttributes<HTMLElement> {
@@ -27,4 +28,4 @@ const Section = forwardRef<HTMLElement, ISectionProps>(
   }
 )
 Section.displayName = 'Section'
-export default Section;
+export default Section

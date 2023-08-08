@@ -1,8 +1,8 @@
 import GridPattern from '@/components/patterns/GridPattern'
 import Heading from '@/components/typography/Heading'
 import Text from '@/components/typography/Text'
-import { OutlineButton, SolidButton } from '@/components/elements/Button'
-import { detacher } from '@/data/fonts'
+import { BtnLink, Button } from '@/components/elements'
+import { detacher } from '@/fonts/fonts'
 
 function HeroPattern() {
   return (
@@ -48,16 +48,13 @@ const Hero = async () => {
         }
       >
         <div className={'text-center'}>
-          <Heading as={'h1'} size={'xxl'} className={detacher.className}>
-            Cryptoforu
-          </Heading>
           <Heading
-            as={'h2'}
-            variant={'slate'}
-            size={'xl'}
-            className={`mx-auto mt-8 max-w-4xl ${detacher.className}`}
+            as={'h1'}
+            size={'xxl'}
+            className={`${detacher.className} mx-auto max-w-2xl`}
           >
-            <span className="relative whitespace-nowrap text-emerald-500">
+            Cryptoforu
+            <span className="relative whitespace-nowrap text-4xl text-emerald-500 sm:text-6xl">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 418 42"
@@ -68,16 +65,21 @@ const Hero = async () => {
               </svg>
               <span className="relative">Learn and Earn</span>
             </span>{' '}
-            Crypto.
+            <span className={'text-4xl sm:text-6xl'}>Crypto.</span>
           </Heading>
+
           <Text className={'mx-auto mt-12 max-w-2xl'}>
             If you are interested in making money online, then Cryptoforu is the
             right place for you. We help individuals to learn and earn crypto by
             providing them with the knowledge they need to succeed.
           </Text>
           <div className={'mt-10 flex items-center justify-center gap-x-6'}>
-            <SolidButton solid={'primary'}>Get Started</SolidButton>
-            <OutlineButton outline={'secondary'}>Learn More</OutlineButton>
+            <BtnLink variant={'solid'} href={'/learn-crypto'}>
+              Get Started
+            </BtnLink>
+            <Button variant={'outline'} colorScheme={'secondary'}>
+              Learn More
+            </Button>
           </div>
         </div>
       </div>

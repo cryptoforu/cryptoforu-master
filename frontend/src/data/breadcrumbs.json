@@ -1,0 +1,87 @@
+{
+  "breadcrumbs": [
+    {
+      "id": 19,
+      "label": "Home",
+      "route": "\/home",
+      "parent_id": 0,
+      "parents": null
+    },
+    {
+      "id": 20,
+      "label": "Earn Crypto",
+      "route": "\/earn-crypto",
+      "parent_id": 0,
+      "parents": null
+    },
+    {
+      "id": 21,
+      "label": "Popular Methods",
+      "route": "\/earn-crypto",
+      "parent_id": 20,
+      "parents": {
+        "id": 20,
+        "label": "Earn Crypto",
+        "route": "\/earn-crypto",
+        "parent_id": 0
+      }
+    },
+    {
+      "id": 22,
+      "label": "Faucets Lists",
+      "route": "\/earn-crypto\/faucets-lists",
+      "parent_id": 20,
+      "parents": {
+        "id": 20,
+        "label": "Earn Crypto",
+        "route": "\/earn-crypto",
+        "parent_id": 0
+      }
+    },
+    {
+      "id": 23,
+      "label": "Learn Crypto",
+      "route": "\/learn-crypto",
+      "parent_id": 0,
+      "parents": null
+    },
+    {
+      "id": 24,
+      "label": "Cryptocurrencies",
+      "route": "\/crypto",
+      "parent_id": 0,
+      "parents": null
+    },
+    {
+      "id": 25,
+      "label": "Crypto News",
+      "route": "\/crypto\/crypto-news",
+      "parent_id": 24,
+      "parents": {
+        "id": 24,
+        "label": "Cryptocurrencies",
+        "route": "\/crypto",
+        "parent_id": 0
+      }
+    },
+    {
+      "id": 26,
+      "label": "Markets",
+      "route": "\/crypto\/crypto-markets",
+      "parent_id": 24,
+      "parents": {
+        "id": 24,
+        "label": "Cryptocurrencies",
+        "route": "\/crypto",
+        "parent_id": 0
+      }
+    },
+    {
+      "id": 27,
+      "label": "Contact",
+      "route": "\/contact",
+      "parent_id": 0,
+      "parents": null
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 'use client'
-import Link from 'next/link'
-import Image from 'next/image'
+import { InternalLink } from '@/components/elements'
+import LazyImage from '@/components/elements/LazyImage'
 import GridPattern from '@/components/patterns/GridPattern'
 import {
   motion,
@@ -8,9 +8,10 @@ import {
   useMotionTemplate,
   useMotionValue,
 } from 'framer-motion'
-import type { Features } from '@/types/shared-types'
-import { MouseEvent } from 'react'
+
+import { MouseEvent, ReactNode } from 'react'
 import { Heading } from '@/components/typography'
+import { Route } from 'next'
 
 function CardIcon({ icon, alt }: { icon: string; alt: string }) {
   return (
@@ -19,7 +20,7 @@ function CardIcon({ icon, alt }: { icon: string; alt: string }) {
         'flex h-12 w-12 items-center justify-center rounded-full bg-slate-900/5 ring-1 ring-slate-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-slate-900/25 dark:bg-white/10 dark:ring-white/20 dark:group-hover:bg-emerald-300/10 dark:group-hover:ring-emerald-400'
       }
     >
-      <Image
+      <LazyImage
         src={icon}
         alt={alt}
         className={
@@ -75,6 +76,13 @@ const CardPattern = ({ mouseX, mouseY, ...gridProps }: PatternProps) => {
   )
 }
 
+type Features = {
+  name: string
+  link: string
+  image: string
+  description: string | ReactNode
+}
+
 const HoverCard = ({ name, link, image, description }: Features) => {
   let mouseX = useMotionValue(0)
   let mouseY = useMotionValue(0)
@@ -109,11 +117,11 @@ const HoverCard = ({ name, link, image, description }: Features) => {
       <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-slate-900/7.5 group-hover:ring-slate-900/10 dark:ring-white/10 dark:group-hover:ring-white/20" />
       <div className="relative rounded-2xl px-4 pb-4 pt-8">
         <CardIcon icon={image} alt={name} />
-        <Heading as={'h3'} size={'lg'} className="mt-4">
-          <Link href="">
+        <Heading as={'h3'} size={'md'} className="mt-4" variant={'gradient'}>
+          <InternalLink href={link as Route}>
             <span className="absolute inset-0 rounded-2xl" />
             {name}
-          </Link>
+          </InternalLink>
         </Heading>
 
         {description}

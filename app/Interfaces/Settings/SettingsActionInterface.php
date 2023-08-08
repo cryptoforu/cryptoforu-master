@@ -11,16 +11,15 @@ use Illuminate\Http\Request;
 
 interface SettingsActionInterface
 {
+    /**
+     * Store Settings
+     */
+    public function store(StorePageRequest $from, ActionEnum $action): void;
 
-  /**
-   * Store Settings
-   */
-  public function store(StorePageRequest $from, ActionEnum $action): void;
-
-  /**
-   * Destroy Menu Or Meta
-   *
-   * @param  DeleteEnum  $delete
-   */
-  public function destroy(Request $request, string|int $id): bool;
+    /**
+     * Destroy Menu Or Meta
+     *
+     * @param  DeleteEnum  $delete
+     */
+    public function destroy(Request $request, string|int $id): bool;
 }

@@ -63,8 +63,8 @@ const Categories = () => {
             form_id={category}
             options={{
               only: [category],
-              replace: true,
               preserveState: false,
+              onSuccess: () => closeDrawer(),
             }}
           >
             <Drawer

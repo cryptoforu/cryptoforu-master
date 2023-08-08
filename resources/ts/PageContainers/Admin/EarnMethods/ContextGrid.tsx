@@ -6,6 +6,7 @@ import type { EarnCategory } from '@/Types/generated';
 
 const ContextGrid = () => {
   const values = useSelectedValues<EarnCategory>();
+
   return (
     <Flex p="16px" my="24px" maxWidth="100%">
       <Grid
@@ -22,8 +23,9 @@ const ContextGrid = () => {
             description={
               value?.main_features ? value.main_features : value.content
             }
-            to="admin-earn.edit"
+            to="admin:earn.edit"
             params={value.id}
+            destroy={'admin:earn.destroy'}
           />
         ))}
       </Grid>

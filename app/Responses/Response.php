@@ -6,15 +6,17 @@ namespace App\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
+use JustSteveKing\StatusCode\Http;
 
 class Response implements Responsable
 {
     /**
-     * {@inheritDoc}
+     * @property-read mixed $data
+     * @property-read Http $status
      */
     public function toResponse(
         $request
-    ): JsonResponse|\Symfony\Component\HttpFoundation\Response {
+    ): JsonResponse {
         return new JsonResponse(
             data: $this->data,
             status: $this->status->value,

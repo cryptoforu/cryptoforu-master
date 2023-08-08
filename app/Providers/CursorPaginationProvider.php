@@ -27,30 +27,31 @@ class CursorPaginationProvider extends ServiceProvider
          * Cursor Paginate a standard Laravel Collection.
          *
          * @param  int  $perPage
-         * @param  int  $total
+         * @param  string  $cursorName
          * @param  int  $page
-         * @param  string  $pageName
-         * @return array
          */
         Collection::macro(
             'cursorCol',
             function (
-                $perPage,
-                $total = null,
-                $page = null,
-                $pageName = 'page'
+                int $perPage = 5,
+                string $cursorName = 'cursor',
+                ?int $page = null,
+                array $options = []
             ): CursorPaginator {
                 /** @var Collection $this */
-                $page = $page ?: CursorPaginator::resolveCurrentCursor($pageName);
+                $page = $page ?: CursorPaginator::resolveCurrentCursor($cursorName);
+                $results = $this->slice(($page - 1) * $perPage)->take($perPage + 1);
+
+                $options += [
+                    'path' => CursorPaginator::resolveCurrentCursor(),
+                    'pageName' => $cursorName,
+                ];
 
                 return new CursorPaginator(
-                    items: $total ? $this : $this->forPage($page, $perPage)->values(),
+                    items: $results,
                     perPage: $perPage,
                     cursor: $page,
-                    options: [
-                        'path' => CursorPaginator::resolveCurrentCursor(),
-                        'pageName' => $pageName,
-                    ]
+                    options: $options
                 );
             }
         );

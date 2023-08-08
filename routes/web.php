@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EarnController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SiteController;
+use App\Http\Controllers\Api\SocialAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
-
+Route::redirect('/', '/admin');
 Route::middleware('auth:sanctum')->prefix('admin')->as('admin:')->group(function (
 ): void {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,8 +47,15 @@ Route::post('/tokens/create', function (Request $request) {
     }
     $token = $request->user()->createToken(
         $request->token_name,
-        ['admin,get-data']
+        ['admin']
     );
 
     return back()->with('token', $token->plainTextToken);
 })->middleware('auth:sanctum');
+Route::get('/login/{provider}', [
+    SocialAuthController::class, 'redirectToProvider',
+]);
+Route::get('/login/{provider}/callback', [
+    SocialAuthController::class,
+    'handleProviderCallback',
+]);

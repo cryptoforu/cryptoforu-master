@@ -11,13 +11,11 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Interfaces\Blog\BlogActionInterface;
 use App\Interfaces\Blog\BlogInterface;
 use App\Models\Post;
-use App\Responses\ErrorResponse;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
-use Throwable;
 
 final class PostController extends Controller
 {
@@ -64,7 +62,7 @@ final class PostController extends Controller
             request: $request
         );
 
-        return to_route('admin-blog')->with(
+        return to_route('admin:blog:post.index')->with(
             'success',
             'Created a new Post Successfully'
         );
@@ -79,6 +77,7 @@ final class PostController extends Controller
     ): RedirectResponse {
         $post->status = $request->validated('status');
         $post->save();
+        cache()->flush();
 
         return back()->with('success', 'Status Updated Successfully');
     }
@@ -104,19 +103,16 @@ final class PostController extends Controller
     public function update(
         UpdatePostRequest $request,
         Post $post
-    ): RedirectResponse|ErrorResponse {
-        try {
-            $this->action->update(
-                request: $request,
-                post: $post,
-            );
-        } catch (Throwable $e) {
-            session(['warning', 'Something Went Wrong']);
+    ): RedirectResponse {
+        $this->action->update(
+            request: $request,
+            post: $post,
+        );
 
-            return new ErrorResponse(message: '', exception: $e);
-        }
-
-        return to_route('admin-blog')->with('success', 'Updated Post Successfully');
+        return to_route('admin:blog:post.index')->with(
+            'success',
+            'Updated Post Successfully'
+        );
     }
 
     /**

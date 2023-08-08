@@ -1,9 +1,8 @@
-import { Box, Flex } from '@chakra-ui/react';
-import { FieldArray } from 'formik';
+import type { CheckboxProps } from '@chakra-ui/react';
+import { Checkbox } from '@chakra-ui/react';
+import { useField } from 'formik';
 
-import { CheckBoxField } from '@/Components/Elements/Forms/index';
-
-interface GroupProps {
+interface GroupProps extends CheckboxProps {
   items?: {
     id: number | string;
     name: string;
@@ -12,26 +11,18 @@ interface GroupProps {
   name: string;
 }
 
-const CheckBoxGroup = ({ items, name }: GroupProps) => {
+const CheckBoxGroup = ({ ...props }: GroupProps) => {
+  const [field, meta, helpers] = useField({
+    name: props.name,
+    type: 'checkbox',
+  });
+  const { setValue } = helpers;
+  const { value } = meta;
+
   return (
-    <FieldArray
-      name={name}
-      render={(arrayHelpers) => (
-        <Box maxWidth={'full'}>
-          <Flex wrap={'wrap'} width={'full'} justifyItems={'center'}>
-            {items?.map((item, index) => (
-              <Box key={index}>
-                <CheckBoxField
-                  name={`items[${index}].name`}
-                  label={item.name}
-                  onChange={() => arrayHelpers.push({ id: item.id })}
-                />
-              </Box>
-            ))}
-          </Flex>
-        </Box>
-      )}
-    />
+    <>
+      <Checkbox onChange={() => setValue(value)}>{props.value}</Checkbox>
+    </>
   );
 };
 export default CheckBoxGroup;

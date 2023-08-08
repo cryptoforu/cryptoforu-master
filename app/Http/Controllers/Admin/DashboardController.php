@@ -5,28 +5,30 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\Faucetpay\FaucetPayServiceInterface;
 use App\Interfaces\Settings\PageInterface;
 use Inertia\Inertia;
 use Inertia\Response;
 
 final class DashboardController extends Controller
 {
-    protected PageInterface $page;
+  protected PageInterface $page;
 
-    /**
-     * Admin Dashboard
-     */
-    public function __construct(
-        PageInterface $page
-    ) {
-        $this->page = $page;
-    }
+  /**
+   * Admin Dashboard
+   */
+  public function __construct(
+    PageInterface $page,
+    protected FaucetPayServiceInterface $service,
+  ) {
+    $this->page = $page;
+  }
 
-    public function index(): Response
-    {
-        return Inertia::render(
-            component: 'Admin/Dashboard',
-            props: $this->page->admin_meta(),
-        );
-    }
+  public function index(): Response
+  {
+    return Inertia::render(
+      component: 'Admin/Dashboard',
+      props: $this->page->admin_meta(),
+    );
+  }
 }

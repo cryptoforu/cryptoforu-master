@@ -24,6 +24,7 @@ final class CategoryData extends Data
         public Optional|Lazy|string $description,
         public Optional|Lazy|string $category_image,
         public Optional|Lazy|string $category_thumb,
+        public Optional|Lazy|string $headline,
         #[DataCollectionOf(PostData::class)]
         public Optional|Lazy|DataCollection $posts,
     ) {
@@ -34,16 +35,22 @@ final class CategoryData extends Data
         return new self(
             $category->id,
             $category->name,
-            Lazy::create(fn () => $category->slug),
+            Lazy::create(fn () => $category->slug)->defaultIncluded(),
             Lazy::create(fn () => $category->description),
             Lazy::create(fn () => $category->category_image),
             Lazy::create(fn () => $category->category_thumb),
+            Lazy::create(fn () => $category->headline),
             Lazy::whenLoaded(
                 'posts',
                 $category,
                 fn () => PostData::collection($category->posts)
             ),
         );
+    }
+
+    public static function allowedRequestIncludes(): ?array
+    {
+        return null;
     }
 
     public static function fromData(Category $category): self
@@ -55,6 +62,7 @@ final class CategoryData extends Data
             $category->description,
             $category->category_image,
             Lazy::create(fn () => $category->category_thumb),
+            Lazy::create(fn () => $category->headline),
             Lazy::whenLoaded(
                 'posts',
                 $category,
@@ -76,7 +84,8 @@ final class CategoryData extends Data
                         'category_image' => '',
                     ]),
                     [
-                        'id', 'slug', 'category_thumb', 'posts',
+                        'id', 'slug', 'category_thumb', 'posts', 'next', 'prev', 'headline',
+                        'links',
                     ]
                 );
             case 'fields':
@@ -87,7 +96,8 @@ final class CategoryData extends Data
                         'category_image' => 'file',
                     ]),
                     [
-                        'id', 'slug', 'category_thumb', 'posts',
+                        'id', 'slug', 'category_thumb', 'posts', 'next', 'prev', 'headline',
+                        'links',
                     ]
                 );
             case 'edit':
@@ -95,10 +105,11 @@ final class CategoryData extends Data
                     self::empty([
                         'name' => $category->name,
                         'description' => $category->description,
-                        'category_image' => $category->category_image,
+                        'category_image' => null,
                     ]),
                     [
-                        'id', 'slug', 'category_thumb', 'posts',
+                        'id', 'slug', 'category_thumb', 'posts', 'next', 'prev', 'headline',
+                        'links',
                     ]
                 );
         }

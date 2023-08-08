@@ -14,7 +14,7 @@ const Lines = ({ width, height, className }: LineProps) => {
         viewBox="0 0 1172 5737"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={clsx('h-full w-[1170px] opacity-60', className)}
+        className={clsx('h-full w-[1170px] opacity-40', className)}
         preserveAspectRatio="none"
       >
         <g opacity="0.6">

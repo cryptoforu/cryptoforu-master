@@ -1,15 +1,18 @@
 import { HTMLAttributes } from 'react'
 import { Heading, Text } from '@/components/typography'
 import { Badge } from '@/components/elements'
-import { detacher } from '@/data/fonts'
+import { detacher } from '@/fonts/fonts'
+import { clsx } from 'clsx'
 
 export interface ISectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
-  headingSize?: 'lg' | 'xl' | 'xxl'
+  headingSize?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   textSize?: 'md' | 'lg'
   badgeLabel?: string
+  badgePosition?: string
   title: string
   gradTitle: string
   desc?: string
+  decorate?: boolean
 }
 
 const SectionHeader = (props: ISectionHeaderProps) => {
@@ -17,16 +20,18 @@ const SectionHeader = (props: ISectionHeaderProps) => {
     headingSize = 'xl',
     textSize = 'lg',
     badgeLabel,
+    badgePosition = 'center',
     title,
     gradTitle,
     desc,
+    decorate = false,
     ...rest
   } = props
   return (
     <div className={`mx-auto ${rest.className}`}>
       {badgeLabel && (
-        <div className={'flex justify-center'}>
-          <Badge variant={'secondary'} size={'lg'} className={'relative'}>
+        <div className={clsx('flex', `justify-${badgePosition}`)}>
+          <Badge variant={'secondary'} size={'md'} className={'relative'}>
             {badgeLabel}
           </Badge>
         </div>
@@ -34,14 +39,25 @@ const SectionHeader = (props: ISectionHeaderProps) => {
       <Heading
         as={'h2'}
         size={headingSize}
-        className={`mt-8 ${detacher.className}`}
+        className={clsx(
+          `mt-8 ${detacher.className} `,
+          decorate && 'relative flex items-center pl-3.5'
+        )}
       >
+        {decorate && (
+          <span
+            className="absolute inset-y-0 left-0 flex items-center"
+            aria-hidden="true"
+          >
+            <span className="h-[75%] w-1 rounded-full bg-slate-200 py-2 dark:bg-emerald-400" />
+          </span>
+        )}
         {title}
         {''}
         <span className={'ml-2 text-emerald-400'}>{gradTitle}</span>
       </Heading>
       {desc && (
-        <Text size={textSize} className={'mx-auto mt-4 max-w-2xl'}>
+        <Text size={textSize} variant={'prose'} className={'mt-4'}>
           {desc}
         </Text>
       )}
