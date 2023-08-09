@@ -17,13 +17,22 @@ use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\PaginatedDataCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PostsApiController extends Controller
+final class PostsApiController extends Controller
 {
+  /**
+   * Posts Api Controller Instance
+   * @param  AllPostsContract  $query
+   */
   public function __construct(
     private readonly AllPostsContract $query,
   ) {
   }
 
+  /**
+   * Retrive All Posts
+   * @param  Request  $request
+   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
+   */
   public function index(
     Request $request
   ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
@@ -36,6 +45,12 @@ class PostsApiController extends Controller
     );
   }
 
+  /**
+   * Get Posts  From Specific Category
+   * @param  Request  $request
+   * @param  Category  $category
+   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
+   */
   public function from_category(
     Request $request,
     Category $category
@@ -53,7 +68,9 @@ class PostsApiController extends Controller
   }
 
   /**
-   * Display the specified resource.
+   * Display the specified Post
+   * @param  Post  $post
+   * @return PostApiResource
    */
   public function show(Post $post): PostApiResource
   {

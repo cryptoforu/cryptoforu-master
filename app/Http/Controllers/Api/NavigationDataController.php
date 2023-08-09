@@ -10,19 +10,27 @@ use Illuminate\Http\Request;
 
 class NavigationDataController extends Controller
 {
-    public function __construct(
-        private readonly ApiServiceContract $apiService,
-    ) {
-    }
+  /**
+   * Navigation Data Instance
+   * @param  ApiServiceContract  $apiService
+   */
+  public function __construct(
+    private readonly ApiServiceContract $apiService,
+  ) {
+  }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(
-        Request $request
-    ) {
+  /**
+   * Handle the incoming request.
+   * @param  Request  $request
+   * @return array
+   */
+  public function __invoke(
+    Request $request
+  ): array {
 
-        return $this->apiService->breadcrumbs()->generate();
+    return $this->apiService
+      ->breadcrumbs()
+      ->generate();
 
-    }
+  }
 }

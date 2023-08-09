@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Earn;
 
-use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Earn\EarnCategoryQueryContract;
 use App\Models\EarnCategory;
@@ -14,26 +13,31 @@ use Spatie\LaravelData\CursorPaginatedDataCollection;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-class EarnCategoryResourceController extends Controller
+final class EarnCategoryResourceController extends Controller
 {
-    public function __construct(
-        private readonly EarnCategoryQueryContract $earn,
-        private readonly ApiCacheContract $cache,
-    ) {
-    }
+  /**
+   * Earning Methods Category Instance
+   * @param  EarnCategoryQueryContract  $earn
+   */
+  public function __construct(
+    protected EarnCategoryQueryContract $earn,
+  ) {
+  }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(
-        Request $request
-    ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
-        $data = $this->earn->handle(
-            EarnCategory::query()->latest()
-        )->get();
+  /**
+   * Earning Methods Category Query Builder
+   * @param  Request  $request
+   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
+   */
+  public function __invoke(
+    Request $request
+  ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
+    $data = $this->earn->handle(
+      EarnCategory::query()->latest()
+    )->get();
 
-        return EarnCategoryApiData::collection(
-            $data
-        );
-    }
+    return EarnCategoryApiData::collection(
+      $data
+    );
+  }
 }

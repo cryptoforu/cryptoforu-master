@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Site;
 
-use App\Contracts\CacheContract;
 use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Responses\CollectionResponse;
@@ -19,13 +18,15 @@ final class HomeResourceController extends Controller
   /**
    * Home Api Resource Instance
    */
-  public function __construct(
-    private readonly CacheContract $cache,
-  ) {
+  public function __construct()
+  {
   }
 
   /**
-   * Handle the incoming request.
+   * Query Builder For Home Page Data
+   * @param  Request  $request
+   * @param  Site  $site
+   * @return CollectionResponse|ErrorResponse
    */
   public function __invoke(
     Request $request,
@@ -35,6 +36,7 @@ final class HomeResourceController extends Controller
       ->allowedFilters([AllowedFilter::exact('data_name')])
       ->allowedFields(['data_values'])
       ->find($site->id);
+
     return new CollectionResponse(
       data: SiteResource::make($data)
     );

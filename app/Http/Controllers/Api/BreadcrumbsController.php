@@ -7,15 +7,23 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\ApiServiceContract;
 use App\Http\Controllers\Controller;
 
-class BreadcrumbsController extends Controller
+final class BreadcrumbsController extends Controller
 {
-    public function __construct(
-        private readonly ApiServiceContract $apiService,
-    ) {
-    }
+  /**
+   * Breadcrumbs Instance
+   * @param  ApiServiceContract  $apiService
+   */
+  public function __construct(
+    protected ApiServiceContract $apiService,
+  ) {
+  }
 
-    public function __invoke(): array
-    {
-        return $this->apiService->breadcrumbs()->generate();
-    }
+  /**
+   * Get Breadcrumbs
+   * @return array
+   */
+  public function __invoke(): array
+  {
+    return $this->apiService->breadcrumbs()->generate();
+  }
 }

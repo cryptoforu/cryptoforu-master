@@ -93,7 +93,7 @@ final class Category extends Model
         ;
     }
 
-    public function scopeOfNext(Builder $query, int $id): array|null
+    public function scopeOfNext(Builder $query, int $id): ?array
     {
         $next = $query->where('id', '>', $id)->first([
             'name', 'slug',
@@ -108,7 +108,7 @@ final class Category extends Model
         return null;
     }
 
-    public function scopeOfPrev(Builder $query, int $id): array|null
+    public function scopeOfPrev(Builder $query, int $id): ?array
     {
         $prev = $query->where('id', '<', $id)->orderBy('id', 'desc')
             ->first(['name', 'slug'])

@@ -10,27 +10,33 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class MetaDataController extends Controller
+final class MetaDataController extends Controller
 {
-    public function __construct(
-        private readonly CacheContract $cache,
-    ) {
-    }
+  /**
+   * Site Meta Data Instance
+   * @param  CacheContract  $cache
+   */
+  public function __construct(
+    protected CacheContract $cache,
+  ) {
+  }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
-    {
-        $cache_key = $request->query('filter');
+  /**
+   * Seo Meta Data Api
+   * @param  Request  $request
+   * @return mixed
+   */
+  public function __invoke(Request $request)
+  {
+    $cache_key = $request->query('filter');
 
-        return $this->cache->load(
-            key: $cache_key['page_name'] ?? $cache_key['route'] ?? $cache_key['page_type'],
-            callback: fn () => QueryBuilder::for(Page::class)
-                ->allowedFilters([
-                    'page_name', 'route', 'page_type',
-                ])->select(['label', 'meta_desc', 'route'])->first()
-        );
+    return $this->cache->load(
+      key: $cache_key['page_name'] ?? $cache_key['route'] ?? $cache_key['page_type'],
+      callback: fn() => QueryBuilder::for(Page::class)
+        ->allowedFilters([
+          'page_name', 'route', 'page_type',
+        ])->select(['label', 'meta_desc', 'route'])->first()
+    );
 
-    }
+  }
 }

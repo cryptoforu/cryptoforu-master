@@ -12,27 +12,20 @@ use Illuminate\Http\Client\PendingRequest;
 
 class FaucetPayService implements FaucetPayServiceInterface
 {
-  use BuildRequests;
-  use LoadCache;
+    use BuildRequests;
+    use LoadCache;
 
-  /**
-   * @param  PendingRequest  $client
-   * @param  ApiCacheContract  $cache
-   */
-  public function __construct(
-    private readonly PendingRequest $client,
-    public readonly ApiCacheContract $cache,
-  ) {
-  }
+    public function __construct(
+        private readonly PendingRequest $client,
+        public readonly ApiCacheContract $cache,
+    ) {
+    }
 
-  /**
-   * @return FaucetPayListResource
-   */
-  public function list(): FaucetPayListResource
-  {
-    return new FaucetPayListResource(
-      service: $this,
-      client: $this->client,
-    );
-  }
+    public function list(): FaucetPayListResource
+    {
+        return new FaucetPayListResource(
+            service: $this,
+            client: $this->client,
+        );
+    }
 }

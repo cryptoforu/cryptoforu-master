@@ -12,24 +12,30 @@ use Illuminate\Http\Request;
 
 final class EarnApiController extends Controller
 {
-    public function __construct(
-        private readonly EarnQueryContract $queryContract,
-    ) {
-    }
+  /**
+   * Earning Methods Instance
+   * @param  EarnQueryContract  $queryContract
+   */
+  public function __construct(
+    protected EarnQueryContract $queryContract,
+  ) {
+  }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(
-        Request $request
-    ): array {
-        $earnData = $this->queryContract->handle(
-            query: Earn::query()->latest()
-        )->get();
+  /**
+   * Earning Methods Query Builder
+   * @param  Request  $request
+   * @return array
+   */
+  public function __invoke(
+    Request $request
+  ): array {
+    $earnData = $this->queryContract->handle(
+      query: Earn::query()->latest()
+    )->get();
 
-        return $earnData->map(static fn (
-            $item
-        ) => EarnApiResource::fromModel($item))->toArray();
+    return $earnData->map(static fn(
+      $item
+    ) => EarnApiResource::fromModel($item))->toArray();
 
-    }
+  }
 }

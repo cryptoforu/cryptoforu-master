@@ -8,5 +8,5 @@ use Illuminate\Support\LazyCollection;
 
 interface ListUpdateOrCreateContract
 {
-  public function handle(LazyCollection $collection): void;
+    public function handle(LazyCollection $collection): void;
 }

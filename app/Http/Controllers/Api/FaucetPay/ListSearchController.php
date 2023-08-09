@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\FaucetPay;
 
 use App\Http\Controllers\Controller;
@@ -7,9 +9,10 @@ use App\Models\FaucetPayList;
 use App\Responses\CollectionResponse;
 use Illuminate\Http\Request;
 
-class ListSearchController extends Controller
+final class ListSearchController extends Controller
 {
   /**
+   * FaucetPay List Search Instance
    * @param  Request  $request
    * @return CollectionResponse
    */
@@ -17,12 +20,15 @@ class ListSearchController extends Controller
   {
 
     $lists = FaucetPayList::query()->select(['list_data'])->get()->flatten();
-    $filtered = $lists->flatMap(function ($item) {
-      return collect()->mergeRecursive($item['list_data']);
-    })->filter(
-      fn($item) => stripos($item['name'],
-          $request->string('q')->trim()) !== false)
+    $filtered = $lists->flatMap(fn($item
+    ) => collect()->mergeRecursive($item['list_data']))->filter(
+      fn($item) => false !== mb_stripos(
+          $item['name'],
+          $request->string('q')->trim()
+        )
+    )
       ->all();
+
     return new CollectionResponse(
       data: $filtered
     );

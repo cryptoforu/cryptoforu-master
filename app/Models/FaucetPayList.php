@@ -17,17 +17,17 @@ use Illuminate\Support\Collection;
  */
 class FaucetPayList extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'list_name',
-    'currency',
-    'coin_data',
-    'list_data',
-  ];
+    protected $fillable = [
+        'list_name',
+        'currency',
+        'coin_data',
+        'list_data',
+    ];
 
-  protected $casts = [
-    'coin_data' => AsCollection::class,
-    'list_data' => AsCollection::class,
-  ];
+    protected $casts = [
+        'coin_data' => AsCollection::class,
+        'list_data' => AsCollection::class,
+    ];
 }

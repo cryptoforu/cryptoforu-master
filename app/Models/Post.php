@@ -147,7 +147,7 @@ final class Post extends Model implements Viewable
         $query->where('status', PostStatus::PUBLISHED());
     }
 
-    public function scopeOfNext(Builder $query, int $id): array|null
+    public function scopeOfNext(Builder $query, int $id): ?array
     {
         $next = $query->with('category')->where('id', '>', $id)->first([
             'title', 'slug', 'category_id',
@@ -162,7 +162,7 @@ final class Post extends Model implements Viewable
         return null;
     }
 
-    public function scopeOfPrev(Builder $query, int $id): array|null
+    public function scopeOfPrev(Builder $query, int $id): ?array
     {
         $prev = $query->with('category')->where('id', '<', $id)->orderBy(
             'id',

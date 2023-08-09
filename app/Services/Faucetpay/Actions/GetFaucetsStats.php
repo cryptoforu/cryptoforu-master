@@ -12,22 +12,20 @@ use App\Services\Faucetpay\DataObjects\FaucetsStats;
 
 final class GetFaucetsStats implements GetFaucetsStatsContract
 {
+    public function handle(): array
+    {
+        $query = FaucetPayList::query()
+            ->whereNotIn('currency', ['top_hundred', 'new_faucets'])
+            ->get()
+        ;
+        $coinStats = FaucetCoinStats::fromCollection($query);
+        $faucetsStats = FaucetsStats::fromCollection($query);
 
-  /**
-   * @return array
-   */
-  public function handle(): array
-  {
-    $query = FaucetPayList::query()
-      ->whereNotIn('currency', ['top_hundred', 'new_faucets'])
-      ->get();
-    $coinStats = FaucetCoinStats::fromCollection($query);
-    $faucetsStats = FaucetsStats::fromCollection($query);
-    return FaucetListStats::from([
-      'coinStats' => $coinStats['collection'],
-      'faucetsStats' => $faucetsStats['collection'],
-      'totalCoin' => $coinStats['total'],
-      'totalFaucets' => $faucetsStats['total']
-    ])->toArray();
-  }
+        return FaucetListStats::from([
+            'coinStats' => $coinStats['collection'],
+            'faucetsStats' => $faucetsStats['collection'],
+            'totalCoin' => $coinStats['total'],
+            'totalFaucets' => $faucetsStats['total'],
+        ])->toArray();
+    }
 }

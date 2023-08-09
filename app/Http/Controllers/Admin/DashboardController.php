@@ -24,6 +24,9 @@ final class DashboardController extends Controller
     $this->page = $page;
   }
 
+  /**
+   * @return Response
+   */
   public function index(): Response
   {
     return Inertia::render(

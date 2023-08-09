@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Faucetpay\Actions;
 
 use App\Interfaces\Faucetpay\ListUpdateOrCreateContract;
@@ -9,29 +11,25 @@ use Illuminate\Support\LazyCollection;
 
 class UpdateOrCreateFaucets implements ListUpdateOrCreateContract
 {
-  use ReplaceUrl;
+    use ReplaceUrl;
 
-  /**
-   * @param  LazyCollection  $collection
-   * @return void
-   */
-  public function handle(LazyCollection $collection): void
-  {
-    $collection->each(function ($item) {
-      $item->each(function ($val) {
-        FaucetPayList::query()->updateOrCreate(
-          [
-            'list_name' => $val->list_name
-          ],
-          [
-            'currency' => $val->currency,
-            'coin_data' => $val->coin_data,
-            'list_data' => $val->list_data
-          ]
-        );
-      });
+    public function handle(LazyCollection $collection): void
+    {
+        $collection->each(function ($item): void {
+            $item->each(function ($val): void {
+                FaucetPayList::query()->updateOrCreate(
+                    [
+                        'list_name' => $val->list_name,
+                    ],
+                    [
+                        'currency' => $val->currency,
+                        'coin_data' => $val->coin_data,
+                        'list_data' => $val->list_data,
+                    ]
+                );
+            });
 
-    });
+        });
 
-  }
+    }
 }

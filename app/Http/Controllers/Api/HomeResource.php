@@ -10,21 +10,27 @@ use App\Responses\CollectionResponse;
 use App\Responses\ErrorResponse;
 use Illuminate\Http\Request;
 
-class HomeResource extends Controller
+final class HomeResource extends Controller
 {
-    public function __construct(
-        private readonly ApiServiceContract $apiService,
-    ) {
-    }
+  /**
+   * Home Api Resource
+   * @param  ApiServiceContract  $apiService
+   */
+  public function __construct(
+    private readonly ApiServiceContract $apiService,
+  ) {
+  }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request): CollectionResponse|ErrorResponse
-    {
+  /**
+   * Get HomePage Data
+   * @param  Request  $request
+   * @return CollectionResponse|ErrorResponse
+   */
+  public function __invoke(Request $request): CollectionResponse|ErrorResponse
+  {
 
-        return new CollectionResponse(
-            data: $this->apiService->home()->generate()
-        );
-    }
+    return new CollectionResponse(
+      data: $this->apiService->home()->generate()
+    );
+  }
 }

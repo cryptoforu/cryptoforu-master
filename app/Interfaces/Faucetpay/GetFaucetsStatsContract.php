@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Interfaces\Faucetpay;
 
 interface GetFaucetsStatsContract
 {
-  /**
-   * @return array
-   */
-  public function handle(): array;
+    public function handle(): array;
 }

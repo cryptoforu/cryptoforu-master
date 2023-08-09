@@ -10,30 +10,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CorsMiddleware
 {
-  /**
-   * Handle an incoming request.
-   *
-   * @param  Closure(Request): (Response)  $next
-   */
-  public function handle(Request $request, Closure $next): Response
-  {
-    if ($request->method() === 'OPTIONS') {
-      $next($request)
-        ->header(
-          'Access-Control-Allow-Methods',
-          'GET, POST, PUT, DELETE'
-        );
-      return $next($request)->setStatusCode(200);
+    /**
+     * Handle an incoming request.
+     *
+     * @param  Closure(Request): (Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ('OPTIONS' === $request->method()) {
+            $next($request)
+                ->header(
+                    'Access-Control-Allow-Methods',
+                    'GET, POST, PUT, DELETE'
+                )
+            ;
+
+            return $next($request)->setStatusCode(200);
+        }
+
+        return $next($request)
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header(
+                'Access-Control-Allow-Methods',
+                'GET, POST, PUT, DELETE, OPTIONS'
+            )
+            ->header(
+                'Access-Control-Allow-Headers',
+                'X-Requested-With, Content-Type, X-Token-Auth, Authorization'
+            )
+        ;
     }
-    return $next($request)
-      ->header('Access-Control-Allow-Origin', '*')
-      ->header(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PUT, DELETE, OPTIONS'
-      )
-      ->header(
-        'Access-Control-Allow-Headers',
-        'X-Requested-With, Content-Type, X-Token-Auth, Authorization'
-      );
-  }
 }

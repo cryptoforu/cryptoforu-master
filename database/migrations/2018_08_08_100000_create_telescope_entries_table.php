@@ -11,7 +11,7 @@ return new class() extends Migration
     /**
      * Get the migration connection name.
      */
-    public function getConnection(): string|null
+    public function getConnection(): ?string
     {
         return config('telescope.storage.database.connection');
     }

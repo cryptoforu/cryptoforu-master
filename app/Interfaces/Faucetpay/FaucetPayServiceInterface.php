@@ -8,5 +8,5 @@ use App\Services\Faucetpay\FaucetPayListResource;
 
 interface FaucetPayServiceInterface
 {
-  public function list(): FaucetPayListResource;
+    public function list(): FaucetPayListResource;
 }

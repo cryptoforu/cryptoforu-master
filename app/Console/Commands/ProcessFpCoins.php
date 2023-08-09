@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
@@ -8,29 +10,29 @@ use Illuminate\Console\Command;
 
 class ProcessFpCoins extends Command
 {
-  /**
-   * The name and signature of the console command.
-   *
-   * @var string
-   */
-  protected $signature = 'app:process-fp-coins';
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'app:process-fp-coins';
 
-  /**
-   * The console command description.
-   *
-   * @var string
-   */
-  protected $description = 'Process Faucetpay Coin Data';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Process Faucetpay Coin Data';
 
-  /**
-   * Execute the console command.
-   */
-  public function handle(
-    CryptoActionsInterface $action,
-    HandleCoinsContract $handle,
-  ) {
-    $action->updateOrCreateFpCoins(
-      action: $handle
-    );
-  }
+    /**
+     * Execute the console command.
+     */
+    public function handle(
+        CryptoActionsInterface $action,
+        HandleCoinsContract $handle,
+    ): void {
+        $action->updateOrCreateFpCoins(
+            action: $handle
+        );
+    }
 }

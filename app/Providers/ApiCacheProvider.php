@@ -17,46 +17,51 @@ use Illuminate\Support\ServiceProvider;
 
 class ApiCacheProvider extends ServiceProvider
 {
-  /**
-   * Register services.
-   */
-  public function register(): void
-  {
-    $this->app->bind(
-      abstract: ApiCacheContract::class,
-      concrete: ApiCacheService::class
-    );
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        $this->app->bind(
+            abstract: ApiCacheContract::class,
+            concrete: ApiCacheService::class
+        );
 
-    $this->app->when(PostsApiController::class)
-      ->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['apiPosts']));
-    $this->app->when(CategoryApiController::class)
-      ->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['category', 'data']));
+        $this->app->when(PostsApiController::class)
+            ->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['apiPosts']))
+        ;
+        $this->app->when(CategoryApiController::class)
+            ->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['category', 'data']))
+        ;
 
-    $this->app->when(
-      CryptoResourceController::class
-    )->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['crypto', 'data']));
-    $this->app->when(
-      EarnCategoryResourceController::class
-    )->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['earn', 'categories']));
-    $this->app->when(
-      [
-        HomeResourceController::class, MetaDataController::class,
-        NavigationDataController::class,
-      ]
-    )->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['site', 'data']));
+        $this->app->when(
+            CryptoResourceController::class
+        )->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['crypto', 'data']))
+        ;
+        $this->app->when(
+            EarnCategoryResourceController::class
+        )->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['earn', 'categories']))
+        ;
+        $this->app->when(
+            [
+                HomeResourceController::class, MetaDataController::class,
+                NavigationDataController::class,
+            ]
+        )->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['site', 'data']))
+        ;
 
-  }
+    }
 
-  /**
-   * Bootstrap services.
-   */
-  public function boot(): void
-  {
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
 
-  }
+    }
 }

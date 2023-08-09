@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/list', [ListController::class, 'index'])->name('list');
 Route::get('/stats', [ListController::class, 'stats'])->name('stats');
-Route::get('/search',
-  ListSearchController::class)->name('search');
-
+Route::get(
+    '/search',
+    ListSearchController::class
+)->name('search');

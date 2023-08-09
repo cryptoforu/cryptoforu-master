@@ -37,38 +37,38 @@ use Spatie\LaravelData\WithData;
  */
 final class Site extends Model
 {
-  use HasFactory, WithData;
+    use HasFactory, WithData;
 
-  protected $fillable = [
-    'data_name',
-    'data_values',
-  ];
+    protected $fillable = [
+        'data_name',
+        'data_values',
+    ];
 
-  protected string $dataClass = PageData::class;
+    protected string $dataClass = PageData::class;
 
-  /**
-   * The attributes that should be cast.
-   *
-   * @var array
-   */
-  protected $casts = [
-    'data_values' => AsCollection::class,
-  ];
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'data_values' => AsCollection::class,
+    ];
 
-  public function images(): MorphMany
-  {
-    return $this->morphMany(Library::class, 'imageable');
-  }
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Library::class, 'imageable');
+    }
 
-  public function scopeOfData(
-    Builder $query,
-    string $data_name
-  ): Builder|Model|null {
-    return $query->where('data_name', $data_name)->first();
-  }
+    public function scopeOfData(
+        Builder $query,
+        string $data_name
+    ): Builder|Model|null {
+        return $query->where('data_name', $data_name)->first();
+    }
 
-  public function getRouteKeyName(): string
-  {
-    return 'data_name';
-  }
+    public function getRouteKeyName(): string
+    {
+        return 'data_name';
+    }
 }

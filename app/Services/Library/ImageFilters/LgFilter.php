@@ -10,22 +10,22 @@ use Intervention\Image\Image;
 
 final class LgFilter implements FilterInterface
 {
-  public function applyFilter(Image $image): Image
-  {
-    if (Request::query('w')) {
-      return $image->widen(
-        (int) Request::query('w'),
-        function ($constraint): void {
-          $constraint->upsize();
+    public function applyFilter(Image $image): Image
+    {
+        if (Request::query('w')) {
+            return $image->widen(
+                (int) Request::query('w'),
+                function ($constraint): void {
+                    $constraint->upsize();
+                }
+            )->encode($image->mime(), 75);
         }
-      )->encode($image->mime(), 75);
-    }
 
-    return $image->widen(
-      1366,
-      function ($constraint): void {
-        $constraint->upsize();
-      }
-    )->encode($image->mime(), 75);
-  }
+        return $image->widen(
+            1366,
+            function ($constraint): void {
+                $constraint->upsize();
+            }
+        )->encode($image->mime(), 75);
+    }
 }
