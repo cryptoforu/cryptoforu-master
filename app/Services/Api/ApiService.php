@@ -14,29 +14,42 @@ use Spatie\Valuestore\Valuestore;
 
 class ApiService extends Valuestore implements ApiServiceContract
 {
-    public function home(): ApiHomeResource
-    {
-        return new ApiHomeResource(
-            apiService: $this,
-            cache: new ApiCacheService(['api', 'home'])
-        );
-    }
+  /**
+   * Home Api Resource
+   * @return ApiHomeResource
+   */
+  public function home(): ApiHomeResource
+  {
+    return new ApiHomeResource(
+      apiService: $this,
+      cache: new ApiCacheService(['api', 'home'])
+    );
+  }
 
-    public function breadcrumbs(): BreadCrumbsResource
-    {
-        return new BreadCrumbsResource(
-            apiService: $this,
-            cache: new ApiCacheService(['api', 'breadcrumbs'])
-        );
-    }
+  /**
+   * Get Breadcrumbs
+   * @return BreadCrumbsResource
+   */
+  public function breadcrumbs(): BreadCrumbsResource
+  {
+    return new BreadCrumbsResource(
+      cache: new ApiCacheService(['api', 'breadcrumbs'])
+    );
+  }
 
-    public function post_count(Post $post, string $ip): CountActions
-    {
-        return new CountActions(
-            apiService: $this,
-            cache: new ApiCacheService(['api', 'count_views']),
-            post: $post,
-            ip: $ip
-        );
-    }
+  /**
+   * Count Posts
+   * @param  Post  $post
+   * @param  string  $ip
+   * @return CountActions
+   */
+  public function post_count(Post $post, string $ip): CountActions
+  {
+    return new CountActions(
+      apiService: $this,
+      cache: new ApiCacheService(['api', 'count_views']),
+      post: $post,
+      ip: $ip
+    );
+  }
 }
