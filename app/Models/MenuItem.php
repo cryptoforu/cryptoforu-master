@@ -35,7 +35,7 @@ use Spatie\LaravelData\WithData;
  *
  * @method static Builder|MenuItem newModelQuery()
  * @method static Builder|MenuItem newQuery()
- * @method static Builder|MenuItem ofItems(Menu $menu)
+ * @method static Builder|MenuItem|Collection ofItems(Menu $menu)
  * @method static Builder|MenuItem ofMain()
  * @method static Builder|MenuItem parent()
  * @method static Builder|MenuItem query()
@@ -51,73 +51,71 @@ use Spatie\LaravelData\WithData;
  */
 final class MenuItem extends Model
 {
-    use HasFactory;
-    use WithData;
+  use HasFactory;
+  use WithData;
 
-    protected $fillable = [
-        'label',
-        'route',
-        'icon',
-        'parent_id',
-        'menu_id',
-    ];
+  protected $fillable = [
+    'label',
+    'route',
+    'icon',
+    'parent_id',
+    'menu_id',
+  ];
 
-    protected $dataClass = MenuItemsData::class;
+  protected $dataClass = MenuItemsData::class;
 
-    public function childs(): HasMany
-    {
-        return $this->hasMany(MenuItem::class, 'parent_id', 'id');
-    }
+  public function childs(): HasMany
+  {
+    return $this->hasMany(MenuItem::class, 'parent_id', 'id');
+  }
 
-    public function parents(): BelongsTo
-    {
-        return $this->belongsTo(MenuItem::class, 'parent_id', 'id');
-    }
+  public function parents(): BelongsTo
+  {
+    return $this->belongsTo(MenuItem::class, 'parent_id', 'id');
+  }
 
-    public function menu(): BelongsTo
-    {
-        return $this->belongsTo(Menu::class);
-    }
+  public function menu(): BelongsTo
+  {
+    return $this->belongsTo(Menu::class);
+  }
 
-    public function images(): MorphMany
-    {
-        return $this->morphMany(Library::class, 'imageable');
-    }
+  public function images(): MorphMany
+  {
+    return $this->morphMany(Library::class, 'imageable');
+  }
 
-    /**
-     * Scope query for current route
-     */
-    public function scopeRoute(Builder $query, string $route): Builder
-    {
-        return $query->where('route', $route);
-    }
+  /**
+   * Scope query for current route
+   */
+  public function scopeRoute(Builder $query, string $route): Builder
+  {
+    return $query->where('route', $route);
+  }
 
-    /**
-     * Get Parent Menu
-     */
-    public function scopeParent(Builder $query): Builder
-    {
-        return $query->where('parent_id', 0);
-    }
+  /**
+   * Get Parent Menu
+   */
+  public function scopeParent(Builder $query): Builder
+  {
+    return $query->where('parent_id', 0);
+  }
 
-    public function scopeOfMain(Builder $query): Collection|array
-    {
-        return $query->whereBelongsTo(
-            Menu::query()
-                ->where('position', 'front_main')
-                ->with('items')->first()
-        )->with('parents:id,label,route,parent_id')
-            ->select(['id', 'label', 'route', 'parent_id'])->get()
-        ;
-    }
+  public function scopeOfMain(Builder $query): Collection|array
+  {
+    return $query->whereBelongsTo(
+      Menu::query()
+        ->where('position', 'front_main')
+        ->with('items')->first()
+    )->with('parents:id,label,route,parent_id')
+      ->select(['id', 'label', 'route', 'parent_id'])->get();
+  }
 
-    public function scopeOfItems(
-        Builder $query,
-        Menu $menu
-    ): Collection|array {
-        return $query->whereBelongsTo($menu)
-            ->where('parent_id', 0)
-            ->with('childs')->get()
-        ;
-    }
+  public function scopeOfItems(
+    Builder $query,
+    Menu $menu
+  ): Collection|array {
+    return $query->whereBelongsTo($menu)
+      ->where('parent_id', 0)
+      ->with('childs')->get();
+  }
 }

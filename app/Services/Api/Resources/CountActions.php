@@ -10,64 +10,67 @@ use App\Services\Api\ApiService;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
-class CountActions
+final readonly class CountActions
 {
-    public function __construct(
-        private readonly ApiService $apiService,
-        private readonly ApiCacheContract $cache,
-        private readonly Post $post,
-        private readonly string $ip,
-    ) {
+  public function __construct(
+    private ApiService $apiService,
+    private ApiCacheContract $cache,
+    private Post $post,
+    private string $ip,
+  ) {
+  }
+
+  public function count()
+  {
+    $key = "post-{$this->post->id}";
+    $values = $this->apiService->get($key);
+
+    if ($this->apiService->has($key)) {
+      $timestamp = $this->apiService->get($key)['timestamp'];
+      $nowTime = Carbon::now()->timestamp;
+      if ($timestamp < $nowTime) {
+        $this->apiService->flush();
+      }
     }
 
-    public function count()
-    {
-        $key = "post-{$this->post->id}";
-        $values = $this->apiService->get($key);
-
-        if ($this->apiService->has($key)) {
-            $timestamp = $this->apiService->get($key)['timestamp'];
-            $nowTime = Carbon::now()->timestamp;
-            if ($timestamp < $nowTime) {
-                $this->apiService->flush();
-            }
-        }
-
-        if (null !== $values) {
-            $ips = data_get($values, "ips.*.{$this->ip}");
-            if (null === $ips) {
-                $newIps = Arr::add($values['ips'], 'ip', $this->ip);
-                views($this->post)->record();
-                $this->apiService->put(
-                    $key,
-                    ['views' => views($this->post)->unique()->count(), 'ips' => $newIps]
-                );
-            }
-            $values['views'] = views($this->post)->unique()->count();
-            $this->apiService->put(
-                $key,
-                $values
-            );
-
-            return $values;
-        }
+    if (null !== $values) {
+      $ips = data_get($values, "ips.*.{$this->ip}");
+      if (null === $ips) {
+        $newIps = Arr::add($values['ips'], 'ip', $this->ip);
+        views($this->post)->record();
         $this->apiService->put(
-            $key,
-            [
-                'timestamp' => Carbon::now()->addDay()->timestamp,
-                'views' => 1,
-                'ips' => ['ip' => $this->ip],
-            ]
+          $key,
+          ['views' => views($this->post)->unique()->count(), 'ips' => $newIps]
         );
+      }
+      $values['views'] = views($this->post)->unique()->count();
+      $this->apiService->put(
+        $key,
+        $values
+      );
 
-        return $this->apiService->get($key);
+      return $values;
     }
+    $this->apiService->put(
+      $key,
+      [
+        'timestamp' => Carbon::now()->addDay()->timestamp,
+        'views' => 1,
+        'ips' => ['ip' => $this->ip],
+      ]
+    );
 
-    public function get_all()
-    {
-        return $this->cache->load_data(
-            key: 'all_views',
-            callback: fn () => $this->apiService->all()
-        );
-    }
+    return $this->apiService->get($key);
+  }
+
+  /**
+   * @return mixed
+   */
+  public function get_all(): mixed
+  {
+    return $this->cache->load_data(
+      key: 'all_views',
+      callback: fn() => $this->apiService->all()
+    );
+  }
 }

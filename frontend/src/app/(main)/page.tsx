@@ -10,7 +10,7 @@ import { SectionSkeleton } from '@/components/skeletons'
 import { CryptoProvider } from '@/store/useCrypto'
 import BlogPosts from '@/app/(main)/components/BlogPosts'
 
-preload('meta-data?filter[page_name]=home')
+preload('site/shared/meta-data?filter[page_name]=home')
 preloadHome()
 
 export async function generateMetadata() {

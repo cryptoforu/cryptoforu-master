@@ -18,7 +18,7 @@ export const preloadHome = () => {
   void getHomeData()
 }
 export const getHomeData = cache(async () => {
-  const res = await fetchData('home_resource')
+  const res = await fetchData('site/shared/home-resource')
   if (!res.ok) {
     throw new Error('Failed to fetch Home Resource')
   }

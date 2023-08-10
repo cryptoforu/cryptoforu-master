@@ -4,7 +4,6 @@ import type { AriaTextFieldProps, LabelAriaProps } from 'react-aria'
 import { useTextField } from 'react-aria'
 import { PropsWithChildren, useRef } from 'react'
 import { Label } from 'react-aria-components'
-import { motion } from 'framer-motion'
 
 const inputVariants = {
   base: 'block w-full appearance-none rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-[calc(theme(spacing.2)-1px)] px-[calc(theme(spacing.3)-1px)] text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-teal-400 dark:focus:border-teal-400 focus:outline-none focus:ring-teal-400 dark:focus:ring-teal-400 sm:text-sm',
@@ -39,12 +38,12 @@ export function TextField(props: TextFieldProps) {
   let ref = useRef(null)
   let { labelProps, inputProps, descriptionProps, errorMessageProps } =
     useTextField(props, ref)
+
   return (
     <div className={props.className}>
       {props.label && <FieldsLabel {...labelProps}>{label}</FieldsLabel>}
-      <motion.input
-        placeholder={props.placeholder}
-        whileFocus={{ outline: 'solid 1.5px teal' }}
+      <input
+        {...inputProps}
         className={clsx(inputVariants[variant], inputClass)}
         ref={ref}
       />

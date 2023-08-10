@@ -83,3 +83,13 @@ export interface EarningMethods {
     attributes: EarnCategory
   }[]
 }
+
+export type MenuItem = {
+  id: number
+  label: string
+  route: string
+}
+
+export interface MainMenu extends MenuItem {
+  childs: Array<MenuItem>
+}
