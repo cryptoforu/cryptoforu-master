@@ -24,6 +24,7 @@ type LibraryActions = {
   setValues: (payload: LibraryData) => void;
   toogleDetails: () => void;
   setSelected: (id: number) => void;
+  setAllSelected: (ids: number[]) => void;
   isChecked: (id: number) => boolean;
   toogleSelect: () => void;
   clearSelected: () => void;
@@ -53,8 +54,7 @@ const useLibraryStore = create<LibraryStore>()(
     selectAll: false,
     isEditing: false,
     isHovered: (id) => {
-      const hovered = get().hoveredId === id;
-      return hovered;
+      return get().hoveredId === id;
     },
     setHovered: (id) =>
       set((state) => {
@@ -80,6 +80,14 @@ const useLibraryStore = create<LibraryStore>()(
         }
       });
     },
+    setAllSelected: (ids) =>
+      set((state) => {
+        if (state.selected.length > 0) {
+          state.selected = [];
+        } else {
+          ids.forEach((id) => state.selected.push({ id: id }));
+        }
+      }),
     isChecked: (index) => {
       const selected = get().selected?.find((el) => el.id === index);
       return selected !== undefined;
@@ -111,19 +119,22 @@ export const useHovered = () => {
 };
 
 export const useSelectAll = () => {
-  const { selected, toogleSelect, clearSelected } = useLibraryStore(
-    (state) => ({
-      selected: state.selected,
-      toogleSelect: state.toogleSelect,
-      clearSelected: state.clearSelected,
-    }),
-    shallow
-  );
+  const { selected, toogleSelect, clearSelected, setAllSelected } =
+    useLibraryStore(
+      (state) => ({
+        selected: state.selected,
+        toogleSelect: state.toogleSelect,
+        clearSelected: state.clearSelected,
+        setAllSelected: state.setAllSelected,
+      }),
+      shallow
+    );
 
   return {
     selected,
     toogleSelect,
     clearSelected,
+    setAllSelected,
   };
 };
 

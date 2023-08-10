@@ -8,7 +8,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { SuspenseWrapper } from '@/Motion';
 import PanelWrapper from '@/PageContainers/PanelWrapper';
 import FormProvider from '@/Store/useFormProvider';
-import type { FormData } from '@/Types/generated';
+import type { FormData, LibraryData } from '@/Types/generated';
 
 const DynamicForm = lazy(() =>
   pMinDelay(import(`@/Forms/DynamicForm.js`), 1000)
@@ -33,7 +33,8 @@ interface EarnEditProps {
 
 const EarnEdit = () => {
   const { edit_form } = usePageProps<EarnEditProps>();
-
+  const { media } = usePageProps<LibraryData>();
+  console.log(media);
   return (
     <>
       <AppHead />

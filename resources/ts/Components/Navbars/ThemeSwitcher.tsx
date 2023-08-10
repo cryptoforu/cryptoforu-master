@@ -86,7 +86,6 @@ const ThemeSwitcher = () => {
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.2 }}
         aria-label="Theme Switcher"
-        variant={'ghost'}
         onClick={toggleColorMode}
       >
         <AnimatedIcon path={current} />

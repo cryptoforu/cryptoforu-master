@@ -1,12 +1,15 @@
 import { Flex, Grid } from '@chakra-ui/react';
 
 import { ImgCard } from '@/Components/Elements/Content';
+import ShortLinksTable from '@/Components/Table/TablesData/ShortLinksTable';
 import { useSelectedValues } from '@/Store/useMenuSelect';
 import type { EarnCategory } from '@/Types/generated';
 
 const ContextGrid = () => {
   const values = useSelectedValues<EarnCategory>();
-
+  if (values.name.includes('Short')) {
+    return <ShortLinksTable shortlinks={values.earn} />;
+  }
   return (
     <Flex p="16px" my="24px" maxWidth="100%">
       <Grid

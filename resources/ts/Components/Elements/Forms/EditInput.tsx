@@ -18,6 +18,7 @@ import type { EditMenuProps } from '@/types';
 
 import { LazyImage } from '../Content';
 import { ButtonLink } from '../Navigation';
+
 function InputControls({ index }: EditMenuProps) {
   const setInput = useSetInput();
   const isEditing = useIsEditing(index);
@@ -30,7 +31,7 @@ function InputControls({ index }: EditMenuProps) {
         as={ButtonLink}
         aria-label="check"
         icon={<CheckIcon />}
-        to="admin-settings.menu"
+        to="admin:settings:menu"
         routeParams={false}
         params={id}
         data={{ ...values, _method: 'put' }}

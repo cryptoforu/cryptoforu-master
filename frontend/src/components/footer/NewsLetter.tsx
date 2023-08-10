@@ -18,21 +18,25 @@ const NewsLetter = () => {
                 the world of blockchain. So why wait? Subscribe today and start
                 exploring all that Cryptoforu has to offer.
               </Text>
-              <div className="mt-4 flex w-full justify-start md:w-auto">
-                <TextField
-                  aria-label={'Email address'}
-                  placeholder={'Email address'}
-                  className={'w-60 min-w-0 shrink'}
-                  variant={'primary'}
-                />
-                <Button
-                  type="submit"
-                  size={'lg'}
-                  className="ml-4 flex-none justify-center text-center"
-                >
-                  Subscribe
-                </Button>
-              </div>
+              <form action="#">
+                <div className="mt-4 flex w-full justify-start md:w-auto">
+                  <TextField
+                    id={'subscribe'}
+                    aria-label={'Email address'}
+                    placeholder={'Email address'}
+                    className={'w-60 min-w-0 shrink'}
+                    variant={'primary'}
+                    name={'subscribe'}
+                  />
+                  <Button
+                    type="submit"
+                    size={'lg'}
+                    className="ml-4 flex-none justify-center text-center"
+                  >
+                    Subscribe
+                  </Button>
+                </div>
+              </form>
             </div>
             <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
               <div className="flex flex-col items-start">

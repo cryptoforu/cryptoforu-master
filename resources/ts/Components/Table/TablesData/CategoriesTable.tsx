@@ -18,7 +18,7 @@ const CategoriesTable = () => {
       cell: (column) => {
         return ImageTitleCell({
           title: column.getValue(),
-          image: column.row.original.category_image,
+          image: column.row.original.category_image as string,
         });
       },
     }),

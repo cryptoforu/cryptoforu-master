@@ -12,24 +12,24 @@ use Illuminate\Support\Str;
 
 final class ShowEarnData
 {
-    use Selectable;
+  use Selectable;
 
-    /**
-     * Show earn Data
-     */
-    public function handle(): Collection
-    {
-        $earn = EarnCategory::with('earn')->get();
+  /**
+   * Show earn Data
+   */
+  public function handle(): Collection
+  {
+    $earn = EarnCategory::with('earn')->get();
 
-        $data = (new Collection(
-            items: EarnCategoryData::collection(
-                items: $earn->map(fn ($e) => $e->getData())
-            )->include('earn.{content,image,image_name,main_features}')
-        ))->keyBy(fn (array $item) => Str::slug($item['name']));
+    $data = (new Collection(
+      items: EarnCategoryData::collection(
+        items: $earn->map(fn($e) => $e->getData())
+      )->include('earn.{content,image,image_name,main_features,link}')
+    ))->keyBy(fn(array $item) => Str::slug($item['name']));
 
-        return collect([
-            'data' => $data,
-            'select' => $this->selectable($data, 'name'),
-        ]);
-    }
+    return collect([
+      'data' => $data,
+      'select' => $this->selectable($data, 'name'),
+    ]);
+  }
 }

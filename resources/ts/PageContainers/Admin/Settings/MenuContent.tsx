@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -70,7 +69,7 @@ function Delete({ id }: { id: number }) {
         icon={<DeleteIcon />}
         size="sm"
         colorScheme="red"
-        to="admin-settings.destroy"
+        to="admin:settings:destroy"
         params={id}
         options={{
           method: 'delete',

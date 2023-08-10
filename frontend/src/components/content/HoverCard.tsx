@@ -49,6 +49,7 @@ const CardPattern = ({ mouseX, mouseY, ...gridProps }: PatternProps) => {
     <div className="pointer-events-none">
       <div className="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50">
         <GridPattern
+          id={'card'}
           width={72}
           height={56}
           x="50%"
@@ -65,6 +66,7 @@ const CardPattern = ({ mouseX, mouseY, ...gridProps }: PatternProps) => {
         style={style}
       >
         <GridPattern
+          id={'card'}
           width={72}
           height={56}
           x="50%"

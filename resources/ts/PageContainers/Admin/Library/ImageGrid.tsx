@@ -53,7 +53,6 @@ const ModalDetails = ({
   showingDetails,
 }: ModalDetailsProps) => {
   const { isEditing, isPending, onEditChange } = useIsEditing();
-  const { setValues } = useDetails();
   return (
     <Modal
       isOpen={showingDetails}
@@ -188,7 +187,7 @@ const ImageGrid = () => {
   return (
     <Container variant="panel">
       <SimpleGrid columns={{ base: 2, sm: 3, lg: 4 }} spacing={10}>
-        {values.media?.length > 0
+        {values.media.length > 0
           ? values.media.map((file) => (
               <Box
                 as={m.div}

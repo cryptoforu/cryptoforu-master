@@ -53,7 +53,7 @@ export type EarnCategory = {
   name: string;
   description?: string;
   category_image?: string;
-  earn?: Array<EarnData>;
+  earn: Array<EarnData>;
 };
 export type EarnData = {
   id: number;
@@ -61,7 +61,7 @@ export type EarnData = {
   content?: string;
   image?: string;
   thumb?: string;
-  link?: string;
+  link: string;
   featured?: FeaturedEarn;
   status?: EarnStatus;
   image_name?: string;
@@ -71,11 +71,12 @@ export type EarnData = {
 };
 export type EarnStatus = 'DRAFT' | 'FEATURED' | 'PUBLISHED';
 export type FeaturedEarn = '1' | '2';
-export type FormData = {
-  label: string | null;
-  name: string | null;
+export type FormData<T> = {
+  id: string;
+  label: string;
+  name: string;
   type: FormType;
-  options?: Array<any>;
+  options?: Array<T>;
 };
 export type FormType =
   | 'textfield'
@@ -90,13 +91,16 @@ export type LibraryCategory = {
   id: number;
   name: string;
   directory: string;
-  media?: Array<LibraryData>;
+  media: Array<LibraryData>;
+};
+export type Conversions = {
+  [x: string]: string;
 };
 export type LibraryData = {
   id: number;
   file_name: string;
   mime_type?: string;
-  conversions?: Array<any>;
+  conversions: Conversions;
   size?: string;
   width?: number;
   height?: number;
@@ -110,26 +114,27 @@ export type LibraryData = {
 export type MenuData = {
   id: number;
   label: string;
-  position: string | null;
+  position: string;
   items?: Array<MenuItems>;
 };
 export type MenuItems = {
   id?: number;
   label?: string;
   route?: string;
-  icon?: string | null;
+  icon?: string;
   parent_id?: number;
   menu_id?: number;
   childs?: Array<MenuItems>;
   menu?: Array<MenuData>;
 };
 export type PageMeta = {
+  id: string;
   label: string;
   route?: string;
   meta_desc: string;
-  meta_image?: string | null;
-  tw_image?: string | null;
-  og_image?: string | null;
+  meta_image?: string;
+  tw_image?: string;
+  og_image?: string;
   parent_id?: number;
   page_type?: string;
   page_name?: string;

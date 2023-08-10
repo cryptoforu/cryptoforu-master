@@ -10,13 +10,13 @@ use App\Interfaces\Settings\ActionContracts\UpdateMenuItemContract;
 use App\Models\MenuItem;
 use Illuminate\Support\Facades\Cache;
 
-final class UpdateMenuItems implements UpdateMenuItemContract
+final readonly class UpdateMenuItems implements UpdateMenuItemContract
 {
     /**
      * Construct Library
      */
     public function __construct(
-        private readonly LibraryActionsInterface $library,
+        private LibraryActionsInterface $library,
     ) {
     }
 
@@ -25,7 +25,7 @@ final class UpdateMenuItems implements UpdateMenuItemContract
         string|int $id,
     ): bool {
         $validated = $request->validated();
-        $nMenu = MenuItem::find($id);
+        $nMenu = MenuItem::query()->find($id);
         if ($request->hasFile('icon')) {
             $icon = $this->library->store(
                 file: $validated['icon'],

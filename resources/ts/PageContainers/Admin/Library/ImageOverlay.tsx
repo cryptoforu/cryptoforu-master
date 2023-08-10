@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import { ButtonLink } from '@/Components/Elements/Navigation';
 import { useMenuSelectContext } from '@/Store/useMenuSelect';
+
 interface OverlayProps {
   isHovered: boolean;
   id: string | number;
@@ -69,7 +70,7 @@ const ImageOverlay = ({ isHovered, id }: OverlayProps) => {
           as={IconButton}
           icon={<DeleteIcon />}
           colorScheme="red"
-          to="admin-library.destroy"
+          to="admin:library.destroy"
           params={id}
           options={{
             method: 'delete',

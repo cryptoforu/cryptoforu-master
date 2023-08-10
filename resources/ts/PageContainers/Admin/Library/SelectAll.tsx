@@ -2,15 +2,19 @@ import { Button, ButtonGroup } from '@chakra-ui/react';
 
 import { ButtonLink } from '@/Components/Elements/Navigation';
 import { useSelectAll } from '@/Store/useLibraryStore';
-import { useMenuSelectContext } from '@/Store/useMenuSelect';
+import { useMenuSelectContext, useSelectedValues } from '@/Store/useMenuSelect';
+import { LibraryCategory } from '@/Types/generated';
+
 const SelectAll = () => {
-  const { selected, toogleSelect, clearSelected } = useSelectAll();
+  const { selected, toogleSelect, clearSelected, setAllSelected } =
+    useSelectAll();
+  const values = useSelectedValues<LibraryCategory>();
   const current = useMenuSelectContext((state) => state.selected);
   return (
     <ButtonGroup gap={6}>
       {selected.length > 1 && (
         <ButtonLink
-          to="admin-library.destroyMultiple"
+          to="admin:library.destroyMultiple"
           options={{
             method: 'delete',
             data: {
@@ -28,6 +32,11 @@ const SelectAll = () => {
         </ButtonLink>
       )}
       <Button onClick={() => toogleSelect()}>Select</Button>
+      <Button
+        onClick={() => setAllSelected(values.media.map((file) => file.id))}
+      >
+        Select All
+      </Button>
     </ButtonGroup>
   );
 };

@@ -64,6 +64,7 @@ const Categories = () => {
             options={{
               only: [category],
               preserveState: false,
+              replace: true,
               onSuccess: () => closeDrawer(),
             }}
           >

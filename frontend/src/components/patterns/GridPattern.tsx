@@ -1,4 +1,5 @@
-import { useId } from 'react'
+'use client'
+import { useId } from 'react-aria'
 
 interface GridProps {
   width: number
@@ -7,11 +8,12 @@ interface GridProps {
   y: string
   squares: [x: number, y: number][]
   className?: string
+  id: string
 }
 
 const GridPattern = (props: GridProps) => {
   const { width, height, x, y, squares, className } = props
-  let patternId = useId()
+  let patternId = useId(props.id)
   return (
     <svg aria-hidden={'true'} className={className}>
       <defs>

@@ -2,11 +2,13 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Flex,
   Stack,
   VStack,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 
+import { LibraryModal } from '@/Components/Elements/Content';
 import {
   ChakraPond,
   CheckBoxField,
@@ -17,13 +19,16 @@ import {
   TextAreaField,
   TextField,
 } from '@/Components/Elements/Forms';
+import { usePageProps } from '@/Hooks/useTypedPage';
 import { useFormContext } from '@/Store/useFormProvider';
+import { LibraryData } from '@/Types/generated';
 
 import FormWrapper from './FormWrapper';
 
 const DynamicForm = () => {
   const { initialValues, form_schema, handleSubmit, withButton, form_id } =
     useFormContext();
+  const { media } = usePageProps<LibraryData[]>();
   return (
     <FormWrapper title="" desc="">
       <Formik
@@ -55,18 +60,23 @@ const DynamicForm = () => {
                     );
                   case 'file':
                     return (
-                      <Label
-                        key={value.name}
-                        name={value.name}
-                        label={value.label}
-                      >
-                        <ChakraPond
+                      <Flex direction={'column'} gap={'4'} w={'full'}>
+                        <Label
+                          key={value.name}
                           name={value.name}
-                          onupdatefiles={(files) =>
-                            setFieldValue(value.name, files[0].file)
-                          }
-                        />
-                      </Label>
+                          label={value.label}
+                        >
+                          <ChakraPond
+                            name={value.name}
+                            onupdatefiles={(files) =>
+                              setFieldValue(value.name, files[0].file)
+                            }
+                          />
+                        </Label>
+                        {media && (
+                          <LibraryModal images={media} value={value.name} />
+                        )}
+                      </Flex>
                     );
                   case 'md':
                     return (

@@ -22,36 +22,9 @@ const AuthLayout = ({
   return (
     <>
       <AppHead />
-      <Flex position="relative" h="max-content">
-        <Flex
-          h={{
-            sm: 'initial',
-            md: 'unset',
-            lg: '100vh',
-            xl: '97vh',
-          }}
-          w="100%"
-          maxW={{ md: '66%', lg: '1313px' }}
-          mx="auto"
-          pt={{ sm: '16px', md: '0px' }}
-          px={{ lg: '30px', xl: '0px' }}
-          ps={{ xl: '70px' }}
-          justifyContent="start"
-          direction="column"
-        >
-          <Flex
-            maxW={{ base: '100%', md: 'max-content' }}
-            w="100%"
-            mx={{ base: 'auto', lg: '0px' }}
-            me="auto"
-            h="100%"
-            alignItems="start"
-            justifyContent="center"
-            mb={{ base: '30px', md: '60px' }}
-            px={{ base: '25px', md: '0px' }}
-            mt={{ base: '40px', md: '14vh' }}
-            flexDirection="column"
-          >
+      <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
+        <Flex p={8} flex={1} align={'center'} justify={'center'}>
+          <Flex flexDirection="column">
             <Box me="auto">
               <Heading fontSize="36px" mb="10px">
                 {title}
@@ -72,7 +45,7 @@ const AuthLayout = ({
               direction="column"
               w={{ base: '100%', md: '420px' }}
               maxW="100%"
-              background="transparent"
+              bg={'transparent'}
               borderRadius="15px"
               mx={{ base: 'auto', lg: 'unset' }}
               me="auto"
@@ -81,23 +54,13 @@ const AuthLayout = ({
               {children}
             </Flex>
           </Flex>
-
-          <Box
-            display={{ base: 'none', xl: 'block' }}
-            h="100%"
-            minH="100vh"
-            w={{ lg: '50vw', '2xl': '44vw' }}
-            position="absolute"
-            right="0px"
-          >
-            <Stack spacing="6">
-              <Box maxW={'full'} h="auto" mx={'auto'}>
-                <Logo objectFit="cover" variant="baseLogo" />
-              </Box>
-            </Stack>
-          </Box>
         </Flex>
-      </Flex>
+        <Flex flex={1} justify={'center'} align={'center'}>
+          <Stack w={'full'} maxW={'2xl'}>
+            <Logo objectFit="cover" variant="baseLogo" />
+          </Stack>
+        </Flex>
+      </Stack>
     </>
   );
 };

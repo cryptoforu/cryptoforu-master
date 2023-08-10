@@ -8,7 +8,7 @@ import { getFaq } from '@/requests/getFaq'
 import Faq from '@/app/(main)/(pages)/earn-crypto/components/Faq'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
 
-preload('meta-data?filter[page_name]=earn_crypto')
+preload('site/shared/meta-data?filter[page_name]=earn_crypto')
 
 export async function generateMetadata() {
   return await getMetadata('earn_crypto')

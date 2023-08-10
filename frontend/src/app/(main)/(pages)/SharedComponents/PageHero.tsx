@@ -1,6 +1,8 @@
 import { HeroPattern } from '@/components/content'
-import { getBreadcrumbs } from '@/requests/getBreadcrumbs'
+import { getBreadcrumbs, preloadBreadcrumbs } from '@/requests/getBreadcrumbs'
 import PageHeader from '@/app/(main)/(pages)/SharedComponents/PageHeader'
+
+preloadBreadcrumbs()
 
 const PageHero = async () => {
   const crumbs = await getBreadcrumbs()

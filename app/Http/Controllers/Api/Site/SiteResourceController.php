@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final class HomeResourceController extends Controller
+final class SiteResourceController extends Controller
 {
   /**
    * Home Api Resource Instance

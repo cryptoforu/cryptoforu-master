@@ -79,10 +79,14 @@ final class LibraryController extends Controller
 
     public function destroyMultiple(Request $request): RedirectResponse
     {
-
-        $request->collect('selected')->except([0])
-            ->map(fn ($lib) => $this->delete->handle(Library::find($lib['id'])))
-        ;
+       $request->collect('selected')->except([0])
+         ->map(function ($lib) {
+           $query = Library::query()->find($lib['id']);
+           if(!is_null($query)) {
+             $this->delete->handle($query);
+           }
+         });
+       
         cache()->flush();
 
         return back()->with('success', 'Deleted Successfully');

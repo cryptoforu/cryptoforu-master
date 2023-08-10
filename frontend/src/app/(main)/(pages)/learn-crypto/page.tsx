@@ -8,7 +8,7 @@ import { AdPlaceholder } from '@/components/content'
 import { getArticles } from './[category]/[post]/getPosts'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
 
-preload('meta-data?filter[page_name]=learn_crypto')
+preload('site/shared/meta-data?filter[page_name]=learn_crypto')
 
 export async function generateMetadata() {
   return await getMetadata('learn_crypto')

@@ -25,7 +25,7 @@ export type FormData = {
   label: string;
   name: string;
   type: FormType;
-  options: Array<Options>;
+  options?: Array<Options>;
 };
 
 type FormContextData<FormItem extends FormID> = {

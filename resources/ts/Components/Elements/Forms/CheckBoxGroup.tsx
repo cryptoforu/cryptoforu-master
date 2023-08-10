@@ -12,7 +12,7 @@ interface GroupProps extends CheckboxProps {
 }
 
 const CheckBoxGroup = ({ ...props }: GroupProps) => {
-  const [field, meta, helpers] = useField({
+  const [, meta, helpers] = useField({
     name: props.name,
     type: 'checkbox',
   });

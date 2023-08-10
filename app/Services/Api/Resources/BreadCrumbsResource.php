@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Services\Api\DataObjects\BreadcrumbsData;
 
-readonly class BreadCrumbsResource
+final readonly class BreadCrumbsResource
 {
   /**
    * BreadCrumbs Api Resource Instance
@@ -26,14 +26,14 @@ readonly class BreadCrumbsResource
    */
   public function generate(): array
   {
-    $data = [
-      ...$this->pages(),
-      ...$this->categories(),
-    ];
-
     return $this->cache->load_data(
       key: 'breadcrumbs_data',
-      callback: fn() => $data
+      callback: function () {
+        return [
+          ...$this->pages(),
+          ...$this->categories(),
+        ];
+      }
     );
   }
 
