@@ -19,69 +19,62 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class PostsApiController extends Controller
 {
-  /**
-   * Posts Api Controller Instance
-   * @param  AllPostsContract  $query
-   */
-  public function __construct(
-    private readonly AllPostsContract $query,
-  ) {
-  }
+    /**
+     * Posts Api Controller Instance
+     */
+    public function __construct(
+        private readonly AllPostsContract $query,
+    ) {
+    }
 
-  /**
-   * Retrive All Posts
-   * @param  Request  $request
-   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
-   */
-  public function index(
-    Request $request
-  ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
-    $posts = $this->query->handle(
-      query: Post::query()->latest('updated_at')
-    )->jsonPaginate()->appends($request->query());
+    /**
+     * Retrive All Posts
+     */
+    public function index(
+        Request $request
+    ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
+        $posts = $this->query->handle(
+            query: Post::query()->latest('updated_at')
+        )->jsonPaginate()->appends($request->query());
 
-    return PostApiResource::collection(
-      $posts
-    );
-  }
+        return PostApiResource::collection(
+            $posts
+        );
+    }
 
-  /**
-   * Get Posts  From Specific Category
-   * @param  Request  $request
-   * @param  Category  $category
-   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
-   */
-  public function from_category(
-    Request $request,
-    Category $category
-  ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
-    $categoryQuery = new FilterCategoryPosts($category);
-    $posts = $categoryQuery->jsonPaginate()->appends($request->query());
-    $postData = Cache::rememberForever(
-      key: $request->path(),
-      callback: static fn() => $posts
-    );
+    /**
+     * Get Posts  From Specific Category
+     */
+    public function from_category(
+        Request $request,
+        Category $category
+    ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
+        $categoryQuery = new FilterCategoryPosts($category);
+        $posts = $categoryQuery->jsonPaginate()->appends($request->query());
+        $postData = Cache::rememberForever(
+            key: $request->path(),
+            callback: static fn () => $posts
+        );
 
-    return PostApiResource::collection(
-      $postData
-    );
-  }
+        return PostApiResource::collection(
+            $postData
+        );
+    }
 
-  /**
-   * Display the specified Post
-   * @param  Post  $post
-   * @return PostApiResource
-   */
-  public function show(Post $post): PostApiResource
-  {
+    /**
+     * Display the specified Post
+     */
+    public function show(Post $post): PostApiResource
+    {
 
-    $postData = QueryBuilder::for(
-      $post
-    )
-      ->allowedFields(['category.id', 'categories.slug'])
-      ->allowedIncludes(['category', 'tags'])
-      ->findOrFail($post->id);
+        $postData = QueryBuilder::for(
+            $post
+        )
+            ->allowedFields(['category.id', 'categories.slug'])
+            ->allowedIncludes(['category', 'tags'])
+            ->findOrFail($post->id)
+        ;
 
-    return PostApiResource::from($postData);
-  }
+        return PostApiResource::from($postData);
+    }
 }

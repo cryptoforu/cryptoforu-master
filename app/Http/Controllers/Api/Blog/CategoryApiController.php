@@ -16,47 +16,43 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class CategoryApiController extends Controller
 {
-  /**
-   * Blog Category Instance
-   * @param  CategoryQueryContract  $query
-   */
-  public function __construct(
-    private readonly CategoryQueryContract $query,
-  ) {
-  }
+    /**
+     * Blog Category Instance
+     */
+    public function __construct(
+        private readonly CategoryQueryContract $query,
+    ) {
+    }
 
-  /**
-   * Get All Categories with posts and post tags
-   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
-   */
-  public function index(
-  ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
-  {
-    $categoryData = $this->query->handle(
-      query: Category::query()->latest()
-    );
+    /**
+     * Get All Categories with posts and post tags
+     */
+    public function index(
+    ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
+        $categoryData = $this->query->handle(
+            query: Category::query()->latest()
+        );
 
-    return CategoryApiResource::collection(
-      $categoryData->get()
-    );
-  }
+        return CategoryApiResource::collection(
+            $categoryData->get()
+        );
+    }
 
-  /**
-   * Get Specific Category
-   * @param  Category  $category
-   * @return CategoryApiResource
-   */
-  public function show(
-    Category $category
-  ): CategoryApiResource {
-    $categoryData = QueryBuilder::for(
-      $category
-    )->allowedFilters([AllowedFilter::exact('posts.slug')])
-      ->allowedIncludes(['posts.tags'])
-      ->findOrFail($category->id);
+    /**
+     * Get Specific Category
+     */
+    public function show(
+        Category $category
+    ): CategoryApiResource {
+        $categoryData = QueryBuilder::for(
+            $category
+        )->allowedFilters([AllowedFilter::exact('posts.slug')])
+            ->allowedIncludes(['posts.tags'])
+            ->findOrFail($category->id)
+        ;
 
-    return CategoryApiResource::from(
-      $categoryData
-    );
-  }
+        return CategoryApiResource::from(
+            $categoryData
+        );
+    }
 }

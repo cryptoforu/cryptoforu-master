@@ -9,9 +9,6 @@ use App\Http\Controllers\Api\Blog\CategoryApiController;
 use App\Http\Controllers\Api\Blog\PostsApiController;
 use App\Http\Controllers\Api\Crypto\CryptoResourceController;
 use App\Http\Controllers\Api\Earn\EarnCategoryResourceController;
-use App\Http\Controllers\Api\MetaDataController;
-use App\Http\Controllers\Api\NavigationDataController;
-use App\Http\Controllers\Api\Site\SiteResourceController;
 use App\Services\Store\ApiCacheService;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,13 +39,6 @@ class ApiCacheProvider extends ServiceProvider
       EarnCategoryResourceController::class
     )->needs(ApiCacheContract::class)
       ->give(fn() => new ApiCacheService(['earn', 'categories']));
-    $this->app->when(
-      [
-        SiteResourceController::class, MetaDataController::class,
-        NavigationDataController::class,
-      ]
-    )->needs(ApiCacheContract::class)
-      ->give(fn() => new ApiCacheService(['site', 'data']));
 
   }
 

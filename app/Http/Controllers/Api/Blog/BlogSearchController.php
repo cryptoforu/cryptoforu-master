@@ -11,28 +11,28 @@ use Illuminate\Http\Request;
 
 final class BlogSearchController extends Controller
 {
-  // TO DO
-  // IMPLEMENT MORE SEARCH METHODS
-  /**
-   * Search All Posts by Their Title
-   * @param  Request  $request
-   * @return CollectionResponse
-   */
-  public function __invoke(Request $request): CollectionResponse
-  {
-    $posts = Post::search(trim($request->get('q')) ?? '')
-      ->query(function ($query): void {
-        $query->join('categories', 'posts.category_id', 'categories.id')
-          ->select([
-            'posts.id', 'posts.title', 'posts.introduction',
-            'categories.name as category',
-          ])
-          ->orderBy('posts.id', 'DESC');
-      })
-      ->get();
+    // TO DO
+    // IMPLEMENT MORE SEARCH METHODS
+    /**
+     * Search All Posts by Their Title
+     */
+    public function __invoke(Request $request): CollectionResponse
+    {
+        $posts = Post::search(trim($request->get('q')) ?? '')
+            ->query(function ($query): void {
+                $query->join('categories', 'posts.category_id', 'categories.id')
+                    ->select([
+                        'posts.id', 'posts.title', 'posts.introduction',
+                        'categories.name as category',
+                    ])
+                    ->orderBy('posts.id', 'DESC')
+                ;
+            })
+            ->get()
+        ;
 
-    return new CollectionResponse(
-      data: $posts
-    );
-  }
+        return new CollectionResponse(
+            data: $posts
+        );
+    }
 }

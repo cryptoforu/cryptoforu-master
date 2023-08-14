@@ -17,94 +17,84 @@ use Laravel\Socialite\Facades\Socialite;
 
 final class SocialAuthController extends Controller
 {
-  /**
-   * Social Authentication
-   * @param  CreateNewUser  $createNewUser
-   * @param  CreateProvider  $createProvider
-   */
-  public function __construct(
-    protected CreateNewUser $createNewUser,
-    protected CreateProvider $createProvider
-  ) {
-  }
-
-  /**
-   * Redirect the user to the Provider authentication page.
-   * @param $provider
-   * @return ErrorResponse|RedirectResponse
-   */
-  public function redirectToProvider(
-    $provider
-  ): ErrorResponse|RedirectResponse {
-    $validate = $this->validateProvider($provider);
-    if (!$validate
+    /**
+     * Social Authentication
+     */
+    public function __construct(
+        protected CreateNewUser $createNewUser,
+        protected CreateProvider $createProvider
     ) {
-      return $validate;
     }
 
-    return Socialite::driver($provider)->stateless()->redirect();
-  }
+    /**
+     * Redirect the user to the Provider authentication page.
+     */
+    public function redirectToProvider(
+        $provider
+    ): ErrorResponse|RedirectResponse {
+        $validate = $this->validateProvider($provider);
+        if ( ! $validate
+        ) {
+            return $validate;
+        }
 
-  /**
-   * @param $provider
-   * @return bool|ErrorResponse
-   */
-  protected function validateProvider(
-    $provider
-  ): bool|ErrorResponse {
-    if (!in_array($provider, ['facebook', 'github', 'google'])) {
-      return new ErrorResponse(
-        message: ['message' => 'Please login using facebook, github or google'],
-        code: Http::UNPROCESSABLE_ENTITY
-      );
+        return Socialite::driver($provider)->stateless()->redirect();
     }
 
-    return true;
-  }
+    protected function validateProvider(
+        $provider
+    ): bool|ErrorResponse {
+        if ( ! in_array($provider, ['facebook', 'github', 'google'])) {
+            return new ErrorResponse(
+                message: ['message' => 'Please login using facebook, github or google'],
+                code: Http::UNPROCESSABLE_ENTITY
+            );
+        }
 
-  /**
-   * Obtain the user information from Provider.
-   * @param $provider
-   * @return ErrorResponse|JsonResponse|RedirectResponse|Response
-   */
-  public function handleProviderCallback(
-    $provider
-  ): ErrorResponse|JsonResponse|RedirectResponse|Response {
-    $validated = $this->validateProvider($provider);
-    if (!$validated
-    ) {
-      return $validated;
-    }
-    try {
-      $user = Socialite::driver($provider)->stateless()->user();
-    } catch (ClientException $exception) {
-      return new ErrorResponse([
-        'message' => 'Invalid credentials provided.',
-      ], Http::UNPROCESSABLE_ENTITY);
+        return true;
     }
 
-    $userCreated = $this->createNewUser->create($user);
+    /**
+     * Obtain the user information from Provider.
+     */
+    public function handleProviderCallback(
+        $provider
+    ): ErrorResponse|JsonResponse|RedirectResponse|Response {
+        $validated = $this->validateProvider($provider);
+        if ( ! $validated
+        ) {
+            return $validated;
+        }
+        try {
+            $user = Socialite::driver($provider)->stateless()->user();
+        } catch (ClientException $exception) {
+            return new ErrorResponse([
+                'message' => 'Invalid credentials provided.',
+            ], Http::UNPROCESSABLE_ENTITY);
+        }
 
-    if ($userCreated->admin()) {
-      $userCreated->roles()->sync(['1']);
-      $this->createProvider->create(
-        userCreated: $userCreated,
-        user: $user,
-        provider: $provider
-      );
-      auth()->login($userCreated);
+        $userCreated = $this->createNewUser->create($user);
+
+        if ($userCreated->admin()) {
+            $userCreated->roles()->sync(['1']);
+            $this->createProvider->create(
+                userCreated: $userCreated,
+                user: $user,
+                provider: $provider
+            );
+            auth()->login($userCreated);
+        }
+        $userCreated->roles()->attach('4');
+        $this->createProvider->create(
+            userCreated: $userCreated,
+            user: $user,
+            provider: $provider
+        );
+        $token = $userCreated->createToken(
+            'social_guest',
+            ['reader']
+        )->plainTextToken;
+
+        return response()->json($userCreated, 200, ['Access-Token' => $token]);
     }
-    $userCreated->roles()->attach('4');
-    $this->createProvider->create(
-      userCreated: $userCreated,
-      user: $user,
-      provider: $provider
-    );
-    $token = $userCreated->createToken(
-      'social_guest',
-      ['reader']
-    )->plainTextToken;
-
-    return response()->json($userCreated, 200, ['Access-Token' => $token]);
-  }
 }

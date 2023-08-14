@@ -12,26 +12,23 @@ use Inertia\Response;
 
 final class DashboardController extends Controller
 {
-  protected PageInterface $page;
+    protected PageInterface $page;
 
-  /**
-   * Admin Dashboard
-   */
-  public function __construct(
-    PageInterface $page,
-    protected FaucetPayServiceInterface $service,
-  ) {
-    $this->page = $page;
-  }
+    /**
+     * Admin Dashboard
+     */
+    public function __construct(
+        PageInterface $page,
+        protected FaucetPayServiceInterface $service,
+    ) {
+        $this->page = $page;
+    }
 
-  /**
-   * @return Response
-   */
-  public function index(): Response
-  {
-    return Inertia::render(
-      component: 'Admin/Dashboard',
-      props: $this->page->admin_meta(),
-    );
-  }
+    public function index(): Response
+    {
+        return Inertia::render(
+            component: 'Admin/Dashboard',
+            props: $this->page->admin_meta(),
+        );
+    }
 }

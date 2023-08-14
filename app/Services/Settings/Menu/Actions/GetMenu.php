@@ -12,16 +12,18 @@ use Illuminate\Support\Facades\Cache;
 
 final class GetMenu implements GetMenuContract
 {
-  public function handle(string $position = 'front_main'): array
-  {
-    return Cache::rememberForever($position,
-      static function () use ($position) {
-        return MenuItemsData::make(
-          items: MenuItem::ofItems(
-            Menu::ofMain($position)
-          )
+    public function handle(string $position = 'front_main'): array
+    {
+        return Cache::rememberForever(
+            $position,
+            static function () use ($position) {
+                return MenuItemsData::make(
+                    items: MenuItem::ofItems(
+                        Menu::ofMain($position)
+                    )
+                );
+            }
         );
-      });
 
-  }
+    }
 }

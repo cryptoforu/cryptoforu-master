@@ -10,17 +10,17 @@ use JustSteveKing\StatusCode\Http;
 
 final readonly class JsonResourceResponse implements Responsable
 {
-  public function __construct(
-    public array $data,
-    public Http $status = Http::OK,
-  ) {
-  }
+    public function __construct(
+        public array $data,
+        public Http $status = Http::OK,
+    ) {
+    }
 
-  public function toResponse($request): JsonResponse
-  {
-    return new JsonResponse(
-      data: $this->data,
-      status: $this->status->value,
-    );
-  }
+    public function toResponse($request): JsonResponse
+    {
+        return new JsonResponse(
+            data: $this->data,
+            status: $this->status->value,
+        );
+    }
 }

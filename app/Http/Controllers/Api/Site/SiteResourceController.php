@@ -15,30 +15,28 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class SiteResourceController extends Controller
 {
-  /**
-   * Home Api Resource Instance
-   */
-  public function __construct()
-  {
-  }
+    /**
+     * Home Api Resource Instance
+     */
+    public function __construct()
+    {
+    }
 
-  /**
-   * Query Builder For Home Page Data
-   * @param  Request  $request
-   * @param  Site  $site
-   * @return CollectionResponse|ErrorResponse
-   */
-  public function __invoke(
-    Request $request,
-    Site $site
-  ): CollectionResponse|ErrorResponse {
-    $data = QueryBuilder::for($site)
-      ->allowedFilters([AllowedFilter::exact('data_name')])
-      ->allowedFields(['data_values'])
-      ->find($site->id);
+    /**
+     * Query Builder For Home Page Data
+     */
+    public function __invoke(
+        Request $request,
+        Site $site
+    ): CollectionResponse|ErrorResponse {
+        $data = QueryBuilder::for($site)
+            ->allowedFilters([AllowedFilter::exact('data_name')])
+            ->allowedFields(['data_values'])
+            ->find($site->id)
+        ;
 
-    return new CollectionResponse(
-      data: SiteResource::make($data)
-    );
-  }
+        return new CollectionResponse(
+            data: SiteResource::make($data)
+        );
+    }
 }

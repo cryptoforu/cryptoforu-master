@@ -12,19 +12,17 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class FilterCategoryPosts extends QueryBuilder
 {
-  /**
-   * @param  Category  $category
-   */
-  public function __construct(Category $category)
-  {
-    $postsQuery = Post::query()
-      ->where('category_id', $category->id)
-      ->with(['category', 'tags']);
-    parent::__construct($postsQuery);
+    public function __construct(Category $category)
+    {
+        $postsQuery = Post::query()
+            ->where('category_id', $category->id)
+            ->with(['category', 'tags'])
+        ;
+        parent::__construct($postsQuery);
 
-    $this->allowedFilters([
-      AllowedFilter::exact('id'),
-      AllowedFilter::custom('postStatus', new FilterPostStatus()),
-    ]);
-  }
+        $this->allowedFilters([
+            AllowedFilter::exact('id'),
+            AllowedFilter::custom('postStatus', new FilterPostStatus()),
+        ]);
+    }
 }

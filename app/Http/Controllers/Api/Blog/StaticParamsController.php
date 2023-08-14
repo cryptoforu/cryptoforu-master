@@ -15,28 +15,26 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class StaticParamsController extends Controller
 {
-  /**
-   * Generate Next.js Static Params for Posts and Categories
-   *
-   * @param  Request  $request
-   * @return CollectionResponse
-   */
-  public function __invoke(Request $request): CollectionResponse
-  {
+    /**
+     * Generate Next.js Static Params for Posts and Categories
+     */
+    public function __invoke(Request $request): CollectionResponse
+    {
 
-    $data = QueryBuilder::for(
-      Post::class
-    )->allowedFilters([
-      AllowedFilter::exact('category_id'),
-      AllowedFilter::exact('category.slug'),
-      AllowedFilter::exact('slug'),
-      AllowedFilter::custom('metadata', new MetaDataFilter()),
-      AllowedFilter::custom('params', new StaticParamsFilter()),
-    ])
-      ->get();
+        $data = QueryBuilder::for(
+            Post::class
+        )->allowedFilters([
+            AllowedFilter::exact('category_id'),
+            AllowedFilter::exact('category.slug'),
+            AllowedFilter::exact('slug'),
+            AllowedFilter::custom('metadata', new MetaDataFilter()),
+            AllowedFilter::custom('params', new StaticParamsFilter()),
+        ])
+            ->get()
+        ;
 
-    return new CollectionResponse(
-      data: $data
-    );
-  }
+        return new CollectionResponse(
+            data: $data
+        );
+    }
 }

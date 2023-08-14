@@ -15,29 +15,26 @@ use Spatie\LaravelData\PaginatedDataCollection;
 
 final class EarnCategoryResourceController extends Controller
 {
-  /**
-   * Earning Methods Category Instance
-   * @param  EarnCategoryQueryContract  $earn
-   */
-  public function __construct(
-    protected EarnCategoryQueryContract $earn,
-  ) {
-  }
+    /**
+     * Earning Methods Category Instance
+     */
+    public function __construct(
+        protected EarnCategoryQueryContract $earn,
+    ) {
+    }
 
-  /**
-   * Earning Methods Category Query Builder
-   * @param  Request  $request
-   * @return CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection
-   */
-  public function __invoke(
-    Request $request
-  ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
-    $data = $this->earn->handle(
-      EarnCategory::query()->latest()
-    )->get();
+    /**
+     * Earning Methods Category Query Builder
+     */
+    public function __invoke(
+        Request $request
+    ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
+        $data = $this->earn->handle(
+            EarnCategory::query()->latest()
+        )->get();
 
-    return EarnCategoryApiData::collection(
-      $data
-    );
-  }
+        return EarnCategoryApiData::collection(
+            $data
+        );
+    }
 }

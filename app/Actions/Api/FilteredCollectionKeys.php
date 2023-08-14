@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Request;
 
 class FilteredCollectionKeys
 {
-  /**
-   * @param  Collection  $collection
-   * @return Collection
-   */
     public function __invoke(Collection $collection): Collection
     {
         return Request::whenHas(
