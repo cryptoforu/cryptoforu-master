@@ -1,11 +1,12 @@
 import { HomeIcon } from '@heroicons/react/24/outline'
-import NextLink from 'next/link'
-import { InternalLink } from '@/components/elements'
 import { Route } from 'next'
+import NextLink from 'next/link'
+
+import { InternalLink } from '@/components/elements'
 import { ReturnedCrumbs } from '@/store/types/crumbs-store'
 
 const BreadCrumbs = ({ breadcrumbs }: { breadcrumbs: ReturnedCrumbs }) => {
-  let headline = breadcrumbs.label.split('|')
+  const headline = breadcrumbs.label.split('|')
   return (
     <div
       className={

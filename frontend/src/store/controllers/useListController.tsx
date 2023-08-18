@@ -1,9 +1,10 @@
 import { useCallback, useDeferredValue, useEffect, useTransition } from 'react'
-import { CurrencyState, useListContext } from '@/store/useListStore'
+import { shallow } from 'zustand/shallow'
+
+import { FaucetListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import { fetchList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getLists'
 import usePrev from '@/hooks/usePrev'
-import { shallow } from 'zustand/shallow'
-import { FaucetListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
+import { CurrencyState, useListContext } from '@/store/useListStore'
 
 const useListController = () => {
   const { currency, page_size, page } = useListContext((state) => ({

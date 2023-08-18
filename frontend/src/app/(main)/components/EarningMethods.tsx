@@ -1,4 +1,5 @@
-import { Container, Section } from '@/components/wrappers'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
+
 import {
   Card,
   CardBody,
@@ -6,25 +7,25 @@ import {
   CardHeader,
   CardImage,
   CardOverlayLink,
+  DataTabsV2,
   SectionHeader,
 } from '@/components/content'
-import DataTabs from '@/components/content/DataTabs'
-import { getRandItem } from '@/lib/utils'
-import { EarningMethods } from '@/types/shared-types'
 import { Badge, ExternalLink } from '@/components/elements'
 import { ProseMarkdown } from '@/components/typography'
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { Container, Section } from '@/components/wrappers'
+import { getRandItem } from '@/lib/utils'
+import { getHomeData } from '@/requests/getHomeData'
+import { EarningMethods } from '@/types/shared-types'
 
-const EarningMethods = async ({
-  earnData,
-}: {
-  earnData: EarningMethods['data']
-}) => {
+const EarningMethods = async () => {
   const badges = getRandItem(['Popular', 'Featured', 'Hot'])
-
-  const tabsData = earnData.map((tab) => {
+  const methods = (await getHomeData(
+    'earning_methods'
+  )) as EarningMethods['data']
+  const tabsData = methods.map((tab) => {
     return {
       id: tab.id,
+      key: tab.id,
       label: tab.attributes.name,
       content: (
         <div className={'grid gap-8 md:grid-cols-2 lg:grid-cols-3'}>
@@ -84,30 +85,23 @@ const EarningMethods = async ({
       ),
     }
   })
+
   return (
-    <>
-      <Section id={'earning-methods'} ariaLabel={'earning Methods'}>
-        <Container>
-          <SectionHeader
-            className={'max-w-2xl text-center'}
-            title={'Earn Crypto with'}
-            gradTitle={'Cryptoforu'}
-            desc={
-              'Join us in a Brand New Crypto World. Start exploring our awesome\n' +
-              '            services and Earn your Online Passive Income right way'
-            }
-            badgeLabel={'Earning Methods'}
-          />
-          <DataTabs
-            tabs={tabsData}
-            variant={'underline'}
-            withLink={true}
-            listVariant={'left'}
-            linkHref={'/earn-crypto'}
-          />
-        </Container>
-      </Section>
-    </>
+    <Section id={'earning-methods'} ariaLabel={'earning Methods'}>
+      <Container>
+        <SectionHeader
+          className={'max-w-2xl text-center'}
+          title={'Earn Crypto with'}
+          gradTitle={'Cryptoforu'}
+          desc={
+            'Join us in a Brand New Crypto World. Start exploring our awesome\n' +
+            '            services and Earn your Online Passive Income right way'
+          }
+          badgeLabel={'Earning Methods'}
+        />
+        <DataTabsV2 data={tabsData} />
+      </Container>
+    </Section>
   )
 }
 export default EarningMethods

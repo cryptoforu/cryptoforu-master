@@ -1,12 +1,13 @@
 'use client'
+import { VariantProps } from 'class-variance-authority'
 import type { Route } from 'next'
 import NextLink from 'next/link'
-import { Link as AriaLink } from 'react-aria-components'
-import { cn } from '@/lib/utils'
-import { VariantProps } from 'class-variance-authority'
 import { HTMLAttributes, ReactNode, useRef } from 'react'
-import { linkVariants } from '@/components/elements/variants/link-variants'
 import { AriaLinkOptions, useLink } from 'react-aria'
+import { Link as AriaLink } from 'react-aria-components'
+
+import { linkVariants } from '@/components/elements/variants/link-variants'
+import { cn } from '@/lib/utils'
 
 export interface InternalLinkProps
   extends VariantProps<typeof linkVariants>,
@@ -31,8 +32,8 @@ export function ExternalLink({
   classes,
   ...rest
 }: ExternalLinkProps) {
-  let ref = useRef(null)
-  let { linkProps } = useLink({ ...rest }, ref)
+  const ref = useRef(null)
+  const { linkProps } = useLink({ ...rest }, ref)
   linkProps.className = cn(
     linkVariants({ variant, decoration, hover, className: classes })
   )

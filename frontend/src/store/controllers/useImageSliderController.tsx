@@ -1,7 +1,8 @@
 'use client'
-import { useImageSliderContext } from '@/store/useImageSliderStore'
-import { useUpdateEffect } from '@/hooks/useUpdateEffect'
 import { useHover } from 'react-aria'
+
+import { useUpdateEffect } from '@/hooks/useUpdateEffect'
+import { useImageSliderContext } from '@/store/useImageSliderStore'
 
 export default function useImageSliderController() {
   const [page, direction] = useImageSliderContext((state) => [

@@ -1,6 +1,7 @@
-import { useCryptoContext } from '@/store/useCrypto'
-import useSocket from '@/hooks/useSocket'
 import { useDeferredValue, useEffect } from 'react'
+
+import useSocket from '@/hooks/useSocket'
+import { useCryptoContext } from '@/store/useCrypto'
 
 export default function useCryptoController() {
   const updatePrice = useCryptoContext((state) => state.updatePrice)

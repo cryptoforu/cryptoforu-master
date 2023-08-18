@@ -1,4 +1,4 @@
-const themeScript: string = `
+const themeScript = `
   let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
   function updateTheme(savedTheme) {

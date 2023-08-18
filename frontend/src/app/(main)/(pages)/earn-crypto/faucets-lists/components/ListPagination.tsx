@@ -1,7 +1,7 @@
 'use client'
+import { ListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import Pagination from '@/components/tables/Pagination'
 import { useListContext } from '@/store/useListStore'
-import { ListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 
 const ListPagination = () => {
   const list_data = useListContext((state) => state.data?.list_data) as ListData

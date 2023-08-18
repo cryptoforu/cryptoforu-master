@@ -1,5 +1,7 @@
-import { cache } from 'react'
 import 'server-only'
+
+import { cache } from 'react'
+
 import { fetchData } from '@/lib/fetchClient'
 
 export const preload = (url: string) => {

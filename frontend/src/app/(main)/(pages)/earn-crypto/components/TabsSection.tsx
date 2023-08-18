@@ -1,4 +1,6 @@
-import { Container, Section } from '@/components/wrappers'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
+
+import { EarnCategoryProps } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
 import {
   AdPlaceholder,
   Card,
@@ -6,13 +8,12 @@ import {
   CardFooter,
   CardHeader,
   CardImage,
+  DataTabsV2,
   List,
 } from '@/components/content'
-import DataTabs from '@/components/content/DataTabs'
-import { EarnCategoryProps } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
-import { Heading, ProseMarkdown, Text } from '@/components/typography'
 import { Badge, ExternalLink } from '@/components/elements'
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { Heading, ProseMarkdown, Text } from '@/components/typography'
+import { Container, Section } from '@/components/wrappers'
 
 const TabsSection = ({
   categoryMethods,
@@ -20,10 +21,11 @@ const TabsSection = ({
   categoryMethods: EarnCategoryProps[]
 }) => {
   const tabsData = categoryMethods.map((category) => ({
-    id: category.id,
+    id: category.id.toString(),
+    key: category.id,
     label: category.name,
     content: (
-      <>
+      <div className={'flex flex-col'}>
         <div className={'mx-auto flex w-full px-8 py-6 text-center'}>
           <ProseMarkdown className={'mx-auto max-w-none'}>
             {category.description}
@@ -83,7 +85,7 @@ const TabsSection = ({
             </Card>
           )}
         />
-      </>
+      </div>
     ),
   }))
   return (
@@ -93,13 +95,7 @@ const TabsSection = ({
           <AdPlaceholder ad={'leaderboard'} />
         </div>
         <Container>
-          <DataTabs
-            tabs={tabsData}
-            variant={'underline'}
-            withLink={false}
-            listVariant={'full'}
-            panelVariant={'transparent'}
-          />
+          <DataTabsV2 data={tabsData} listPosition={'full'} />
         </Container>
       </Section>
     </>

@@ -4,9 +4,9 @@ export const card = cva('relative', {
   variants: {
     variant: {
       filledGray:
-        'bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-950 dark:border-gray-900',
+        'rounded-xl border border-gray-200 bg-white shadow dark:border-gray-900 dark:bg-gray-950',
       filledSlate:
-        'bg-slate-100 border border-slate-200 rounded-xl shadow dark:bg-slate-900 dark:border-slate-700',
+        'rounded-xl border border-slate-200 bg-slate-100 shadow dark:border-slate-700 dark:bg-slate-900',
       outlineGray:
         'group rounded-xl border border-gray-200 dark:border-gray-900/50',
       outlineSlate:

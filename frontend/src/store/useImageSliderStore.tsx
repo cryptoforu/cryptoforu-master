@@ -1,5 +1,5 @@
-import { createStore, useStore } from 'zustand'
 import { createContext, PropsWithChildren, useContext, useState } from 'react'
+import { createStore, useStore } from 'zustand'
 
 type UseImageSliderContext = {
   sliderData: {
@@ -59,7 +59,7 @@ export function ImageSliderProvider({
   children,
   ...props
 }: PropsWithChildren<UseImageSliderContext>) {
-  let [sliderStore] = useState(() => createImageSliderStore(props))
+  const [sliderStore] = useState(() => createImageSliderStore(props))
   return (
     <SliderContext.Provider value={sliderStore}>
       {children}

@@ -1,8 +1,9 @@
-import { List, ListItem } from '@/components/content'
-import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
-import { Heading } from '@/components/typography'
-import { InternalLink } from '@/components/elements'
 import { Route } from 'next'
+
+import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import { List, ListItem } from '@/components/content'
+import { InternalLink } from '@/components/elements'
+import { Heading } from '@/components/typography'
 
 const CategoriesNav = ({
   categories,

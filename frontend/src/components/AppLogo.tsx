@@ -1,5 +1,6 @@
 'use client'
 import Image, { ImageProps } from 'next/image'
+
 import { useAppLogo } from '@/store/controllers/useThemeController'
 
 interface IAppLogoProps extends Partial<ImageProps> {
@@ -8,7 +9,7 @@ interface IAppLogoProps extends Partial<ImageProps> {
 
 const AppLogo = (props: IAppLogoProps) => {
   const { nav_logo, base_logo } = useAppLogo()
-  let logo = {
+  const logo = {
     nav_logo: nav_logo,
     base_logo: base_logo,
   }

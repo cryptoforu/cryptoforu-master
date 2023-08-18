@@ -7,12 +7,12 @@ export default function useObserver({
   containerRef: RefObject<Element>
   childRefs: RefObject<Element[] | null[]>
 }) {
-  let [activeIndex, setActiveIndex] = useState<number | undefined>(0)
+  const [activeIndex, setActiveIndex] = useState<number | undefined>(0)
 
   useEffect(() => {
-    let observer = new window.IntersectionObserver(
+    const observer = new window.IntersectionObserver(
       (entries) => {
-        for (let entry of entries) {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             childRefs.current &&
               // @ts-ignore
@@ -27,7 +27,7 @@ export default function useObserver({
       }
     )
     if (childRefs.current) {
-      for (let child of childRefs?.current) {
+      for (const child of childRefs?.current) {
         if (child) {
           observer.observe(child)
         }

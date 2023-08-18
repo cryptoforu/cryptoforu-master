@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react'
 import { clsx } from 'clsx'
+import React, { forwardRef } from 'react'
 
 const sectionVariants = {
   primary: 'relative py-20 sm:py-24',

@@ -1,17 +1,17 @@
 'use client'
-import { InternalLink } from '@/components/elements'
-import LazyImage from '@/components/elements/LazyImage'
-import GridPattern from '@/components/patterns/GridPattern'
 import {
   motion,
   MotionValue,
   useMotionTemplate,
   useMotionValue,
 } from 'framer-motion'
-
-import { MouseEvent, ReactNode } from 'react'
-import { Heading } from '@/components/typography'
 import { Route } from 'next'
+import { MouseEvent, ReactNode } from 'react'
+
+import { InternalLink } from '@/components/elements'
+import LazyImage from '@/components/elements/LazyImage'
+import GridPattern from '@/components/patterns/GridPattern'
+import { Heading } from '@/components/typography'
 
 function CardIcon({ icon, alt }: { icon: string; alt: string }) {
   return (
@@ -43,8 +43,8 @@ type PatternProps = {
 }
 
 const CardPattern = ({ mouseX, mouseY, ...gridProps }: PatternProps) => {
-  let maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`
-  let style = { maskImage, WebkitMaskImage: maskImage }
+  const maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`
+  const style = { maskImage, WebkitMaskImage: maskImage }
   return (
     <div className="pointer-events-none">
       <div className="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50">
@@ -86,15 +86,15 @@ type Features = {
 }
 
 const HoverCard = ({ name, link, image, description }: Features) => {
-  let mouseX = useMotionValue(0)
-  let mouseY = useMotionValue(0)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
 
   function onMouseMove({
     currentTarget,
     clientX,
     clientY,
   }: MouseEvent<HTMLDivElement>) {
-    let { left, top } = currentTarget.getBoundingClientRect()
+    const { left, top } = currentTarget.getBoundingClientRect()
     mouseX.set(clientX - left)
     mouseY.set(clientY - top)
   }

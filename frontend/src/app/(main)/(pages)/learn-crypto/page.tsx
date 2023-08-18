@@ -1,12 +1,14 @@
-import { getMetadata, preload } from '@/lib/getData'
 import { Suspense } from 'react'
-import { SectionSkeleton } from '@/components/skeletons'
-import CategoryPosts from './components/CategoryPosts'
-import { getCategories } from './getCategories'
-import LatestPosts from './components/LatestPosts'
-import { AdPlaceholder } from '@/components/content'
-import { getArticles } from './[category]/[post]/getPosts'
+
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
+import { AdPlaceholder } from '@/components/content'
+import { SectionSkeleton } from '@/components/skeletons'
+import { getMetadata, preload } from '@/lib/getData'
+
+import { getArticles } from './[category]/[post]/getPosts'
+import CategoryPosts from './components/CategoryPosts'
+import LatestPosts from './components/LatestPosts'
+import { getCategories } from './getCategories'
 
 preload('site/shared/meta-data?filter[page_name]=learn_crypto')
 

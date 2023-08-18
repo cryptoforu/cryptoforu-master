@@ -1,8 +1,9 @@
-import { ExternalLink, InternalLink, LazyImage } from '@/components/elements'
-import { DateFormatter } from '@/components/misc/DateFormatter'
 import { footer } from 'contentlayer/generated'
 import { Route } from 'next'
+
 import AppLogo from '@/components/AppLogo'
+import { ExternalLink, InternalLink, LazyImage } from '@/components/elements'
+import { DateFormatter } from '@/components/misc/DateFormatter'
 
 const Footer = () => {
   const { social_links, footer_nav } = footer

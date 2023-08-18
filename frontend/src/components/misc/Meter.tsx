@@ -1,29 +1,29 @@
+import clsx from 'clsx'
 import {
   AriaMeterProps,
   mergeProps,
   useMeter,
   useVisuallyHidden,
 } from 'react-aria'
-import clsx from 'clsx'
 
 type IMeter = {
   showValueLabel: boolean
 } & AriaMeterProps
 
 const Meter = (props: IMeter) => {
-  let {
+  const {
     label,
     showValueLabel = !!label,
     value,
     minValue = 0,
     maxValue = 100,
   } = props
-  let { meterProps, labelProps } = useMeter(props)
-  let { visuallyHiddenProps } = useVisuallyHidden()
-  let barWidth: string = ''
-  let color: string = ''
+  const { meterProps, labelProps } = useMeter(props)
+  const { visuallyHiddenProps } = useVisuallyHidden()
+  let barWidth = ''
+  let color = ''
   if (value) {
-    let percentage = (value - minValue) / (maxValue - minValue)
+    const percentage = (value - minValue) / (maxValue - minValue)
     barWidth = `${Math.round(percentage * 100)}%`
     color = clsx(
       value < 25 && 'bg-danger',
@@ -32,7 +32,7 @@ const Meter = (props: IMeter) => {
     )
   }
 
-  let merged = mergeProps(labelProps, visuallyHiddenProps)
+  const merged = mergeProps(labelProps, visuallyHiddenProps)
   return (
     <div
       {...meterProps}

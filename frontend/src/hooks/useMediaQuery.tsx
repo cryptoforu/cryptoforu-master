@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useIsSSR } from 'react-aria'
 
 export default function useMediaQuery(query: string): boolean {
-  let isSSR = useIsSSR()
+  const isSSR = useIsSSR()
   const getMatches = (query: string): boolean => {
     if (!isSSR) {
       return window.matchMedia(query).matches

@@ -27,12 +27,20 @@ export async function loadMore({
   return await res.json()
 }
 
+export type CountProps = {
+  timestamp: number
+  views: number
+  ips: {
+    ip: string
+  }
+}
+
 export async function count(slug: string) {
-  const res = await fetchData(`shared/count-views/${slug}`, {
+  const res = await fetchData(`count-views/${slug}`, {
     cache: 'no-cache',
   })
   if (!res.ok) {
     throw new Error('Something Went Wrong')
   }
-  return await res.json()
+  return (await res.json()) as CountProps
 }

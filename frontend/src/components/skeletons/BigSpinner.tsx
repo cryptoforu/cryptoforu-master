@@ -1,7 +1,11 @@
+import Image from 'next/image'
+
+import base_white from '@/images/logo/vertical_trimmed_white_full.webp'
+
 export default function BigSpinner() {
   return (
     <div className={'flex max-h-screen w-screen'}>
-      <div className="absolute z-50 flex h-screen w-full animate-pulse items-center justify-center bg-primary-white dark:bg-primary-dark">
+      <div className="absolute z-50 flex h-screen w-full animate-pulse flex-col items-center justify-center bg-primary-white dark:bg-primary-dark">
         <div className="text-center">
           <div role="status">
             <svg
@@ -22,6 +26,15 @@ export default function BigSpinner() {
             </svg>
             <span className="sr-only">Loading...</span>
           </div>
+        </div>
+        <div className={'flex w-full max-w-md bg-primary-dark pl-4 pt-4'}>
+          <Image
+            src={base_white}
+            alt={'Cryptoforu Learn and Earn Crypto'}
+            className={'h-auto max-w-full'}
+            priority={true}
+            fetchPriority={'high'}
+          />
         </div>
       </div>
     </div>

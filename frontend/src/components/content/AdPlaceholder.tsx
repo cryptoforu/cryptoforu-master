@@ -30,7 +30,7 @@ type AdProps = {
   ad: keyof typeof ad_sizes
 }
 const AdPlaceholder = ({ ad = 'inline_rectangle' }: AdProps) => {
-  let maxWidth = (ad_sizes[ad].width + 10).toString()
+  const maxWidth = (ad_sizes[ad].width + 10).toString()
   return (
     <div
       className={`mx-auto overflow-hidden`}

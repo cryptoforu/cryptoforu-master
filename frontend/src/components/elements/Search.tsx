@@ -1,14 +1,14 @@
 'use client'
-import React, { useRef } from 'react'
 import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline/index.js'
+import React, { useRef } from 'react'
 import { AriaSearchFieldProps, useSearchField } from 'react-aria'
 import { useSearchFieldState } from 'react-stately'
 
 export default function Search(props: AriaSearchFieldProps) {
-  let { label } = props
-  let state = useSearchFieldState(props)
-  let ref = useRef(null)
-  let { labelProps, inputProps } = useSearchField(props, state, ref)
+  const { label } = props
+  const state = useSearchFieldState(props)
+  const ref = useRef(null)
+  const { labelProps, inputProps } = useSearchField(props, state, ref)
   return (
     <div>
       <label {...labelProps}>{label}</label>

@@ -1,9 +1,13 @@
 import dynamic from 'next/dynamic'
+
 import WidgetSkeleton from '@/components/skeletons/WidgetSkeleton'
 
-const SidebarComponents = dynamic(() => import('./SidebarComponents'), {
-  loading: () => <WidgetSkeleton numberOfLines={15} />,
-})
+const SidebarComponents = dynamic(
+  () => import('@/components/sidebar/SidebarComponents'),
+  {
+    loading: () => <WidgetSkeleton numberOfLines={15} />,
+  }
+)
 const Sidebar = () => {
   return (
     <div className="hidden w-full shrink grow-0 px-2 sm:w-[26rem] xl:block">

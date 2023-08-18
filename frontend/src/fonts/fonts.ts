@@ -11,4 +11,4 @@ const detacher = localFont({
   display: 'swap',
 })
 
-export { space, detacher }
+export { detacher, space }

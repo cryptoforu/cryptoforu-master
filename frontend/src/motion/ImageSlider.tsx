@@ -1,11 +1,12 @@
+import { clsx } from 'clsx'
 import { AnimatePresence, motion, wrap } from 'framer-motion'
+import { ReactNode } from 'react'
+
+import LazyImage from '@/components/elements/LazyImage'
+import { Text } from '@/components/typography'
 import { hoverVariants, slideVariants } from '@/motion/variants'
 import useImageSliderController from '@/store/controllers/useImageSliderController'
-import LazyImage from '@/components/elements/LazyImage'
-import { clsx } from 'clsx'
-import { ReactNode } from 'react'
 import { useImageSliderContext } from '@/store/useImageSliderStore'
-import { Text } from '@/components/typography'
 
 const swipeConfidenceThreshold = 10000
 

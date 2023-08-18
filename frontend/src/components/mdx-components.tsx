@@ -1,25 +1,26 @@
 import type { MDXComponents } from 'mdx/types'
+import { Route } from 'next'
+import { ImageProps } from 'next/image'
+import { useMDXComponent } from 'next-contentlayer/hooks'
+import { ReactNode } from 'react'
+
+import { Card, CardBody, SectionHeader } from '@/components/content'
+import type { ISectionHeaderProps } from '@/components/content/SectionHeader'
 import {
   ExternalLink,
   InternalLink,
   ResponsiveImage,
 } from '@/components/elements'
+import SectionGrid from '@/components/patterns/SectionGrid'
 import { Prose } from '@/components/typography'
-import { getBaseUrl } from '@/lib/getApiUrl'
-import { Route } from 'next'
-import { ReactNode } from 'react'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import type { IProseProps } from '@/components/typography/Prose'
 import type {
   IContainerProps,
   IGridProps,
   ISectionProps,
 } from '@/components/wrappers'
 import { Container, Grid, Section } from '@/components/wrappers'
-import { Card, CardBody, SectionHeader } from '@/components/content'
-import type { ISectionHeaderProps } from '@/components/content/SectionHeader'
-import type { IProseProps } from '@/components/typography/Prose'
-import { ImageProps } from 'next/image'
-import SectionGrid from '@/components/patterns/SectionGrid'
+import { getBaseUrl } from '@/lib/getApiUrl'
 
 const baseUrl = getBaseUrl()
 

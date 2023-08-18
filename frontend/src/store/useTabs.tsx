@@ -1,59 +1,53 @@
-import { create } from 'zustand'
-import { ReactNode, useTransition } from 'react'
-
+import { Key, useTransition } from 'react'
 import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-export type TabsProps = {
-  id: string
-  label: string | ReactNode
-  content: ReactNode
-  image: string
-}
-type TabsState = {
-  id: string
-  selected: number
-}
+import createSelectors from '@/store/createSelectors'
 
+type DataTabsState = {
+  isSelected: string
+  direction: number
+  focused: string | null
+}
 type TabsActions = {
-  setSelected: (key: string) => void
-  setIndex: (index: number) => void
-  getContent: (data: Array<TabsProps>) => TabsProps | undefined
+  setDataTab: (key: Key) => void
+  setFocused: (focused: string | null) => void
 }
 
-interface TabsStore extends TabsState, TabsActions {}
+interface TabsStore extends DataTabsState, TabsActions {}
 
-const useTabsStore = create<TabsStore>((set, get) => ({
-  id: '1',
-  selected: 0,
-  setSelected: (key) => set({ id: key }),
-  setIndex: (index) => set({ selected: index }),
-  getContent: (data) => {
-    return data.find((el) => el.id === get().id)
-  },
-}))
-
-export const useTabs = () => {
+const useTabsStore = createWithEqualityFn<TabsStore>(
+  (set) => ({
+    isSelected: '1',
+    direction: 1,
+    focused: null,
+    setDataTab: (key) =>
+      set((state) => ({
+        isSelected: key as string,
+        direction: key > state.isSelected ? 0 : 1,
+      })),
+    setFocused: (focused) => set({ focused: focused }),
+  }),
+  shallow
+)
+export const useTabs = createSelectors(useTabsStore)
+export const useDataTabs = () => {
+  const [[isSelected, direction], setDataTab] = useTabsStore((state) => [
+    [state.isSelected, state.direction],
+    state.setDataTab,
+  ])
   const [isPending, startTransition] = useTransition()
-  const [id, setSelected] = useTabsStore(
-    (state) => [state.id, state.setSelected],
-    shallow
-  )
-  const getContent = useTabsStore((state) => state.getContent)
-  const setIndex = useTabsStore((state) => state.setIndex)
-  const selected = useTabsStore((state) => state.selected)
 
-  function onSelectedChange(key: string, index: number) {
+  function onSelectionChange(key: Key) {
     startTransition(() => {
-      setSelected(key)
-      setIndex(index)
+      setDataTab(key)
     })
   }
 
   return {
-    id,
-    onSelectedChange,
-    getContent,
     isPending,
-    selected,
+    onSelectionChange,
+    isSelected,
+    direction,
   }
 }

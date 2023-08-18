@@ -26,25 +26,25 @@
       "id": "social_links6462b93291a48",
       "href": "https://twitter.com/CryptoforuEarn",
       "name": "Twitter",
-      "image": "6462b9327c509.png"
+      "image": "twitter_circled_240px.png"
     },
     {
       "id": "social_links6462b900e8b5c6462b93291a4b",
       "href": "https://github.com/cryptoforu",
       "name": "GitHub",
-      "image": "6462b900cc042.png"
+      "image": "github_240px.png"
     },
     {
       "id": "social_links6462b8ce7fb456462b900e8b5f6462b93291a4c",
       "href": "https://www.reddit.com/user/CryptoforuLE",
       "name": "Reddit",
-      "image": "6462b8ce67ccc.png"
+      "image": "reddit_240px.png"
     },
     {
       "id": "social_links6462b7ff32db96462b8ce7fb486462b900e8b616462b93291a4e",
       "href": "https://www.facebook.com/cryptoforu",
       "name": "Facebook",
-      "image": "6462b7ff19904.png"
+      "image": "facebook_circled_240px.png"
     }
   ]
 }

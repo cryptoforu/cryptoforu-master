@@ -1,17 +1,21 @@
-import MenuLink from '@/components/navbar/MenuLink'
-import SubMenu from '@/components/navbar/SubMenu'
-import { MainMenu } from '@/types/shared-types'
 import { Route } from 'next'
 
-const MainMenu = ({ menu }: { menu: MainMenu[] }) => {
+import MenuLink from '@/components/navbar/MenuLink'
+import SubMenu from '@/components/navbar/SubMenu'
+import { getMenu } from '@/requests/getMenu'
+import { MenuProvider } from '@/store/useNavStore'
+
+const MainMenu = async () => {
+  const menu = await getMenu()
   return (
-    <div className={'hidden lg:flex lg:gap-10'}>
-      {menu.map((item) =>
+    <MenuProvider menu={menu}>
+      {menu.map((item, index) =>
         item.childs.length === 0 ? (
           <MenuLink
             key={item.route}
             href={item.route as Route}
             title={item.label}
+            index={index}
           />
         ) : (
           <SubMenu
@@ -19,10 +23,11 @@ const MainMenu = ({ menu }: { menu: MainMenu[] }) => {
             href={item.route as Route}
             title={item.label}
             items={item.childs}
+            index={index}
           />
         )
       )}
-    </div>
+    </MenuProvider>
   )
 }
 export default MainMenu

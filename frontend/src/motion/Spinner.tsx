@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { spinTransition } from '@/motion/transitions'
 
 const Spinner = () => {

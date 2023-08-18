@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+
 import AppLogo from '@/components/AppLogo'
 
 const containerVariants = {

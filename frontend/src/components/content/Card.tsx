@@ -1,7 +1,8 @@
 'use client'
-import React, { HTMLAttributes, PropsWithChildren } from 'react'
 import { clsx } from 'clsx'
-import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
+import React, { HTMLAttributes, PropsWithChildren } from 'react'
+
 import type {
   CardBodyVariants,
   CardFooterVariants,
@@ -17,11 +18,11 @@ import {
   cardHeader,
   cardImage,
 } from '@/components/content/variants/card-variants'
-import { motion } from 'framer-motion'
-import AnimatedImage from '@/motion/AnimatedImage'
+import { InternalLink } from '@/components/elements'
 import { Heading } from '@/components/typography'
 import { IHeadingProps } from '@/components/typography/Heading'
-import { InternalLink } from '@/components/elements'
+import { cn } from '@/lib/utils'
+import AnimatedImage from '@/motion/AnimatedImage'
 
 export interface ICard<As extends React.ElementType>
   extends CardVariants,

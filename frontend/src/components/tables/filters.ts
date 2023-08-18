@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {RankingInfo} from '@tanstack/match-sorter-utils'
-import {rankings, rankItem} from '@tanstack/match-sorter-utils'
-import type {Row} from '@tanstack/react-table'
+import type { RankingInfo } from '@tanstack/match-sorter-utils'
+import { rankings, rankItem } from '@tanstack/match-sorter-utils'
+import type { Row } from '@tanstack/react-table'
 
 const fuzzy = <TData extends Record<string, any> = {}>(
   row: Row<TData>,

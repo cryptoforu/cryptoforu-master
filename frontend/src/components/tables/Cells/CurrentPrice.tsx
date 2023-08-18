@@ -1,8 +1,9 @@
-import { Text } from '@/components/typography'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
-import { Currency } from '@/components/misc/NumberFormatter'
 import { clsx } from 'clsx'
 import { useDeferredValue } from 'react'
+
+import { Currency } from '@/components/misc/NumberFormatter'
+import { Text } from '@/components/typography'
 
 interface CurrentPriceCellProps {
   nextPrice: number
@@ -10,7 +11,7 @@ interface CurrentPriceCellProps {
 }
 
 const CurrentPrice = (props: CurrentPriceCellProps) => {
-  let colors = useDeferredValue(props.color) as 'danger' | 'success'
+  const colors = useDeferredValue(props.color) as 'danger' | 'success'
 
   return (
     <>

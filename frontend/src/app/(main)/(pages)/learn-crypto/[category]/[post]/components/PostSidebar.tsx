@@ -1,5 +1,5 @@
-import Sidebar from '@/components/sidebar/Sidebar'
 import { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import Sidebar from '@/components/sidebar/Sidebar'
 import SidebarProvider from '@/store/controllers/SidebarProvider'
 
 const PostSidebar = ({ post }: { post: PostApiResource }) => {

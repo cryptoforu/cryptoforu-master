@@ -1,7 +1,8 @@
 'use client'
-import { BtnLink, InternalLink } from '@/components/elements'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid'
 import { Route } from 'next'
+
+import { BtnLink, InternalLink } from '@/components/elements'
 
 type LinkMeta = {
   name: string

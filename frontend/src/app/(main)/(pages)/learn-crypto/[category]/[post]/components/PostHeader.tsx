@@ -1,5 +1,5 @@
-import { Heading, ProseMarkdown, Text } from '@/components/typography'
 import { DateFormatter } from '@/components/misc/DateFormatter'
+import { Heading, ProseMarkdown, Text } from '@/components/typography'
 
 interface PostHeaderProps {
   children: string

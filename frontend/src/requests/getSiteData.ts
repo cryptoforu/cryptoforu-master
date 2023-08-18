@@ -1,8 +1,10 @@
-import { fetchData } from '@/lib/fetchClient'
 import 'server-only'
-import seo from '@/lib/seo'
+
 import { Metadata } from 'next'
+
+import { fetchData } from '@/lib/fetchClient'
 import { getImageUrl } from '@/lib/getApiUrl'
+import seo from '@/lib/seo'
 
 interface SiteData {
   id: number

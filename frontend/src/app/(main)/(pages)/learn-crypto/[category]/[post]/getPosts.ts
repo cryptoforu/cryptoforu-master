@@ -1,10 +1,12 @@
+import 'server-only'
+
+import { notFound } from 'next/navigation'
+import { cache } from 'react'
+
 import type {
   CursorPaginatedPost,
   PostApiResource,
 } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
-import { cache } from 'react'
-import 'server-only'
-import { notFound } from 'next/navigation'
 import { fetchData } from '@/lib/fetchClient'
 
 export const getArticle = cache(async ({ slug }: { slug: string }) => {
@@ -26,7 +28,8 @@ export const getArticle = cache(async ({ slug }: { slug: string }) => {
 
 export const getArticles = cache(
   async (params?: string, init?: RequestInit | undefined) => {
-    let url = params !== undefined ? `blog/posts` + '?' + params : `blog/posts`
+    const url =
+      params !== undefined ? `blog/posts` + '?' + params : `blog/posts`
     const response = await fetchData(url, init)
     if (!response.ok) {
       throw new Error('Failed to fetch Article List')

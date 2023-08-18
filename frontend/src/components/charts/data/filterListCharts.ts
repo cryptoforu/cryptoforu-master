@@ -1,9 +1,10 @@
-import { ListStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import { ChartData } from 'chart.js'
 import { ChartProps } from 'react-chartjs-2'
 
+import { ListStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
+
 export function filterListCharts({ data }: { data: ListStats }) {
-  let chartCoinData: ChartData<'bar'> = {
+  const chartCoinData: ChartData<'bar'> = {
     labels: data.coinStats.map((val) => val.coin),
     datasets: [
       {
@@ -14,7 +15,7 @@ export function filterListCharts({ data }: { data: ListStats }) {
       },
     ],
   }
-  let chartFaucetData: ChartData<'bar'> = {
+  const chartFaucetData: ChartData<'bar'> = {
     labels: data.faucetsStats.map((val) => val.coin),
     datasets: [
       {

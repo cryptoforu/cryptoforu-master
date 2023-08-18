@@ -1,13 +1,14 @@
 'use client'
-import { useBackToTop } from '@/store/useBackToTopStore'
-import { Button } from '@/components/elements'
 import {
   motion,
   useMotionValueEvent,
   useScroll,
   useSpring,
 } from 'framer-motion'
+
+import { Button } from '@/components/elements'
 import useScrollTo from '@/hooks/useScrollTo'
+import { useBackToTop } from '@/store/useBackToTopStore'
 
 const BackToTop = () => {
   const showBtn = useBackToTop.use.showBtn()

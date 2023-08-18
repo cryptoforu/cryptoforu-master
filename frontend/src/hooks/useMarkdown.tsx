@@ -1,8 +1,8 @@
 import { useRemarkSync, UseRemarkSyncOptions } from 'react-remark'
-import rSlug from 'rehype-slug'
-import rExternalLinks from 'rehype-external-links'
-import remarkUnwrapImages from 'remark-unwrap-images'
 import rAutolinkHeadings from 'rehype-autolink-headings'
+import rExternalLinks from 'rehype-external-links'
+import rSlug from 'rehype-slug'
+import remarkUnwrapImages from 'remark-unwrap-images'
 
 const autoLinkOptions = {
   properties: {

@@ -1,12 +1,13 @@
-import { getMetadata, preload } from '@/lib/getData'
-import { getCategoryMethods } from '@/app/(main)/(pages)/earn-crypto/getMethods'
 import { Suspense } from 'react'
-import { SectionSkeleton } from '@/components/skeletons'
-import TabsSection from '@/app/(main)/(pages)/earn-crypto/components/TabsSection'
+
 import Description from '@/app/(main)/(pages)/earn-crypto/components/Description'
-import { getFaq } from '@/requests/getFaq'
 import Faq from '@/app/(main)/(pages)/earn-crypto/components/Faq'
+import TabsSection from '@/app/(main)/(pages)/earn-crypto/components/TabsSection'
+import { getCategoryMethods } from '@/app/(main)/(pages)/earn-crypto/getMethods'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
+import { SectionSkeleton } from '@/components/skeletons'
+import { getMetadata, preload } from '@/lib/getData'
+import { getFaq } from '@/requests/getFaq'
 
 preload('site/shared/meta-data?filter[page_name]=earn_crypto')
 
@@ -16,7 +17,7 @@ export async function generateMetadata() {
 
 export default async function EarnCrypto() {
   const earnCategories = await getCategoryMethods()
-  const faq = getFaq()
+  const faq = await getFaq()
   return (
     <PageWrapper>
       <Suspense fallback={<SectionSkeleton />}>

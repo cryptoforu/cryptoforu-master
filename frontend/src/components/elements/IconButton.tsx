@@ -1,10 +1,11 @@
 'use client'
+import { motion } from 'framer-motion'
+import Image, { ImageProps, StaticImageData } from 'next/image'
+import NextLink from 'next/link'
+import React from 'react'
+
 import { Button } from '@/components/elements'
 import { IButtonProps } from '@/components/elements/Button'
-import Image, { ImageProps, StaticImageData } from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import NextLink from 'next/link'
 
 type Position = 'left' | 'right'
 
@@ -53,7 +54,7 @@ interface IconButtonProps extends IButtonProps<any>, IconProps {
 
 export default function IconButton(props: IconButtonProps) {
   const { position = 'left', as, label, src, alt, ...rest } = props
-  let render =
+  const render =
     src !== undefined ? (
       <ImageIcon
         label={label}

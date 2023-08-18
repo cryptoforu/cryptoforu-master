@@ -1,7 +1,8 @@
 'use client'
 import { Suspense } from 'react'
-import Spinner from '@/motion/Spinner'
+
 import DataTable from '@/components/tables/DataTable'
+import Spinner from '@/motion/Spinner'
 import useCryptoController from '@/store/controllers/useCryptoController'
 
 const CryptoData = () => {

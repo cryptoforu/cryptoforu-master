@@ -1,13 +1,14 @@
 'use client'
+import { createColumnHelper } from '@tanstack/react-table'
 import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { CryptoData } from '@/types/crypto'
-import { createColumnHelper } from '@tanstack/react-table'
+
 import CurrentPrice from '@/components/tables/Cells/CurrentPrice'
 import ImageCell from '@/components/tables/Cells/ImageCell'
-import TextCell from '@/components/tables/Cells/TextCell'
 import PriceCell from '@/components/tables/Cells/PriceCell'
+import TextCell from '@/components/tables/Cells/TextCell'
+import { CryptoData } from '@/types/crypto'
 
 const columnHelper = createColumnHelper<CryptoData>()
 
@@ -94,7 +95,7 @@ const createCryptoStore = (initProps?: Partial<CryptoState>) => {
       columns: [...defColumns],
       updatePrice: (id, price) =>
         set((state) => {
-          let currentPrice = state.crypto[id].attributes.current_price
+          const currentPrice = state.crypto[id].attributes.current_price
           state.crypto[id].attributes.current_price = price
           state.crypto[id].attributes.current_color =
             currentPrice > price ? 'danger' : 'success'
@@ -113,7 +114,7 @@ export function CryptoProvider({
   children,
   ...props
 }: PropsWithChildren<CryptoState>) {
-  let [cryptoStore] = useState(() => createCryptoStore(props))
+  const [cryptoStore] = useState(() => createCryptoStore(props))
   return (
     <CryptoContext.Provider value={cryptoStore}>
       {children}

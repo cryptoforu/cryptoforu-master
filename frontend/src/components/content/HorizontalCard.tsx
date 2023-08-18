@@ -1,8 +1,9 @@
-import { Text } from '@/components/typography'
-import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Route } from 'next'
-import AnimatedImage from '@/motion/AnimatedImage'
+
 import { Card, CardOverlayLink } from '@/components/content/index'
+import { DateFormatter } from '@/components/misc/DateFormatter'
+import { Text } from '@/components/typography'
+import AnimatedImage from '@/motion/AnimatedImage'
 
 type HorizontalCardProps = {
   image: string

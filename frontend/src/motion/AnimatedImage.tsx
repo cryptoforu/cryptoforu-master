@@ -1,9 +1,10 @@
 'use client'
+import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+
 import type { LazyImageProps } from '@/components/elements/LazyImage'
 import LazyImage from '@/components/elements/LazyImage'
-import { clsx } from 'clsx'
 
 const MotionImage = motion(LazyImage)
 

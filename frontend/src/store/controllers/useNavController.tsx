@@ -1,11 +1,10 @@
 'use client'
-import useNavStore from '@/store/useNavStore'
-import { useEffect, useRef } from 'react'
 import { useMotionValueEvent, useScroll } from 'framer-motion'
-import { Nullable } from '@/types/shared-types'
-import { usePathname } from 'next/navigation'
-import { useUpdateEffect } from '@/hooks/useUpdateEffect'
+import { useCallback, useEffect, useRef } from 'react'
 import { useHover } from 'react-aria'
+
+import useNavStore, { useMenuContext } from '@/store/useNavStore'
+import { Nullable } from '@/types/shared-types'
 
 export const useNavController = () => {
   const scrolledRef = useRef(useNavStore.use.navState())
@@ -33,9 +32,9 @@ export const useNavHover = () => {
     []
   )
 
-  function isHovered(index: Nullable<string | number>) {
-    return hoveredRef.current === index
-  }
+  const isHovered = useCallback((id: Nullable<string | number>) => {
+    return hoveredRef.current === id
+  }, [])
 
   const { hoverProps } = useHover({
     onHoverStart: (e) => setHovered(e.target.id),
@@ -45,26 +44,18 @@ export const useNavHover = () => {
   return {
     isHovered,
     hoverProps,
+    hoveredIndex: hoveredRef.current,
+    setHovered,
   }
 }
 
 export const useActiveLink = () => {
-  const path = usePathname()
-  const activeRef = useRef(useNavStore.use.activeLink())
-  const setActive = useNavStore.use.setActive()
-  useEffect(
-    () =>
-      useNavStore.subscribe((state) => (activeRef.current = state.activeLink)),
-    []
+  const activeItem = useMenuContext((state) => state.activeItem)
+
+  return useCallback(
+    (index: number) => {
+      return activeItem === index
+    },
+    [activeItem]
   )
-
-  useUpdateEffect(() => {
-    setActive(path)
-  }, [path])
-
-  function isActive(href: string) {
-    return activeRef.current === href
-  }
-
-  return isActive
 }

@@ -1,6 +1,6 @@
 'use client'
-import type { ReactNode } from 'react'
 import { useParams } from 'next/navigation'
+import type { ReactNode } from 'react'
 
 const HeroWrapper = ({ children }: { children: ReactNode }) => {
   const params = useParams()

@@ -1,7 +1,7 @@
-import HorizontalCard from '@/components/content/HorizontalCard'
-import { Container } from '@/components/wrappers'
 import type { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
 import BlogCard from '@/components/content/BlogCard'
+import HorizontalCard from '@/components/content/HorizontalCard'
+import { Container } from '@/components/wrappers'
 
 const LatestPosts = ({
   latest_posts,

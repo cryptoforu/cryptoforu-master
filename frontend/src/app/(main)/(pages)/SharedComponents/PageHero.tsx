@@ -1,6 +1,6 @@
+import PageHeader from '@/app/(main)/(pages)/SharedComponents/PageHeader'
 import { HeroPattern } from '@/components/content'
 import { getBreadcrumbs, preloadBreadcrumbs } from '@/requests/getBreadcrumbs'
-import PageHeader from '@/app/(main)/(pages)/SharedComponents/PageHeader'
 
 preloadBreadcrumbs()
 

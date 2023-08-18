@@ -1,8 +1,9 @@
-import { Container, Section } from '@/components/wrappers'
-import { HoverCard, SectionHeader } from '@/components/content'
-import PolygonBlur from '@/components/patterns/PolygonBlur'
 import { allFeatures } from 'contentlayer/generated'
+
+import { HoverCard, SectionHeader } from '@/components/content'
 import MdxContent from '@/components/mdx-components'
+import PolygonBlur from '@/components/patterns/PolygonBlur'
+import { Container, Section } from '@/components/wrappers'
 
 const Features = () => {
   return (

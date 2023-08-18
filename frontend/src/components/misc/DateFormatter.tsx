@@ -3,7 +3,7 @@
 import { useDateFormatter } from 'react-aria'
 
 export const DateFormatter = ({ date }: { date?: string }) => {
-  let formatter = useDateFormatter({
+  const formatter = useDateFormatter({
     dateStyle: 'full',
   })
   return (

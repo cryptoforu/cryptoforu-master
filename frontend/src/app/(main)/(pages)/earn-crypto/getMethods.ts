@@ -1,12 +1,13 @@
-import { fetchData } from '@/lib/fetchClient'
+import 'server-only'
+
 import {
   EarnCategoryProps,
   EarningMethodsProps,
 } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
-import 'server-only'
+import { fetchData } from '@/lib/fetchClient'
 
 export const getMethods = async (params?: string) => {
-  let url =
+  const url =
     params !== undefined
       ? `earn/earn-methods` + '?' + params
       : `earn/earn-methods`
@@ -20,7 +21,7 @@ export const getMethods = async (params?: string) => {
 }
 
 export const getCategoryMethods = async (params?: string) => {
-  let url =
+  const url =
     params !== undefined
       ? `earn/earn_categories?include=data` + '?' + params
       : `earn/earn_categories?include=data`

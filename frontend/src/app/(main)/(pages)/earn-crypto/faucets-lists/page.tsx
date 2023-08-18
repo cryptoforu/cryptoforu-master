@@ -1,21 +1,22 @@
-import { getMetadata } from '@/lib/getData'
-import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
-import { AdPlaceholder } from '@/components/content'
-import { Container, Section } from '@/components/wrappers'
+import { listDescription } from 'contentlayer/generated'
+import lazy from 'next/dynamic'
+import { Suspense } from 'react'
+
 import ListData from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListData'
 import ListFilters from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListFilters'
 import ListPagination from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListPagination'
-import { Suspense } from 'react'
+import { fetchList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getLists'
+import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
+import { AdPlaceholder } from '@/components/content'
+import MdxContent from '@/components/mdx-components'
 import {
   CardSkeleton,
   SectionSkeleton,
   TableSkeleton,
 } from '@/components/skeletons'
-import { fetchList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getLists'
+import { Container, Section } from '@/components/wrappers'
+import { getMetadata } from '@/lib/getData'
 import FaucetListProvider from '@/store/useListStore'
-import { listDescription } from 'contentlayer/generated'
-import MdxContent from '@/components/mdx-components'
-import lazy from 'next/dynamic'
 
 export const dynamic = 'force-dynamic'
 

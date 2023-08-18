@@ -1,7 +1,7 @@
+import { BtnLink, Button } from '@/components/elements'
 import GridPattern from '@/components/patterns/GridPattern'
 import Heading from '@/components/typography/Heading'
 import Text from '@/components/typography/Text'
-import { BtnLink, Button } from '@/components/elements'
 import { detacher } from '@/fonts/fonts'
 
 function HeroPattern() {

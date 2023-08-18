@@ -1,24 +1,25 @@
+import { cva, VariantProps } from 'class-variance-authority'
+import { motion } from 'framer-motion'
 import { ReactNode, useRef } from 'react'
 import type { AriaModalOverlayProps } from 'react-aria'
 import { Overlay, useModalOverlay } from 'react-aria'
-import { motion } from 'framer-motion'
 import type { OverlayTriggerState } from 'react-stately'
-import { cva, VariantProps } from 'class-variance-authority'
+
 import { cn } from '@/lib/utils'
 import { modalVariants, underlayVariants } from '@/motion/variants'
 
-const modal = cva('relative z-1 top-[10%] focus:outline-none w-full', {
+const modal = cva('z-1 relative top-[10%] w-full focus:outline-none', {
   variants: {
     variant: {
       primary:
-        'bg-white/90 border border-gray-300 shadow-2xl rounded-lg dark:bg-gray-950/90 dark:border-gray-900',
+        'rounded-lg border border-gray-300 bg-white/90 shadow-2xl dark:border-gray-900 dark:bg-gray-950/90',
       transparent: 'shadow-2xl shadow-slate-600/50',
     },
     size: {
-      sm: 'max-w-sm h-fit max-h-[50vh]',
-      md: 'max-w-md h-fit max-h-[70vh]',
-      lg: 'max-w-2xl h-fit max-h-[80vh]',
-      xl: 'max-w-5xl h-fit max-h-[80vh]',
+      sm: 'h-fit max-h-[50vh] max-w-sm',
+      md: 'h-fit max-h-[70vh] max-w-md',
+      lg: 'h-fit max-h-[80vh] max-w-2xl',
+      xl: 'h-fit max-h-[80vh] max-w-5xl',
       xxl: 'max-w-screen h-fit max-h-screen',
     },
   },
@@ -44,8 +45,8 @@ const Modal = ({
   size = 'md',
   ...props
 }: ModalProps) => {
-  let modalRef = useRef<HTMLDivElement>(null)
-  let { modalProps, underlayProps } = useModalOverlay(props, state, modalRef)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const { modalProps, underlayProps } = useModalOverlay(props, state, modalRef)
 
   return (
     <Overlay>

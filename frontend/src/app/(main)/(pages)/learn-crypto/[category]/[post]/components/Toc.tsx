@@ -1,22 +1,23 @@
 'use client'
-import { Heading } from '@/components/typography'
 import { clsx } from 'clsx'
+import { JSXElementConstructor, ReactElement } from 'react'
+import { Button } from 'react-aria-components'
+
+import { TextSkeleton } from '@/components/skeletons'
+import { Heading } from '@/components/typography'
+import useScrollTo from '@/hooks/useScrollTo'
+import { collectHeadings } from '@/lib/collectHeadings'
 import {
   usePostController,
   useToc,
 } from '@/store/controllers/usePostController'
-import { TextSkeleton } from '@/components/skeletons'
-import { JSXElementConstructor, ReactElement } from 'react'
-import { collectHeadings } from '@/lib/collectHeadings'
-import useScrollTo from '@/hooks/useScrollTo'
-import { Button } from 'react-aria-components'
 
 const Toc = ({
   markdown,
 }: {
   markdown: ReactElement<any, string | JSXElementConstructor<any>>
 }) => {
-  let toc = collectHeadings(markdown as any)
+  const toc = collectHeadings(markdown as any)
   useToc(toc)
   const { toc: tableOfContents, isActive, currentHeading } = usePostController()
   const scrollTo = useScrollTo()

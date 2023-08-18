@@ -1,9 +1,10 @@
-import { Container, Section } from '@/components/wrappers'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
+
+import CryptoData from '@/app/(main)/components/partials/CryptoData'
 import { SectionHeader } from '@/components/content'
 import { Button } from '@/components/elements'
 import { Text } from '@/components/typography'
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
-import CryptoData from '@/app/(main)/components/partials/CryptoData'
+import { Container, Section } from '@/components/wrappers'
 
 const Crypto = () => {
   return (

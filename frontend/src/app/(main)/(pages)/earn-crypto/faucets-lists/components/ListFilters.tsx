@@ -1,7 +1,7 @@
-import ListPageSize from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListPageSize'
-import ListTabs from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListTabs'
-import ListSearch from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListSearch'
 import ListLastUpdate from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListLastUpdate'
+import ListPageSize from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListPageSize'
+import ListSearch from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListSearch'
+import ListTabs from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListTabs'
 
 const ListFilters = () => {
   return (

@@ -1,7 +1,8 @@
-import { CurrencyState } from '@/store/useListStore'
 import { cache } from 'react'
+
 import { FaucetListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import { getBaseUrl } from '@/lib/getApiUrl'
+import { CurrencyState } from '@/store/useListStore'
 
 export const fetchList = cache(
   async (

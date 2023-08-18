@@ -1,11 +1,12 @@
 'use client'
 
-import Link from 'next/link'
-import AppLogo from '@/components/AppLogo'
-import { useNavController } from '@/store/controllers/useNavController'
-import ThemeToggle from '@/components/navbar/ThemeToggle'
 import { clsx } from 'clsx'
+import Link from 'next/link'
 import { ReactNode } from 'react'
+
+import AppLogo from '@/components/AppLogo'
+import ThemeToggle from '@/components/navbar/ThemeToggle'
+import { useNavController } from '@/store/controllers/useNavController'
 
 const baseStyle =
   'sticky top-0 !z-50 w-full border-b border-slate-900/10 shadow-md shadow-slate-900/5 transition-colors duration-500 dark:border-slate-50/[0.06] dark:shadow-none'
@@ -17,6 +18,7 @@ const variants = {
 
 const Navbar = ({ children }: { children: ReactNode }) => {
   const isScrolled = useNavController()
+
   return (
     <header
       className={clsx(
@@ -29,12 +31,12 @@ const Navbar = ({ children }: { children: ReactNode }) => {
         aria-label="Navbar"
       >
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5">
+          <Link href={'/'} className="-m-1.5">
             <span className="sr-only">Home page</span>
             <AppLogo variant="nav_logo" className="h-auto w-20" />
           </Link>
         </div>
-        {children}
+        <div className={'hidden lg:flex'}>{children}</div>
         <div className="flex flex-1 items-center justify-end gap-4">
           <ThemeToggle />
         </div>

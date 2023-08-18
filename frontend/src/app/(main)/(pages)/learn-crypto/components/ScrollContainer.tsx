@@ -7,6 +7,7 @@ import {
   useSpring,
 } from 'framer-motion'
 import { ReactNode, useRef } from 'react'
+
 import { Text } from '@/components/typography'
 
 interface ScrollProps {
@@ -52,7 +53,7 @@ export default function ScrollContainer({
           style={{ height: heightSpring }}
         />
 
-        <div className="flex max-w-3xl flex-col space-y-16">{children}</div>
+        <div className="flex flex-col space-y-16">{children}</div>
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
-import type { PostActions, UsePostState } from '@/store/types/post-store'
 import { create } from 'zustand'
 import { redux } from 'zustand/middleware'
+
+import type { PostActions, UsePostState } from '@/store/types/post-store'
 
 const postState = {
   currentHeading: ' ',

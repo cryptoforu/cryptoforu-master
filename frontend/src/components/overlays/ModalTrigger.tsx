@@ -1,11 +1,12 @@
+import { AnimatePresence } from 'framer-motion'
+import { cloneElement, ReactElement, ReactNode } from 'react'
 import { useOverlayTrigger } from 'react-aria'
 import { OverlayTriggerProps, OverlayTriggerState } from 'react-stately'
-import { cloneElement, ReactElement, ReactNode } from 'react'
+
+import { Button } from '@/components/elements'
+import type { BtnVariantsProps } from '@/components/elements/variants/btn-variants'
 import type { ModalProps } from '@/components/overlays/Modal'
 import Modal from '@/components/overlays/Modal'
-import { Button } from '@/components/elements'
-import { AnimatePresence } from 'framer-motion'
-import type { BtnVariantsProps } from '@/components/elements/variants/btn-variants'
 
 interface ModalTriggerProps {
   children: (close: OverlayTriggerState['close']) => ReactElement
@@ -24,7 +25,7 @@ const ModalTrigger = ({
 }: ModalTriggerProps &
   OverlayTriggerProps &
   Omit<ModalProps, keyof ModalTriggerProps>) => {
-  let { triggerProps, overlayProps } = useOverlayTrigger(
+  const { triggerProps, overlayProps } = useOverlayTrigger(
     { type: 'dialog' },
     state
   )

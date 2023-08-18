@@ -1,7 +1,7 @@
-import { getStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getStats'
-import { Container, Grid, Section } from '@/components/wrappers'
-import { SectionHeader } from '@/components/content'
 import ListCharts from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListCharts'
+import { getStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getStats'
+import { SectionHeader } from '@/components/content'
+import { Container, Grid, Section } from '@/components/wrappers'
 
 const ListStats = async () => {
   const stats = await getStats()

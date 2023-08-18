@@ -1,11 +1,13 @@
 'use client'
+import { createContext, PropsWithChildren, useContext, useState } from 'react'
+import { createStore } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
+import { useStoreWithEqualityFn } from 'zustand/traditional'
+
 import {
   Currency,
   FaucetListData,
 } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
-import { createStore, useStore } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
-import { createContext, PropsWithChildren, useContext, useState } from 'react'
 
 export type CurrencyState = Currency | 'top_hundred' | 'new_faucets'
 
@@ -85,7 +87,7 @@ export default function FaucetListProvider({
   children,
   ...props
 }: PropsWithChildren<FaucetListContext>) {
-  let [listStore] = useState(() => createListStore(props))
+  const [listStore] = useState(() => createListStore(props))
   return (
     <FaucetListContext.Provider value={listStore}>
       {children}
@@ -101,5 +103,5 @@ export function useListContext<T>(
   if (!listStore) {
     throw new Error('Must be under ListProvider')
   }
-  return useStore(listStore, selector, equalityFn)
+  return useStoreWithEqualityFn(listStore, selector, equalityFn)
 }

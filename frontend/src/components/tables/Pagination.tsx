@@ -1,10 +1,11 @@
-import { Button } from '@/components/elements'
-import { PaginationProps } from '@/types/shared-types'
-import { Text } from '@/components/typography'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/20/solid'
+
+import { Button } from '@/components/elements'
+import { Text } from '@/components/typography'
+import { PaginationProps } from '@/types/shared-types'
 
 interface IPaginate extends PaginationProps {
   onPageChange: (page: string) => void

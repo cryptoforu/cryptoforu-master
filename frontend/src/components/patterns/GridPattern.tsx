@@ -13,7 +13,7 @@ interface GridProps {
 
 const GridPattern = (props: GridProps) => {
   const { width, height, x, y, squares, className } = props
-  let patternId = useId(props.id)
+  const patternId = useId(props.id)
   return (
     <svg aria-hidden={'true'} className={className}>
       <defs>

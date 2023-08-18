@@ -1,7 +1,8 @@
-import { ProseMarkdown, Text } from '@/components/typography'
 import { Route } from 'next'
-import AnimatedImage from '@/motion/AnimatedImage'
+
 import { Card, CardOverlayLink } from '@/components/content/index'
+import { ProseMarkdown, Text } from '@/components/typography'
+import AnimatedImage from '@/motion/AnimatedImage'
 
 export type BlogCardProps = {
   image: string

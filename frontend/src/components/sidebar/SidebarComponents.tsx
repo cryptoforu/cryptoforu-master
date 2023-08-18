@@ -1,9 +1,11 @@
 'use client'
-import { useSidebarContext } from '@/store/controllers/SidebarProvider'
-import { SidebarSocial, SideBarTags } from './'
-import { AdPlaceholder } from '@/components/content'
-import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
 import { Fragment } from 'react'
+
+import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { AdPlaceholder } from '@/components/content'
+import { useSidebarContext } from '@/store/controllers/SidebarProvider'
+
+import { SidebarSocial, SideBarTags } from './'
 
 type ComponentsProps = {
   id: 'Components'
@@ -12,7 +14,7 @@ type ComponentsProps = {
 
 const SidebarComponents = () => {
   const { sidebarItems, data } = useSidebarContext<ComponentsProps>()
-  return sidebarItems.map((el) => {
+  const Element = sidebarItems.map((el) => {
     switch (el.component) {
       case 'SideBarTags': {
         return (
@@ -34,5 +36,6 @@ const SidebarComponents = () => {
         return <Fragment key={el.component}></Fragment>
     }
   })
+  return <>{Element}</>
 }
 export default SidebarComponents

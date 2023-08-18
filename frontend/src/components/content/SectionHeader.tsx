@@ -1,8 +1,9 @@
-import { HTMLAttributes } from 'react'
-import { Heading, Text } from '@/components/typography'
-import { Badge } from '@/components/elements'
-import { detacher } from '@/fonts/fonts'
 import { clsx } from 'clsx'
+import { HTMLAttributes } from 'react'
+
+import { Badge } from '@/components/elements'
+import { Heading, Text } from '@/components/typography'
+import { detacher } from '@/fonts/fonts'
 
 export interface ISectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
   headingSize?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'

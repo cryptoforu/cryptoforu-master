@@ -1,6 +1,7 @@
 import { cache } from 'react'
-import { fetchData } from '@/lib/fetchClient'
+
 import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { fetchData } from '@/lib/fetchClient'
 
 export const getTags = cache(async () => {
   const res = await fetchData('blog/tags')

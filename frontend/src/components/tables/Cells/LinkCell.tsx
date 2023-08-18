@@ -1,5 +1,6 @@
-import { ExternalLink, InternalLink } from '@/components/elements'
 import { Route } from 'next'
+
+import { ExternalLink, InternalLink } from '@/components/elements'
 
 type LinkCellProps = {
   href?: string

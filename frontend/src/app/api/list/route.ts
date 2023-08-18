@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+
 import { getApiUrl } from '@/lib/getApiUrl'
 
 export async function GET(request: NextRequest) {

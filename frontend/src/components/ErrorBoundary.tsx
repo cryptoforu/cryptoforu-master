@@ -1,8 +1,8 @@
 'use client'
 
+import AppLogo from '@/components/AppLogo'
 import { Button } from '@/components/elements'
 import { Heading } from '@/components/typography'
-import AppLogo from '@/components/AppLogo'
 
 export interface ErrorProps {
   error: Error

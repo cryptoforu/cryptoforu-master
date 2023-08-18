@@ -1,9 +1,10 @@
 'use client'
 import { AnimatePresence, motion, useAnimate, usePresence } from 'framer-motion'
-import { useAccordion } from '@/store/useAccordionStore'
-import { Button } from '@/components/elements'
 import { ReactNode, useEffect, useRef } from 'react'
+
+import { Button } from '@/components/elements'
 import { Heading, ProseMarkdown, Text } from '@/components/typography'
+import { useAccordion } from '@/store/useAccordionStore'
 
 function AccordionButton({
   index,
@@ -67,7 +68,7 @@ function AccordionButton({
     >
       <Button
         colorScheme={'secondary'}
-        onClick={() => setActive(index === activeIndex ? null : index)}
+        onPress={() => setActive(index === activeIndex ? null : index)}
         className={'flex w-full items-center justify-between'}
       >
         <Heading>{question}</Heading>
@@ -123,13 +124,9 @@ export default function Accordion({ items }: IAccordionProps) {
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            <MotionProse
-              variants={{ collapsed: { scale: 0.8 }, open: { scale: 1 } }}
-              transition={{ duration: 0.8 }}
-              className={'mx-auto max-w-none'}
-            >
+            <ProseMarkdown className={'mx-auto max-w-none'}>
               {val.content}
-            </MotionProse>
+            </ProseMarkdown>
           </motion.section>
         </AccordionButton>
       ))}

@@ -1,7 +1,9 @@
-import { cache } from 'react'
-import { fetchData } from '@/lib/fetchClient'
 import 'server-only'
+
+import { cache } from 'react'
+
 import { ListStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
+import { fetchData } from '@/lib/fetchClient'
 
 export const getStats = cache(async () => {
   const res = await fetchData('faucetpay/stats')

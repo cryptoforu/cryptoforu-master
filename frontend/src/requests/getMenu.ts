@@ -1,5 +1,7 @@
 import 'server-only'
+
 import { cache } from 'react'
+
 import { fetchData } from '@/lib/fetchClient'
 import type { MainMenu } from '@/types/shared-types'
 

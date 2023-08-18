@@ -1,4 +1,9 @@
 'use client'
+import { EyeIcon } from '@heroicons/react/20/solid'
+import { Route } from 'next'
+import { useRouter } from 'next/navigation'
+import { useRef } from 'react'
+
 import {
   ArticleCard,
   ArticleCta,
@@ -6,21 +11,17 @@ import {
   ArticleEye,
   ArticleTitle,
 } from '@/components/content'
-import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Button } from '@/components/elements'
-import { Route } from 'next'
-import useCategoryController from '@/store/controllers/useCategoryController'
-import { useCategoryContext } from '@/store/useCategoryStore'
+import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Text } from '@/components/typography'
-import { EyeIcon } from '@heroicons/react/20/solid'
-import usePostCount from '@/store/controllers/usePostCount'
-import { useRouter } from 'next/navigation'
 import useObserver from '@/hooks/useObserver'
-import { useRef } from 'react'
+import useCategoryController from '@/store/controllers/useCategoryController'
+import useCountPost, { usePostCount } from '@/store/controllers/usePostCount'
+import { useCategoryContext } from '@/store/useCategoryStore'
 
 const CategoryArticles = () => {
-  let articleRef = useRef(null)
-  let articleRefs = useRef<HTMLDivElement[] | null[]>([])
+  const articleRef = useRef(null)
+  const articleRefs = useRef<HTMLDivElement[] | null[]>([])
   const [activeIndex] = useObserver({
     containerRef: articleRef,
     childRefs: articleRefs,
@@ -32,9 +33,10 @@ const CategoryArticles = () => {
     state.pageSize,
     state.per_page,
   ])
-
-  const { updateCount, filterPost } = usePostCount()
+  const addCount = useCountPost()
+  const getCount = usePostCount()
   const router = useRouter()
+
   return (
     <>
       {posts.data.map((post, index) => (
@@ -55,11 +57,11 @@ const CategoryArticles = () => {
               <EyeIcon
                 className={'h-5 w-5 text-slate-600 dark:text-slate-500'}
               />{' '}
-              <Text variant={'secondary'}>{filterPost(post.id)?.count}</Text>
+              <Text variant={'secondary'}>{getCount(post.id)}</Text>
             </div>
             <ArticleTitle
               onClick={() => {
-                void updateCount(post.slug, post.id)
+                void addCount(post.slug, post.id)
                 router.push(post.post_links.post_link as Route)
               }}
             >
@@ -84,13 +86,13 @@ const CategoryArticles = () => {
         className={'flex items-center justify-center gap-4 py-6'}
       >
         {posts.meta.next_page_url !== null && (
-          <Button onClick={() => onChangeUp()} disabled={isPending}>
+          <Button onPress={() => onChangeUp()} disabled={isPending}>
             Show More
           </Button>
         )}
         {pageSize !== per_page && (
           <Button
-            onClick={() => {
+            onPress={() => {
               onChangeDown()
               articleRefs.current[activeIndex as number]?.scrollIntoView({
                 block: 'start',

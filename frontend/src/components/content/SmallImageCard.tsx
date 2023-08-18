@@ -1,11 +1,12 @@
 'use client'
-import { Heading, Text } from '@/components/typography'
-import { ExternalLink, InternalLink } from '@/components/elements'
+import { motion } from 'framer-motion'
 import { Route } from 'next'
 import { ReactNode } from 'react'
-import { motion } from 'framer-motion'
-import useHoverController from '@/store/controllers/useHoverController'
+
+import { ExternalLink, InternalLink } from '@/components/elements'
+import { Heading, Text } from '@/components/typography'
 import AnimatedImage from '@/motion/AnimatedImage'
+import useHoverController from '@/store/controllers/useHoverController'
 
 type SmallImageProps = {
   image: string

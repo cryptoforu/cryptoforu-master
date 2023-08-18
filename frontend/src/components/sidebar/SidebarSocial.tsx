@@ -1,16 +1,17 @@
 'use client'
-import { IconButton } from '@/components/elements'
-import { Card, CardBody, CardHeader } from '@/components/content'
-import useSocialShare from '@/hooks/useSocialShare'
 import { ClipboardDocumentIcon } from '@heroicons/react/24/outline/index.js'
 import { useIsSSR } from '@react-aria/ssr'
-import { useCopyToClipboard } from '@/hooks/useCopy'
+
+import { Card, CardBody, CardHeader } from '@/components/content'
+import { IconButton } from '@/components/elements'
 import { Heading } from '@/components/typography'
+import { useCopyToClipboard } from '@/hooks/useCopy'
+import useSocialShare from '@/hooks/useSocialShare'
 
 export default function SidebarSocial() {
   const social_media = useSocialShare(['fb', 'tw'])
-  let isSSR = useIsSSR()
-  let urlToCopy = isSSR ? '' : window.location.href
+  const isSSR = useIsSSR()
+  const urlToCopy = isSSR ? '' : window.location.href
   const [value, copy, status] = useCopyToClipboard()
   return (
     <Card className={'order-first'}>

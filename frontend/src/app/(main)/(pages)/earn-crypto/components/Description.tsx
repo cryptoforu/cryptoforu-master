@@ -3,9 +3,10 @@ import {
   GlobeAltIcon,
   WalletIcon,
 } from '@heroicons/react/20/solid'
-import { Heading, Prose, Text } from '@/components/typography'
-import SectionGrid from '@/components/patterns/SectionGrid'
+
 import AppLogo from '@/components/AppLogo'
+import SectionGrid from '@/components/patterns/SectionGrid'
+import { Heading, Prose, Text } from '@/components/typography'
 
 const Description = () => {
   return (

@@ -1,8 +1,9 @@
 'use client'
 
 import { create } from 'zustand'
-import type { Nullable } from '@/types/shared-types'
+
 import createSelectors from '@/store/createSelectors'
+import type { Nullable } from '@/types/shared-types'
 
 type UseHoveredState = {
   hoveredIndex: Nullable<string | number>

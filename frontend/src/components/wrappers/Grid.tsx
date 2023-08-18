@@ -1,5 +1,6 @@
-import React, { forwardRef, HTMLAttributes } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
+import React, { forwardRef, HTMLAttributes } from 'react'
+
 import { cn } from '@/lib/utils'
 
 const grid = cva('mx-auto grid', {

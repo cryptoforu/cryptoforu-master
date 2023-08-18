@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
 import { AnimatePresence, useAnimate, usePresence } from 'framer-motion'
+import { useEffect } from 'react'
+
+import { Button } from '@/components/elements'
 import {
   useIconPaths,
   useThemeController,
 } from '@/store/controllers/useThemeController'
-import { Button } from '@/components/elements'
 
 function AnimatedIcon({ path }: { path?: string }) {
   const [isPresent, safeToRemove] = usePresence()

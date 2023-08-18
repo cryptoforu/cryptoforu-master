@@ -1,9 +1,12 @@
 'use client'
+import { DOMAttributes } from '@react-types/shared'
 import clsx from 'clsx'
-import type { AriaTextFieldProps, LabelAriaProps } from 'react-aria'
-import { useTextField } from 'react-aria'
-import { PropsWithChildren, useRef } from 'react'
-import { Label } from 'react-aria-components'
+import {
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  PropsWithChildren,
+  useRef,
+} from 'react'
 
 const inputVariants = {
   base: 'block w-full appearance-none rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-[calc(theme(spacing.2)-1px)] px-[calc(theme(spacing.3)-1px)] text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-teal-400 dark:focus:border-teal-400 focus:outline-none focus:ring-teal-400 dark:focus:ring-teal-400 sm:text-sm',
@@ -14,49 +17,39 @@ const inputVariants = {
 export function FieldsLabel({
   children,
   ...props
-}: PropsWithChildren<LabelAriaProps>) {
+}: PropsWithChildren<DOMAttributes | LabelHTMLAttributes<HTMLLabelElement>>) {
   return (
-    <Label
+    <label
       {...props}
       className={
         'mb-3 block text-base font-medium text-slate-700 dark:text-slate-400'
       }
     >
       {children}
-    </Label>
+    </label>
   )
 }
 
-interface TextFieldProps extends AriaTextFieldProps {
+interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
   variant?: keyof typeof inputVariants
   inputClass?: string
+  label?: string
 }
 
 export function TextField(props: TextFieldProps) {
-  let { label, variant = 'base', inputClass } = props
-  let ref = useRef(null)
-  let { labelProps, inputProps, descriptionProps, errorMessageProps } =
-    useTextField(props, ref)
+  const { label, variant = 'base', inputClass } = props
+  const ref = useRef(null)
 
   return (
     <div className={props.className}>
-      {props.label && <FieldsLabel {...labelProps}>{label}</FieldsLabel>}
+      {props.label && <FieldsLabel htmlFor={props.name}>{label}</FieldsLabel>}
+
       <input
-        {...inputProps}
+        {...props}
         className={clsx(inputVariants[variant], inputClass)}
         ref={ref}
       />
-      {props.description && (
-        <div {...descriptionProps} style={{ fontSize: 12 }}>
-          {props.description}
-        </div>
-      )}
-      {props.errorMessage && (
-        <div {...errorMessageProps} style={{ color: 'red', fontSize: 12 }}>
-          {props.errorMessage}
-        </div>
-      )}
     </div>
   )
 }

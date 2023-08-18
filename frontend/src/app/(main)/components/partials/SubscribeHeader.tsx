@@ -16,7 +16,7 @@ const SubscribeHeader = () => {
         <div className="min-w-0 flex-1">
           <TextField
             variant={'primary'}
-            aria-label={'Email Address'}
+            aria-labelledby={'Email Address'}
             name={'email'}
             id={'email'}
             placeholder={'Enter Your Email'}

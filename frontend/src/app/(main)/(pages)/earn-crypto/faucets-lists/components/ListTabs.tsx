@@ -1,8 +1,9 @@
 'use client'
+import { listDatum } from 'contentlayer/generated'
+
 import { Button } from '@/components/elements'
 import LazyImage from '@/components/elements/LazyImage'
 import { useListActions } from '@/store/controllers/useListController'
-import { listDatum } from 'contentlayer/generated'
 import type { CurrencyState } from '@/store/useListStore'
 import { useListContext } from '@/store/useListStore'
 
@@ -22,7 +23,7 @@ const ListTabs = () => {
       size={'lg'}
       disabled={isPending}
       key={tab.label}
-      onClick={() => handleCurrency(tab.id as CurrencyState)}
+      onPress={() => handleCurrency(tab.id as CurrencyState)}
     >
       <LazyImage
         src={tab.image}

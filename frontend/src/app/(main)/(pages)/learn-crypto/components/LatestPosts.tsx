@@ -1,4 +1,6 @@
-import { Container, Section } from '@/components/wrappers'
+import { Route } from 'next'
+
+import { CursorPaginatedPost } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
 import {
   Card,
   CardBody,
@@ -6,11 +8,10 @@ import {
   CardHeader,
   SectionHeader,
 } from '@/components/content'
-import { Route } from 'next'
-import { CursorPaginatedPost } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { BtnLink, InternalLink } from '@/components/elements'
 import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Heading, Text } from '@/components/typography'
-import { BtnLink, InternalLink } from '@/components/elements'
+import { Container, Section } from '@/components/wrappers'
 
 const LatestPosts = async ({ latest }: { latest: CursorPaginatedPost }) => {
   return (

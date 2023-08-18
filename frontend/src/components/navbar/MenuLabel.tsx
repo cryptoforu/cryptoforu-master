@@ -1,5 +1,5 @@
 'use client'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 type MenuLabelProps = {
@@ -11,22 +11,21 @@ type MenuLabelProps = {
 const MenuLabel = ({ selected, title, isActive }: MenuLabelProps) => {
   return (
     <>
-      <AnimatePresence mode={'wait'}>
-        {selected && (
-          <motion.div
-            layoutId={'hoveredMenu'}
-            className={
-              'absolute inset-0 rounded-lg bg-gray-100 dark:bg-slate-950/50'
-            }
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.15 } }}
-            exit={{
-              opacity: 0,
-              transition: { duration: 0.15, delay: 0.2 },
-            }}
-          />
-        )}
-      </AnimatePresence>
+      {selected && (
+        <motion.div
+          layoutId={'hoveredMenu'}
+          className={
+            'absolute inset-0 rounded-lg bg-gray-100 dark:bg-slate-950/50'
+          }
+          transition={{
+            layout: {
+              duration: 0.2,
+              ease: 'easeOut',
+            },
+          }}
+        />
+      )}
+
       {isActive && (
         <motion.div
           layoutId={'activeLink'}

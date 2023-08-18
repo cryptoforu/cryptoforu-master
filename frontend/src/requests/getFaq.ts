@@ -1,4 +1,5 @@
 import { cache } from 'react'
+
 import { fetchData } from '@/lib/fetchClient'
 
 export type GetFaqProps = {

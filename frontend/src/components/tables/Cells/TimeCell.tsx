@@ -1,5 +1,6 @@
-import { Text } from '@/components/typography'
 import { ClockIcon } from '@heroicons/react/20/solid'
+
+import { Text } from '@/components/typography'
 
 const TimeCell = (time: string | number) => {
   return (

@@ -1,8 +1,9 @@
-import { Card, CardBody, CardHeader } from '@/components/content'
-import { Heading } from '@/components/typography'
-import { InternalLink, Tag } from '@/components/elements'
-import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
 import { Route } from 'next'
+
+import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { Card, CardBody, CardHeader } from '@/components/content'
+import { InternalLink, Tag } from '@/components/elements'
+import { Heading } from '@/components/typography'
 
 export type SidebarTagsProps = {
   heading: string

@@ -1,10 +1,11 @@
+import { XMarkIcon } from '@heroicons/react/20/solid'
+import { clsx } from 'clsx'
 import { ReactNode, useRef } from 'react'
 import type { AriaDialogProps, DialogAria } from 'react-aria'
 import { useDialog } from 'react-aria'
-import { Heading } from '@/components/typography'
-import { clsx } from 'clsx'
+
 import { Button } from '@/components/elements'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import { Heading } from '@/components/typography'
 
 type DialogHeaderProps = {
   title: string | ReactNode
@@ -42,8 +43,8 @@ const Dialog = ({
   onClose,
   ...props
 }: DialogProps) => {
-  let dialogRef = useRef<HTMLDivElement>(null)
-  let { dialogProps, titleProps } = useDialog(props, dialogRef)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const { dialogProps, titleProps } = useDialog(props, dialogRef)
 
   return (
     <div

@@ -1,6 +1,6 @@
 function getNodeText(nodes: any) {
   let text = ''
-  for (let el of nodes.props?.children ?? []) {
+  for (const el of nodes.props?.children ?? []) {
     if (typeof el === 'string') {
       text += el
     }
@@ -19,10 +19,10 @@ type SectionProps = {
 }
 
 export function collectHeadings(nodes: NodeListOf<any>) {
-  let sections: SectionProps[] = []
+  const sections: SectionProps[] = []
   nodes.forEach((node) => {
     if (node.type === 'h2' || node.type === 'h3') {
-      let title = getNodeText(node)
+      const title = getNodeText(node)
       if (title) {
         if (node.type === 'h3') {
           if (!sections[sections.length - 1]) {

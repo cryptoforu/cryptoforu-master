@@ -8,8 +8,9 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
-import { memo, useState } from 'react'
 import { clsx } from 'clsx'
+import { memo, useState } from 'react'
+
 import { filterFns } from '@/components/tables/filters'
 
 const tableVariant = {

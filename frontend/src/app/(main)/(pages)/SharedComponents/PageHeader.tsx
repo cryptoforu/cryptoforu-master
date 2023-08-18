@@ -1,19 +1,20 @@
 'use client'
-import { Heading, ProseMarkdown } from '@/components/typography'
-import { detacher } from '@/fonts/fonts'
-import { Container } from '@/components/wrappers'
-import BreadCrumbs from '@/components/elements/BreadCrumbs'
-import { BreadcrumbsProps } from '@/types/shared-types'
 import { usePathname, useSelectedLayoutSegments } from 'next/navigation'
-import { filterCrumbs } from '@/lib/utils'
-import { BtnExternalLink } from '@/components/elements'
-import { VideoPlayer } from '@/components/content'
-import ModalTrigger from '@/components/overlays/ModalTrigger'
-import Dialog from '@/components/overlays/Dialog'
 import { useOverlayTriggerState } from 'react-stately'
 
+import { VideoPlayer } from '@/components/content'
+import { BtnExternalLink } from '@/components/elements'
+import BreadCrumbs from '@/components/elements/BreadCrumbs'
+import Dialog from '@/components/overlays/Dialog'
+import ModalTrigger from '@/components/overlays/ModalTrigger'
+import { Heading, ProseMarkdown } from '@/components/typography'
+import { Container } from '@/components/wrappers'
+import { detacher } from '@/fonts/fonts'
+import { filterCrumbs } from '@/lib/utils'
+import { BreadcrumbsProps } from '@/types/shared-types'
+
 function HeaderButtons({ render }: { render: boolean }) {
-  let state = useOverlayTriggerState({})
+  const state = useOverlayTriggerState({})
   if (render) {
     return (
       <div

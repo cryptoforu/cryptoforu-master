@@ -1,23 +1,24 @@
+import { ArrowSmallLeftIcon } from '@heroicons/react/20/solid'
 import { Metadata, Route } from 'next'
-import { getArticle } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/getPosts'
+import dynamic from 'next/dynamic'
+
 import {
   PostMainContent,
   PostSidebar,
   Toc,
 } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components'
-import PostHeader from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/PostHeader'
-import useMarkdown from '@/hooks/useMarkdown'
-import { BtnLink, ResponsiveImage } from '@/components/elements'
-import { Heading, Prose } from '@/components/typography'
-import { AnchorLink } from '@/components/elements/Link'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/getCategories'
 import CategoryNav from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/CategoryNav'
-import { filterPostMetaData, getSiteData } from '@/requests/getSiteData'
-import AnimatedImage from '@/motion/AnimatedImage'
-import dynamic from 'next/dynamic'
-import { SectionSkeleton } from '@/components/skeletons'
+import PostHeader from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/PostHeader'
+import { getArticle } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/getPosts'
+import { getCategories } from '@/app/(main)/(pages)/learn-crypto/getCategories'
 import { AdPlaceholder } from '@/components/content'
-import { ArrowSmallLeftIcon } from '@heroicons/react/20/solid'
+import { BtnLink, ResponsiveImage } from '@/components/elements'
+import { AnchorLink } from '@/components/elements/Link'
+import { SectionSkeleton } from '@/components/skeletons'
+import { Heading, Prose } from '@/components/typography'
+import useMarkdown from '@/hooks/useMarkdown'
+import AnimatedImage from '@/motion/AnimatedImage'
+import { filterPostMetaData, getSiteData } from '@/requests/getSiteData'
 
 const RelatedPosts = dynamic(
   () => import('@/app/(main)/(pages)/learn-crypto/components/RelatedPosts'),
@@ -69,10 +70,10 @@ export default async function Post({ params }: PostPageProps) {
     <>
       <div
         className={
-          'relative mx-auto flex max-w-9xl justify-center border-b border-gray-100 pb-24 dark:border-gray-900 sm:px-2'
+          'relative mx-auto flex max-w-9xl justify-center border-b border-gray-100 pb-24 dark:border-gray-900 sm:px-2 lg:max-w-none'
         }
       >
-        <div className="hidden lg:relative lg:block lg:flex-none">
+        <div className="hidden lg:relative lg:block lg:w-full lg:max-w-fit lg:flex-initial lg:basis-1/4">
           <div className="sticky top-[4.9rem] -ml-0.5 h-[calc(100vh-4.9rem)] overflow-y-auto overflow-x-hidden py-8 pl-4">
             <div className="absolute bottom-0 right-0 top-8 hidden w-px bg-slate-800 dark:block" />
             <Toc markdown={markdown} />
@@ -81,10 +82,10 @@ export default async function Post({ params }: PostPageProps) {
         </div>
         <div
           className={
-            'min-w-0 max-w-2xl flex-auto px-4 py-16 lg:max-w-none lg:pl-8 lg:pr-0 xl:px-16'
+            'min-w-0 max-w-2xl flex-auto px-4 py-16 lg:max-w-3xl lg:flex-1 lg:basis-1/2 lg:pl-8 lg:pr-0 xl:px-16'
           }
         >
-          <Prose>
+          <Prose className={'max-w-none'}>
             <div className={'not-prose relative'}>
               <BtnLink
                 href={`/learn-crypto/${data.category?.slug}` as Route}
@@ -114,6 +115,7 @@ export default async function Post({ params }: PostPageProps) {
             </PostMainContent>
           </Prose>
         </div>
+
         <PostSidebar post={data} />
       </div>
       <div className={'mx-auto max-w-5xl py-12'}>

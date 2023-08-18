@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from 'react'
+
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import type { TableOfContents } from '@/store/types/post-store'
 import { usePostStore } from '@/store/usePostStore'
-import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 export function useToc(toc: TableOfContents[]) {
   const dispatch = usePostStore((state) => state.dispatch)
@@ -52,15 +53,15 @@ export function usePostController() {
     const observerParams = { threshold: 0, root: null, rootMargin: '0%' }
     const observer = new IntersectionObserver(updateEntry, observerParams)
     if (toc && toc.length > 0) {
-      for (let val of toc) {
-        let element = document.getElementById(val.id)
-        let children = val.children
+      for (const val of toc) {
+        const element = document.getElementById(val.id)
+        const children = val.children
         if (element) {
           observer.observe(element)
         }
         if (children) {
-          for (let child of children) {
-            let childElement = document.getElementById(child.id)
+          for (const child of children) {
+            const childElement = document.getElementById(child.id)
             if (childElement) {
               observer.observe(childElement)
             }

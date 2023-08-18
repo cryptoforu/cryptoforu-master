@@ -1,23 +1,10 @@
 {
-  "root": true,
   "extends": [
-    "next",
     "prettier",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "plugin:@next/next/recommended"
   ],
   "plugins": [
-    "@typescript-eslint",
     "tailwindcss"
-  ],
-  "settings": {
-    "tailwindcss": {
-      "callees": [
-        "cn"
-      ],
-      "config": "tailwind.config.js"
-    },
-    "next": {
-      "rootDir": true
-    }
-  }
+  ]
 }

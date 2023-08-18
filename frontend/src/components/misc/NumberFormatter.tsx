@@ -1,6 +1,7 @@
 'use client'
 
 import { useNumberFormatter } from 'react-aria'
+
 import { parseFloatNumber } from '@/lib/utils'
 
 interface FormatterProps extends Intl.NumberFormatOptions {
@@ -9,7 +10,7 @@ interface FormatterProps extends Intl.NumberFormatOptions {
 
 export function Currency(props: FormatterProps) {
   const { currency, value, ...rest } = props
-  let formatter = useNumberFormatter({
+  const formatter = useNumberFormatter({
     style: currency !== undefined ? 'currency' : 'decimal',
     currency,
     minimumFractionDigits: 0,

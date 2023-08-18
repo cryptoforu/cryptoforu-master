@@ -1,8 +1,9 @@
 'use client'
-import { MenuButton, MenuItem } from '@/components/elements/Menu'
-import { useListContext } from '@/store/useListStore'
-import { useListActions } from '@/store/controllers/useListController'
 import { listDatum } from 'contentlayer/generated'
+
+import { MenuButton, MenuItem } from '@/components/elements/Menu'
+import { useListActions } from '@/store/controllers/useListController'
+import { useListContext } from '@/store/useListStore'
 
 const ListPageSize = () => {
   const { isPending, handleSize } = useListActions()

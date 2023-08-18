@@ -1,8 +1,8 @@
-import { Container, Section } from '@/components/wrappers'
-import { List, SectionHeader, SmallImageCard } from '@/components/content'
-import HoveredComponent from '@/motion/HoveredComponent'
-import SectionGrid from '@/components/patterns/SectionGrid'
 import type { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { List, SectionHeader, SmallImageCard } from '@/components/content'
+import SectionGrid from '@/components/patterns/SectionGrid'
+import { Container, Section } from '@/components/wrappers'
+import HoveredComponent from '@/motion/HoveredComponent'
 
 interface RelatedPostsProps {
   related: Array<PostApiResource>
@@ -10,11 +10,7 @@ interface RelatedPostsProps {
   description: string
 }
 
-const RelatedPosts = async ({
-  related,
-  title,
-  description,
-}: RelatedPostsProps) => {
+const RelatedPosts = ({ related, title, description }: RelatedPostsProps) => {
   return (
     <Section id={'related-posts'} ariaLabel={'Related Posts'}>
       <SectionGrid />

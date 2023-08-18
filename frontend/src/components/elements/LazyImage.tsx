@@ -1,5 +1,6 @@
 import Image, { ImageProps } from 'next/image'
 import { forwardRef } from 'react'
+
 import { ResponsiveImage } from '@/components/elements'
 
 export interface LazyImageProps extends ImageProps {

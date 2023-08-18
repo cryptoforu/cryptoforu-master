@@ -1,30 +1,48 @@
 'use client'
-import type { PopoverProps } from 'react-aria-components'
-import {
-  Dialog,
-  OverlayArrow,
-  Popover as AriaPopover,
-} from 'react-aria-components'
+import clsx from 'clsx'
 import type { ReactNode } from 'react'
+import { useRef } from 'react'
+import type { AriaPopoverProps } from 'react-aria'
+import { usePopover } from 'react-aria'
+import type { OverlayTriggerState } from 'react-stately'
 
-interface IPopoverProps extends Omit<PopoverProps, 'children'> {
-  children: ReactNode
+const positionVariant = {
+  left: 'absolute left-0 w-fit max-w-fit z-50 overflow-hidden focus:outline-none',
+  right:
+    'absolute right-0 mt-2 w-56 max-w-fit rounded-md bg-black/60 shadow-lg z-50 overflow-hidden',
+  center:
+    'absolute left-1/2 z-10 mt-2 flex w-screen max-w-max -translate-x-1/2 bg-black/60',
 }
 
-export default function Popover({ children, ...props }: IPopoverProps) {
+interface IPopoverProps extends Omit<AriaPopoverProps, 'popoverRef'> {
+  children: ReactNode
+  popoverVariant?: keyof typeof positionVariant
+  state: OverlayTriggerState
+}
+
+export default function Popover({
+  children,
+  popoverVariant = 'left',
+  state,
+  ...props
+}: IPopoverProps) {
+  const popoverRef = useRef(null)
+  const { popoverProps, underlayProps } = usePopover(
+    {
+      ...props,
+      popoverRef,
+    },
+    state
+  )
   return (
-    <AriaPopover
-      {...props}
-      className={
-        'max-w-sm rounded-lg border border-gray-100 bg-white p-8 outline-none dark:border-slate-900 dark:bg-slate-950/80'
-      }
-    >
-      <OverlayArrow>
-        <svg className={'display-block'} width={12} height={12}>
-          <path d="M0 0,L6 6,L12 0" />
-        </svg>
-      </OverlayArrow>
-      <Dialog>{children}</Dialog>
-    </AriaPopover>
+    <div {...underlayProps}>
+      <div
+        {...popoverProps}
+        ref={popoverRef}
+        className={clsx(positionVariant[popoverVariant])}
+      >
+        {children}
+      </div>
+    </div>
   )
 }

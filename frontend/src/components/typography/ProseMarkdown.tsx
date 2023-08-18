@@ -1,8 +1,10 @@
 import { useRemarkSync, UseRemarkSyncOptions } from 'react-remark'
-import { Prose } from './'
-import type { IProseProps } from '@/components/typography/Prose'
 import rExternalLinks from 'rehype-external-links'
 import rSlug from 'rehype-slug'
+
+import type { IProseProps } from '@/components/typography/Prose'
+
+import { Prose } from './'
 
 const MarkDown = ({ children, ...props }: IProseProps) => {
   const markdown = useRemarkSync(children as string, {

@@ -1,18 +1,20 @@
 'use client'
-import React, { PropsWithChildren } from 'react'
-import { cn } from '@/lib/utils'
-import { Button as AriaButton } from 'react-aria-components'
 import { ForwardRefComponent, HTMLMotionProps, motion } from 'framer-motion'
+import React, { PropsWithChildren, RefObject } from 'react'
+import { Button as AriaButton } from 'react-aria-components'
+
 import type { BtnVariantsProps } from '@/components/elements/variants/btn-variants'
 import {
   btnAnimation,
   btnVariants,
 } from '@/components/elements/variants/btn-variants'
+import { cn } from '@/lib/utils'
 
 export interface IButtonProps<As extends React.ElementType>
   extends BtnVariantsProps,
     HTMLMotionProps<'button'> {
   as?: As
+  buttonRef?: RefObject<any>
 }
 
 const MotionButton = motion(AriaButton)
@@ -39,7 +41,7 @@ export default function Button<
   } = props
   const Component = as ?? MotionButton
 
-  let hover =
+  const hover =
     hoverAnimation && hoverAnimation === 'outlineColor'
       ? {
           outline: `2.5px solid ${

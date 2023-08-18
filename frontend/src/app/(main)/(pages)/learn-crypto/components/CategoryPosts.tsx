@@ -1,19 +1,20 @@
-import { Container, Section } from '@/components/wrappers'
+import { Route } from 'next'
+
+import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
 import {
   Card,
   CardBody,
   CardFooter,
   CardImage,
   CardOverlayLink,
-  DataTabs,
+  DataTabsV2,
   SectionHeader,
 } from '@/components/content'
-import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
 import { Badge, BtnLink } from '@/components/elements'
-import { Route } from 'next'
+import { DateFormatter } from '@/components/misc/DateFormatter'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Text } from '@/components/typography'
-import { DateFormatter } from '@/components/misc/DateFormatter'
+import { Container, Section } from '@/components/wrappers'
 
 const CategoryPosts = async ({
   categories,
@@ -23,10 +24,11 @@ const CategoryPosts = async ({
   const data = await categories
   const tabsData = data.map((category) => {
     return {
-      id: category.id,
+      id: category.id.toString(),
+      key: category.id,
       label: category.name,
       content: (
-        <>
+        <div className={'flex flex-col'}>
           <div className={'grid gap-8 md:grid-cols-2 lg:grid-cols-3'}>
             {category.posts?.data.map((post) => (
               <Card variant={'filledGray'} key={post.id}>
@@ -77,7 +79,7 @@ const CategoryPosts = async ({
               Browse All
             </BtnLink>
           </div>
-        </>
+        </div>
       ),
     }
   })
@@ -96,13 +98,7 @@ const CategoryPosts = async ({
           textSize={'md'}
           className={'-mb-12 max-w-2xl text-center'}
         />
-        <DataTabs
-          tabs={tabsData}
-          variant={'underline'}
-          withLink={false}
-          listVariant={'full'}
-          panelVariant={'transparent'}
-        />
+        <DataTabsV2 data={tabsData} listPosition={'full'} />
       </Container>
     </Section>
   )

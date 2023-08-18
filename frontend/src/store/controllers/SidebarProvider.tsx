@@ -1,7 +1,7 @@
 'use client'
-import React, { createContext, PropsWithChildren, useContext } from 'react'
 import type { SidebarData, SidebarNested } from 'contentlayer/generated'
 import { sidebarDatum } from 'contentlayer/generated'
+import React, { createContext, PropsWithChildren, useContext } from 'react'
 
 type SidebarIndex = keyof Omit<SidebarData, '_id' | '_raw' | 'type'>
 type SidebarID = {

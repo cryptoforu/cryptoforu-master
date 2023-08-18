@@ -21,15 +21,6 @@ const nextConfig = {
     serverActions: true,
   },
   reactStrictMode: true,
-  swcMinify: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `http://localhost:80/api/*`,
-      },
-    ]
-  },
 }
 const { withContentlayer } = require('next-contentlayer')
 

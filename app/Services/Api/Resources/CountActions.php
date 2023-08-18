@@ -4,70 +4,76 @@ declare(strict_types=1);
 
 namespace App\Services\Api\Resources;
 
-use App\Contracts\ApiCacheContract;
+use App\Contracts\CountActionContract;
 use App\Models\Post;
-use App\Services\Api\ApiService;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Spatie\Valuestore\Valuestore;
 
-final readonly class CountActions
+final class CountActions extends ValueStore implements CountActionContract
 {
-    public function __construct(
-        private ApiService $apiService,
-        private ApiCacheContract $cache,
-        private Post $post,
-        private string $ip,
-    ) {
+
+  public function should_count(Post $post, string $ip): bool
+  {
+
+    if ($this->has("post-{$post->id}")) {
+      $values = $this->get("post-{$post->id}");
+      if ($this->check_ip($values, $ip)) {
+        return false;
+      }
+      return true;
     }
+    return true;
+  }
 
-    public function count()
-    {
-        $key = "post-{$this->post->id}";
-        $values = $this->apiService->get($key);
-
-        if ($this->apiService->has($key)) {
-            $timestamp = $this->apiService->get($key)['timestamp'];
-            $nowTime = Carbon::now()->timestamp;
-            if ($timestamp < $nowTime) {
-                $this->apiService->flush();
-            }
-        }
-
-        if (null !== $values) {
-            $ips = data_get($values, "ips.*.{$this->ip}");
-            if (null === $ips) {
-                $newIps = Arr::add($values['ips'], 'ip', $this->ip);
-                views($this->post)->record();
-                $this->apiService->put(
-                    $key,
-                    ['views' => views($this->post)->unique()->count(), 'ips' => $newIps]
-                );
-            }
-            $values['views'] = views($this->post)->unique()->count();
-            $this->apiService->put(
-                $key,
-                $values
-            );
-
-            return $values;
-        }
-        $this->apiService->put(
-            $key,
-            [
-                'timestamp' => Carbon::now()->addDay()->timestamp,
-                'views' => 1,
-                'ips' => ['ip' => $this->ip],
-            ]
-        );
-
-        return $this->apiService->get($key);
+  /**
+   * Check If Ip Already Exists
+   * @param  array  $values
+   * @param  string  $ip
+   * @return bool
+   */
+  private function check_ip(array $values, string $ip): bool
+  {
+    if (!empty(data_get($values, "ips.*.{$ip}"))) {
+      return true;
     }
+    return false;
+  }
 
-    public function get_all(): mixed
-    {
-        return $this->cache->load_data(
-            key: 'all_views',
-            callback: fn () => $this->apiService->all()
-        );
+  public function count_views(Post $post, string $ip)
+  {
+    $key = "post-{$post->id}";
+    if ($this->has($key)) {
+      $timestamp = $this->get($key)['timestamp'];
+      $nowTime = Carbon::now()->timestamp;
+      if ($timestamp < $nowTime) {
+        $this->flush();
+      }
+
     }
+    return $this->storeOrUpdate($post, $ip);
+  }
+
+  private function storeOrUpdate(Post $post, string $ip)
+  {
+    $key = "post-{$post->id}";
+    if ($this->has($key)) {
+      $values = $this->get($key);
+      if ($this->check_ip($values, $ip)) {
+        return $values;
+      }
+      data_set($values, 'views', views($post)->unique()->count());
+      Arr::add($values, 'ips', $ip);
+      return $values;
+    }
+    $this->put(
+      $key,
+      [
+        'timestamp' => Carbon::now()->addDay()->timestamp,
+        'views' => 1,
+        'ips' => [$ip],
+      ]
+    );
+    return $this->get($key);
+  }
 }

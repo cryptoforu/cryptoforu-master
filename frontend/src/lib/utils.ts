@@ -1,5 +1,6 @@
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+
 import { BreadcrumbsProps } from '@/types/shared-types'
 
 export function cn(...inputs: ClassValue[]) {
@@ -18,7 +19,7 @@ export const parseFloatNumber = (value: string) => {
 }
 
 export const isObjectEmpty = (objectName: object) => {
-  for (let prop in objectName) {
+  for (const prop in objectName) {
     if (objectName.hasOwnProperty(prop)) {
       return false
     }
@@ -37,10 +38,12 @@ export function filterCrumbs(
   route: string,
   segments: string[]
 ) {
-  let found = crumbsData.find((el) => el.route === route)
+  const found = crumbsData.find((el) => el.route === route)
   if (found) {
-    let filtered = found.label.includes('FaucetPay') || found.label.length > 20
-    let filteredDesc = segments.length > 1 && !filtered ? null : found.meta_desc
+    const filtered =
+      found.label.includes('FaucetPay') || found.label.length > 20
+    const filteredDesc =
+      segments.length > 1 && !filtered ? null : found.meta_desc
     return {
       label: found.label,
       description: filteredDesc,

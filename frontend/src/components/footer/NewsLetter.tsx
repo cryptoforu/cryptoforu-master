@@ -1,4 +1,5 @@
 import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline'
+
 import { Button, TextField } from '@/components/elements'
 import { Heading, Text } from '@/components/typography'
 
@@ -21,8 +22,7 @@ const NewsLetter = () => {
               <form action="#">
                 <div className="mt-4 flex w-full justify-start md:w-auto">
                   <TextField
-                    id={'subscribe'}
-                    aria-label={'Email address'}
+                    aria-labelledby={'Email address'}
                     placeholder={'Email address'}
                     className={'w-60 min-w-0 shrink'}
                     variant={'primary'}

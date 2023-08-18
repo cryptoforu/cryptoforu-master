@@ -1,6 +1,6 @@
 'use client'
-import { useListContext } from '@/store/useListStore'
 import { Text } from '@/components/typography'
+import { useListContext } from '@/store/useListStore'
 
 const ListLastUpdate = () => {
   const updated_at = useListContext((state) => state.data?.updated_at)

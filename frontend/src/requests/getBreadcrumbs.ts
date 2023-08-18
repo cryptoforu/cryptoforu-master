@@ -1,5 +1,7 @@
 import 'server-only'
+
 import { cache } from 'react'
+
 import { fetchData } from '@/lib/fetchClient'
 import { BreadcrumbsProps } from '@/types/shared-types'
 

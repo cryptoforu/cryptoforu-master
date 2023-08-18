@@ -7,7 +7,7 @@ export default function WidgetSkeleton({
     <div
       role={'status'}
       className={
-        'max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6'
+        'max-w-sm animate-pulse space-y-6 rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6'
       }
     >
       {Array.from(Array(numberOfLines).keys()).map((key) => (

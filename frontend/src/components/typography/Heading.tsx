@@ -1,6 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
 import React, { forwardRef } from 'react'
+
+import { cn } from '@/lib/utils'
 
 type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
 
@@ -9,9 +10,9 @@ const heading = cva('font-bold tracking-tight', {
     variant: {
       primary: 'text-primary-dark dark:text-primary-white',
       slate: 'text-slate-800 dark:text-slate-200',
-      gradient: 'bg-clip-text text-transparent bg-primary-gradient',
+      gradient: 'bg-primary-gradient bg-clip-text text-transparent',
       gradientFrom:
-        'bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-emerald-400',
+        'bg-gradient-to-r from-slate-100 to-emerald-400 bg-clip-text text-transparent',
       secondary: 'text-slate-600 dark:text-slate-400',
       emerald: 'text-emerald-600 dark:text-emerald-400',
     },

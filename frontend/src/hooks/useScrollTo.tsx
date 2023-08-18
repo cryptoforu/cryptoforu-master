@@ -1,13 +1,13 @@
 'use client'
+import { useIsSSR } from '@react-aria/ssr'
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
 import { useCallback } from 'react'
-import { useIsSSR } from '@react-aria/ssr'
 
 gsap.registerPlugin(ScrollToPlugin)
 
 export default function useScrollTo() {
-  let isSSR = useIsSSR()
+  const isSSR = useIsSSR()
 
   return useCallback(
     ({ y, offsetY }: ScrollToPlugin.Vars) => {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Site;
 
 use App\Contracts\ApiServiceContract;
+use App\Contracts\CountActionContract;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Responses\CollectionResponse;
@@ -15,6 +16,7 @@ final class SharedPropsController extends Controller
 {
   public function __construct(
     protected ApiServiceContract $service,
+    protected CountActionContract $actionContract
   ) {
   }
 
@@ -43,8 +45,11 @@ final class SharedPropsController extends Controller
    */
   public function count_views(Request $request, Post $post): JsonResponse
   {
+    if ($this->actionContract->should_count($post, $request->ip())) {
+      views($post)->record();
+    }
     return new JsonResponse(
-      data: $this->service->post_count(
+      data: $this->actionContract->count_views(
         post: $post,
         ip: $request->ip()
       )

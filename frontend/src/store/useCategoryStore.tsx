@@ -1,7 +1,9 @@
 'use client'
 import { createContext, PropsWithChildren, useContext, useState } from 'react'
-import { createStore, useStore } from 'zustand'
+import { createStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { useStoreWithEqualityFn } from 'zustand/traditional'
+
 import type {
   CategoryContextData,
   ICategory,
@@ -23,7 +25,7 @@ const createCategoryStore = (initProps?: Partial<CategoryContextData>) => {
   }
 
   return createStore(
-    immer<ICategory>((set, get) => ({
+    immer<ICategory>((set) => ({
       ...DEFAULT_CATEGORY,
       ...initProps,
       pageSize: 6,
@@ -45,7 +47,7 @@ export default function CategoryProvider({
   children,
   ...props
 }: PropsWithChildren<CategoryContextData>) {
-  let [categoryStore] = useState(() => createCategoryStore(props))
+  const [categoryStore] = useState(() => createCategoryStore(props))
   return (
     <CategoryContext.Provider value={categoryStore}>
       {children}
@@ -59,5 +61,5 @@ export function useCategoryContext<T>(
 ): T {
   const categoryStore = useContext(CategoryContext)
   if (!categoryStore) throw new Error('Must be under CategoryProvider')
-  return useStore(categoryStore, selector, equalityFn)
+  return useStoreWithEqualityFn(categoryStore, selector, equalityFn)
 }

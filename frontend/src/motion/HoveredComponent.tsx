@@ -6,11 +6,11 @@ import {
   useAnimate,
   usePresence,
 } from 'framer-motion'
-import { useEffect } from 'react'
-import useHoverController from '@/store/controllers/useHoverController'
-
 import { Route } from 'next'
 import NextLink from 'next/link'
+import { useEffect } from 'react'
+
+import useHoverController from '@/store/controllers/useHoverController'
 
 function useHoverAnimation() {
   const [isPresent, safeToRemove] = usePresence()

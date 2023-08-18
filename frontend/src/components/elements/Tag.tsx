@@ -1,8 +1,9 @@
 import { cva, VariantProps } from 'class-variance-authority'
 import { forwardRef, HTMLAttributes } from 'react'
+
 import { cn } from '@/lib/utils'
 
-const tag = cva('text-sm font-medium mr-2 px-2.5 py-0.5 rounded', {
+const tag = cva('mr-2 rounded px-2.5 py-0.5 text-sm font-medium', {
   variants: {
     variant: {
       slate:
@@ -29,4 +30,4 @@ const Tag = forwardRef<HTMLSpanElement, ITagProps>((props, ref) => {
 })
 Tag.displayName = 'Tag'
 
-export default Tag;
+export default Tag

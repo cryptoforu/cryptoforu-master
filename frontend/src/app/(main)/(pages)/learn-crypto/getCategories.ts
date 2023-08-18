@@ -1,8 +1,10 @@
-import { cache } from 'react'
+import 'server-only'
+
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
+
 import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
 import { fetchData } from '@/lib/fetchClient'
-import 'server-only'
 
 export const getCategory = async (
   {
@@ -12,7 +14,7 @@ export const getCategory = async (
   },
   params?: string
 ) => {
-  let url =
+  const url =
     params !== undefined
       ? `blog/categories/${slug}?include=posts.tags` + '&' + params
       : `blog/categories/${slug}?include=posts.tags`
@@ -33,7 +35,7 @@ export const getCategory = async (
   return category
 }
 export const getCategories = cache(async (params?: string) => {
-  let url =
+  const url =
     params !== undefined ? `blog/categories` + '?' + params : `blog/categories`
   const res = await fetchData(url, {
     next: {

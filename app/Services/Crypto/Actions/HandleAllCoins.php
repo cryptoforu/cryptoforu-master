@@ -10,22 +10,21 @@ use Illuminate\Support\Collection;
 
 final class HandleAllCoins implements HandleCoinsContract
 {
-    public function handle(Collection $responses, string $data_name): bool
-    {
-        $query = Crypto::ofName($data_name);
-        if ($query) {
-            $replaced = $query->data_values->lazy()->replace($responses);
-            $query->data_values = $replaced;
-            $query->save();
-
-            return true;
-        }
-        Crypto::create([
-            'data_name' => $data_name,
-            'data_values' => $responses,
-        ]);
-
-        return true;
+  public function handle(Collection $responses, string $data_name): bool
+  {
+    if ($data_name === 'all_coins') {
+      $all = Crypto::query()->where('data_name', 'all_coins')->first();
+      $newCol = $all->data_values->merge($responses);
+      $all->data_values = $newCol;
+      $all->save();
+    } else {
+      Crypto::query()->updateOrCreate([
+        'data_name' => $data_name
+      ], [
+        'data_values' => $responses
+      ]);
 
     }
+    return true;
+  }
 }

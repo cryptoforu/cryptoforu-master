@@ -1,4 +1,8 @@
-import { Container, Section } from '@/components/wrappers'
+import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { Route } from 'next'
+
+import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
 import {
   Card,
   CardBody,
@@ -8,18 +12,13 @@ import {
   SectionHeader,
 } from '@/components/content'
 import { Badge, Button, InternalLink } from '@/components/elements'
-import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
-import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Heading, ProseMarkdown } from '@/components/typography'
-import { Route } from 'next'
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { Container, Section } from '@/components/wrappers'
+import { getHomeData } from '@/requests/getHomeData'
 
-const CryptoAcademy = async ({
-  categories,
-}: {
-  categories: CategoryApiResource[]
-}) => {
+const CryptoAcademy = async () => {
+  const categories = (await getHomeData('categories')) as CategoryApiResource[]
   return (
     <Section
       id={'crypto-academy'}

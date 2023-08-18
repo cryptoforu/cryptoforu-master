@@ -1,8 +1,9 @@
-import { useCategoryContext } from '@/store/useCategoryStore'
-import { useCallback, useDeferredValue, useEffect, useTransition } from 'react'
-import { loadMore } from '@/app/actions'
 import { useParams } from 'next/navigation'
+import { useCallback, useDeferredValue, useEffect, useTransition } from 'react'
+
+import { loadMore } from '@/app/actions'
 import { useFirstRender } from '@/hooks/useFirstRender'
+import { useCategoryContext } from '@/store/useCategoryStore'
 
 export default function useCategoryController() {
   const [isPending, startTransition] = useTransition()
@@ -15,7 +16,7 @@ export default function useCategoryController() {
     state.setPageDown,
   ])
   const currentSize = useDeferredValue(pageSize)
-  let isStale = currentSize !== pageSize
+  const isStale = currentSize !== pageSize
   const updatePosts = useCallback(async () => {
     const optimisticData = await loadMore({ slug: params.category, pageSize })
     updateCategory(optimisticData.posts)
