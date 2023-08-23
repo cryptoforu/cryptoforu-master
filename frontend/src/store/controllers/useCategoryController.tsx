@@ -1,47 +1,29 @@
 import { useParams } from 'next/navigation'
-import { useCallback, useDeferredValue, useEffect, useTransition } from 'react'
+import { useCallback } from 'react'
+import { shallow } from 'zustand/shallow'
 
-import { loadMore } from '@/app/actions'
-import { useFirstRender } from '@/hooks/useFirstRender'
+import { fetchCategory } from '@/requests/fetchCategory'
 import { useCategoryContext } from '@/store/useCategoryStore'
 
-export default function useCategoryController() {
-  const [isPending, startTransition] = useTransition()
+export function useUpdateCategory() {
   const params = useParams() as { category: string }
-  const isFirstRender = useFirstRender()
-  const updateCategory = useCategoryContext((state) => state.updateCategory)
-  const [pageSize, setPageUp, setPageDown] = useCategoryContext((state) => [
-    state.pageSize,
+  const [setPageUp, setPageDown] = useCategoryContext((state) => [
     state.setPageUp,
     state.setPageDown,
   ])
-  const currentSize = useDeferredValue(pageSize)
-  const isStale = currentSize !== pageSize
-  const updatePosts = useCallback(async () => {
-    const optimisticData = await loadMore({ slug: params.category, pageSize })
-    updateCategory(optimisticData.posts)
-  }, [pageSize, params.category, updateCategory])
-
-  useEffect(() => {
-    if (isFirstRender) return
-    if (!isStale) void updatePosts()
-  }, [pageSize, isStale, isFirstRender, updatePosts])
-
-  function onChangeUp() {
-    startTransition(() => {
-      setPageUp(6)
-    })
-  }
-
-  function onChangeDown() {
-    startTransition(() => {
-      setPageDown(6)
-    })
-  }
-
-  return {
-    isPending,
-    onChangeDown,
-    onChangeUp,
-  }
+  const [updateCategory, pageSize] = useCategoryContext(
+    (state) => [state.updateCategory, state.pageSize],
+    shallow
+  )
+  return useCallback(
+    async (direction: 'up' | 'down') => {
+      direction === 'up' ? setPageUp(6) : setPageDown(6)
+      const newSize = direction === 'up' ? pageSize + 6 : pageSize - 6
+      const data = await fetchCategory(params.category, newSize.toString())
+      if (data) {
+        updateCategory(data)
+      }
+    },
+    [pageSize, params.category, setPageDown, setPageUp, updateCategory]
+  )
 }

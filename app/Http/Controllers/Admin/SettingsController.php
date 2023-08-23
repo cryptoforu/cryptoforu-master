@@ -36,10 +36,10 @@ final class SettingsController extends Controller
      * Settings Controller Instance
      */
     public function __construct(
-        SettingsInterface $settings,
-        SettingsActionInterface $action,
-        private readonly UpdateMenuItemContract $updateMenu,
-        private readonly StoreMenuItemContract $menuStore,
+      SettingsInterface $settings,
+      SettingsActionInterface $action,
+      private readonly UpdateMenuItemContract $updateMenu,
+      private readonly StoreMenuItemContract $menuStore,
     ) {
         $this->settings = $settings;
         $this->action = $action;
@@ -51,8 +51,8 @@ final class SettingsController extends Controller
     public function index(): Response
     {
         return Inertia::render(
-            component: 'Admin/Settings/SettingsIndex',
-            props: $this->settings->forIndex()
+          component: 'Admin/Settings/SettingsIndex',
+          props: $this->settings->forIndex()
         );
     }
 
@@ -62,23 +62,23 @@ final class SettingsController extends Controller
     public function create(): Response
     {
         return Inertia::render(
-            component: 'Admin/Settings/Create',
-            props: $this->settings->forCreate()
+          component: 'Admin/Settings/Create',
+          props: $this->settings->forCreate()
         );
     }
 
     public function action(
-        StorePageRequest $from,
-        ActionEnum $action,
+      StorePageRequest $from,
+      ActionEnum $action,
     ): RedirectResponse {
         $this->action->store(
-            from: $from,
-            action: $action
+          from: $from,
+          action: $action
         );
 
         return to_route('admin.settings.index')->with(
-            'success',
-            'Stored Settings Successfully'
+          'success',
+          'Stored Settings Successfully'
         );
     }
 
@@ -88,7 +88,7 @@ final class SettingsController extends Controller
     public function store(StoreMenuItemRequest $request): RedirectResponse
     {
         $this->menuStore->handle(
-            from: $request,
+          from: $request,
         );
 
         return back()->with('success', 'Stored Settings Successfully');
@@ -112,20 +112,20 @@ final class SettingsController extends Controller
      * Update Menu Item
      */
     public function updateMenu(
-        UpdateMenuItemRequest $request,
-        string|int $id,
+      UpdateMenuItemRequest $request,
+      string|int $id,
     ): ErrorResponse|RedirectResponse {
         try {
             $update = $this->updateMenu->handle(
-                request: $request,
-                id: $id
+              request: $request,
+              id: $id
             );
-        } catch (Throwable $exception) {
+        } catch (Throwable $e) {
             session(['warning', 'Something Went Wrong']);
 
-            return new ErrorResponse(message: '', exception: $exception);
+            return new ErrorResponse(message: [$e->getMessage()]);
         }
-        if ( ! $update) {
+        if (!$update) {
             return back()->with('error', 'Something Went Wrong');
         }
 
@@ -137,27 +137,26 @@ final class SettingsController extends Controller
      */
     public function update(): void
     {
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(
-        Request $request,
-        string $id
+      Request $request,
+      string $id
     ): RedirectResponse|ErrorResponse {
         try {
             $del = $this->action->destroy(
-                request: $request,
-                id: $id,
+              request: $request,
+              id: $id,
             );
         } catch (Throwable $e) {
             session(['warning', 'Something Went Wrong']);
 
-            return new ErrorResponse(message: '', exception: $e);
+            return new ErrorResponse(message: [$e->getMessage()]);
         }
-        if ( ! $del) {
+        if (!$del) {
             return back()->with('error', 'Something Went Wrong');
         }
 

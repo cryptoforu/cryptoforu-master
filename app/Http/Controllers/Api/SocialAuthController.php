@@ -1,4 +1,7 @@
 <?php
+/** @noinspection ALL */
+
+/** @noinspection ALL */
 
 declare(strict_types=1);
 
@@ -21,8 +24,8 @@ final class SocialAuthController extends Controller
      * Social Authentication
      */
     public function __construct(
-        protected CreateNewUser $createNewUser,
-        protected CreateProvider $createProvider
+      protected CreateNewUser $createNewUser,
+      protected CreateProvider $createProvider
     ) {
     }
 
@@ -30,10 +33,10 @@ final class SocialAuthController extends Controller
      * Redirect the user to the Provider authentication page.
      */
     public function redirectToProvider(
-        $provider
+      $provider
     ): ErrorResponse|RedirectResponse {
         $validate = $this->validateProvider($provider);
-        if ( ! $validate
+        if (!$validate
         ) {
             return $validate;
         }
@@ -42,12 +45,12 @@ final class SocialAuthController extends Controller
     }
 
     protected function validateProvider(
-        $provider
+      $provider
     ): bool|ErrorResponse {
-        if ( ! in_array($provider, ['facebook', 'github', 'google'])) {
+        if (!in_array($provider, ['facebook', 'github', 'google'])) {
             return new ErrorResponse(
-                message: ['message' => 'Please login using facebook, github or google'],
-                code: Http::UNPROCESSABLE_ENTITY
+              message: ['message' => 'Please login using facebook, github or google'],
+              code: Http::UNPROCESSABLE_ENTITY
             );
         }
 
@@ -58,10 +61,10 @@ final class SocialAuthController extends Controller
      * Obtain the user information from Provider.
      */
     public function handleProviderCallback(
-        $provider
+      $provider
     ): ErrorResponse|JsonResponse|RedirectResponse|Response {
         $validated = $this->validateProvider($provider);
-        if ( ! $validated
+        if (!$validated
         ) {
             return $validated;
         }
@@ -69,7 +72,7 @@ final class SocialAuthController extends Controller
             $user = Socialite::driver($provider)->stateless()->user();
         } catch (ClientException $exception) {
             return new ErrorResponse([
-                'message' => 'Invalid credentials provided.',
+              'message' => 'Invalid credentials provided.',
             ], Http::UNPROCESSABLE_ENTITY);
         }
 
@@ -78,21 +81,21 @@ final class SocialAuthController extends Controller
         if ($userCreated->admin()) {
             $userCreated->roles()->sync(['1']);
             $this->createProvider->create(
-                userCreated: $userCreated,
-                user: $user,
-                provider: $provider
+              userCreated: $userCreated,
+              user: $user,
+              provider: $provider
             );
             auth()->login($userCreated);
         }
         $userCreated->roles()->attach('4');
         $this->createProvider->create(
-            userCreated: $userCreated,
-            user: $user,
-            provider: $provider
+          userCreated: $userCreated,
+          user: $user,
+          provider: $provider
         );
         $token = $userCreated->createToken(
-            'social_guest',
-            ['reader']
+          'social_guest',
+          ['reader']
         )->plainTextToken;
 
         return response()->json($userCreated, 200, ['Access-Token' => $token]);

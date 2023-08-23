@@ -27,7 +27,7 @@ export interface TabStyleProps extends VariantProps<typeof tab> {
 }
 
 export const tabList = cva(
-  'relative flex cursor-pointer flex-wrap border-b border-slate-200 dark:border-slate-900',
+  'relative hidden cursor-pointer flex-wrap border-b border-slate-200 dark:border-slate-900 lg:flex',
   {
     variants: {
       horizontal: {

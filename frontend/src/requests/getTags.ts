@@ -1,6 +1,6 @@
 import { cache } from 'react'
 
-import { TagsApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { TagsProps } from '@/app/(main)/(pages)/learn-crypto/blog'
 import { fetchData } from '@/lib/fetchClient'
 
 export const getTags = cache(async () => {
@@ -8,5 +8,5 @@ export const getTags = cache(async () => {
   if (!res.ok) {
     throw new Error('Failed to Fetch Tags')
   }
-  return (await res.json()) as TagsApiResource[]
+  return (await res.json()) as TagsProps[]
 })

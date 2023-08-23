@@ -1,10 +1,12 @@
 {
   "extends": [
-    "prettier",
     "plugin:tailwindcss/recommended",
-    "plugin:@next/next/recommended"
+    "plugin:@next/next/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "plugins": [
-    "tailwindcss"
+    "tailwindcss",
+    "prettier"
   ]
 }

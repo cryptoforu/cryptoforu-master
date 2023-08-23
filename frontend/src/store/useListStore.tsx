@@ -45,7 +45,7 @@ const createListStore = (initProps?: Partial<FaucetListContext>) => {
   }
 
   return createStore(
-    immer<UseFaucetList>((set, get) => ({
+    immer<UseFaucetList>((set) => ({
       ...DEFAULT_PROPS,
       ...initProps,
       currency: 'top_hundred',

@@ -1,4 +1,11 @@
 <?php
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection PhpUndefinedMethodInspection */
 
 declare(strict_types=1);
 
@@ -20,11 +27,10 @@ final class BadgeEnum extends Enum
     {
         return collect(self::cases())->map(function (BadgeEnum $item) {
             return [
-                'label' => $item->label,
-                'color' => $item->colors(),
+              'label' => $item->label,
+              'color' => $item->colors(),
             ];
         })->random();
-
     }
 
     public function colors(): string
@@ -35,6 +41,5 @@ final class BadgeEnum extends Enum
             self::FEATURED() => 'cyan-400',
             self::POPULAR() => 'emerald-400'
         };
-
     }
 }

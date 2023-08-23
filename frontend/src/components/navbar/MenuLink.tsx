@@ -1,39 +1,26 @@
-'use client'
+import { DOMAttributes } from '@react-types/shared'
 import { Route } from 'next'
-import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
 
-import { Button } from '@/components/elements'
-import MenuLabel from '@/components/navbar/MenuLabel'
-import {
-  useActiveLink,
-  useNavHover,
-} from '@/store/controllers/useNavController'
+import { BtnLink } from '@/components/elements'
 
 export type MenuLinkProps = {
   href: Route | string
-  title: string | ReactNode
-  index: number
+  children: ReactNode
+  hoverProps: DOMAttributes
 }
-const MenuLink = ({ href, title, index }: MenuLinkProps) => {
-  const { isHovered, hoverProps } = useNavHover()
-  const isActive = useActiveLink()
-  const router = useRouter()
+const MenuLink = ({ href, children, hoverProps }: MenuLinkProps) => {
   return (
     <div {...hoverProps} className={'relative -my-2'} id={href}>
-      <Button
+      <BtnLink
         colorScheme={'transparent'}
         hoverAnimation={'none'}
         size={'md'}
-        onPress={() => router.push(href as Route)}
+        href={href as Route}
         className={'relative z-10'}
       >
-        <MenuLabel
-          selected={isHovered(href)}
-          title={title}
-          isActive={isActive(index)}
-        />
-      </Button>
+        {children}
+      </BtnLink>
     </div>
   )
 }

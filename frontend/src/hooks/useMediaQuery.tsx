@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { useEffect, useState } from 'react'
 import { useIsSSR } from 'react-aria'
 

@@ -16,11 +16,11 @@ use Illuminate\Support\ServiceProvider;
 
 final class SiteProvider extends ServiceProvider
 {
-    public $bindings = [
-        StoreDataContract::class => StoreSiteData::class,
-        SiteInterface::class => SiteService::class,
-        DeleteDataContract::class => DeleteSiteData::class,
-        SocialLinksContract::class => GetSocialLinks::class,
+    public array $bindings = [
+      StoreDataContract::class => StoreSiteData::class,
+      SiteInterface::class => SiteService::class,
+      DeleteDataContract::class => DeleteSiteData::class,
+      SocialLinksContract::class => GetSocialLinks::class,
     ];
 
     /**
@@ -28,7 +28,6 @@ final class SiteProvider extends ServiceProvider
      */
     public function register(): void
     {
-
     }
 
     /**
@@ -36,6 +35,5 @@ final class SiteProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
     }
 }

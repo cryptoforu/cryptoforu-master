@@ -1,9 +1,9 @@
 'use client'
-import { AnimatePresence, motion, useAnimate, usePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import { Button } from '@/components/elements'
-import { Heading, ProseMarkdown, Text } from '@/components/typography'
+import { Heading, ProseMarkdown } from '@/components/typography'
 import { useAccordion } from '@/store/useAccordionStore'
 
 function AccordionButton({
@@ -15,8 +15,6 @@ function AccordionButton({
   question: string
   children: ReactNode
 }) {
-  const [isPresent, safeToRemove] = usePresence()
-  const [scope, animate] = useAnimate()
   const setActive = useAccordion.use.setActiveIndex()
   const activeIndex = useAccordion.use.activeIndex()
   const getIconPaths = useAccordion.use.getIconPath()
@@ -31,48 +29,23 @@ function AccordionButton({
   )
   const isActive = isActiveRef.current(index)
   const path = getIconPaths(isActive)
-  useEffect(() => {
-    if (isPresent) {
-      const pathSequence = [
-        [
-          'span',
-          {
-            backgroundColor: isActive ? '#34d399' : '#64748b',
-            color: isActive ? '#f1f5f9' : '#4b5563',
-          },
-          { duration: 0.3 },
-        ],
-        ['path', { pathLength: 1 }, { duration: 0.3, ease: 'easeIn' }],
-      ]
-      const enterAnimation = async () => {
-        await animate(scope.current && pathSequence)
-      }
-      void enterAnimation()
-    } else {
-      const exitAnimation = async () => {
-        await animate(
-          'path',
-          { pathLength: 0 },
-          { duration: 0.3, ease: 'easeOut' }
-        )
-        safeToRemove()
-      }
 
-      void exitAnimation()
-    }
-  }, [animate, isActive, isPresent, safeToRemove, scope])
   return (
-    <div
-      ref={scope}
-      className={'my-6 rounded-lg bg-gray-100 p-8 dark:bg-gray-800'}
-    >
+    <div className={'my-6 rounded-lg bg-gray-100 p-8 dark:bg-gray-800'}>
       <Button
         colorScheme={'secondary'}
         onPress={() => setActive(index === activeIndex ? null : index)}
         className={'flex w-full items-center justify-between'}
       >
         <Heading>{question}</Heading>
-        <span className="rounded-full">
+        <motion.span
+          className="rounded-full"
+          style={{
+            backgroundColor: isActive ? '#34d399' : '#64748b',
+            color: isActive ? '#f1f5f9' : '#4b5563',
+          }}
+          transition={{ duration: 0.3 }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -81,15 +54,17 @@ function AccordionButton({
             stroke="currentColor"
             strokeWidth="1.5"
           >
-            <path
+            <motion.path
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
               d={path}
               pathLength={0}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
             />
           </svg>
-        </span>
+        </motion.span>
       </Button>
       <AnimatePresence initial={false}>{isActive && children}</AnimatePresence>
     </div>
@@ -105,8 +80,6 @@ export interface IAccordionProps {
   items: Item[]
 }
 
-const MotionText = motion(Text)
-const MotionProse = motion(ProseMarkdown)
 export default function Accordion({ items }: IAccordionProps) {
   return (
     <div className={'pt-6'}>

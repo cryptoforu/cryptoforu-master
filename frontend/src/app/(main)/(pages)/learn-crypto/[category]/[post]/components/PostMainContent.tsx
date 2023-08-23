@@ -1,11 +1,11 @@
-import { JSXElementConstructor, ReactElement } from 'react'
+import { ReactElement } from 'react'
 
-import { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PostProps } from '@/app/(main)/(pages)/learn-crypto/blog'
 import { PrevNext } from '@/components/content'
 
 interface PostMainContent {
-  children: ReactElement<any, string | JSXElementConstructor<any>>
-  post_links: PostApiResource['post_links']
+  children: ReactElement
+  post_links: PostProps['post_links']
 }
 
 export default function PostMainContent({

@@ -12,10 +12,10 @@ class SiteResource extends JsonApiResource
     /**
      * @var string[]
      */
-    public $attributes = [
-        'id',
-        'data_name',
-        'data_values',
+    public array $attributes = [
+      'id',
+      'data_name',
+      'data_values',
     ];
 
     /**
@@ -24,13 +24,13 @@ class SiteResource extends JsonApiResource
     public function toAttributes(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'data_name' => $this->data_name,
-            'data_values' => $this->data_values,
+          'id' => $this->id,
+          'data_name' => $this->data_name,
+          'data_values' => $this->data_values,
         ];
     }
 
-    public function toType(Request $request)
+    public function toType(Request $request): string
     {
         return 'Sites';
     }

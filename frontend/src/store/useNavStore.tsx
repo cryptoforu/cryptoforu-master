@@ -3,11 +3,13 @@ import { usePathname } from 'next/navigation'
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react'
 import { create, createStore } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 
@@ -16,17 +18,12 @@ import { MainMenu, Nullable } from '@/types/shared-types'
 
 type NavState = {
   navState: boolean
-  navVariants: {
-    [x: string]: string
-  }
   hoveredIndex: Nullable<string | number>
-  activeLink: string
 }
 
 type NavActions = {
   setScrolled: (action: boolean) => void
   setHovered: (index: Nullable<string | number>) => void
-  setActive: (link: string) => void
 }
 
 interface NavbarStore extends NavState, NavActions {}
@@ -34,18 +31,11 @@ interface NavbarStore extends NavState, NavActions {}
 const useNavbarStore = create<NavbarStore>()((set) => ({
   navState: false,
   hoveredIndex: null,
-  activeLink: '/',
-  navVariants: {
-    scrolled:
-      'bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-slate-900 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75',
-    notScrolled: 'bg-transparent',
-  },
   setScrolled: (action) =>
     set(() => ({
       navState: action,
     })),
   setHovered: (index) => set(() => ({ hoveredIndex: index })),
-  setActive: (link) => set(() => ({ activeLink: link })),
 }))
 const useNavStore = createSelectors(useNavbarStore)
 export default useNavStore
@@ -59,7 +49,10 @@ type MenuState = {
   setActive: (href: string) => void
 }
 
-interface MenuData extends MenuContextData, MenuState {}
+interface MenuData extends MenuContextData, MenuState {
+  _hasHydrated: boolean
+  setHasHydrated: (state: boolean) => void
+}
 
 type UseMenuStore = ReturnType<typeof createMenuStore>
 const createMenuStore = (initProps?: Partial<MenuContextData>) => {
@@ -67,24 +60,36 @@ const createMenuStore = (initProps?: Partial<MenuContextData>) => {
     menu: [],
   }
   return createStore(
-    immer<MenuData>((set) => ({
-      ...DEFAULT_PROPS,
-      ...initProps,
-      activeItem: 0,
-      setActive: (href) =>
-        set((state) => {
-          state.menu.map((el, index) => {
-            if (el.route === href) {
-              state.activeItem = index
-            } else {
-              const child = el.childs.find((child) => child.route === href)
-              if (child) {
+    persist(
+      immer<MenuData>((set) => ({
+        ...DEFAULT_PROPS,
+        ...initProps,
+        activeItem: 0,
+        _hasHydrated: false,
+        setActive: (href) =>
+          set((state) => {
+            state.menu.map((el, index) => {
+              if (state.activeItem === index) return
+              if (el.route === href) {
                 state.activeItem = index
+              } else {
+                const child = el.childs.find((child) => child.route === href)
+                if (child) {
+                  state.activeItem = index
+                }
               }
-            }
-          })
-        }),
-    }))
+            })
+          }),
+        setHasHydrated: (state) => set({ _hasHydrated: state }),
+      })),
+      {
+        name: 'menu-storage',
+        partialize: (state) => state.menu,
+        onRehydrateStorage: () => (state) => {
+          state.setHasHydrated(true)
+        },
+      }
+    )
   )
 }
 
@@ -95,11 +100,17 @@ export function MenuProvider({
   ...props
 }: PropsWithChildren<MenuContextData>) {
   const [menuStore] = useState(() => createMenuStore(props))
+  const hasHydrated = menuStore.getState()._hasHydrated
   const setActive = menuStore.getState().setActive
   const path = usePathname()
+  const updateActive = useCallback(() => {
+    if (hasHydrated) {
+      setActive(path)
+    }
+  }, [hasHydrated, path, setActive])
   useEffect(() => {
-    setActive(path)
-  }, [path, setActive])
+    updateActive()
+  }, [updateActive])
   return (
     <MenuContext.Provider value={menuStore}>{children}</MenuContext.Provider>
   )

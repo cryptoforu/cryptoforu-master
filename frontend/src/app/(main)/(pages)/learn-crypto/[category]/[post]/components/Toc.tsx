@@ -1,6 +1,6 @@
 'use client'
 import { clsx } from 'clsx'
-import { JSXElementConstructor, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { Button } from 'react-aria-components'
 
 import { TextSkeleton } from '@/components/skeletons'
@@ -12,14 +12,10 @@ import {
   useToc,
 } from '@/store/controllers/usePostController'
 
-const Toc = ({
-  markdown,
-}: {
-  markdown: ReactElement<any, string | JSXElementConstructor<any>>
-}) => {
+const Toc = ({ markdown }: { markdown: ReactElement }) => {
   const toc = collectHeadings(markdown as any)
   useToc(toc)
-  const { toc: tableOfContents, isActive, currentHeading } = usePostController()
+  const { toc: tableOfContents, isActive } = usePostController()
   const scrollTo = useScrollTo()
   if (!tableOfContents) {
     return (

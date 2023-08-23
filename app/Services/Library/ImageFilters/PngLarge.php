@@ -10,23 +10,22 @@ use Intervention\Image\Image;
 
 final class PngLarge implements FilterInterface
 {
-    public function applyFilter(Image $image)
+    public function applyFilter(Image $image): Image
     {
         if (Request::query('w')) {
             return $image->widen(
-                Request::query('w'),
-                function ($constraint): void {
-                    $constraint->upsize();
-                }
+              (int) Request::query('w'),
+              function ($constraint): void {
+                  $constraint->upsize();
+              }
             )->encode($image->mime(), Request::query('q'));
         } else {
             return $image->widen(
-                1200,
-                function ($constraint): void {
-                    $constraint->upsize();
-                }
+              1200,
+              function ($constraint): void {
+                  $constraint->upsize();
+              }
             )->encode($image->mime(), Request::query('q'));
         }
-
     }
 }

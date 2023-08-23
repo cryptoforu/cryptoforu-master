@@ -23,7 +23,7 @@ const SubscribeHeader = () => {
             type={'email'}
           />
         </div>
-        <div className={'mt-4 sm:ml-3 sm:mt-0'}>
+        <div className={'mt-4 text-center sm:ml-3 sm:mt-0'}>
           <Button type={'submit'} size={'lg'}>
             Subscribe
           </Button>

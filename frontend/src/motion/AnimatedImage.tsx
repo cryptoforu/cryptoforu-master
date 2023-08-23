@@ -21,7 +21,7 @@ export default function AnimatedImage(props: AnimatedImage) {
     setTimeout(() => setPulsing(false), 600)
   }
 
-  const { src, alt, width, height, className, ...rest } = props
+  const { src, alt, width, height, className } = props
   return (
     <motion.div
       className={clsx(

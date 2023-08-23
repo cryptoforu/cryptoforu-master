@@ -8,7 +8,6 @@ import { BreadcrumbsProps } from '@/types/shared-types'
 export const preloadBreadcrumbs = () => {
   void getBreadcrumbs()
 }
-
 export const getBreadcrumbs = cache(async () => {
   const response = await fetchData('site/shared/breadcrumbs')
   if (!response.ok) {

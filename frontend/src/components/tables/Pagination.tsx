@@ -19,7 +19,6 @@ const Pagination = ({
   links,
   prev_page_url,
   next_page_url,
-  current_page,
 }: IPaginate) => {
   if (links.length <= 4) {
     return

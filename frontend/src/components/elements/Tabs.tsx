@@ -1,7 +1,7 @@
 'use client'
 import { Node, Orientation } from '@react-types/shared'
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { Key, ReactNode, useRef } from 'react'
 import {
   AriaTabListProps,
   AriaTabPanelProps,
@@ -12,6 +12,7 @@ import {
 } from 'react-aria'
 import { TabListState, useTabListState } from 'react-stately'
 
+import { MenuButton, MenuItem } from '@/components/elements/Menu'
 import { cn } from '@/lib/utils'
 import { tabsVariants } from '@/motion/variants'
 import useTabsController from '@/store/controllers/useTabsController'
@@ -112,6 +113,12 @@ interface ITabsV2<T extends object>
   tabPanelVariant?: 'withBg' | 'transparent'
 }
 
+type DataItem = {
+  id: string
+  key: Key
+  label: string
+  content: ReactNode
+}
 export default function Tabs<T extends object>(props: ITabsV2<T>) {
   const state = useTabListState<T>(props)
   const tabsRef = useRef(null)
@@ -125,7 +132,22 @@ export default function Tabs<T extends object>(props: ITabsV2<T>) {
   const { setFocused } = useTabsController()
 
   return (
-    <div className={'hidden lg:relative lg:mt-20 lg:block'}>
+    <div className={'relative mt-20'}>
+      <div className={'block lg:hidden'}>
+        <MenuButton
+          colorScheme={'secondary'}
+          items={props.items as DataItem[]}
+          disabled={props.isDisabled}
+          label={state.selectedItem.rendered}
+          onAction={props.onSelectionChange}
+        >
+          {(item) => (
+            <MenuItem id={item.id} key={item.key}>
+              {item.label}
+            </MenuItem>
+          )}
+        </MenuButton>
+      </div>
       <div
         {...tabListProps}
         ref={tabsRef}

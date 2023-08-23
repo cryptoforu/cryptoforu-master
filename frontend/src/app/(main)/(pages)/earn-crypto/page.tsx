@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { Suspense } from 'react'
 
 import Description from '@/app/(main)/(pages)/earn-crypto/components/Description'

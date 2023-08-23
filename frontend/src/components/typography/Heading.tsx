@@ -20,8 +20,8 @@ const heading = cva('font-bold tracking-tight', {
       sm: `text-lg`,
       md: `text-xl sm:text-2xl`,
       lg: `text-2xl sm:text-4xl`,
-      xl: `text-4xl sm:text-6xl`,
-      xxl: `text-5xl sm:text-8xl`,
+      xl: `text-3xl sm:text-5xl`,
+      xxl: `text-4xl sm:text-6xl md:text-8xl`,
     },
   },
   defaultVariants: {

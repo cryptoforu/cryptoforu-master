@@ -1,4 +1,21 @@
 <?php
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection ALL */
+
+/** @noinspection ALL */
+
+/** @noinspection ALL */
+
+/** @noinspection ALL */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 declare(strict_types=1);
 
@@ -53,20 +70,20 @@ final class Category extends Model
     use WithData;
 
     protected $fillable = [
-        'name',
-        'description',
-        'slug',
-        'category_image',
-        'category_thumb',
-        'posts',
-        'headline',
-        'category_links',
+      'name',
+      'description',
+      'slug',
+      'category_image',
+      'category_thumb',
+      'posts',
+      'headline',
+      'category_links',
     ];
 
     protected string $dataClass = CategoryData::class;
 
     protected $casts = [
-        'category_links' => AsCollection::class,
+      'category_links' => AsCollection::class,
     ];
 
     public function posts(): HasMany
@@ -87,21 +104,20 @@ final class Category extends Model
     public function scopeOfData(): Collection
     {
         return $this->all()
-            ->map(
-                fn ($category) => CategoryData::fromData($category)
-            )
-        ;
+          ->map(
+            fn($category) => CategoryData::fromData($category)
+          );
     }
 
     public function scopeOfNext(Builder $query, int $id): ?array
     {
         $next = $query->where('id', '>', $id)->first([
-            'name', 'slug',
+          'name', 'slug',
         ]);
         if (null !== $next) {
             return [
-                'name' => $next->name,
-                'slug' => '/learn-crypto/' . $next->slug,
+              'name' => $next->name,
+              'slug' => '/learn-crypto/'.$next->slug,
             ];
         }
 
@@ -111,12 +127,11 @@ final class Category extends Model
     public function scopeOfPrev(Builder $query, int $id): ?array
     {
         $prev = $query->where('id', '<', $id)->orderBy('id', 'desc')
-            ->first(['name', 'slug'])
-        ;
+          ->first(['name', 'slug']);
         if (null !== $prev) {
             return [
-                'name' => $prev->name,
-                'slug' => '/learn-crypto/' . $prev->slug,
+              'name' => $prev->name,
+              'slug' => '/learn-crypto/'.$prev->slug,
             ];
         }
 

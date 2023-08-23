@@ -1,6 +1,8 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { ArrowSmallLeftIcon } from '@heroicons/react/20/solid'
-import { Metadata, Route } from 'next'
-import dynamic from 'next/dynamic'
+import { Route } from 'next'
+import { Suspense } from 'react'
 
 import {
   PostMainContent,
@@ -9,51 +11,48 @@ import {
 } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components'
 import CategoryNav from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/CategoryNav'
 import PostHeader from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/PostHeader'
-import { getArticle } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/getPosts'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/getCategories'
+import {
+  CategoryParams,
+  PostParams,
+  PostWithCategory,
+} from '@/app/(main)/(pages)/learn-crypto/blog'
+import {
+  getArticle,
+  getArticleMeta,
+  getCategory,
+} from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
+import RelatedPosts from '@/app/(main)/(pages)/learn-crypto/components/RelatedPosts'
 import { AdPlaceholder } from '@/components/content'
 import { BtnLink, ResponsiveImage } from '@/components/elements'
 import { AnchorLink } from '@/components/elements/Link'
-import { SectionSkeleton } from '@/components/skeletons'
+import { ContentSkeleton } from '@/components/skeletons'
+import WidgetSkeleton from '@/components/skeletons/WidgetSkeleton'
 import { Heading, Prose } from '@/components/typography'
 import useMarkdown from '@/hooks/useMarkdown'
 import AnimatedImage from '@/motion/AnimatedImage'
-import { filterPostMetaData, getSiteData } from '@/requests/getSiteData'
 
-const RelatedPosts = dynamic(
-  () => import('@/app/(main)/(pages)/learn-crypto/components/RelatedPosts'),
-  {
-    loading: () => <SectionSkeleton />,
-  }
-)
-
-type PostPageProps = {
-  params: {
-    category: string
-    post: string
-  }
-}
-
+export const revalidate = 3600
 export const dynamicParams = true
+export const generateMetadata = async ({ params }: PostParams) =>
+  getArticleMeta({ params })
 
-export async function generateMetadata({
-  params,
-}: PostPageProps): Promise<Metadata> {
-  return await filterPostMetaData(params.post)
-}
-
-export async function generateStaticParams() {
-  const posts = await getSiteData('filter[params]=id,category_id,slug', 5)
+export async function generateStaticParams({ params }: CategoryParams) {
+  const posts = (await getCategory(
+    params.category,
+    '?filter[postId]=6'
+  )) as PostWithCategory[]
   return posts.map((post) => ({
-    category: post.category.slug,
     post: post.slug,
   }))
 }
 
-export default async function Post({ params }: PostPageProps) {
-  const data = await getArticle({ slug: params.post })
-  const categories = await getCategories('fields[categories]=id,name,slug')
-  const markdown = useMarkdown(data.content, {
+export default async function Post({ params }: PostParams) {
+  const article = (await getArticle(
+    params.category,
+    params.post
+  )) as unknown as PostWithCategory
+
+  const markdown = useMarkdown(article.content, {
     components: {
       a: (props: any) => <AnchorLink {...props} />,
       img: (props: any) => <ResponsiveImage src={props.src} alt={props.alt} />,
@@ -66,6 +65,10 @@ export default async function Post({ params }: PostPageProps) {
       ),
     },
   })
+  const related = getCategory(
+    params.category,
+    `?filter[related]=${params.post}`
+  ) as unknown as Promise<PostWithCategory[]>
   return (
     <>
       <div
@@ -77,7 +80,9 @@ export default async function Post({ params }: PostPageProps) {
           <div className="sticky top-[4.9rem] -ml-0.5 h-[calc(100vh-4.9rem)] overflow-y-auto overflow-x-hidden py-8 pl-4">
             <div className="absolute bottom-0 right-0 top-8 hidden w-px bg-slate-800 dark:block" />
             <Toc markdown={markdown} />
-            <CategoryNav categories={categories} />
+            <Suspense fallback={<WidgetSkeleton numberOfLines={10} />}>
+              <CategoryNav />
+            </Suspense>
           </div>
         </div>
         <div
@@ -88,7 +93,7 @@ export default async function Post({ params }: PostPageProps) {
           <Prose className={'max-w-none'}>
             <div className={'not-prose relative'}>
               <BtnLink
-                href={`/learn-crypto/${data.category?.slug}` as Route}
+                href={`/learn-crypto/${article.category?.slug}` as Route}
                 className={'absolute -top-12 left-0'}
                 variant={'solid'}
                 colorScheme={'secondary'}
@@ -98,34 +103,32 @@ export default async function Post({ params }: PostPageProps) {
               </BtnLink>
             </div>
             <PostHeader
-              headline={data.headline.split('|')}
-              updated={data.updated_at}
-              reading_time={data.reading_time}
+              headline={article.headline.split('|')}
+              updated={article.updated_at}
+              reading_time={article.reading_time}
             >
-              {data.introduction}
+              {article.introduction}
             </PostHeader>
             <AnimatedImage
-              src={data.image_name}
-              alt={data.title}
+              src={article.image_name}
+              alt={article.title}
               width={1000}
               height={600}
             />
-            <PostMainContent post_links={data.post_links}>
+            <PostMainContent post_links={article.post_links}>
               {markdown}
             </PostMainContent>
           </Prose>
         </div>
 
-        <PostSidebar post={data} />
+        <PostSidebar post={article} />
       </div>
       <div className={'mx-auto max-w-5xl py-12'}>
         <AdPlaceholder ad={'leaderboard'} />
       </div>
-      <RelatedPosts
-        related={data.related}
-        title={'Related'}
-        description={'Posts'}
-      />
+      <Suspense fallback={<ContentSkeleton cards={4} />}>
+        <RelatedPosts data={related} title={'Related'} description={'Posts'} />
+      </Suspense>
     </>
   )
 }

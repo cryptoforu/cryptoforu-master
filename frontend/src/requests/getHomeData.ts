@@ -1,18 +1,20 @@
 import { cache } from 'react'
 
-import { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
-import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import {
+  CategoryWithPosts,
+  PostWithCategory,
+} from '@/app/(main)/(pages)/learn-crypto/blog'
 import { fetchData } from '@/lib/fetchClient'
 import { CryptoData } from '@/types/crypto'
 import { EarningMethods } from '@/types/shared-types'
 
 export interface HomeData {
-  categories: CategoryApiResource[]
+  categories: CategoryWithPosts[]
   crypto: {
     [x: string]: CryptoData
   }
   earning_methods: EarningMethods['data']
-  latest_posts: Array<PostApiResource>
+  latest_posts: Array<PostWithCategory>
 }
 
 export const preloadHome = () => {

@@ -1,7 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
 import Image, { ImageProps, StaticImageData } from 'next/image'
-import NextLink from 'next/link'
 import React from 'react'
 
 import { Button } from '@/components/elements'
@@ -44,8 +42,6 @@ interface ImageIcon extends IconProps, ImageProps {}
 function ImageIcon(props: ImageIcon) {
   return <IconComponent as={Image} width={240} height={240} {...props} />
 }
-
-const MotionLink = motion(NextLink)
 
 interface IconButtonProps extends IButtonProps<any>, IconProps {
   src?: string | StaticImageData

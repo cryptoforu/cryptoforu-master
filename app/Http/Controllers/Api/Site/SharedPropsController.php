@@ -14,65 +14,62 @@ use Illuminate\Http\Request;
 
 final class SharedPropsController extends Controller
 {
-  public function __construct(
-    protected ApiServiceContract $service,
-    protected CountActionContract $actionContract
-  ) {
-  }
-
-  /**
-   * Get Page Meta Data
-   */
-  public function meta_data(): CollectionResponse
-  {
-    return new CollectionResponse(
-      data: $this->service->meta()->get_meta_data()
-    );
-  }
-
-  /**
-   * Get Pages Breadcrumbs
-   */
-  public function breadcrumbs(): CollectionResponse
-  {
-    return new CollectionResponse(
-      data: $this->service->breadcrumbs()->generate()
-    );
-  }
-
-  /**
-   * Posts View Count
-   */
-  public function count_views(Request $request, Post $post): JsonResponse
-  {
-    if ($this->actionContract->should_count($post, $request->ip())) {
-      views($post)->record();
+    public function __construct(
+      protected ApiServiceContract $service,
+      protected CountActionContract $actionContract
+    ) {
     }
-    return new JsonResponse(
-      data: $this->actionContract->count_views(
-        post: $post,
-        ip: $request->ip()
-      )
-    );
-  }
 
-  /**
-   * Home Page Data
-   */
-  public function home_resource(): CollectionResponse
-  {
-    return new CollectionResponse(
-      data: $this->service->home()->generate()
-    );
-  }
+    /**
+     * Get Page Meta Data
+     */
+    public function meta_data(): CollectionResponse
+    {
+        return new CollectionResponse(
+          data: $this->service->meta()->get_meta_data()
+        );
+    }
 
-  /**
-   * Get Main Menu
-   */
-  public function front_menu(): JsonResponse
-  {
-    return new JsonResponse(
-      data: $this->service->menu()->get_front_menu()
-    );
-  }
+    /**
+     * Get Pages Breadcrumbs
+     */
+    public function breadcrumbs(): CollectionResponse
+    {
+        return new CollectionResponse(
+          data: $this->service->breadcrumbs()->generate()
+        );
+    }
+
+    /**
+     * Posts View Count
+     */
+    public function count_views(Request $request, Post $post): JsonResponse
+    {
+        return new JsonResponse(
+          data: $this->actionContract->count_views(
+            post: $post,
+            ip: $request->ip()
+          )
+        );
+    }
+
+    /**
+     * Home Page Data
+     */
+    public function home_resource(): CollectionResponse
+    {
+        return new CollectionResponse(
+          data: $this->service->home()->generate()
+        );
+    }
+
+    /**
+     * Get Main Menu
+     */
+    public function front_menu(): JsonResponse
+    {
+        return new JsonResponse(
+          data: $this->service->menu()->get_front_menu()
+        );
+    }
 }

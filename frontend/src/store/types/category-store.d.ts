@@ -1,11 +1,11 @@
-import { CursorPaginatedPost } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PaginatedPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
 
 export type CategoryContextData = {
-  posts: CursorPaginatedPost
+  posts: PaginatedPosts
 }
 
 export type CategoryDispatch = {
-  updateCategory: (posts: CursorPaginatedPost) => void
+  updateCategory: (posts: PaginatedPosts) => void
   setPageUp: (size: number) => void
   setPageDown: (size: number) => void
 }

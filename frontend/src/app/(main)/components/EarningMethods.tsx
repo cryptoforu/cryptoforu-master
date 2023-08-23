@@ -90,7 +90,7 @@ const EarningMethods = async () => {
     <Section id={'earning-methods'} ariaLabel={'earning Methods'}>
       <Container>
         <SectionHeader
-          className={'max-w-2xl text-center'}
+          className={'max-w-2xl lg:text-center'}
           title={'Earn Crypto with'}
           gradTitle={'Cryptoforu'}
           desc={
@@ -98,6 +98,7 @@ const EarningMethods = async () => {
             '            services and Earn your Online Passive Income right way'
           }
           badgeLabel={'Earning Methods'}
+          badgePosition={'start lg:justify-center'}
         />
         <DataTabsV2 data={tabsData} />
       </Container>

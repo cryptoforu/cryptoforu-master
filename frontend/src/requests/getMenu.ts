@@ -8,7 +8,6 @@ import type { MainMenu } from '@/types/shared-types'
 export const preloadMenu = () => {
   void getMenu()
 }
-
 export const getMenu = cache(async () => {
   const res = await fetchData('site/shared/front-menu')
   if (!res.ok) {

@@ -15,7 +15,6 @@ const ListCharts = ({ stats }: { stats: ListStats }) => {
   return (
     <>
       <BarChart data={chartCoinData} options={coinOptions} />
-
       <BarChart data={chartFaucetData} options={faucetOptions} />
     </>
   )

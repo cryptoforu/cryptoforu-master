@@ -19,5 +19,4 @@ const reducer = (state: UsePostState, { type, payload }: PostActions) => {
       return { entry: payload.entry }
   }
 }
-export type IPostStore = ReturnType<typeof usePostStore>
 export const usePostStore = create(redux(reducer, postState))

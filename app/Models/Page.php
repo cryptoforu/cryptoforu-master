@@ -64,18 +64,18 @@ final class Page extends Model
     use WithData;
 
     protected $fillable = [
-        'label',
-        'route',
-        'meta_desc',
-        'meta_image',
-        'tw_image',
-        'og_image',
-        'parent_id',
-        'page_type',
-        'page_name',
+      'label',
+      'route',
+      'meta_desc',
+      'meta_image',
+      'tw_image',
+      'og_image',
+      'parent_id',
+      'page_type',
+      'page_name',
     ];
 
-    protected $dataClass = PageData::class;
+    protected string $dataClass = PageData::class;
 
     public function childs(): HasMany
     {
@@ -117,14 +117,13 @@ final class Page extends Model
      * Get Page Meta Data Query
      */
     public function scopePage(
-        Builder $query,
-        string $page_type,
-        string $page
+      Builder $query,
+      string $page_type,
+      string $page
     ): Builder {
         return $query->with('parents')
-            ->where('page_type', $page_type)
-            ->where('page_name', $page)
-        ;
+          ->where('page_type', $page_type)
+          ->where('page_name', $page);
     }
 
     /**
@@ -139,18 +138,18 @@ final class Page extends Model
      * Scope query for current route
      */
     public function scopeRoute(
-        Builder $query,
-        string $route,
-        ?string $fallback = null
+      Builder $query,
+      string $route,
+      ?string $fallback = null
     ): Builder {
         return $query->when(
-            $route,
-            function (Builder $builder) use ($route): void {
-                $builder->where('route', $route);
-            },
-            function (Builder $builder) use ($fallback): void {
-                $builder->where('route', $fallback);
-            }
+          $route,
+          function (Builder $builder) use ($route): void {
+              $builder->where('route', $route);
+          },
+          function (Builder $builder) use ($fallback): void {
+              $builder->where('route', $fallback);
+          }
         );
     }
 }

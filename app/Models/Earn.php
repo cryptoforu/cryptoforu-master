@@ -67,32 +67,33 @@ use Spatie\LaravelData\WithData;
  */
 final class Earn extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
-        'title',
-        'content',
-        'slug',
-        'image',
-        'thumb',
-        'link',
-        'featured',
-        'image_name',
-        'earn_category_id',
-        'post_id',
-        'main_features',
-        'status',
+      'title',
+      'content',
+      'slug',
+      'image',
+      'thumb',
+      'link',
+      'featured',
+      'image_name',
+      'earn_category_id',
+      'post_id',
+      'main_features',
+      'status',
     ];
 
     protected $casts = [
-        'featured' => FeaturedEnum::class,
-        'status' => EarnStatus::class,
-        'nullable_enum' => EarnStatus::class . ':nullable',
-        'array_of_enums' => EarnStatus::class . ':collection',
-        'nullable_array_of_enums' => EarnStatus::class . ':collection,nullable',
+      'featured' => FeaturedEnum::class,
+      'status' => EarnStatus::class,
+      'nullable_enum' => EarnStatus::class.':nullable',
+      'array_of_enums' => EarnStatus::class.':collection',
+      'nullable_array_of_enums' => EarnStatus::class.':collection,nullable',
     ];
 
-    protected $dataClass = EarnData::class;
+    protected string $dataClass = EarnData::class;
 
     public function earnCategory(): BelongsTo
     {
@@ -110,8 +111,8 @@ final class Earn extends Model
     }
 
     public function scopeOfFeatured(
-        Builder $query,
-        FeaturedEnum $featured
+      Builder $query,
+      FeaturedEnum $featured
     ): Builder {
         return $query->where('featured', $featured);
     }

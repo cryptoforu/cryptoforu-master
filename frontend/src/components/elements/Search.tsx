@@ -1,6 +1,6 @@
 'use client'
 import { DocumentMagnifyingGlassIcon } from '@heroicons/react/24/outline/index.js'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { AriaSearchFieldProps, useSearchField } from 'react-aria'
 import { useSearchFieldState } from 'react-stately'
 

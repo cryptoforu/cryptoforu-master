@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import './globals.css'
 
 import type { Metadata } from 'next'
@@ -9,6 +11,7 @@ import seo from '@/lib/seo'
 import themeScript from '@/lib/theme-script'
 import SSRProvider from '@/providers/SSRProvider'
 
+// noinspection JSUnusedGlobalSymbols
 export const metadata: Metadata = seo
 
 export default function RootLayout({ children }: { children: ReactNode }) {

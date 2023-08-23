@@ -1,9 +1,3 @@
-import { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
-
-export type PostProviderProps = {
-  post: PostApiResource
-}
-
 export type TableOfContents = {
   id: string
   title: string

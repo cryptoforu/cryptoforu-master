@@ -1,5 +1,15 @@
-/* next */
+# next
 next.config.js
+.next
 
-/* prettier */
+# prettier
 prettier.config.js
+
+#tailwind
+tailwind.config.js
+
+#node
+node_modules
+
+# contentlayer
+.contentlayer

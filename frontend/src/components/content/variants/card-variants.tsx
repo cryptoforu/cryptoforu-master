@@ -20,6 +20,7 @@ export const card = cva('relative', {
       lg: 'px-3 py-2',
       xl: 'max-w-xl p-4',
       prose: 'max-w-prose',
+      article: 'max-w-sm',
       none: '',
     },
   },
@@ -29,7 +30,7 @@ export const card = cva('relative', {
   },
 })
 
-export type CardVariants = {} & VariantProps<typeof card>
+export type CardVariants = VariantProps<typeof card>
 
 export const cardHeader = cva('relative', {
   variants: {
@@ -47,7 +48,7 @@ export const cardHeader = cva('relative', {
   },
 })
 
-export type CardHeaderVariants = {} & VariantProps<typeof cardHeader>
+export type CardHeaderVariants = VariantProps<typeof cardHeader>
 
 export const cardBody = cva('relative', {
   variants: {
@@ -68,9 +69,9 @@ export const cardBody = cva('relative', {
   },
 })
 
-export type CardBodyVariants = {} & VariantProps<typeof cardBody>
+export type CardBodyVariants = VariantProps<typeof cardBody>
 
-export const cardLink = cva('', {
+cva('', {
   variants: {
     variant: {
       overlay: 'absolute inset-0 z-50 overflow-hidden',
@@ -85,8 +86,6 @@ export const cardLink = cva('', {
     variant: 'hoverBorder',
   },
 })
-
-export type CardLinkVariants = {} & VariantProps<typeof cardLink>
 
 export const cardImage = cva('relative', {
   variants: {
@@ -104,7 +103,7 @@ export const cardImage = cva('relative', {
     variant: 'primary',
   },
 })
-export type CardImageVariants = {} & VariantProps<typeof cardImage>
+export type CardImageVariants = VariantProps<typeof cardImage>
 
 export const cardFooter = cva('', {
   variants: {
@@ -128,7 +127,7 @@ export const cardFooter = cva('', {
   },
 })
 
-export type CardFooterVariants = {} & VariantProps<typeof cardFooter>
+export type CardFooterVariants = VariantProps<typeof cardFooter>
 
 export const cardAnimations = {
   primary: {

@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 export const hoverVariants = {
   initial: {
     opacity: 0.7,
@@ -9,32 +11,13 @@ export const hoverVariants = {
   },
 }
 export const slideVariants = {
-  enter: (direction: number) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }
-  },
   center: {
     zIndex: 1,
     x: 0,
     opacity: 1,
   },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }
-  },
 }
-export const priceVariant = {
-  current: (price: string) => {
-    return {
-      color: '',
-    }
-  },
-}
+
 export const tabsVariants = {
   initial: (direction: number) => {
     return {

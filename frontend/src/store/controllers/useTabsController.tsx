@@ -27,14 +27,3 @@ const useTabsController = () => {
   }
 }
 export default useTabsController
-
-export const useSelectedTab = () => {
-  const isSelected = useTabs.use.isSelected()
-
-  return useCallback(
-    (key: string) => {
-      return isSelected === key
-    },
-    [isSelected]
-  )
-}

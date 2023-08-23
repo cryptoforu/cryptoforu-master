@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { Suspense } from 'react'
 
 import BlogPosts from '@/app/(main)/components/BlogPosts'
@@ -9,10 +11,11 @@ import Hero from '@/app/(main)/components/Hero'
 import SubscribeHeader from '@/app/(main)/components/partials/SubscribeHeader'
 import { CardSkeleton, SectionSkeleton } from '@/components/skeletons'
 import { getMetadata, preload } from '@/lib/getData'
-import { getHomeData, HomeData } from '@/requests/getHomeData'
+import { getHomeData, HomeData, preloadHome } from '@/requests/getHomeData'
 import { CryptoProvider } from '@/store/useCrypto'
 
 preload('site/shared/meta-data?filter[page_name]=home')
+preloadHome()
 
 export async function generateMetadata() {
   return await getMetadata('home')

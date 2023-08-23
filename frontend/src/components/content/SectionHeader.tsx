@@ -28,10 +28,11 @@ const SectionHeader = (props: ISectionHeaderProps) => {
     decorate = false,
     ...rest
   } = props
+  const badgePositionClass = 'justify-' + badgePosition
   return (
     <div className={`mx-auto ${rest.className}`}>
       {badgeLabel && (
-        <div className={clsx('flex', `justify-${badgePosition}`)}>
+        <div className={clsx('flex', badgePositionClass)}>
           <Badge variant={'secondary'} size={'md'} className={'relative'}>
             {badgeLabel}
           </Badge>

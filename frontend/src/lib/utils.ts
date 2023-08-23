@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -20,14 +22,14 @@ export const parseFloatNumber = (value: string) => {
 
 export const isObjectEmpty = (objectName: object) => {
   for (const prop in objectName) {
-    if (objectName.hasOwnProperty(prop)) {
+    if (prop) {
       return false
     }
   }
   return true
 }
 
-export function filterObjectKey<T extends Object>(obj: T, filterKey: string) {
+export function filterObjectKey<T extends object>(obj: T, filterKey: string) {
   return Object.fromEntries(
     Object.entries(obj).filter(([key]) => key.includes(filterKey))
   )

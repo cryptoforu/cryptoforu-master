@@ -43,7 +43,7 @@ const Description = () => {
                   10 Crypto Faucets, Shortlink Services, AdNetworks and many
                   more different ways.
                 </p>
-                <ul role="list" className="mt-8 space-y-8">
+                <ul className="mt-8 space-y-8">
                   <li className="flex gap-x-3">
                     <BanknotesIcon
                       className="mt-1 h-5 w-5 flex-none text-emerald-600"

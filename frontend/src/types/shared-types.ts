@@ -38,30 +38,6 @@ export type PaginationProps = {
   total: number
 }
 
-export type DecryptNews = {
-  title: string
-  link: string
-  description: string
-  enclosure: {
-    '@attributes': {
-      url: string
-    }
-  }
-}
-
-export type Exchanges = {
-  id: string
-  name: string
-  year_established: string
-  url: string
-  image: string
-  trust_score: number
-  trust_score_rank: number
-  trade_volume_24h_btc: string
-}
-
-export type ColorScheme = 'emerald' | 'teal' | 'cyan' | 'blue' | 'red'
-
 export type EarnData = {
   id: number
   title: string

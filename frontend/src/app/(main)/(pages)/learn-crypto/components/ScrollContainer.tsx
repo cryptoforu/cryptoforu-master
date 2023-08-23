@@ -11,16 +11,11 @@ import { ReactNode, useRef } from 'react'
 import { Text } from '@/components/typography'
 
 interface ScrollProps {
-  className?: string
   children: ReactNode
   header: string
 }
 
-export default function ScrollContainer({
-  children,
-  className,
-  header,
-}: ScrollProps) {
+export default function ScrollContainer({ children, header }: ScrollProps) {
   const containerRef = useRef(null)
   const { scrollY } = useScroll({
     target: containerRef,

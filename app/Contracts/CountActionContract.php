@@ -8,9 +8,9 @@ use App\Models\Post;
 
 interface CountActionContract
 {
-  public function should_count(Post $post, string $ip);
+    public function get_count(string $uniqueKey): mixed;
 
-  public function count_views(Post $post, string $ip);
+    public function should_count(string $uniqueKey);
 
-
+    public function count_views(Post $post, string $ip);
 }
