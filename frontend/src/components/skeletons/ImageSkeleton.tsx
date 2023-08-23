@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 export default function ImageSkeleton() {
   return (
     <div

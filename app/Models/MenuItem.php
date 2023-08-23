@@ -55,14 +55,14 @@ final class MenuItem extends Model
     use WithData;
 
     protected $fillable = [
-        'label',
-        'route',
-        'icon',
-        'parent_id',
-        'menu_id',
+      'label',
+      'route',
+      'icon',
+      'parent_id',
+      'menu_id',
     ];
 
-    protected $dataClass = MenuItemsData::class;
+    protected string $dataClass = MenuItemsData::class;
 
     public function childs(): HasMany
     {
@@ -103,21 +103,19 @@ final class MenuItem extends Model
     public function scopeOfMain(Builder $query): Collection|array
     {
         return $query->whereBelongsTo(
-            Menu::query()
-                ->where('position', 'front_main')
-                ->with('items')->first()
+          Menu::query()
+            ->where('position', 'front_main')
+            ->with('items')->first()
         )->with('parents:id,label,route,parent_id')
-            ->select(['id', 'label', 'route', 'parent_id'])->get()
-        ;
+          ->select(['id', 'label', 'route', 'parent_id'])->get();
     }
 
     public function scopeOfItems(
-        Builder $query,
-        Menu $menu
+      Builder $query,
+      Menu $menu
     ): Collection|array {
         return $query->whereBelongsTo($menu)
-            ->where('parent_id', 0)
-            ->with('childs')->get()
-        ;
+          ->where('parent_id', 0)
+          ->with('childs')->get();
     }
 }

@@ -7,8 +7,8 @@ const useSocket = (url?: string) => {
   const socketUrl = url || defaultUrl
 
   const [messageHistory, setMessageHistory] = useState({})
-  const { lastJsonMessage, lastMessage } = useWebSocket(socketUrl, {
-    shouldReconnect: (closeEvent) => true,
+  const { lastJsonMessage } = useWebSocket(socketUrl, {
+    shouldReconnect: () => true,
   })
   useEffect(() => {
     if (lastJsonMessage !== null) {

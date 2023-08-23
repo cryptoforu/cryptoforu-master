@@ -21,7 +21,7 @@ const text = cva('font-medium', {
     },
     size: {
       sm: 'text-sm',
-      md: 'text-md',
+      md: 'text-base',
       lg: 'text-lg',
       xl: 'text-2xl sm:text-4xl',
       prose: '',

@@ -1,8 +1,8 @@
-import { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
 import Sidebar from '@/components/sidebar/Sidebar'
 import SidebarProvider from '@/store/controllers/SidebarProvider'
 
-const PostSidebar = ({ post }: { post: PostApiResource }) => {
+const PostSidebar = ({ post }: { post: PostWithCategory }) => {
   return (
     <SidebarProvider
       selectedType={'post'}

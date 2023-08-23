@@ -12,7 +12,7 @@ export default function SidebarSocial() {
   const social_media = useSocialShare(['fb', 'tw'])
   const isSSR = useIsSSR()
   const urlToCopy = isSSR ? '' : window.location.href
-  const [value, copy, status] = useCopyToClipboard()
+  const [, copy, status] = useCopyToClipboard()
   return (
     <Card className={'order-first'}>
       <CardHeader>

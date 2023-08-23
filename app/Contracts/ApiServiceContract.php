@@ -11,11 +11,11 @@ use App\Services\Api\Resources\MetaDataResource;
 
 interface ApiServiceContract
 {
-  public function home(): ApiHomeResource;
+    public function home(): ApiHomeResource;
 
-  public function breadcrumbs(): BreadCrumbsResource;
+    public function breadcrumbs(): BreadCrumbsResource;
 
-  public function menu(): MenuResource;
+    public function menu(): MenuResource;
 
-  public function meta(): MetaDataResource;
+    public function meta(): MetaDataResource;
 }

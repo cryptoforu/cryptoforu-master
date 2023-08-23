@@ -19,10 +19,10 @@ type SmallImageProps = {
 }
 
 const SmallImageCard = (props: SmallImageProps) => {
-  const { onHoverStart, onHoverEnd, hoveredIndex } = useHoverController()
+  const { onHoverStart, onHoverEnd } = useHoverController()
   return (
     <motion.div
-      onHoverStart={(e) => onHoverStart(props.label)}
+      onHoverStart={() => onHoverStart(props.label)}
       onHoverEnd={() => onHoverEnd()}
       className={'relative rounded-2xl px-3 py-2'}
     >
@@ -30,7 +30,7 @@ const SmallImageCard = (props: SmallImageProps) => {
         className="relative flex aspect-[3/2] items-center justify-center rounded-2xl px-6 shadow-lg"
         style={{
           backgroundImage:
-            'conic-gradient(from -49.8deg at 50% 50%, #34d399 0deg, #5EEAD4 59.07deg, #bef264 185.61deg, #34d399 284.23deg, #bef264 329.41deg, #34d399 360deg)',
+            'conic-gradient(from -49.8deg at 50% 50%, #34d399 0deg, #5eeAD4 59.07deg, #bef264 185.61deg, #34d399 284.23deg, #bef264 329.41deg, #34d399 360deg)',
         }}
       >
         <AnimatedImage

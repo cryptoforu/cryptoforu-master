@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { Key, useCallback, useTransition } from 'react'
 import { useHover } from 'react-aria'
 
 import { useTabs } from '@/store/useTabs'
@@ -28,13 +28,18 @@ const useTabsController = () => {
 }
 export default useTabsController
 
-export const useSelectedTab = () => {
-  const isSelected = useTabs.use.isSelected()
+export const useTabsAction = () => {
+  const [[selectedKey, direction], setDataTab] = [
+    [useTabs.use.selectedKey(), useTabs.use.direction()],
+    useTabs.use.setDataTab(),
+  ]
+  const [isPending, startTransition] = useTransition()
 
-  return useCallback(
-    (key: string) => {
-      return isSelected === key
-    },
-    [isSelected]
-  )
+  function onSelectionChange(key: Key) {
+    startTransition(() => {
+      setDataTab(key)
+    })
+  }
+
+  return [selectedKey, direction, isPending, onSelectionChange] as const
 }

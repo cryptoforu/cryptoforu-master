@@ -11,13 +11,7 @@ type IMeter = {
 } & AriaMeterProps
 
 const Meter = (props: IMeter) => {
-  const {
-    label,
-    showValueLabel = !!label,
-    value,
-    minValue = 0,
-    maxValue = 100,
-  } = props
+  const { label, value, minValue = 0, maxValue = 100 } = props
   const { meterProps, labelProps } = useMeter(props)
   const { visuallyHiddenProps } = useVisuallyHidden()
   let barWidth = ''
@@ -43,7 +37,7 @@ const Meter = (props: IMeter) => {
         aria-label="meter"
         className={clsx(
           color,
-          'text-blue-100 rounded-full p-0.5 text-center text-xs font-medium leading-none'
+          'rounded-full p-0.5 text-center text-xs font-medium leading-none text-cyan-100'
         )}
         style={{ width: barWidth }}
       >

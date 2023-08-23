@@ -10,21 +10,21 @@ use Intervention\Image\Image;
 
 final class SmFilter implements FilterInterface
 {
-    public function applyFilter(Image $image)
+    public function applyFilter(Image $image): Image
     {
         if (Request::query('w')) {
             return $image->widen(
-                (int) Request::query('w'),
-                function ($constraint): void {
-                    $constraint->upsize();
-                }
+              (int) Request::query('w'),
+              function ($constraint): void {
+                  $constraint->upsize();
+              }
             )->encode($image->mime(), 75);
         } else {
             return $image->widen(
-                300,
-                function ($constraint): void {
-                    $constraint->upsize();
-                }
+              300,
+              function ($constraint): void {
+                  $constraint->upsize();
+              }
             )->encode($image->mime(), 75);
         }
     }

@@ -3,7 +3,7 @@ import { useMotionValueEvent, useScroll } from 'framer-motion'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHover } from 'react-aria'
 
-import useNavStore, { useMenuContext } from '@/store/useNavStore'
+import useNavStore from '@/store/useNavStore'
 import { Nullable } from '@/types/shared-types'
 
 export const useNavController = () => {
@@ -47,15 +47,4 @@ export const useNavHover = () => {
     hoveredIndex: hoveredRef.current,
     setHovered,
   }
-}
-
-export const useActiveLink = () => {
-  const activeItem = useMenuContext((state) => state.activeItem)
-
-  return useCallback(
-    (index: number) => {
-      return activeItem === index
-    },
-    [activeItem]
-  )
 }

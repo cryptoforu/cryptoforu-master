@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { listDescription } from 'contentlayer/generated'
 import lazy from 'next/dynamic'
 import { Suspense } from 'react'
@@ -18,6 +20,7 @@ import { Container, Section } from '@/components/wrappers'
 import { getMetadata } from '@/lib/getData'
 import FaucetListProvider from '@/store/useListStore'
 
+// noinspection JSUnusedGlobalSymbols
 export const dynamic = 'force-dynamic'
 
 const ListStats = lazy(() => import('./components/ListStats'), {

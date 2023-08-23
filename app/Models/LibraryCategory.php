@@ -37,14 +37,15 @@ use Spatie\LaravelData\WithData;
  */
 final class LibraryCategory extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
-        'name',
-        'directory',
+      'name',
+      'directory',
     ];
 
-    protected $dataClass = LibraryCategoryData::class;
+    protected string $dataClass = LibraryCategoryData::class;
 
     public function media(): HasMany
     {
@@ -64,7 +65,7 @@ final class LibraryCategory extends Model
      *
      * @param  Builder  $query
      */
-    public function scopeOfDirectory($query, $directory): Builder
+    public function scopeOfDirectory(Builder $query, $directory): Builder
     {
         return $query->where('directory', $directory);
     }

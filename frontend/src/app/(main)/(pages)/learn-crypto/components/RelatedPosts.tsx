@@ -1,16 +1,21 @@
-import type { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
 import { List, SectionHeader, SmallImageCard } from '@/components/content'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Container, Section } from '@/components/wrappers'
 import HoveredComponent from '@/motion/HoveredComponent'
 
 interface RelatedPostsProps {
-  related: Array<PostApiResource>
+  data: Promise<PostWithCategory[]>
   title: string
   description: string
 }
 
-const RelatedPosts = ({ related, title, description }: RelatedPostsProps) => {
+const RelatedPosts = async ({
+  data,
+  title,
+  description,
+}: RelatedPostsProps) => {
+  const related = await data.then((res) => res)
   return (
     <Section id={'related-posts'} ariaLabel={'Related Posts'}>
       <SectionGrid />

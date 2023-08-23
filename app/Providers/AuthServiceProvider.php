@@ -26,11 +26,13 @@ final class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        Gate::before(static function (User $user, string $ability) {
+        Gate::before(static function (User $user) {
             if ('super-admin' === $user->roles()->value('name')) {
                 return true;
             }
+            return false;
         });
-        Gate::define('view-resource', [ApiRequestPolicy::class, 'viewResource']);
+        Gate::define('view-resource',
+          [ApiRequestPolicy::class, 'viewResource']);
     }
 }

@@ -8,72 +8,109 @@ use App\Contracts\CountActionContract;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Request;
 use Spatie\Valuestore\Valuestore;
 
 final class CountActions extends ValueStore implements CountActionContract
 {
-
-  public function should_count(Post $post, string $ip): bool
-  {
-
-    if ($this->has("post-{$post->id}")) {
-      $values = $this->get("post-{$post->id}");
-      if ($this->check_ip($values, $ip)) {
-        return false;
-      }
-      return true;
+    /**
+     * @param  string  $uniqueKey
+     * @return mixed|null
+     */
+    public function get_count(string $uniqueKey): mixed
+    {
+        if ($this->has($uniqueKey)) {
+            return $this->get($uniqueKey);
+        }
+        return null;
     }
-    return true;
-  }
 
-  /**
-   * Check If Ip Already Exists
-   * @param  array  $values
-   * @param  string  $ip
-   * @return bool
-   */
-  private function check_ip(array $values, string $ip): bool
-  {
-    if (!empty(data_get($values, "ips.*.{$ip}"))) {
-      return true;
+    /**
+     * Should Count Post
+     * @param  string  $uniqueKey
+     * @return bool
+     */
+    public function should_count(string $uniqueKey): bool
+    {
+        if ($this->has(
+          name: $uniqueKey
+        )) {
+            $values = $this->get(name: $uniqueKey);
+
+            return !($this->check_ip($values['ips'], Request::ip()));
+        }
+
+        return true;
     }
-    return false;
-  }
 
-  public function count_views(Post $post, string $ip)
-  {
-    $key = "post-{$post->id}";
-    if ($this->has($key)) {
-      $timestamp = $this->get($key)['timestamp'];
-      $nowTime = Carbon::now()->timestamp;
-      if ($timestamp < $nowTime) {
-        $this->flush();
-      }
-
+    /**
+     * Check if Ip Exists
+     * @param  array  $values
+     * @param  string  $ip
+     * @return bool
+     */
+    private function check_ip(array $values, string $ip): bool
+    {
+        return Arr::has($values, $ip);
     }
-    return $this->storeOrUpdate($post, $ip);
-  }
 
-  private function storeOrUpdate(Post $post, string $ip)
-  {
-    $key = "post-{$post->id}";
-    if ($this->has($key)) {
-      $values = $this->get($key);
-      if ($this->check_ip($values, $ip)) {
-        return $values;
-      }
-      data_set($values, 'views', views($post)->unique()->count());
-      Arr::add($values, 'ips', $ip);
-      return $values;
+    /**
+     * Store or Update and Return
+     * @param  Post  $post
+     * @param  string  $ip
+     * @return void
+     */
+    public function count_views(Post $post, string $ip): void
+    {
+        $key = "post-$post->id";
+        if ($this->has($key)) {
+            $values = $this->get($key);
+            $nowTime = Carbon::now()->timestamp;
+            if ($nowTime > $values['timestamp']) {
+                data_set($values, 'ips', []);
+            }
+            if ($this->check_ip($values['ips'], $ip)) {
+                return;
+            }
+            $this->update($values, views($post)->unique()->count(), $ip);
+            return;
+        }
+
+        $this->store($post, $ip);
     }
-    $this->put(
-      $key,
-      [
-        'timestamp' => Carbon::now()->addDay()->timestamp,
-        'views' => 1,
-        'ips' => [$ip],
-      ]
-    );
-    return $this->get($key);
-  }
+
+    /**
+     * Update Views
+     * @param  mixed  $values
+     * @param  int  $count
+     * @param  string  $ip
+     * @return void
+     */
+    private function update(mixed $values, int $count, string $ip): void
+    {
+        data_set($values, 'views', $count);
+        Arr::add($values, 'ips', $ip);
+    }
+
+    /**
+     * Store new View
+     * @param  Post  $post
+     * @param  string  $ip
+     * @return void
+     */
+    private function store(Post $post, string $ip): void
+    {
+        $key = "post-$post->id";
+
+        $this->put(
+          $key,
+          [
+            'timestamp' => Carbon::now()->addDay()->timestamp,
+            'views' => 1,
+            'ips' => [$ip],
+          ]
+        );
+
+        $this->get($key);
+    }
 }

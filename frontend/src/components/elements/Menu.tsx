@@ -53,7 +53,7 @@ export function MenuButton<T extends object>({
         <span>{label}</span>
         {withIcon && <ChevronDownIcon className={'ml-1 h-5 w-5'} />}
       </Button>
-      <Popover isNonModal={true} shouldUpdatePosition={true}>
+      <Popover shouldUpdatePosition={true}>
         <Menu
           className={
             'max-h-fit w-fit overflow-y-auto rounded-md bg-white shadow-lg backdrop-blur-lg focus:outline-none dark:divide-slate-900 dark:bg-gray-950/60'
@@ -102,7 +102,11 @@ export function MenuItem(props: MenuItemProps) {
       {...rest}
       className={({ isFocused }) =>
         `${cn(
-          menuItem({ variant, focused: isFocused ? focused : 'secondary' })
+          menuItem({
+            variant,
+            focused: isFocused ? focused : 'secondary',
+            className,
+          })
         )}`
       }
     />

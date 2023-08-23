@@ -3,11 +3,13 @@ import { Key, ReactNode, useMemo } from 'react'
 import { Item } from 'react-stately'
 
 import { Tabs } from '@/components/elements'
-import { useDataTabs } from '@/store/useTabs'
+import useNavigated from '@/hooks/useNavigated'
+import { useUpdateEffect } from '@/hooks/useUpdateEffect'
+import { useTabsAction } from '@/store/controllers/useTabsController'
 
 interface IDataTabsProps {
   data: {
-    id: string
+    id: string | number
     key: Key
     label: string
     content: ReactNode
@@ -18,21 +20,26 @@ interface IDataTabsProps {
 
 export default function DataTabsV2({ data, ...props }: IDataTabsProps) {
   const tabsData = useMemo(() => data, [data])
-  const { isPending, onSelectionChange, isSelected } = useDataTabs()
+  const [selectedKey, _, isPending, onSelectionChange] = useTabsAction()
   const { listVariant = 'horizontal', listPosition = 'left' } = props
+  const navigated = useNavigated()
+  useUpdateEffect(() => {
+    if (navigated) {
+      onSelectionChange('1')
+    }
+  }, [navigated])
   return (
     <Tabs
       aria-label={'Tabs Data'}
       items={tabsData}
-      selectedKey={isSelected}
+      selectedKey={selectedKey}
       onSelectionChange={onSelectionChange}
-      defaultSelectedKey={'1'}
       tabPosition={listPosition}
       variant={listVariant}
       isDisabled={isPending}
     >
       {(item) => (
-        <Item key={item.id} title={item.label}>
+        <Item key={item.key} title={item.label}>
           {item.content}
         </Item>
       )}

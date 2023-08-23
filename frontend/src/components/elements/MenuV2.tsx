@@ -1,6 +1,8 @@
+'use client'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import type { Node } from '@react-types/shared'
 import { cva, VariantProps } from 'class-variance-authority'
+import { animate, AnimationSequence, stagger } from 'framer-motion'
 import { ReactNode, useRef } from 'react'
 import {
   AriaMenuItemProps,
@@ -13,6 +15,7 @@ import type { MenuTriggerProps, TreeState } from 'react-stately'
 import { useMenuTriggerState, useTreeState } from 'react-stately'
 
 import { Button, Popover } from '@/components/elements'
+import { useUpdateEffect } from '@/hooks/useUpdateEffect'
 import { cn } from '@/lib/utils'
 
 interface MenuProps<T extends object>
@@ -28,7 +31,13 @@ export function MenuTrigger<T extends object>(
   const ref = useRef(null)
   const state = useMenuTriggerState(props)
   const { menuTriggerProps, menuProps } = useMenuTrigger<T>({}, state, ref)
-
+  const sequence = [
+    ['ul', { opacity: 1 }, { duration: 0.6 }],
+    ['li', { opacity: 1 }, { delay: stagger(0.1) }],
+  ] as AnimationSequence
+  useUpdateEffect(() => {
+    state.isOpen ? animate(sequence) : null
+  }, [sequence, state.isOpen])
   return (
     <>
       <Button
@@ -42,7 +51,6 @@ export function MenuTrigger<T extends object>(
           <ChevronDownIcon id={'arrow'} className={'ml-1 h-5 w-5'} />
         )}
       </Button>
-
       {state.isOpen && (
         <Popover
           triggerRef={ref}
@@ -67,7 +75,6 @@ export function MenuItems<T extends object>(props: MenuItemsProps<T>) {
   const state = useTreeState(props)
   const menuRef = useRef(null)
   const { menuProps } = useMenu(props, state, menuRef)
-
   return (
     <ul
       ref={menuRef}
@@ -75,8 +82,9 @@ export function MenuItems<T extends object>(props: MenuItemsProps<T>) {
       className={
         'mt-2 min-w-full rounded-md bg-white/90 outline-none backdrop-blur dark:bg-gray-900 dark:backdrop-blur-2xl'
       }
+      style={{ opacity: 0 }}
     >
-      {[...state.collection].map((item) => (
+      {Array.from(state.collection).map((item) => (
         <MenuItem
           item={item}
           state={state}
@@ -95,7 +103,7 @@ const menuItemV2 = cva('', {
       primary:
         'relative m-2 cursor-pointer rounded-md p-2 outline-none transition-all duration-500',
       navLink:
-        'cursor-pointer rounded-lg p-2.5 outline outline-offset-2 outline-transparent',
+        'cursor-pointer rounded-lg outline outline-offset-2 outline-transparent',
       secondary: '',
     },
     focused: {
@@ -141,6 +149,7 @@ export function MenuItem<T>(props: MenuItemProps<T>) {
           className: props.className,
         })
       )}`}
+      style={{ opacity: 0 }}
     >
       {item.rendered}
     </li>

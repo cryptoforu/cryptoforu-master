@@ -12,5 +12,8 @@ interface LibraryUpdateContract
     /**
      * @return mixed
      */
-    public function handle(UpdateLibraryRequest $request, Library $library);
+    public function handle(
+      UpdateLibraryRequest $request,
+      Library $library
+    ): mixed;
 }

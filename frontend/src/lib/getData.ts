@@ -9,7 +9,7 @@ export const preload = (url: string) => {
 }
 
 export const getData = cache(async (url: string, init?: RequestInit) => {
-  const res = await fetchData(`${url}`)
+  const res = await fetchData(`${url}`, init)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')

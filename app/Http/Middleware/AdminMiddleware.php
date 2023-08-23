@@ -12,26 +12,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
+    protected array $allowedRoutes = [
+      'api/placeholder/*',
+      'api/count-views/*',
+    ];
 
-  protected array $allowedRoutes = [
-    'api/placeholder/*',
-    'api/count-views/*'
-  ];
+    /**
+     * Handle an incoming request.
+     *
+     * @param  Request  $request
+     * @param  Closure(Request): (Response)  $next
+     *
+     * @return Response
+     * @throws AuthorizationException
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($request->is(...$this->allowedRoutes)) {
+            return $next($request);
+        }
+        Gate::authorize('view-resource', [$request->user()]);
 
-  /**
-   * Handle an incoming request.
-   *
-   * @param  Closure(Request): (Response)  $next
-   *
-   * @throws AuthorizationException
-   */
-  public function handle(Request $request, Closure $next): Response
-  {
-    if ($request->is(...$this->allowedRoutes)) {
-      return $next($request);
+        return $next($request);
     }
-    Gate::authorize('view-resource', [$request->user()]);
-
-    return $next($request);
-  }
 }

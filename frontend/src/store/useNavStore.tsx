@@ -1,32 +1,20 @@
 'use client'
-import { usePathname } from 'next/navigation'
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
-import { create, createStore } from 'zustand'
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import { useStoreWithEqualityFn } from 'zustand/traditional'
 
+import { getBaseUrl } from '@/lib/getApiUrl'
 import createSelectors from '@/store/createSelectors'
 import { MainMenu, Nullable } from '@/types/shared-types'
 
 type NavState = {
   navState: boolean
-  navVariants: {
-    [x: string]: string
-  }
   hoveredIndex: Nullable<string | number>
-  activeLink: string
 }
 
 type NavActions = {
   setScrolled: (action: boolean) => void
   setHovered: (index: Nullable<string | number>) => void
-  setActive: (link: string) => void
 }
 
 interface NavbarStore extends NavState, NavActions {}
@@ -34,18 +22,11 @@ interface NavbarStore extends NavState, NavActions {}
 const useNavbarStore = create<NavbarStore>()((set) => ({
   navState: false,
   hoveredIndex: null,
-  activeLink: '/',
-  navVariants: {
-    scrolled:
-      'bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-slate-900 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75',
-    notScrolled: 'bg-transparent',
-  },
   setScrolled: (action) =>
     set(() => ({
       navState: action,
     })),
   setHovered: (index) => set(() => ({ hoveredIndex: index })),
-  setActive: (link) => set(() => ({ activeLink: link })),
 }))
 const useNavStore = createSelectors(useNavbarStore)
 export default useNavStore
@@ -57,59 +38,53 @@ type MenuContextData = {
 type MenuState = {
   activeItem: string | number
   setActive: (href: string) => void
+  initMenu: () => void
 }
 
-interface MenuData extends MenuContextData, MenuState {}
+interface MenuData extends MenuContextData, MenuState {
+  _hasHydrated: boolean
+  setHasHydrated: (state: boolean) => void
+}
 
-type UseMenuStore = ReturnType<typeof createMenuStore>
-const createMenuStore = (initProps?: Partial<MenuContextData>) => {
-  const DEFAULT_PROPS: MenuContextData = {
-    menu: [],
-  }
-  return createStore(
+export const useMenuStore = create(
+  persist(
     immer<MenuData>((set) => ({
-      ...DEFAULT_PROPS,
-      ...initProps,
+      menu: [],
       activeItem: 0,
+      _hasHydrated: false,
       setActive: (href) =>
         set((state) => {
-          state.menu.map((el, index) => {
-            if (el.route === href) {
-              state.activeItem = index
-            } else {
-              const child = el.childs.find((child) => child.route === href)
-              if (child) {
-                state.activeItem = index
-              }
+          const menuItem = state.menu.findIndex((el) => {
+            if (el.childs.length > 0) {
+              return el.childs.find((el) => el.route === href)
             }
+            return el.route === href
           })
+          if (menuItem !== -1) {
+            state.activeItem = menuItem
+          }
         }),
-    }))
+      setHasHydrated: (state) => set({ _hasHydrated: state }),
+      initMenu: async () => {
+        const res = await fetch(`${getBaseUrl()}/api/menu`)
+        if (!res.ok) {
+          throw new Error(res.statusText)
+        }
+        const { data: menu } = (await res.json()) as unknown as {
+          data: MainMenu[]
+        }
+        console.log(menu)
+        set((state) => {
+          state.menu = menu
+        })
+      },
+    })),
+    {
+      name: 'menu',
+      partialize: (state) => state.menu,
+      onRehydrateStorage: () => (state) => {
+        state.setHasHydrated(true)
+      },
+    }
   )
-}
-
-const MenuContext = createContext<UseMenuStore | null>(null)
-
-export function MenuProvider({
-  children,
-  ...props
-}: PropsWithChildren<MenuContextData>) {
-  const [menuStore] = useState(() => createMenuStore(props))
-  const setActive = menuStore.getState().setActive
-  const path = usePathname()
-  useEffect(() => {
-    setActive(path)
-  }, [path, setActive])
-  return (
-    <MenuContext.Provider value={menuStore}>{children}</MenuContext.Provider>
-  )
-}
-
-export function useMenuContext<T>(
-  selector: (state: MenuData) => T,
-  equalityFn?: (left: T, right: T) => boolean
-): T {
-  const menuStore = useContext(MenuContext)
-  if (!menuStore) throw new Error('Must be under Menu Provider')
-  return useStoreWithEqualityFn(menuStore, selector, equalityFn)
-}
+)

@@ -10,26 +10,26 @@ use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider
 {
-  /**
-   * Register services.
-   */
-  public function register(): void
-  {
-    $this->app->singleton(
-      abstract: ApiService::class,
-      concrete: fn() => ApiService::make(storage_path('app/api_data.json'))
-    );
-    $this->app->bind(
-      abstract: ApiServiceContract::class,
-      concrete: ApiService::class
-    );
-  }
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        $this->app->singleton(
+            abstract: ApiService::class,
+            concrete: fn () => ApiService::make(storage_path('app/api_data.json'))
+        );
+        $this->app->bind(
+            abstract: ApiServiceContract::class,
+            concrete: ApiService::class
+        );
+    }
 
-  /**
-   * Bootstrap services.
-   */
-  public function boot(): void
-  {
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
 
-  }
+    }
 }

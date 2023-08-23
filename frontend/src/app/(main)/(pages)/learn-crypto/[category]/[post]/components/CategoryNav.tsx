@@ -1,15 +1,13 @@
 import { Route } from 'next'
 
-import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import { CategoryProps } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import { List, ListItem } from '@/components/content'
 import { InternalLink } from '@/components/elements'
 import { Heading } from '@/components/typography'
 
-const CategoriesNav = ({
-  categories,
-}: {
-  categories: CategoryApiResource[]
-}) => {
+const CategoriesNav = async () => {
+  const categories = (await getCategories()) as CategoryProps[]
   return (
     <nav
       aria-label={'Categories'}
@@ -24,19 +22,17 @@ const CategoriesNav = ({
         }
         items={categories}
         renderItem={(category) => (
-          <>
-            <li key={category.id} className={'relative'}>
-              <ListItem
-                as={InternalLink}
-                href={`/learn-crypto/${category.slug}` as Route}
-                activeClasses={
-                  'text-slate-500 before:hidden before:bg-emerald-300 hover:text-emerald-600 hover:before:block dark:text-slate-400 dark:before:bg-emerald-400 dark:hover:text-emerald-400'
-                }
-              >
-                {category.name}
-              </ListItem>
-            </li>
-          </>
+          <li key={category.id} className={'relative'}>
+            <ListItem
+              as={InternalLink}
+              href={`/learn-crypto/${category.slug}` as Route}
+              activeClasses={
+                'text-slate-500 before:hidden before:bg-emerald-300 hover:text-emerald-600 hover:before:block dark:text-slate-400 dark:before:bg-emerald-400 dark:hover:text-emerald-400'
+              }
+            >
+              {category.name}
+            </ListItem>
+          </li>
         )}
       />
     </nav>

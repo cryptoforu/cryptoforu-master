@@ -12,7 +12,7 @@ use Spatie\Enum\Laravel\Enum;
  */
 final class PriceStatusEnum extends Enum
 {
-    public function status()
+    public function status(): string
     {
         return match ($this) {
             PriceStatusEnum::POSITIVE() => 'green.500',

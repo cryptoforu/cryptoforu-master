@@ -1,6 +1,7 @@
 import { revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
+// noinspection JSUnusedGlobalSymbols
 export async function POST(request: NextRequest) {
   const tag = request.nextUrl.searchParams.get('tag')
   if (!tag) {

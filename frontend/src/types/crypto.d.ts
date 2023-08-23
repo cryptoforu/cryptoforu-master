@@ -25,7 +25,3 @@ export interface CryptoData {
   type: string
   attributes: CryptoCoin
 }
-
-export interface ICrypto {
-  data: Array<CryptoData>
-}

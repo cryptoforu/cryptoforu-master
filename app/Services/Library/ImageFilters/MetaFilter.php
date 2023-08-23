@@ -9,7 +9,7 @@ use Intervention\Image\Image;
 
 final class MetaFilter implements FilterInterface
 {
-    public function applyFilter(Image $image)
+    public function applyFilter(Image $image): Image
     {
         return $image->fit(1200, 630, function ($constraint): void {
             $constraint->upsize();

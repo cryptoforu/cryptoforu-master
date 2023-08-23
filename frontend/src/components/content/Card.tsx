@@ -1,5 +1,4 @@
 'use client'
-import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import React, { HTMLAttributes, PropsWithChildren } from 'react'
 
@@ -18,11 +17,10 @@ import {
   cardHeader,
   cardImage,
 } from '@/components/content/variants/card-variants'
-import { InternalLink } from '@/components/elements'
+import { InternalLink, LazyImage } from '@/components/elements'
 import { Heading } from '@/components/typography'
 import { IHeadingProps } from '@/components/typography/Heading'
 import { cn } from '@/lib/utils'
-import AnimatedImage from '@/motion/AnimatedImage'
 
 export interface ICard<As extends React.ElementType>
   extends CardVariants,
@@ -171,7 +169,7 @@ export function CardImage(props: ICardImage) {
   } = props
   return (
     <div className={cn(cardImage({ variant, size, className }))} {...rest}>
-      <AnimatedImage
+      <LazyImage
         src={image}
         alt={alt}
         width={width}
@@ -198,20 +196,4 @@ export function CardFooter(props: PropsWithChildren<ICardFooter>) {
   )
 }
 
-export type CardProps = {
-  className?: string
-}
-const ICard = ({ className, children }: PropsWithChildren<CardProps>) => {
-  return (
-    <div
-      className={clsx(
-        'group relative rounded-xl border border-slate-200 dark:border-slate-900/50',
-        className
-      )}
-    >
-      <div className="absolute -inset-px rounded-xl border-2 border-transparent opacity-0 transition-all duration-500 ease-linear [background:linear-gradient(var(--quick-links-hover-bg,theme(colors.emerald.50)),var(--quick-links-hover-bg,theme(colors.emerald.50)))_padding-box,linear-gradient(to_top,theme(colors.green.400),theme(colors.teal.400),theme(colors.emerald.500))_border-box] group-hover:opacity-100 dark:[--quick-links-hover-bg:theme(colors.slate.950)]" />
-      <div className={'relative overflow-hidden rounded-xl'}>{children}</div>
-    </div>
-  )
-}
 export default Card

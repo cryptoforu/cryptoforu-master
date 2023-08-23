@@ -11,16 +11,16 @@ export const btnVariants = cva(
         transparent: 'text-slate-900 dark:text-white',
         danger: 'bg-danger text-primary-dark',
         fb: 'bg-fb-blue text-white hover:bg-fb-blue/90 focus:outline-none focus:ring-4 focus:ring-fb-blue/50 dark:focus:ring-fb-blue/50',
-        tw: 'dark:focus:ring-tw-blue/55 bg-tw-blue text-white hover:bg-tw-blue/90 focus:outline-none focus:ring-4 focus:ring-tw-blue/50',
+        tw: 'bg-tw-blue text-white hover:bg-tw-blue/90 focus:outline-none focus:ring-4 focus:ring-tw-blue/50 dark:focus:ring-tw-blue',
         reddit:
-          'dark:focus:ring-reddit-orange/55 bg-reddit-orange text-white hover:bg-reddit-orange/90 focus:outline-none focus:ring-4 focus:ring-reddit-orange/50',
+          'bg-reddit-orange text-white hover:bg-reddit-orange/90 focus:outline-none focus:ring-4 focus:ring-reddit-orange/50 dark:focus:ring-reddit-orange',
       },
       outline: {
         primary:
           'border border-emerald-400 text-primary-dark hover:text-white focus:outline-none focus:ring-4 focus:ring-emerald-300 dark:border-emerald-600 dark:text-slate-400 dark:hover:text-primary-white dark:focus:ring-emerald-800',
         secondary:
           'border border-slate-800 text-slate-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 dark:border-slate-600 dark:text-slate-400 dark:hover:text-primary-white dark:focus:ring-slate-800',
-        transparent: 'text-primary dark:text-white',
+        transparent: 'text-primary-dark dark:text-white',
       },
       size: {
         xl: 'px-5 py-3 text-base font-medium',

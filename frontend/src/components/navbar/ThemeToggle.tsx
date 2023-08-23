@@ -22,7 +22,7 @@ function AnimatedIcon({ path }: { path?: string }) {
           { duration: 0.3, ease: 'easeIn' }
         )
       }
-      enterAnimation()
+      void enterAnimation()
     } else {
       const exitAnimation = async () => {
         await animate(
@@ -33,7 +33,7 @@ function AnimatedIcon({ path }: { path?: string }) {
         safeToRemove()
       }
 
-      exitAnimation()
+      void exitAnimation()
     }
   }, [animate, isPresent, safeToRemove, scope])
   return (

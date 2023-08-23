@@ -13,14 +13,14 @@ interface BlogInterface
      *
      * @return array
      */
-    public function forIndex();
+    public function forIndex(): array;
 
     /**
      * Backend Create Page Data
      *
      * @return array
      */
-    public function forCreate();
+    public function forCreate(): array;
 
     /**
      * Backend Edit Post

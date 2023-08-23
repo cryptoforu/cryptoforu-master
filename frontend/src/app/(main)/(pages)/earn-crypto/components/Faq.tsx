@@ -1,9 +1,10 @@
 import { Accordion, SectionHeader } from '@/components/content'
 import { Container, Section } from '@/components/wrappers'
-import { GetFaqProps } from '@/requests/getFaq'
+import { getFaq } from '@/requests/getFaq'
 
-const Faq = ({ items }: { items: GetFaqProps }) => {
-  const data = items.attributes.data_values.map((val) => ({
+const Faq = async () => {
+  const faq = await getFaq()
+  const data = faq.attributes.data_values.map((val) => ({
     label: val.key,
     content: val.value,
   }))

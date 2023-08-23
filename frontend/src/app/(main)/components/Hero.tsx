@@ -40,22 +40,18 @@ const Hero = async () => {
   return (
     <div
       className={
-        'relative isolate mt-[-4.5rem] overflow-hidden bg-primary-white pb-32 pt-[4.5rem] dark:bg-primary-dark lg:mt-[-4.75rem] lg:pt-[4.75rem]'
+        'relative isolate mt-[-4.8rem] overflow-hidden bg-primary-white pt-[4.5rem] dark:bg-primary-dark lg:mt-[-4.8rem] lg:pb-28 lg:pt-[4.75rem]'
       }
     >
       <div
         className={
-          'container mx-auto max-w-5xl px-4 py-16 lg:max-w-8xl lg:px-12 lg:py-24 xl:gap-x-16 xl:px-16'
+          'container mx-auto max-w-2xl px-4 py-16 lg:max-w-8xl lg:px-12 lg:py-24 xl:gap-x-16 xl:px-16'
         }
       >
         <div className={'text-center'}>
-          <Heading
-            as={'h1'}
-            size={'xxl'}
-            className={`${detacher.className} mx-auto max-w-2xl`}
-          >
+          <Heading as={'h1'} size={'xxl'} className={`${detacher.className}`}>
             Cryptoforu
-            <span className="relative whitespace-nowrap text-4xl text-emerald-500 sm:text-6xl">
+            <span className="relative whitespace-nowrap text-3xl text-emerald-500 sm:text-6xl">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 418 42"

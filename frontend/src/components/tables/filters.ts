@@ -3,7 +3,7 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 import { rankings, rankItem } from '@tanstack/match-sorter-utils'
 import type { Row } from '@tanstack/react-table'
 
-const fuzzy = <TData extends Record<string, any> = {}>(
+const fuzzy = <TData extends Record<string, any> = object>(
   row: Row<TData>,
   columnId: string,
   filterValue: string | number,
@@ -18,7 +18,7 @@ const fuzzy = <TData extends Record<string, any> = {}>(
 
 fuzzy.autoRemove = (val: any) => !val
 
-const contains = <TData extends Record<string, any> = {}>(
+const contains = <TData extends Record<string, any> = object>(
   row: Row<TData>,
   id: string,
   filterValue: string | number
@@ -32,7 +32,7 @@ const contains = <TData extends Record<string, any> = {}>(
 
 contains.autoRemove = (val: any) => !val
 
-const startsWith = <TData extends Record<string, any> = {}>(
+const startsWith = <TData extends Record<string, any> = object>(
   row: Row<TData>,
   id: string,
   filterValue: string | number

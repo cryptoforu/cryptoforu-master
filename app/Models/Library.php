@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Services\Library\DataObjects\LibraryData;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,29 +53,30 @@ use Spatie\LaravelData\WithData;
  */
 final class Library extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
-        'file_name',
-        'mime_type',
-        'conversions',
-        'size',
-        'image_url',
-        'width',
-        'height',
-        'library_category_id',
-        'imageable_id',
-        'imageable_type',
+      'file_name',
+      'mime_type',
+      'conversions',
+      'size',
+      'image_url',
+      'width',
+      'height',
+      'library_category_id',
+      'imageable_id',
+      'imageable_type',
     ];
 
     protected $casts = [
-        'conversions' => 'array',
+      'conversions' => 'array',
     ];
 
-    protected $dataClass = LibraryData::class;
+    protected string $dataClass = LibraryData::class;
 
-    public function libraryCategory(
-    ): BelongsTo {
+    public function libraryCategory(): BelongsTo
+    {
         return $this->belongsTo(LibraryCategory::class);
     }
 

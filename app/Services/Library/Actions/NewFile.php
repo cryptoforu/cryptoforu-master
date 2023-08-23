@@ -1,4 +1,7 @@
 <?php
+/** @noinspection ALL */
+
+/** @noinspection ALL */
 
 declare(strict_types=1);
 
@@ -24,8 +27,8 @@ final class NewFile
             return true;
         }
         $new = new Library([
-            ...$file,
-            'library_category_id' => $category,
+          ...$file,
+          'library_category_id' => $category,
         ]);
         $model->images()->save($new);
 

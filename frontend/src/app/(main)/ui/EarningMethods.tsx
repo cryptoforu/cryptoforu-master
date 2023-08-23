@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 
-import { EarnCategoryProps } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
+import type { EarnCategoryProps } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
+import { getCategoryMethods } from '@/app/(main)/(pages)/earn-crypto/getMethods'
 import {
   AdPlaceholder,
   Card,
@@ -10,18 +11,21 @@ import {
   CardImage,
   DataTabsV2,
   List,
+  SectionHeader,
 } from '@/components/content'
-import { Badge, ExternalLink } from '@/components/elements'
+import { Badge, BtnLink, ExternalLink } from '@/components/elements'
 import { Heading, ProseMarkdown, Text } from '@/components/typography'
 import { Container, Section } from '@/components/wrappers'
+import { filterArrayByIndices } from '@/lib/filterArray'
 
-const TabsSection = ({
-  categoryMethods,
-}: {
-  categoryMethods: EarnCategoryProps[]
-}) => {
-  const tabsData = categoryMethods.map((category) => ({
-    id: category.id.toString(),
+const EarningMethods = async ({ page }: { page: 'home' | 'earn' }) => {
+  const methods = await getCategoryMethods()
+  const filteredMethods = filterArrayByIndices<EarnCategoryProps>(methods, {
+    id: [1, 2, 7, 8],
+  })
+  const data = page === 'home' ? filteredMethods : methods
+  const tabsData = data.map((category) => ({
+    id: category.id,
     key: category.id,
     label: category.name,
     content: (
@@ -34,7 +38,7 @@ const TabsSection = ({
         <List
           as={'div'}
           className={'grid gap-8 md:grid-cols-2 lg:grid-cols-3'}
-          items={category.earn}
+          items={page === 'home' ? category.earn.slice(0, 3) : category.earn}
           renderItem={(e) => (
             <Card
               key={e.id}
@@ -89,16 +93,40 @@ const TabsSection = ({
     ),
   }))
   return (
-    <>
-      <Section id={'earn-tabs'} ariaLabel={'Earning Methods'}>
-        <div className={'mx-auto w-full'}>
-          <AdPlaceholder ad={'leaderboard'} />
-        </div>
-        <Container>
-          <DataTabsV2 data={tabsData} listPosition={'full'} />
-        </Container>
-      </Section>
-    </>
+    <Section id={`earn-tabs-${page}`} ariaLabel={'Earning Methods'}>
+      <Container>
+        {page === 'home' ? (
+          <SectionHeader
+            className={'max-w-2xl lg:text-center'}
+            title={'Earn Crypto with'}
+            gradTitle={'Cryptoforu'}
+            desc={
+              'Join us in a Brand New Crypto World. Start exploring our awesome\n' +
+              '            services and Earn your Online Passive Income right way'
+            }
+            badgeLabel={'Earning Methods'}
+            badgePosition={'start lg:justify-center'}
+          />
+        ) : (
+          <div className={'mx-auto w-full'}>
+            <AdPlaceholder ad={'leaderboard'} />
+          </div>
+        )}
+
+        <DataTabsV2 data={tabsData} listPosition={'full'} />
+        {page === 'home' && (
+          <div className={'mt-16 flex justify-center'}>
+            <BtnLink
+              href={'/earn-crypto'}
+              colorScheme={'secondary'}
+              size={'xl'}
+            >
+              Browse All
+            </BtnLink>
+          </div>
+        )}
+      </Container>
+    </Section>
   )
 }
-export default TabsSection
+export default EarningMethods

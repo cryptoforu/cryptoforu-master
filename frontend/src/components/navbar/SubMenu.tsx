@@ -1,49 +1,31 @@
-'use client'
-import { useRouter } from 'next/navigation'
+import { DOMAttributes } from '@react-types/shared'
+import { Route } from 'next'
+import { ReactNode } from 'react'
 import { Item } from 'react-stately'
 
-import { Button } from '@/components/elements'
+import { BtnLink } from '@/components/elements'
 import { MenuTrigger } from '@/components/elements/MenuV2'
-import MenuLabel from '@/components/navbar/MenuLabel'
-import useMenuAnimation from '@/motion/useMenuAnimation'
-import {
-  useActiveLink,
-  useNavHover,
-} from '@/store/controllers/useNavController'
 import { MenuItem } from '@/types/shared-types'
 
 const SubMenu = ({
   items,
   href,
-  title,
-  index,
+  label,
+  isOpen,
+  hoverProps,
 }: {
   items: MenuItem[]
   href: string
-  title: string
-  index: number
+  label: ReactNode
+  isOpen: boolean
+  hoverProps: DOMAttributes
 }) => {
-  const { isHovered, hoverProps } = useNavHover()
-  const isActive = useActiveLink()
-  const scope = useMenuAnimation(isHovered(href))
-  const router = useRouter()
   return (
-    <div
-      {...hoverProps}
-      id={href}
-      ref={scope}
-      className={'relative -my-2 inline-block'}
-    >
+    <div {...hoverProps} id={href} className={'relative -my-2 inline-block'}>
       <MenuTrigger
         shouldFocusWrap={true}
-        label={
-          <MenuLabel
-            selected={isHovered(href)}
-            title={title}
-            isActive={isActive(index)}
-          />
-        }
-        isOpen={isHovered(href)}
+        label={label}
+        isOpen={isOpen}
         withIcon={true}
         items={items}
         variant={'navLink'}
@@ -51,15 +33,15 @@ const SubMenu = ({
       >
         {(item) => (
           <Item key={item.route} textValue={item.label}>
-            <Button
+            <BtnLink
               colorScheme={'transparent'}
               hoverAnimation={'none'}
               size={'md'}
-              onPress={() => router.push(item.route)}
+              href={item.route as Route}
               className={'relative z-10 whitespace-nowrap text-left'}
             >
               {item.label}
-            </Button>
+            </BtnLink>
           </Item>
         )}
       </MenuTrigger>

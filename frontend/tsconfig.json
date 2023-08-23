@@ -39,8 +39,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".contentlayer/generated",
-    "tailwind.config.js"
+    ".contentlayer/generated"
   ],
   "exclude": [
     "node_modules"

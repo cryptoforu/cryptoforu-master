@@ -38,10 +38,10 @@ final class Tag extends Model
     use WithData;
 
     protected $fillable = [
-        'name',
+      'name',
     ];
 
-    protected $dataClass = TagsData::class;
+    protected string $dataClass = TagsData::class;
 
     public function posts(): BelongsToMany
     {
@@ -51,7 +51,7 @@ final class Tag extends Model
     public function scopeOfData(): Collection
     {
         return $this->all()->map(
-            fn ($tag) => $tag->getData()
+          fn($tag) => $tag->getData()
         );
     }
 

@@ -13,7 +13,7 @@ type UseBackToTopActions = {
 
 interface UseBackToTopStore extends UseBackToTopState, UseBackToTopActions {}
 
-const useBackToTopStore = create<UseBackToTopStore>()((set, get) => ({
+const useBackToTopStore = create<UseBackToTopStore>()((set) => ({
   showBtn: false,
   setShowBtn: (action) => set(() => ({ showBtn: action })),
 }))

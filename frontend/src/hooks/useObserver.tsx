@@ -13,10 +13,9 @@ export default function useObserver({
     const observer = new window.IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            childRefs.current &&
-              // @ts-ignore
-              setActiveIndex(childRefs.current.indexOf(entry.target))
+          if (entry.isIntersecting && childRefs.current !== null) {
+            const element = Array.from(childRefs.current)
+            setActiveIndex(element.indexOf(entry.target))
             break
           }
         }
@@ -27,7 +26,7 @@ export default function useObserver({
       }
     )
     if (childRefs.current) {
-      for (const child of childRefs?.current) {
+      for (const child of childRefs.current) {
         if (child) {
           observer.observe(child)
         }

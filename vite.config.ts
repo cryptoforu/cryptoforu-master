@@ -7,6 +7,15 @@ import svgr from 'vite-plugin-svgr';
 import preload from 'vite-plugin-preload';
 
 export default defineConfig({
+  server: {
+    sourcemapIgnoreList(sourcePath, sourcemapPath) {
+      let paths = ['node_modules', 'frontend'];
+      paths.forEach((path) => {
+        return sourcePath.includes(path);
+      });
+      return false;
+    },
+  },
   plugins: [
     laravel({
       input: 'resources/ts/app.tsx',

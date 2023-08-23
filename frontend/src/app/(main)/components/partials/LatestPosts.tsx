@@ -1,4 +1,4 @@
-import type { PostApiResource } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
 import BlogCard from '@/components/content/BlogCard'
 import HorizontalCard from '@/components/content/HorizontalCard'
 import { Container } from '@/components/wrappers'
@@ -6,12 +6,12 @@ import { Container } from '@/components/wrappers'
 const LatestPosts = ({
   latest_posts,
 }: {
-  latest_posts: Array<PostApiResource>
+  latest_posts: Array<PostWithCategory>
 }) => {
   return (
     <Container className={'pt-16'}>
       <div className={'grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4'}>
-        <div>
+        <div className={'hidden md:block'}>
           <BlogCard
             image={latest_posts[0].image_name}
             heading={latest_posts[0].title}

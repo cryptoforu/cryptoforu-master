@@ -1,6 +1,6 @@
 'use client'
-import 'vidstack/styles/defaults.css'
 import 'vidstack/styles/community-skin/video.css'
+import 'vidstack/styles/defaults.css'
 
 import type { MediaPlayerProps } from '@vidstack/react'
 import {

@@ -18,7 +18,6 @@ const ShortLinksTable = ({ shortlinks }: { shortlinks: EarnData[] }) => {
   const shortlinksData = shortlinks.map((el) => {
     const temp = el.main_features?.split('*');
     temp?.shift();
-    console.log(temp);
     let newObj: object = {};
     if (temp) {
       newObj = {
@@ -64,7 +63,7 @@ const ShortLinksTable = ({ shortlinks }: { shortlinks: EarnData[] }) => {
         cell: (props) => LinkCell('Visit', props.getValue()),
       }),
     ],
-    []
+    [columnHelper]
   );
   return (
     <DataTable data={shortlinksData} columns={columns} title={'Shortlinks'} />

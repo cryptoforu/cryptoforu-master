@@ -56,7 +56,7 @@ const useThemeStore = createWithEqualityFn<ThemeStore>()(
         theme: state.theme === 'dark' ? 'light' : 'dark',
       })),
     initTheme: () =>
-      set((state) => ({
+      set(() => ({
         theme: document.documentElement.getAttribute(
           'data-theme'
         ) as ThemeProps,

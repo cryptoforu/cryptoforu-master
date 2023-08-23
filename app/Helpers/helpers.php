@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-if ( ! function_exists('settings')) {
+if (!function_exists('settings')) {
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -17,13 +17,13 @@ if ( ! function_exists('settings')) {
         }
 
         return app(App\Services\Settings\SettingsResources::class)->get(
-            $key,
-            $default
+          $key,
+          $default
         );
     }
 }
 
-if ( ! function_exists('lazy_load')) {
+if (!function_exists('lazy_load')) {
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -35,44 +35,44 @@ if ( ! function_exists('lazy_load')) {
         }
 
         return app(App\Services\Store\CacheStoreService::class)->get(
-            $key,
-            $default
+          $key,
+          $default
         );
     }
 }
 
-if ( ! function_exists('format_currency')) {
+if (!function_exists('format_currency')) {
     /**
      * Format Currency
      *
      * @return false|string
      */
     function format_currency(
-        float $amount,
-        string $intl = 'en_US',
-        string $currency = 'USD',
+      float $amount,
+      string $intl = 'en_US',
+      string $currency = 'USD',
     ): bool|string {
         return (new NumberFormatter(
-            $intl,
-            NumberFormatter::CURRENCY
+          $intl,
+          NumberFormatter::CURRENCY
         )
         )->formatCurrency(
-            $amount,
-            $currency
+          $amount,
+          $currency
         );
     }
 }
 
-if ( ! function_exists('format_percentage')) {
+if (!function_exists('format_percentage')) {
     /**
      * Format Percentage
      *
      * @return string|false
      */
     function format_percentage(
-        float $number,
-        ?int $divide = null,
-        string $intl = 'en_US',
+      float $number,
+      ?int $divide = null,
+      string $intl = 'en_US',
     ): string|bool {
         $fmt = new NumberFormatter($intl, NumberFormatter::PERCENT);
         $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, 2);
@@ -82,16 +82,14 @@ if ( ! function_exists('format_percentage')) {
         }
 
         return $fmt->format($number / $divide);
-
     }
 }
 
-if ( ! function_exists('cal_percentage')) {
-
+if (!function_exists('cal_percentage')) {
     function cal_percentage(
-        float $num_amount,
-        float $num_total,
-        string $intl = 'en_US'
+      float $num_amount,
+      float $num_total,
+      string $intl = 'en_US'
     ): false|string {
         $count1 = ($num_amount / $num_total) * 100;
         $count2 = $count1 / 100;
@@ -101,28 +99,25 @@ if ( ! function_exists('cal_percentage')) {
 
         return $fmt->format($count2);
     }
-
 }
 
-if ( ! function_exists('format_satoshi')) {
-
+if (!function_exists('format_satoshi')) {
     /**
      * @return false|string
      */
-    function format_satoshi(float $amount, string $intl = 'en_US')
+    function format_satoshi(float $amount, string $intl = 'en_US'): false|string
     {
         $fmt = new NumberFormatter(
-            locale: $intl,
-            style: NumberFormatter::DECIMAL
+          locale: $intl,
+          style: NumberFormatter::DECIMAL
         );
         $fmt->setAttribute(
-            attribute: NumberFormatter::MIN_FRACTION_DIGITS,
-            value: 8
+          attribute: NumberFormatter::MIN_FRACTION_DIGITS,
+          value: 8
         );
 
         return $fmt->format(
-            num: $amount
+          num: $amount
         );
     }
-
 }

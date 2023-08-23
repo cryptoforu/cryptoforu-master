@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react'
 
 import { cn } from '@/lib/utils'
 
-type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
 
 const heading = cva('font-bold tracking-tight', {
   variants: {
@@ -17,11 +17,12 @@ const heading = cva('font-bold tracking-tight', {
       emerald: 'text-emerald-600 dark:text-emerald-400',
     },
     size: {
+      xs: 'text-base',
       sm: `text-lg`,
       md: `text-xl sm:text-2xl`,
       lg: `text-2xl sm:text-4xl`,
-      xl: `text-4xl sm:text-6xl`,
-      xxl: `text-5xl sm:text-8xl`,
+      xl: `text-3xl sm:text-5xl`,
+      xxl: `text-4xl sm:text-6xl md:text-8xl`,
     },
   },
   defaultVariants: {

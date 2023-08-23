@@ -1,14 +1,19 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { Suspense } from 'react'
 
+import {
+  CategoryWithPosts,
+  PostWithCategory,
+} from '@/app/(main)/(pages)/learn-crypto/blog'
+import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
 import { AdPlaceholder } from '@/components/content'
-import { SectionSkeleton } from '@/components/skeletons'
+import { ContentSkeleton } from '@/components/skeletons'
 import { getMetadata, preload } from '@/lib/getData'
 
-import { getArticles } from './[category]/[post]/getPosts'
 import CategoryPosts from './components/CategoryPosts'
 import LatestPosts from './components/LatestPosts'
-import { getCategories } from './getCategories'
 
 preload('site/shared/meta-data?filter[page_name]=learn_crypto')
 
@@ -17,12 +22,16 @@ export async function generateMetadata() {
 }
 
 export default async function LearnCrypto() {
-  const latest = await getArticles('include=category&page[size]=3')
-  const categoriesData = getCategories('include=posts')
+  const latest = (await getCategories('/latest')) as PostWithCategory[]
+  const categoriesData = getCategories(
+    '?include=posts&page[size]=6'
+  ) as Promise<CategoryWithPosts[]>
   return (
     <PageWrapper>
-      <LatestPosts latest={latest} />
-      <Suspense fallback={<SectionSkeleton />}>
+      <Suspense fallback={<ContentSkeleton cards={3} />}>
+        <LatestPosts latest={latest} />
+      </Suspense>
+      <Suspense fallback={<ContentSkeleton cards={6} />}>
         <CategoryPosts categories={categoriesData} />
       </Suspense>
       <div className={'mx-auto max-w-5xl'}>

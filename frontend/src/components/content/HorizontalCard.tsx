@@ -1,6 +1,7 @@
 import { Route } from 'next'
 
 import { Card, CardOverlayLink } from '@/components/content/index'
+import { Tag } from '@/components/elements'
 import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Text } from '@/components/typography'
 import AnimatedImage from '@/motion/AnimatedImage'
@@ -31,8 +32,8 @@ const HorizontalCard = (props: HorizontalCardProps) => {
         alt={props.title}
         width="1000"
         height="667"
-        imgClass={'h-40 w-full object-center rounded-2xl sm:h-full'}
-        className="rounded-2xl sm:w-2/6"
+        imgClass={'h-40 w-full object-center rounded-xl sm:h-full'}
+        className="rounded-xl sm:w-2/6"
       />
 
       <div className="sm:w-4/6 sm:space-y-2 sm:p-2 sm:pl-0">
@@ -64,18 +65,10 @@ const HorizontalCard = (props: HorizontalCardProps) => {
           {props.title}
         </CardOverlayLink>
 
-        <div className="mt-2 flex gap-4">
-          {props.tags &&
-            props.tags.map((tag) => (
-              <span
-                key={tag.name}
-                className={
-                  'rounded-full border border-slate-100 px-2 py-1 text-xs font-medium text-slate-100 transition duration-300 hover:border-transparent hover:bg-slate-900 hover:text-white dark:border-slate-700 dark:text-slate-300'
-                }
-              >
-                {tag.name}
-              </span>
-            ))}
+        <div className="mt-2 flex flex-wrap gap-2 whitespace-nowrap">
+          {props.tags?.slice(0, 2).map((tag) => (
+            <Tag key={tag.name}>{`# ${tag.name}`}</Tag>
+          ))}
         </div>
       </div>
     </Card>

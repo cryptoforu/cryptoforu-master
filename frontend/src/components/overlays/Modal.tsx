@@ -8,7 +8,7 @@ import type { OverlayTriggerState } from 'react-stately'
 import { cn } from '@/lib/utils'
 import { modalVariants, underlayVariants } from '@/motion/variants'
 
-const modal = cva('z-1 relative top-[10%] w-full focus:outline-none', {
+const modal = cva('relative top-[10%] z-10 w-full focus:outline-none', {
   variants: {
     variant: {
       primary:
@@ -20,7 +20,7 @@ const modal = cva('z-1 relative top-[10%] w-full focus:outline-none', {
       md: 'h-fit max-h-[70vh] max-w-md',
       lg: 'h-fit max-h-[80vh] max-w-2xl',
       xl: 'h-fit max-h-[80vh] max-w-5xl',
-      xxl: 'max-w-screen h-fit max-h-screen',
+      xxl: 'h-fit max-h-screen max-w-9xl',
     },
   },
   defaultVariants: {

@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 'use client'
 import { motion } from 'framer-motion'
 

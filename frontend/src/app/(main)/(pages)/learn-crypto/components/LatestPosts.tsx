@@ -1,6 +1,6 @@
 import { Route } from 'next'
 
-import { CursorPaginatedPost } from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/posts'
+import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
 import {
   Card,
   CardBody,
@@ -13,7 +13,7 @@ import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Heading, Text } from '@/components/typography'
 import { Container, Section } from '@/components/wrappers'
 
-const LatestPosts = async ({ latest }: { latest: CursorPaginatedPost }) => {
+const LatestPosts = async ({ latest }: { latest: PostWithCategory[] }) => {
   return (
     <Section id={'latest-posts'} ariaLabel={'Latest Posts'}>
       <Container>
@@ -31,7 +31,7 @@ const LatestPosts = async ({ latest }: { latest: CursorPaginatedPost }) => {
             'mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 dark:border-gray-900 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3'
           }
         >
-          {latest.data.map((post) => (
+          {latest.map((post) => (
             <Card
               key={post.id}
               variant={'article'}

@@ -70,7 +70,7 @@ export function AnchorLink(props: InternalLinkProps) {
           'absolute -ml-10 flex items-center border-0 opacity-0 group-hover:opacity-100'
         }
       >
-        <div
+        <span
           className={
             'flex h-6 w-6 items-center justify-center rounded-md p-1 text-slate-400 shadow-sm ring-1 ring-slate-900/5 hover:text-slate-700 hover:shadow hover:ring-slate-900/10 dark:bg-slate-700 dark:text-slate-300 dark:shadow-none dark:ring-0'
           }
@@ -90,7 +90,7 @@ export function AnchorLink(props: InternalLinkProps) {
             />
           </svg>
           {props.children}
-        </div>
+        </span>
       </a>
     </AriaLink>
   )

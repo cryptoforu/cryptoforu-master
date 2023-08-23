@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
+// noinspection JSUnusedGlobalSymbols
 export function useIsMounted() {
   const isMounted = useRef(false)
 

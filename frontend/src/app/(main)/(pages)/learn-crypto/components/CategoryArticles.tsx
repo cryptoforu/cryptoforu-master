@@ -4,6 +4,7 @@ import { Route } from 'next'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 
+import ShowMore from '@/app/(main)/(pages)/learn-crypto/components/ShowMore'
 import {
   ArticleCard,
   ArticleCta,
@@ -11,12 +12,9 @@ import {
   ArticleEye,
   ArticleTitle,
 } from '@/components/content'
-import { Button } from '@/components/elements'
 import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Text } from '@/components/typography'
 import useObserver from '@/hooks/useObserver'
-import useCategoryController from '@/store/controllers/useCategoryController'
-import useCountPost, { usePostCount } from '@/store/controllers/usePostCount'
 import { useCategoryContext } from '@/store/useCategoryStore'
 
 const CategoryArticles = () => {
@@ -26,16 +24,17 @@ const CategoryArticles = () => {
     containerRef: articleRef,
     childRefs: articleRefs,
   })
-
-  const { isPending, onChangeDown, onChangeUp } = useCategoryController()
   const posts = useCategoryContext((state) => state.posts)
-  const [pageSize, per_page] = useCategoryContext((state) => [
-    state.pageSize,
-    state.per_page,
-  ])
-  const addCount = useCountPost()
-  const getCount = usePostCount()
   const router = useRouter()
+
+  function handleDown() {
+    const currentElement = articleRefs.current[activeIndex]
+    if (currentElement) {
+      currentElement.scrollIntoView({
+        block: 'start',
+      })
+    }
+  }
 
   return (
     <>
@@ -57,13 +56,12 @@ const CategoryArticles = () => {
               <EyeIcon
                 className={'h-5 w-5 text-slate-600 dark:text-slate-500'}
               />{' '}
-              <Text variant={'secondary'}>{getCount(post.id)}</Text>
+              <Text variant={'secondary'}>
+                {post.count !== null ? post.count.views : 0}
+              </Text>
             </div>
             <ArticleTitle
-              onClick={() => {
-                void addCount(post.slug, post.id)
-                router.push(post.post_links.post_link as Route)
-              }}
+              onClick={() => router.push(post.post_links.post_link as Route)}
             >
               {post.title}
             </ArticleTitle>
@@ -80,30 +78,7 @@ const CategoryArticles = () => {
           </ArticleEye>
         </div>
       ))}
-
-      <div
-        id={'scroll-region'}
-        className={'flex items-center justify-center gap-4 py-6'}
-      >
-        {posts.meta.next_page_url !== null && (
-          <Button onPress={() => onChangeUp()} disabled={isPending}>
-            Show More
-          </Button>
-        )}
-        {pageSize !== per_page && (
-          <Button
-            onPress={() => {
-              onChangeDown()
-              articleRefs.current[activeIndex as number]?.scrollIntoView({
-                block: 'start',
-              })
-            }}
-            disabled={isPending}
-          >
-            Show Less
-          </Button>
-        )}
-      </div>
+      <ShowMore handleDown={handleDown} posts={posts} />
     </>
   )
 }

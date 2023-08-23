@@ -2,7 +2,7 @@ import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Route } from 'next'
 
-import { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
 import {
   Card,
   CardBody,
@@ -14,23 +14,23 @@ import {
 import { Badge, Button, InternalLink } from '@/components/elements'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Heading, ProseMarkdown } from '@/components/typography'
-import { Container, Section } from '@/components/wrappers'
+import { Container, Grid, Section } from '@/components/wrappers'
 import { getHomeData } from '@/requests/getHomeData'
 
 const CryptoAcademy = async () => {
-  const categories = (await getHomeData('categories')) as CategoryApiResource[]
+  const categories = (await getHomeData('categories')) as CategoryWithPosts[]
   return (
     <Section
       id={'crypto-academy'}
       ariaLabel={'Crypto Academy'}
-      className={'relative border-t border-t-cyan-50 dark:border-t-slate-950'}
+      className={
+        'overflow-hidden border-t border-t-cyan-50 dark:border-t-slate-950'
+      }
     >
       <SectionGrid />
-      <Container className={'relative'}>
+      <Container>
         <div
-          className={
-            'flex min-w-max flex-col items-center justify-between gap-8 px-8 md:flex-row'
-          }
+          className={'lg:flex lg:flex-row lg:items-center lg:justify-between'}
         >
           <div className={'py-2'}>
             <SectionHeader
@@ -42,10 +42,10 @@ const CryptoAcademy = async () => {
                 'To take advantage of the chance to increase both your knowledge and your financial opportunities,' +
                 ' start learning with us right away'
               }
-              className={'ml-2.5'}
+              className={'lg:ml-2.5 lg:max-w-2xl'}
             />
           </div>
-          <div className={'py-2'}>
+          <div className={'hidden lg:block lg:py-2'}>
             <Button
               colorScheme={'secondary'}
               className={'mr-8'}
@@ -56,16 +56,12 @@ const CryptoAcademy = async () => {
             </Button>
           </div>
         </div>
-        <div
-          className={
-            'relative mt-8 grid grid-cols-1 gap-8 px-8 md:grid-cols-2 lg:grid-cols-3'
-          }
-        >
+        <Grid cols={'three'}>
           {categories.map((category) => (
             <Card
               key={category.id}
               variant={'outlineSlate'}
-              size={'none'}
+              size={'article'}
               className={'mx-0 my-5 shadow-[6px_6px_0px_#10b981] md:mx-5'}
             >
               <CardHeader variant={'paper'}>
@@ -78,7 +74,7 @@ const CryptoAcademy = async () => {
                   className={'relative max-h-[230px] w-full items-center'}
                 />
               </CardHeader>
-              <CardBody variant={'article'} className={'p-4'}>
+              <CardBody variant={'secondary'} className={'p-4'}>
                 <div className={'flex justify-start'}>
                   <Badge variant={'primary'} size={'md'}>
                     {category.name === 'NFT' ? 'Popular' : 'Beginners'}
@@ -110,7 +106,7 @@ const CryptoAcademy = async () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
+        </Grid>
       </Container>
     </Section>
   )

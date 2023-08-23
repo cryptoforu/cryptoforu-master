@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { ReactNode, Suspense } from 'react'
 
 import HeroWrapper from '@/app/(main)/(pages)/SharedComponents/HeroWrapper'

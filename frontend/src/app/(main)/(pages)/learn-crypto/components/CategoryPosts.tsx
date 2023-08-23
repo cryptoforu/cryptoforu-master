@@ -1,6 +1,6 @@
 import { Route } from 'next'
 
-import type { CategoryApiResource } from '@/app/(main)/(pages)/learn-crypto/categories'
+import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
 import {
   Card,
   CardBody,
@@ -19,7 +19,7 @@ import { Container, Section } from '@/components/wrappers'
 const CategoryPosts = async ({
   categories,
 }: {
-  categories: Promise<CategoryApiResource[]>
+  categories: Promise<CategoryWithPosts[]>
 }) => {
   const data = await categories
   const tabsData = data.map((category) => {

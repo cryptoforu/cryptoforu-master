@@ -1,33 +1,49 @@
+'use client'
 import { Route } from 'next'
 
+import MenuLabel from '@/components/navbar/MenuLabel'
 import MenuLink from '@/components/navbar/MenuLink'
 import SubMenu from '@/components/navbar/SubMenu'
-import { getMenu } from '@/requests/getMenu'
-import { MenuProvider } from '@/store/useNavStore'
+import useMenuController, {
+  useActiveLink,
+} from '@/store/controllers/useMenuController'
+import { useNavHover } from '@/store/controllers/useNavController'
 
-const MainMenu = async () => {
-  const menu = await getMenu()
-  return (
-    <MenuProvider menu={menu}>
-      {menu.map((item, index) =>
-        item.childs.length === 0 ? (
-          <MenuLink
-            key={item.route}
-            href={item.route as Route}
+const MainMenu = () => {
+  const menu = useMenuController()
+  const activeItem = useActiveLink()
+  const { isHovered, hoverProps } = useNavHover()
+  if (menu) {
+    return menu.map((item, index) =>
+      item.childs.length === 0 ? (
+        <MenuLink
+          key={item.route}
+          href={item.route as Route}
+          hoverProps={hoverProps}
+        >
+          <MenuLabel
+            selected={isHovered(item.route)}
+            isActive={activeItem(index)}
             title={item.label}
-            index={index}
           />
-        ) : (
-          <SubMenu
-            key={item.route}
-            href={item.route as Route}
-            title={item.label}
-            items={item.childs}
-            index={index}
-          />
-        )
-      )}
-    </MenuProvider>
-  )
+        </MenuLink>
+      ) : (
+        <SubMenu
+          key={item.route}
+          href={item.route as Route}
+          hoverProps={hoverProps}
+          items={item.childs}
+          label={
+            <MenuLabel
+              selected={isHovered(item.route)}
+              isActive={activeItem(index)}
+              title={item.label}
+            />
+          }
+          isOpen={isHovered(item.route)}
+        />
+      )
+    )
+  }
 }
 export default MainMenu
