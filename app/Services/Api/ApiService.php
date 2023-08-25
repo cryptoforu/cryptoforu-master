@@ -20,8 +20,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function home(): ApiHomeResource
     {
         return new ApiHomeResource(
-            apiService: $this,
-            cache: new ApiCacheService(['api', 'home'])
+          cache: new ApiCacheService(['api', 'home'])
         );
     }
 
@@ -31,7 +30,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function breadcrumbs(): BreadCrumbsResource
     {
         return new BreadCrumbsResource(
-            cache: new ApiCacheService(['api', 'breadcrumbs'])
+          cache: new ApiCacheService(['api', 'breadcrumbs'])
         );
     }
 
@@ -41,7 +40,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function menu(): MenuResource
     {
         return new MenuResource(
-            cache: new ApiCacheService(['api', 'front_menu'])
+          cache: new ApiCacheService(['api', 'front_menu'])
         );
     }
 
@@ -51,7 +50,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function meta(): MetaDataResource
     {
         return new MetaDataResource(
-            cache: new ApiCacheService(['api', 'meta'])
+          cache: new ApiCacheService(['api', 'meta'])
         );
     }
 }
