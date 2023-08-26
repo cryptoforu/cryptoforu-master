@@ -1,12 +1,12 @@
 'use client'
 import { Suspense, useMemo } from 'react'
 
+import { TableSkeleton } from '@/components/skeletons'
 import CurrentPrice from '@/components/tables/Cells/CurrentPrice'
 import ImageCell from '@/components/tables/Cells/ImageCell'
 import PriceCell from '@/components/tables/Cells/PriceCell'
 import TextCell from '@/components/tables/Cells/TextCell'
 import DataTable from '@/components/tables/DataTable'
-import Spinner from '@/motion/Spinner'
 import useCryptoController from '@/store/controllers/useCryptoController'
 
 const CryptoData = () => {
@@ -73,7 +73,7 @@ const CryptoData = () => {
   )
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<TableSkeleton rows={6} />}>
       <DataTable data={data} columns={columns} />
     </Suspense>
   )

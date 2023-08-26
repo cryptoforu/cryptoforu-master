@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CryptoResourceController::class, 'index'])->name('index');
 Route::get(
-    '/coins/{crypto}',
-    [CryptoResourceController::class, 'show']
+  '/coins/{crypto}',
+  [CryptoResourceController::class, 'show']
 )->scopeBindings()->name('show');
+Route::post('/{id}',
+  [CryptoResourceController::class, 'update'])->name('update');

@@ -1,4 +1,4 @@
-import type { CryptoCoin } from '@/types/crypto'
+import type { CryptoCoin } from '@/app/api/coins/crypto'
 import type { PaginationProps } from '@/types/shared-types'
 
 export type Currency =

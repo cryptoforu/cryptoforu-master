@@ -5,23 +5,26 @@ declare(strict_types=1);
 namespace App\Services\Crypto\Queries;
 
 use App\Interfaces\Crypto\Contracts\CoinQueryContract;
-use App\Models\Crypto;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class CoinQuery implements CoinQueryContract
+final class CoinQuery implements CoinQueryContract
 {
-    public function handle(): Collection
+    public function handle(Builder|Model $query): Builder
     {
         return QueryBuilder::for(
-            subject: Crypto::query()->value('data')
+          subject: $query
         )
-            ->allowedFilters([
-                AllowedFilter::exact('data_name'),
-                AllowedFilter::exact('coins.id'),
-            ])
-            ->value('data_values')
-        ;
+          ->allowedFilters([
+            AllowedFilter::exact('category'),
+            AllowedFilter::exact('name'),
+            AllowedFilter::exact('symbol'),
+            AllowedFilter::custom('unique', new FilterUniqueCoins())
+          ])
+          ->defaultSort('market_cap_rank')
+          ->allowedSorts('market_cap_rank', 'name')
+          ->getEloquentBuilder();
     }
 }

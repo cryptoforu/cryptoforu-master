@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Spatie\LaravelData\WithData;
 
 /**
  * App\Models\Crypto
@@ -41,6 +42,7 @@ final class Crypto extends Model
 {
     use HasFactory;
     use HasUlids;
+    use WithData;
 
     protected $fillable = ['data_name', 'data_values'];
 

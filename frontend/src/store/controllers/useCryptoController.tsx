@@ -14,5 +14,5 @@ export default function useCryptoController() {
       }
     }
   }, [socketData, updatePrice])
-  return useDeferredValue(Object.values(cryptoData))
+  return useDeferredValue(cryptoData)
 }

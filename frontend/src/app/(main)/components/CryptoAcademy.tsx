@@ -3,6 +3,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Route } from 'next'
 
 import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import {
   Card,
   CardBody,
@@ -15,10 +16,11 @@ import { Badge, Button, InternalLink } from '@/components/elements'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Heading, ProseMarkdown } from '@/components/typography'
 import { Container, Grid, Section } from '@/components/wrappers'
-import { getHomeData } from '@/requests/getHomeData'
 
 const CryptoAcademy = async () => {
-  const categories = (await getHomeData('categories')) as CategoryWithPosts[]
+  const categories = (await getCategories(
+    '?filter[id]=1,7,8'
+  )) as CategoryWithPosts[]
   return (
     <Section
       id={'crypto-academy'}

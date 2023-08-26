@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Crypto;
 
 use App\Actions\Api\FilteredCollectionKeys;
+use App\Actions\Api\PaginatedData;
 use App\Actions\Api\SortableCollection;
 use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Crypto\Contracts\CoinQueryContract;
+use App\Models\Coin;
 use App\Models\Crypto;
+use App\Responses\CollectionResponse;
 use App\Services\Crypto\ApiResource\CoinResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Pipeline;
 use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CryptoResourceController extends Controller
@@ -20,31 +24,26 @@ final class CryptoResourceController extends Controller
      * Crypto Api Resources Instance
      */
     public function __construct(
-        protected CoinQueryContract $coinQuery,
-        protected readonly ApiCacheContract $cache,
+      protected CoinQueryContract $coinQuery,
+      protected readonly ApiCacheContract $cache,
     ) {
     }
 
     /**
      * Display Crypto Api Resources
      */
-    public function index(Request $request): JsonApiResourceCollection
+    public function index(): CollectionResponse
     {
-
-        $coins = $this->cache->load_data(
-            key: $request->getRequestUri(),
-            callback: $this->coinQuery->handle()
-                ->pipeThrough([
-                    new FilteredCollectionKeys(),
-                    new SortableCollection(),
-                ])
-        );
-
-        return CoinResource::collection(
-            resource: $coins->colPaginate(
-                $request->query('per_page', 25),
-                $request->query('filter[data_name]')
-            )->appends($request->query())
+        $data = Pipeline::send($this->coinQuery->handle(
+          query: Coin::query()
+        ))
+          ->through([
+            PaginatedData::class
+          ])->then(fn($data) => $data);
+        return new CollectionResponse(
+          data: CoinResource::collection(
+            resource: $data
+          )
         );
     }
 
@@ -52,17 +51,16 @@ final class CryptoResourceController extends Controller
      * Display the specified Crypto Api resource.
      */
     public function show(
-        Crypto $crypto
+      Crypto $crypto
     ): JsonApiResourceCollection {
         $cryptoData = $crypto->data_values
-            ->pipeThrough([
-                new FilteredCollectionKeys(),
-                new SortableCollection(),
-            ])->values()
-        ;
+          ->pipeThrough([
+            new FilteredCollectionKeys(),
+            new SortableCollection(),
+          ])->values();
 
         return CoinResource::collection(
-            resource: $cryptoData
+          resource: $cryptoData
         );
     }
 
@@ -71,7 +69,9 @@ final class CryptoResourceController extends Controller
      */
     public function update(Request $request, string $id): void
     {
-
+        $query = Coin::query()->find($id);
+        $query->name = $request->input('name');
+        $query->save();
     }
 
     /**
@@ -79,6 +79,5 @@ final class CryptoResourceController extends Controller
      */
     public function destroy(string $id): void
     {
-
     }
 }

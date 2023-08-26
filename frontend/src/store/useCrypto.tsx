@@ -4,10 +4,10 @@ import { createStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 
-import { CryptoData } from '@/types/crypto'
+import { CryptoData } from '@/app/api/coins/crypto'
 
 type CryptoState = {
-  crypto: Record<string, CryptoData>
+  crypto: CryptoData[]
 }
 type CryptoActions = {
   updatePrice: (id: string, price: number) => void
@@ -19,7 +19,7 @@ interface ICrypto extends CryptoState, CryptoActions {}
 type CryptoStore = ReturnType<typeof createCryptoStore>
 const createCryptoStore = (initProps?: Partial<CryptoState>) => {
   const DEFAULT_PROPS: CryptoState = {
-    crypto: {},
+    crypto: [],
   }
   return createStore(
     immer<ICrypto>((set, get) => ({
@@ -27,15 +27,16 @@ const createCryptoStore = (initProps?: Partial<CryptoState>) => {
       ...initProps,
       updatePrice: (id, price) =>
         set((state) => {
-          const currentPrice = state.crypto[id].attributes.current_price
-          state.crypto[id].attributes.current_price = price
-          state.crypto[id].attributes.current_color =
-            currentPrice > price ? 'danger' : 'success'
+          const coin = state.crypto.find((el) => el.id === id)
+          if (coin) {
+            coin.attributes.current_price = price
+            coin.attributes.current_color =
+              coin.attributes.current_price > price ? 'danger' : 'success'
+          }
         }),
       getPrice: (id, price) => {
-        return get().crypto[id].attributes.current_price > price
-          ? 'danger'
-          : 'success'
+        const coin = get().crypto.find((el) => el.id === id)
+        return coin.attributes.current_price > price ? 'danger' : 'success'
       },
     }))
   )
