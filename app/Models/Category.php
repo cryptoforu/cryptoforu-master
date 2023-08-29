@@ -64,8 +64,6 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Category whereName($value)
  * @method static Builder|Category whereSlug($value)
  * @method static Builder|Category whereUpdatedAt($value)
- *
- * @mixin IdeHelperCategory
  */
 final class Category extends Model
 {
