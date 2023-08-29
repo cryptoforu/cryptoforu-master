@@ -84,8 +84,6 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Post whereThumb($value)
  * @method static Builder|Post whereTitle($value)
  * @method static Builder|Post whereUpdatedAt($value)
- *
- *
  */
 final class Post extends Model implements Viewable
 {

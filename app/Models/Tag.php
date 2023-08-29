@@ -31,8 +31,6 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Tag whereId($value)
  * @method static Builder|Tag whereName($value)
  * @method static Builder|Tag whereUpdatedAt($value)
- *
- *
  */
 final class Tag extends Model
 {

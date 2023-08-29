@@ -64,8 +64,6 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Earn whereThumb($value)
  * @method static Builder|Earn whereTitle($value)
  * @method static Builder|Earn whereUpdatedAt($value)
- *
- *
  */
 final class Earn extends Model
 {
