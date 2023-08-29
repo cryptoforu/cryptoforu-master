@@ -8,10 +8,9 @@ use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCategoriesContract;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use App\Interfaces\Crypto\HandleExchangesInterface;
-use App\Models\Crypto;
-use App\Services\Crypto\DataObjects\CryptoCategories;
+use App\Models\CryptoCategories;
 use App\Services\Crypto\DataObjects\CryptoCoin;
-use App\Services\Crypto\DataObjects\ExchangesData;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Collection;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -24,21 +23,20 @@ final readonly class CryptoActions implements CryptoActionsInterface
     public function __construct(
         private CryptoService $service,
     ) {
-
     }
 
     /**
      * Update or Create Crypto Categories
+     *
+     * @throws RequestException
      */
     public function updateOrCreateCategories(
         HandleCategoriesContract $action
     ): void {
         $action->handle(
-            data_values: CryptoCategories::make(
-                attributes: $this->service
-                    ->crypto()
-                    ->categories(),
-            )
+            collection: $this->service
+                ->crypto()
+                ->categories()
         );
     }
 
@@ -58,9 +56,11 @@ final readonly class CryptoActions implements CryptoActionsInterface
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             $e->getMessage();
         }
-
     }
 
+    /**
+     * @throws RequestException
+     */
     public function updateOrCreateFpCoins(
         HandleCoinsContract $action
     ): void {
@@ -81,11 +81,11 @@ final readonly class CryptoActions implements CryptoActionsInterface
         HandleCoinsContract $action
     ): void {
         $state = settings()->get('category');
-        $count = Crypto::ofCategories()->data_values->count();
-        $categories = Crypto::ofCategories()->data_values->only([
-            $state['from'], $state['from'] + 1, $state['to'],
-        ]);
-        $collect = $this->service->crypto()->coin_categories($categories, $count);
+        $categories = CryptoCategories::all()->forPage($state['from'], 3);
+        $collect = $this->service->crypto()->coin_categories(
+            $categories,
+            50
+        );
         $collect->each(function (Collection $item, string $key) use (
             $action
         ): void {
@@ -98,20 +98,14 @@ final readonly class CryptoActions implements CryptoActionsInterface
         });
     }
 
+    /**
+     * @throws RequestException
+     */
     public function updateOrCreateExchanges(
         HandleExchangesInterface $action,
     ): void {
-        $replace = $this->service->replace(
-            items: $this->service->crypto()->exchanges(),
-            replace: [
-                'binance' => 'https://www.binance.com/en/activity/referral-entry/CPA?ref=CPA_004ILCS45B',
-                'kucoin' => 'https://www.kucoin.com/r/rf/QBSAT41U',
-            ]
-        );
         $action->handle(
-            responses: ExchangesData::make(
-                collection: $replace,
-            ),
+            responses: $this->service->crypto()->exchanges()
         );
     }
 }

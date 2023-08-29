@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\FaucetPay;
 
+use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Controller;
+use App\Interfaces\Faucetpay\FaucetListCategoryContract;
 use App\Interfaces\Faucetpay\FaucetPayServiceInterface;
 use App\Interfaces\Faucetpay\GetFaucetsStatsContract;
-use App\Interfaces\Faucetpay\ListUpdateOrCreateContract;
-use App\Models\FaucetPayList;
+use App\Models\FaucetListCategory;
 use App\Responses\CollectionResponse;
-use App\Services\Faucetpay\DataObjects\FaucetListData;
-use Illuminate\Support\Collection;
+use App\Services\Faucetpay\DataObjects\FaucetListCategoryData;
 use Illuminate\Support\Facades\Cache;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 final class ListController extends Controller
 {
@@ -23,28 +21,36 @@ final class ListController extends Controller
      */
     public function __construct(
         protected FaucetPayServiceInterface $service,
-        protected ListUpdateOrCreateContract $list,
         protected GetFaucetsStatsContract $stats,
+        protected FaucetListCategoryContract $categoryContract,
+        protected ApiCacheContract $cacheContract,
     ) {
     }
 
     /**
      * FaucetPay List Query Builder
      */
-    public function index(): Collection
-    {
-        $query = QueryBuilder::for(FaucetPayList::class)
-            ->allowedFilters([
-                AllowedFilter::exact('list_name'),
-                AllowedFilter::exact('currency'),
-            ])->get()
-        ;
+    public function index(
+        FaucetListCategory $listCategory
+    ): CollectionResponse {
+        $query = $this->categoryContract->handle(
+            query: FaucetListCategory::query()
+        )->with('list')->find($listCategory->id);
 
-        return $query
-            ->flatMap(
-                fn ($item) => FaucetListData::fromData($item)
+        return new CollectionResponse(
+            data: $this->service->list()->getList(
+                query: $query
             )
-        ;
+        );
+    }
+
+    public function list_categories(): CollectionResponse
+    {
+        return new CollectionResponse(
+            data: FaucetListCategoryData::collection(
+                items: FaucetListCategory::query()->get()
+            )->toArray()
+        );
     }
 
     /**

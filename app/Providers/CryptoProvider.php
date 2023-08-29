@@ -49,6 +49,21 @@ final class CryptoProvider extends ServiceProvider
             abstract: CoinQueryContract::class,
             concrete: CoinQuery::class
         );
+        $this->app->singleton(
+            abstract: HandleCategories::class,
+            concrete: fn (
+            ) => HandleCategories::make(storage_path('app/crypto/categories.json'))
+        );
+        $this->app->singleton(
+            abstract: HandleAllCoins::class,
+            concrete: fn (
+            ) => HandleAllCoins::make(storage_path('app/crypto/coins.json'))
+        );
+        $this->app->singleton(
+            abstract: HandleExchanges::class,
+            concrete: fn (
+            ) => HandleExchanges::make(storage_path('app/crypto/exchanges.json'))
+        );
     }
 
     /**
@@ -56,6 +71,5 @@ final class CryptoProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
     }
 }

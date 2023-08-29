@@ -41,8 +41,8 @@ final class Menu extends Model
     use WithData;
 
     protected $fillable = [
-      'label',
-      'position',
+        'label',
+        'position',
     ];
 
     protected string $dataClass = MenuData::class;
@@ -61,11 +61,12 @@ final class Menu extends Model
     }
 
     public function scopeOfMain(
-      Builder $query,
-      string $position = 'front_main'
+        Builder $query,
+        string $position = 'front_main'
     ): Model {
         return $query
-          ->where('position', $position)
-          ->with('items')->first();
+            ->where('position', $position)
+            ->with('items')->first()
+        ;
     }
 }

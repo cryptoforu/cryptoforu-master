@@ -5,25 +5,46 @@ declare(strict_types=1);
 namespace App\Services\Crypto\Actions;
 
 use App\Interfaces\Crypto\HandleExchangesInterface;
-use App\Models\Crypto;
-use Illuminate\Support\Collection;
+use Cerbero\JsonParser\JsonParser;
+use Spatie\Valuestore\Valuestore;
 
-class HandleExchanges implements HandleExchangesInterface
+final class HandleExchanges extends Valuestore implements HandleExchangesInterface
 {
-    public function handle(Collection $responses): bool
-    {
-        if (Crypto::ofName('exchanges')) {
-            Crypto::ofName('exchanges')->update([
-                'data_values' => $responses,
-            ]);
+    // TO DO
+    // Store Urls To Replace In Database and create programmatic functions
+    protected array $replaceArr = [
+        'binance' => 'https://www.binance.com/en/activity/referral-entry/CPA?ref=CPA_004ILCS45B',
+        'kucoin' => 'https://www.kucoin.com/r/rf/QBSAT41U',
+    ];
 
-            return true;
-        }
-        Crypto::create([
-            'data_name' => 'exchanges',
-            'data_values' => $responses,
-        ]);
+    public function handle(JsonParser $responses): bool
+    {
+        $responses->traverse(function (
+            mixed $value,
+            string|int $key,
+            JsonParser $parser
+        ): void {
+            $site = $this->replaceUrls($value['id']);
+            if ($site) {
+                $value['url'] = $site;
+            }
+            $this->put($value['id'], $value);
+        });
 
         return true;
+    }
+
+    /**
+     * @return false|mixed|string
+     */
+    private function replaceUrls(string $id): mixed
+    {
+        foreach ($this->replaceArr as $a) {
+            if (array_key_exists($id, $this->replaceArr)) {
+                return $a;
+            }
+        }
+
+        return false;
     }
 }

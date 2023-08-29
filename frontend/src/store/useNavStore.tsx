@@ -73,7 +73,6 @@ export const useMenuStore = create(
         const { data: menu } = (await res.json()) as unknown as {
           data: MainMenu[]
         }
-        console.log(menu)
         set((state) => {
           state.menu = menu
         })

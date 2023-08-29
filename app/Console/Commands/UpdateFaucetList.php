@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Interfaces\Faucetpay\FaucetPayServiceInterface;
-use App\Interfaces\Faucetpay\ListUpdateOrCreateContract;
+use App\Interfaces\Faucetpay\HandleListContract;
 use Illuminate\Console\Command;
 
 class UpdateFaucetList extends Command
@@ -29,11 +29,10 @@ class UpdateFaucetList extends Command
      */
     public function handle(
         FaucetPayServiceInterface $service,
-        ListUpdateOrCreateContract $list,
+        HandleListContract $listContract
     ): void {
-        $newList = $service->list()->make_list();
-        $list->handle(
-            collection: $newList
+        $service->list()->make_list(
+            listContract: $listContract
         );
     }
 }

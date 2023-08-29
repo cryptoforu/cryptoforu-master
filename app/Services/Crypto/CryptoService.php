@@ -12,7 +12,10 @@ use Illuminate\Http\Client\PendingRequest;
 
 final class CryptoService
 {
-    use Replaceable, RequestState, SendGetRequest, SendPoolRequest;
+    use Replaceable;
+    use RequestState;
+    use SendGetRequest;
+    use SendPoolRequest;
 
     public function __construct(
         private readonly PendingRequest $client

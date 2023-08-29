@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Interfaces\Crypto;
 
-use Illuminate\Support\Collection;
+use Cerbero\JsonParser\JsonParser;
 
 interface HandleExchangesInterface
 {
-    public function handle(Collection $responses): bool;
+    public function handle(JsonParser $responses): bool;
 }

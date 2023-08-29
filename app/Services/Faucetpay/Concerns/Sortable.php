@@ -23,14 +23,22 @@ trait Sortable
 
     public function sortArray(array|Collection $attributes): Collection
     {
-        return (new Collection(
-            items: $attributes,
-        ))->sortBy(
-            [
-                ['health', 'desc'],
-                ['paid_today', 'desc'],
-                ['total_users_paid', 'desc'],
-            ]
-        );
+        return collect(
+            value: $attributes,
+        )->flatMap(function ($item) {
+            return collect()->mergeRecursive($item)->sortBy(
+                [
+                    ['health', 'desc'],
+                    ['paid_today', 'desc'],
+                    ['total_users_paid', 'desc'],
+                ]
+            )->each(
+                function ($val) {
+                    data_set($val, 'currency', 'TOP');
+
+                    return $val;
+                }
+            );
+        })->values();
     }
 }

@@ -1,7 +1,6 @@
 import { Nullable } from '@/types/shared-types'
 
 export type CryptoCoin = {
-  id: string
   name: string
   image: string
   current_price: number
@@ -24,4 +23,27 @@ export interface CryptoData {
   id: string
   type: string
   attributes: CryptoCoin
+}
+
+export type CoinTableProps = {
+  id: string
+  header: string
+  value: string | number
+  cellType:
+    | 'text'
+    | 'link'
+    | 'usd_crypto'
+    | 'time'
+    | 'meter'
+    | 'image'
+    | 'current_price'
+    | 'price'
+}
+
+export interface CryptoTableData {
+  id: string
+  type: string
+  attributes: {
+    [x: string]: CoinTableProps
+  }
 }

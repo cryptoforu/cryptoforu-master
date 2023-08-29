@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 final class SharedPropsController extends Controller
 {
     public function __construct(
-      protected ApiServiceContract $service,
-      protected CountActionContract $actionContract
+        protected ApiServiceContract $service,
+        protected CountActionContract $actionContract
     ) {
     }
 
@@ -26,7 +26,7 @@ final class SharedPropsController extends Controller
     public function meta_data(): CollectionResponse
     {
         return new CollectionResponse(
-          data: $this->service->meta()->get_meta_data()
+            data: $this->service->meta()->get_meta_data()
         );
     }
 
@@ -36,7 +36,7 @@ final class SharedPropsController extends Controller
     public function breadcrumbs(): CollectionResponse
     {
         return new CollectionResponse(
-          data: $this->service->breadcrumbs()->generate()
+            data: $this->service->breadcrumbs()->generate()
         );
     }
 
@@ -46,10 +46,10 @@ final class SharedPropsController extends Controller
     public function count_views(Request $request, Post $post): JsonResponse
     {
         return new JsonResponse(
-          data: $this->actionContract->count_views(
-            post: $post,
-            ip: $request->ip()
-          )
+            data: $this->actionContract->count_views(
+                post: $post,
+                ip: $request->ip()
+            )
         );
     }
 
@@ -59,7 +59,7 @@ final class SharedPropsController extends Controller
     public function home_resource(): CollectionResponse
     {
         return new CollectionResponse(
-          data: $this->service->home()->generate()
+            data: $this->service->home()->generate()
         );
     }
 
@@ -69,7 +69,7 @@ final class SharedPropsController extends Controller
     public function front_menu(): JsonResponse
     {
         return new JsonResponse(
-          data: $this->service->menu()->get_front_menu()
+            data: $this->service->menu()->get_front_menu()
         );
     }
 }

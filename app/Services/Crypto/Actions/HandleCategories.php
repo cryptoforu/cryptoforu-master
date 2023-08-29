@@ -5,28 +5,31 @@ declare(strict_types=1);
 namespace App\Services\Crypto\Actions;
 
 use App\Interfaces\Crypto\HandleCategoriesContract;
-use App\Models\Crypto;
-use Illuminate\Support\Collection;
+use App\Services\Crypto\DataObjects\CryptoCategoriesData;
+use Cerbero\JsonParser\JsonParser;
+use Spatie\Valuestore\Valuestore;
 
-final class HandleCategories implements HandleCategoriesContract
+final class HandleCategories extends Valuestore implements HandleCategoriesContract
 {
     /**
      * Handle Crypto Categories
      */
-    public function handle(Collection $data_values): bool
+    public function handle(JsonParser $collection): void
     {
-        if (Crypto::ofName('categories')) {
-            Crypto::ofName('categories')->update([
-                'data_values' => $data_values,
-            ]);
+        $collection->traverse(function (
+            mixed $value,
+            string|int $key,
+            JsonParser $parser
+        ): void {
+            if ($key <= 50) {
+                $dataValue = CryptoCategoriesData::from($value);
+                $this->put($value['id'], $dataValue);
+            }
+        });
+    }
 
-            return true;
-        }
-        Crypto::create([
-            'data_name' => 'categories',
-            'data_values' => $data_values,
-        ]);
-
-        return true;
+    public function getCategories(): array
+    {
+        return $this->all();
     }
 }

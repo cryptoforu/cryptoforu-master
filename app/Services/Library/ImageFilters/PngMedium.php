@@ -14,17 +14,17 @@ final class PngMedium implements FilterInterface
     {
         if (Request::query('w')) {
             return $image->widen(
-              (int) Request::query('w'),
-              function ($constraint): void {
-                  $constraint->upsize();
-              }
+                (int) Request::query('w'),
+                function ($constraint): void {
+                    $constraint->upsize();
+                }
             )->encode($image->mime(), Request::query('q'));
         } else {
             return $image->widen(
-              600,
-              function ($constraint): void {
-                  $constraint->upsize();
-              }
+                600,
+                function ($constraint): void {
+                    $constraint->upsize();
+                }
             )->encode($image->mime(), Request::query('q'));
         }
     }

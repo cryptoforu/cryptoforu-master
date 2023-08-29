@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection ALL */
 
 /** @noinspection ALL */
@@ -92,29 +93,29 @@ final class Post extends Model implements Viewable
     use WithData;
 
     protected $fillable = [
-      'title',
-      'content',
-      'introduction',
-      'slug',
-      'featured_image',
-      'thumb',
-      'category_id',
-      'image_name',
-      'excerpt',
-      'status',
-      'headline',
-      'post_links',
+        'title',
+        'content',
+        'introduction',
+        'slug',
+        'featured_image',
+        'thumb',
+        'category_id',
+        'image_name',
+        'excerpt',
+        'status',
+        'headline',
+        'post_links',
 
     ];
 
     protected string $dataClass = PostData::class;
 
     protected $casts = [
-      'status' => PostStatus::class,
-      'nullable_enum' => PostStatus::class.':nullable',
-      'array_of_enums' => PostStatus::class.':collection',
-      'nullable_array_of_enums' => PostStatus::class.':collection,nullable',
-      'post_links' => AsCollection::class,
+        'status' => PostStatus::class,
+        'nullable_enum' => PostStatus::class . ':nullable',
+        'array_of_enums' => PostStatus::class . ':collection',
+        'nullable_array_of_enums' => PostStatus::class . ':collection,nullable',
+        'post_links' => AsCollection::class,
 
     ];
 
@@ -143,8 +144,8 @@ final class Post extends Model implements Viewable
     public function scopeOfLatest(Builder $query, int $take): Builder
     {
         return $query->where(
-          'status',
-          'published'
+            'status',
+            'published'
         )->orWhere('status', 'featured')->take($take)->latest();
     }
 
@@ -161,12 +162,12 @@ final class Post extends Model implements Viewable
     public function scopeOfNext(Builder $query, int $id): ?array
     {
         $next = $query->with('category')->where('id', '>', $id)->first([
-          'title', 'slug', 'category_id',
+            'title', 'slug', 'category_id',
         ]);
         if (null !== $next) {
             return [
-              'name' => $next->title,
-              'slug' => '/learn-crypto/'.$next->category->slug.'/'.$next->slug,
+                'name' => $next->title,
+                'slug' => '/learn-crypto/' . $next->category->slug . '/' . $next->slug,
             ];
         }
 
@@ -176,14 +177,15 @@ final class Post extends Model implements Viewable
     public function scopeOfPrev(Builder $query, int $id): ?array
     {
         $prev = $query->with('category')->where('id', '<', $id)->orderBy(
-          'id',
-          'desc'
+            'id',
+            'desc'
         )
-          ->first(['title', 'slug', 'category_id']);
+            ->first(['title', 'slug', 'category_id'])
+        ;
         if (null !== $prev) {
             return [
-              'name' => $prev->title,
-              'slug' => '/learn-crypto/'.$prev->category->slug.'/'.$prev->slug,
+                'name' => $prev->title,
+                'slug' => '/learn-crypto/' . $prev->category->slug . '/' . $prev->slug,
             ];
         }
 
@@ -201,7 +203,7 @@ final class Post extends Model implements Viewable
     public function toSearchableArray(): array
     {
         return [
-          'title' => $this->title,
+            'title' => $this->title,
         ];
     }
 }

@@ -15,7 +15,10 @@ class FilteredCollectionKeys
             'only',
             static function () use ($collection): Collection {
                 return $collection
-                    ->only(Request::string('only')->split('/[\s,]+/'))
+                    ->only(
+                        Request::string('only')
+                            ->split('/[\s,]+/')
+                    )
                 ;
             },
             static fn (): Collection => $collection

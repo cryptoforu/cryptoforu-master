@@ -18,20 +18,20 @@ final class CacheStoreService extends Valuestore implements CacheContract
 {
     public function withInertia(Collection $collection): array
     {
-        $first = $collection->take(1)->map(fn($item, $key) => fn(
+        $first = $collection->take(1)->map(fn ($item, $key) => fn (
         ) => $this->load(
-          key: $key,
-          callback: fn() => $item,
-        ))->all();
-        $rest = $collection->skip(1)->map(fn($item, $key) => Inertia::lazy(
-          fn() => $this->load(
             key: $key,
-            callback: fn() => $item,
-          )
+            callback: fn () => $item,
+        ))->all();
+        $rest = $collection->skip(1)->map(fn ($item, $key) => Inertia::lazy(
+            fn () => $this->load(
+                key: $key,
+                callback: fn () => $item,
+            )
         ))->all();
 
         return collect(
-          value: [...$first, ...$rest]
+            value: [...$first, ...$rest]
         )->toArray();
     }
 
@@ -39,14 +39,14 @@ final class CacheStoreService extends Valuestore implements CacheContract
      * Lazy Load Data
      */
     public function load(
-      string $key,
-      Closure $callback,
-      Closure|DateInterval|DateTimeInterface|int|null $ttl = 1440
+        string $key,
+        Closure $callback,
+        Closure|DateInterval|DateTimeInterface|int|null $ttl = 1440
     ): mixed {
         return Cache::remember(
-          key: $this->get($key) ?? $this->generate_key($key),
-          ttl: $ttl,
-          callback: $callback,
+            key: $this->get($key) ?? $this->generate_key($key),
+            ttl: $ttl,
+            callback: $callback,
         );
     }
 
@@ -56,8 +56,8 @@ final class CacheStoreService extends Valuestore implements CacheContract
     private function generate_key(string $key): mixed
     {
         $this->put(
-          name: $key,
-          value: (string) Str::orderedUuid()
+            name: $key,
+            value: (string) Str::orderedUuid()
         );
 
         return $this->get(name: $key);

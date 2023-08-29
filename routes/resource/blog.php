@@ -11,32 +11,33 @@ use Illuminate\Support\Facades\Route;
 // Search
 
 Route::get(
-  '/search',
-  BlogSearchController::class
+    '/search',
+    BlogSearchController::class
 )->name('search');
 
 // Static Params
 
 Route::get(
-  '/generate',
-  StaticParamsController::class
+    '/generate',
+    StaticParamsController::class
 )
-  ->name('generate');
+    ->name('generate')
+;
 
 // Blog
 
 Route::controller(BlogApiController::class)->group(
-  function () {
-      Route::get('/', 'index');
-      Route::get('/latest', 'latest');
-      Route::get('/{category}/posts', 'category');
-      Route::get('/{category}/posts/{post}', 'post');
-  }
+    function (): void {
+        Route::get('/', 'index');
+        Route::get('/latest', 'latest');
+        Route::get('/{category}/posts', 'category');
+        Route::get('/{category}/posts/{post}', 'post');
+    }
 )->scopeBindings();
 
 // Tags
 
 Route::get(
-  '/tags',
-  TagsController::class
+    '/tags',
+    TagsController::class
 )->name('tags');

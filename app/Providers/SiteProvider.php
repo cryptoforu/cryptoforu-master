@@ -17,10 +17,10 @@ use Illuminate\Support\ServiceProvider;
 final class SiteProvider extends ServiceProvider
 {
     public array $bindings = [
-      StoreDataContract::class => StoreSiteData::class,
-      SiteInterface::class => SiteService::class,
-      DeleteDataContract::class => DeleteSiteData::class,
-      SocialLinksContract::class => GetSocialLinks::class,
+        StoreDataContract::class => StoreSiteData::class,
+        SiteInterface::class => SiteService::class,
+        DeleteDataContract::class => DeleteSiteData::class,
+        SocialLinksContract::class => GetSocialLinks::class,
     ];
 
     /**

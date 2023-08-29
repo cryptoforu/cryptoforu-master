@@ -16,8 +16,8 @@ use TiMacDonald\JsonApi\JsonApiResourceCollection;
 final class CollectionResponse extends Response
 {
     public function __construct(
-      protected readonly Collection|JsonApiResource|JsonApiResourceCollection|JsonResource|array|Data|Model|LengthAwarePaginator $data,
-      protected readonly Http $status = Http::OK,
+        protected readonly Collection|JsonApiResource|JsonApiResourceCollection|JsonResource|array|Data|Model|LengthAwarePaginator $data,
+        protected readonly Http $status = Http::OK,
     ) {
     }
 }

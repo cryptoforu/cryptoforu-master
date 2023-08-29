@@ -41,8 +41,8 @@ final class LibraryCategory extends Model
     use WithData;
 
     protected $fillable = [
-      'name',
-      'directory',
+        'name',
+        'directory',
     ];
 
     protected string $dataClass = LibraryCategoryData::class;
@@ -62,8 +62,6 @@ final class LibraryCategory extends Model
 
     /**
      * Scope a query to only include
-     *
-     * @param  Builder  $query
      */
     public function scopeOfDirectory(Builder $query, $directory): Builder
     {

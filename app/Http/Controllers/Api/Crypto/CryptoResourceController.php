@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Crypto;
 
-use App\Actions\Api\FilteredCollectionKeys;
 use App\Actions\Api\PaginatedData;
-use App\Actions\Api\SortableCollection;
 use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Crypto\Contracts\CoinQueryContract;
 use App\Models\Coin;
-use App\Models\Crypto;
 use App\Responses\CollectionResponse;
+use App\Services\Api\DataObjects\DataTable;
 use App\Services\Crypto\ApiResource\CoinResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Pipeline;
+use Spatie\QueryBuilder\QueryBuilder;
 use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CryptoResourceController extends Controller
@@ -24,8 +23,8 @@ final class CryptoResourceController extends Controller
      * Crypto Api Resources Instance
      */
     public function __construct(
-      protected CoinQueryContract $coinQuery,
-      protected readonly ApiCacheContract $cache,
+        protected CoinQueryContract $coinQuery,
+        protected readonly ApiCacheContract $cache,
     ) {
     }
 
@@ -35,15 +34,15 @@ final class CryptoResourceController extends Controller
     public function index(): CollectionResponse
     {
         $data = Pipeline::send($this->coinQuery->handle(
-          query: Coin::query()
+            query: Coin::query()
         ))
-          ->through([
-            PaginatedData::class
-          ])->then(fn($data) => $data);
+            ->through([
+                PaginatedData::class,
+            ])->then(fn ($data) => $data)
+        ;
+
         return new CollectionResponse(
-          data: CoinResource::collection(
-            resource: $data
-          )
+            data: DataTable::fromCoins($data)
         );
     }
 
@@ -51,16 +50,14 @@ final class CryptoResourceController extends Controller
      * Display the specified Crypto Api resource.
      */
     public function show(
-      Crypto $crypto
+        Coin $crypto
     ): JsonApiResourceCollection {
-        $cryptoData = $crypto->data_values
-          ->pipeThrough([
-            new FilteredCollectionKeys(),
-            new SortableCollection(),
-          ])->values();
+        $cryptoData = QueryBuilder::for(
+            Coin::class
+        )->findOrFail($crypto->id);
 
         return CoinResource::collection(
-          resource: $cryptoData
+            resource: $cryptoData
         );
     }
 

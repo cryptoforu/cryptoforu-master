@@ -57,20 +57,20 @@ final class Library extends Model
     use WithData;
 
     protected $fillable = [
-      'file_name',
-      'mime_type',
-      'conversions',
-      'size',
-      'image_url',
-      'width',
-      'height',
-      'library_category_id',
-      'imageable_id',
-      'imageable_type',
+        'file_name',
+        'mime_type',
+        'conversions',
+        'size',
+        'image_url',
+        'width',
+        'height',
+        'library_category_id',
+        'imageable_id',
+        'imageable_type',
     ];
 
     protected $casts = [
-      'conversions' => 'array',
+        'conversions' => 'array',
     ];
 
     protected string $dataClass = LibraryData::class;

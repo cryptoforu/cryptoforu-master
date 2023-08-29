@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-use App\Services\Api\Resources\ApiHomeResource;
 use App\Services\Api\Resources\BreadCrumbsResource;
 use App\Services\Api\Resources\MenuResource;
 use App\Services\Api\Resources\MetaDataResource;
 
 interface ApiServiceContract
 {
-    public function home(): ApiHomeResource;
-
     public function breadcrumbs(): BreadCrumbsResource;
 
     public function menu(): MenuResource;

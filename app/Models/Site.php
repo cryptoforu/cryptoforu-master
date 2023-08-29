@@ -37,7 +37,8 @@ use Spatie\LaravelData\WithData;
  */
 final class Site extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
         'data_name',

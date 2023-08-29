@@ -14,17 +14,17 @@ final class PngLarge implements FilterInterface
     {
         if (Request::query('w')) {
             return $image->widen(
-              (int) Request::query('w'),
-              function ($constraint): void {
-                  $constraint->upsize();
-              }
+                (int) Request::query('w'),
+                function ($constraint): void {
+                    $constraint->upsize();
+                }
             )->encode($image->mime(), Request::query('q'));
         } else {
             return $image->widen(
-              1200,
-              function ($constraint): void {
-                  $constraint->upsize();
-              }
+                1200,
+                function ($constraint): void {
+                    $constraint->upsize();
+                }
             )->encode($image->mime(), Request::query('q'));
         }
     }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Crypto;
 
+use Cerbero\JsonParser\JsonParser;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Collection;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -19,6 +21,8 @@ final readonly class CryptoResource
 
     /**
      * Get Coin Price
+     *
+     * @throws RequestException
      */
     public function price(string $coin): Collection
     {
@@ -29,17 +33,21 @@ final readonly class CryptoResource
                 'vs_currencies' => 'usd',
                 'ids' => $coin,
             ]
-        );
+        )->collect();
     }
 
     /**
      * Get Crypto Categories
+     *
+     * @throws RequestException
      */
-    public function categories(): Collection
+    public function categories(): JsonParser
     {
-        return $this->service->get(
-            request: $this->client,
-            method: 'coins/categories',
+        return JsonParser::parse(
+            $this->service->get(
+                request: $this->client,
+                method: 'coins/categories',
+            )
         );
     }
 
@@ -70,8 +78,10 @@ final readonly class CryptoResource
         Collection $collection,
         ?int $max = 12
     ): Collection {
-        $state = settings('category');
-        $collect = $collection->keyBy('id')->map(fn ($item) => $this->service->get(
+        $state = settings()->get('category');
+        $collect = $collection->keyBy('id')->map(fn (
+            $item
+        ) => $this->service->get(
             request: $this->client,
             method: 'coins/markets',
             param: [
@@ -80,7 +90,7 @@ final readonly class CryptoResource
                 'per_page' => '250',
                 'category' => $item['id'],
             ],
-        ));
+        )->collect());
         $this->service->set_state(
             from: $state['from'],
             to: $state['to'],
@@ -93,20 +103,26 @@ final readonly class CryptoResource
 
     /**
      * Crypto Exchanges
+     *
+     * @throws RequestException
      */
-    public function exchanges(): Collection
+    public function exchanges(): JsonParser
     {
-        return $this->service->get(
-            request: $this->client,
-            method: 'exchanges',
-            param: [
-                'per_page' => '250',
-            ]
+        return JsonParser::parse(
+            source: $this->service->get(
+                request: $this->client,
+                method: 'exchanges',
+                param: [
+                    'per_page' => '250',
+                ]
+            )
         );
     }
 
     /**
      * Get FaucetPay Coins
+     *
+     * @throws RequestException
      */
     public function fp_coins(): Collection
     {
@@ -115,8 +131,8 @@ final readonly class CryptoResource
             method: 'coins/markets',
             param: [
                 'vs_currency' => 'usd',
-                'ids' => 'bitcoin,ethereum,tether,binancecoin,solana,dogecoin,tron,litecoin,bitcoin-cash,zcash,dash,digibyte,feyorra,matic-network,ripple',
+                'ids' => 'bitcoin,ethereum,tether,binancecoin,solana,dogecoin,tron,litecoin,bitcoin-cash,zcash,dash,digibyte,feyorra,matic-network,ripple,cardano',
             ],
-        );
+        )->collect();
     }
 }

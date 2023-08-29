@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use App\Contracts\ApiServiceContract;
-use App\Services\Api\Resources\ApiHomeResource;
 use App\Services\Api\Resources\BreadCrumbsResource;
 use App\Services\Api\Resources\MenuResource;
 use App\Services\Api\Resources\MetaDataResource;
@@ -15,22 +14,12 @@ use Spatie\Valuestore\Valuestore;
 final class ApiService extends Valuestore implements ApiServiceContract
 {
     /**
-     * Home Api Resource
-     */
-    public function home(): ApiHomeResource
-    {
-        return new ApiHomeResource(
-          cache: new ApiCacheService(['api', 'home'])
-        );
-    }
-
-    /**
      * Get Breadcrumbs
      */
     public function breadcrumbs(): BreadCrumbsResource
     {
         return new BreadCrumbsResource(
-          cache: new ApiCacheService(['api', 'breadcrumbs'])
+            cache: new ApiCacheService(['api', 'breadcrumbs'])
         );
     }
 
@@ -40,7 +29,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function menu(): MenuResource
     {
         return new MenuResource(
-          cache: new ApiCacheService(['api', 'front_menu'])
+            cache: new ApiCacheService(['api', 'front_menu'])
         );
     }
 
@@ -50,7 +39,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function meta(): MetaDataResource
     {
         return new MetaDataResource(
-          cache: new ApiCacheService(['api', 'meta'])
+            cache: new ApiCacheService(['api', 'meta'])
         );
     }
 }

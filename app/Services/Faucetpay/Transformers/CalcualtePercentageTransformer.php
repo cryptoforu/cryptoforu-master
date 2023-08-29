@@ -14,8 +14,10 @@ class CalcualtePercentageTransformer implements Transformer
     ) {
     }
 
-    public function transform(DataProperty $property, mixed $value): mixed
-    {
+    public function transform(
+        DataProperty $property,
+        mixed $value
+    ): string|false {
         return cal_percentage(
             num_amount: $value['amount'],
             num_total: $value['total'],

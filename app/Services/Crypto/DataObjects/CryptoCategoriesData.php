@@ -11,8 +11,8 @@ use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript('CryptoCategories')]
-final class CryptoCategories extends Data
+#[TypeScript('CryptoCategoriesData')]
+final class CryptoCategoriesData extends Data
 {
     public function __construct(
         public readonly ?string $id,
@@ -21,22 +21,10 @@ final class CryptoCategories extends Data
         public ?float $market_cap,
         #[WithTransformer(PercentageTransformer::class, divide: 100)]
         public readonly ?float $market_cap_change_24h,
-        public readonly ?array $top_3_coins,
+        public readonly ?string $top_3_coins,
         #[WithTransformer(CurrencyTransformer::class)]
         public ?float $volume_24h
     ) {
-    }
-
-    public static function fromArray(array $attributes): self
-    {
-        return new self(
-            id: (string) (data_get($attributes, 'id')),
-            name: (string) (data_get($attributes, 'name')),
-            market_cap: data_get($attributes, 'market_cap'),
-            market_cap_change_24h: (data_get($attributes, 'market_cap_change_24h')),
-            top_3_coins: data_get($attributes, 'top_3_coins'),
-            volume_24h: data_get($attributes, 'volume_24h'),
-        );
     }
 
     public static function make(Collection $attributes): Collection
@@ -45,6 +33,23 @@ final class CryptoCategories extends Data
             fn ($item) => self::fromArray(
                 attributes: $item
             )
-        )->keyBy('id')->sortByDesc('market_cap')->values();
+        )->keyBy('id')->sortByDesc('market_cap');
+    }
+
+    public static function fromArray(array $attributes): self
+    {
+        $imgs = data_get($attributes, 'top_3_coins');
+
+        return new self(
+            id: (string) (data_get($attributes, 'id')),
+            name: (string) (data_get($attributes, 'name')),
+            market_cap: data_get($attributes, 'market_cap'),
+            market_cap_change_24h: (data_get(
+                $attributes,
+                'market_cap_change_24h'
+            )),
+            top_3_coins: $imgs[0] . ' | ' . $imgs[1] . ' | ' . $imgs[2],
+            volume_24h: data_get($attributes, 'volume_24h'),
+        );
     }
 }
