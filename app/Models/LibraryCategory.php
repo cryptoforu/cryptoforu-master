@@ -34,6 +34,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|LibraryCategory whereId($value)
  * @method static Builder|LibraryCategory whereName($value)
  * @method static Builder|LibraryCategory whereUpdatedAt($value)
+ *
+ *
  */
 final class LibraryCategory extends Model
 {

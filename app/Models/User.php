@@ -53,6 +53,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static Builder|User whereTwoFactorSecret($value)
  * @method static Builder|User whereUpdatedAt($value)
+ *
+ *
  */
 final class User extends Authenticatable
 {
@@ -66,9 +68,9 @@ final class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+      'name',
+      'email',
+      'password',
     ];
 
     /**
@@ -77,8 +79,8 @@ final class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+      'password',
+      'remember_token',
     ];
 
     /**
@@ -87,7 +89,7 @@ final class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+      'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -101,9 +103,8 @@ final class User extends Authenticatable
     public function admin(): bool
     {
         $admin = $this->belongsToMany(Role::class)
-            ->wherePivotIn('role_id', ['1'])
-            ->firstOrFail()
-        ;
+          ->wherePivotIn('role_id', ['1'])
+          ->firstOrFail();
 
         return (bool) ($admin);
     }

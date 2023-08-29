@@ -37,6 +37,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Crypto whereDataValues($value)
  * @method static Builder|Crypto whereId($value)
  * @method static Builder|Crypto whereUpdatedAt($value)
+ *
+ * @mixin IdeHelperCrypto
  */
 final class Crypto extends Model
 {

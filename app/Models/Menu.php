@@ -34,6 +34,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Menu whereLabel($value)
  * @method static Builder|Menu wherePosition($value)
  * @method static Builder|Menu whereUpdatedAt($value)
+ *
+ *
  */
 final class Menu extends Model
 {

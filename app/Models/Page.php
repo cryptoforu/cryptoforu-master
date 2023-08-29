@@ -57,6 +57,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Page whereRoute($value)
  * @method static Builder|Page whereTwImage($value)
  * @method static Builder|Page whereUpdatedAt($value)
+ *
+ *
  */
 final class Page extends Model
 {

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ALL */
 
 /** @noinspection ALL */
 
