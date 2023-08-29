@@ -10,15 +10,11 @@ interface BlogInterface
 {
     /**
      * Backend Index Page Data
-     *
-     * @return array
      */
     public function forIndex(): array;
 
     /**
      * Backend Create Page Data
-     *
-     * @return array
      */
     public function forCreate(): array;
 

@@ -48,6 +48,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|MenuItem whereParentId($value)
  * @method static Builder|MenuItem whereRoute($value)
  * @method static Builder|MenuItem whereUpdatedAt($value)
+ *
+ *
  */
 final class MenuItem extends Model
 {

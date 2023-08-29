@@ -20,6 +20,7 @@ final class ApiService extends Valuestore implements ApiServiceContract
     public function home(): ApiHomeResource
     {
         return new ApiHomeResource(
+          apiService: $this,
           cache: new ApiCacheService(['api', 'home'])
         );
     }

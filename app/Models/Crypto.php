@@ -37,6 +37,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Crypto whereDataValues($value)
  * @method static Builder|Crypto whereId($value)
  * @method static Builder|Crypto whereUpdatedAt($value)
+ *
+ * @mixin IdeHelperCrypto
  */
 final class Crypto extends Model
 {
@@ -47,26 +49,26 @@ final class Crypto extends Model
     protected $fillable = ['data_name', 'data_values'];
 
     protected $casts = [
-      'data_values' => AsCollection::class,
+        'data_values' => AsCollection::class,
     ];
 
     protected string $dataClass = CryptoData::class;
 
-    public function scopeOfName(Builder $query, string $data_name): Crypto|bool
-    {
-        return $query->where('data_name', $data_name)->firstOr(
-          '*',
-          fn() => false
-        );
+    public function scopeOfName(
+        Builder $query,
+        string $data_name
+    ): Model|Builder|null {
+        return $query->where('data_name', $data_name)->first();
     }
 
     public function scopeOfValues(Builder $query): Builder|Model
     {
         return $query->where(
-          'data_name',
-          'all_coins'
+            'data_name',
+            'all_coins'
         )->select('data_values')
-          ->first();
+            ->first()
+        ;
     }
 
     /**
@@ -75,40 +77,42 @@ final class Crypto extends Model
     public function scopeOfAllCoins(Builder $query): Collection
     {
         return $query->where(
-          column: 'data_name',
-          value: 'all_coins'
+            column: 'data_name',
+            value: 'all_coins'
         )->value('data_values');
     }
 
     public function scopeOfCategories(Builder $query): Model|Builder|null
     {
         return $query->where(
-          'data_name',
-          'categories'
+            'data_name',
+            'categories'
         )->select('data_values')
-          ->first();
+            ->first()
+        ;
     }
 
     public function scopeOfExchanges(Builder $query): Model|Builder|null
     {
         return $query->where(
-          'data_name',
-          'exchanges'
+            'data_name',
+            'exchanges'
         )->select('data_values')
-          ->first();
+            ->first()
+        ;
     }
 
     /**
      * Get The Model or Create it if it doesn't exist
      */
     public function scopeOfData(
-      Builder $query,
-      string $data_name,
-      Collection $data_values
+        Builder $query,
+        string $data_name,
+        Collection $data_values
     ): Builder|Model {
         return $query->firstOrCreate(
-          ['data_name' => $data_name],
-          ['data_values' => $data_values],
+            ['data_name' => $data_name],
+            ['data_values' => $data_values],
         );
     }
 

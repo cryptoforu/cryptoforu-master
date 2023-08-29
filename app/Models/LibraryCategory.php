@@ -34,6 +34,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|LibraryCategory whereId($value)
  * @method static Builder|LibraryCategory whereName($value)
  * @method static Builder|LibraryCategory whereUpdatedAt($value)
+ *
+ *
  */
 final class LibraryCategory extends Model
 {
@@ -62,8 +64,6 @@ final class LibraryCategory extends Model
 
     /**
      * Scope a query to only include
-     *
-     * @param  Builder  $query
      */
     public function scopeOfDirectory(Builder $query, $directory): Builder
     {

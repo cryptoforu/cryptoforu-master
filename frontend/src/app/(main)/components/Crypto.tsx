@@ -1,11 +1,11 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { ReactNode } from 'react'
 
-import CryptoData from '@/app/(main)/components/partials/CryptoData'
 import { SectionHeader } from '@/components/content'
 import { Button } from '@/components/elements'
 import { Container, Section } from '@/components/wrappers'
 
-const Crypto = () => {
+const Crypto = ({ children }: { children: ReactNode }) => {
   return (
     <Section
       id={'crypto-home'}
@@ -45,7 +45,7 @@ const Crypto = () => {
               </div>
             </div>
           </div>
-          <CryptoData />
+          {children}
         </div>
       </Container>
     </Section>

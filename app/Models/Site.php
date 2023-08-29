@@ -34,14 +34,17 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Site whereDataValues($value)
  * @method static Builder|Site whereId($value)
  * @method static Builder|Site whereUpdatedAt($value)
+ *
+ *
  */
 final class Site extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
-        'data_name',
-        'data_values',
+      'data_name',
+      'data_values',
     ];
 
     protected string $dataClass = PageData::class;
@@ -52,7 +55,7 @@ final class Site extends Model
      * @var array
      */
     protected $casts = [
-        'data_values' => AsCollection::class,
+      'data_values' => AsCollection::class,
     ];
 
     public function images(): MorphMany
@@ -61,8 +64,8 @@ final class Site extends Model
     }
 
     public function scopeOfData(
-        Builder $query,
-        string $data_name
+      Builder $query,
+      string $data_name
     ): Builder|Model|null {
         return $query->where('data_name', $data_name)->first();
     }

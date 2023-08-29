@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ALL */
 
 declare(strict_types=1);
 
@@ -18,7 +19,9 @@ final class UpdateUserProfileInformation implements
      * Validate and update the given user's profile information.
      *
      * @param  array<string, string>  $input
+     *
      * @throws ValidationException
+     *
      * @noinspection DuplicatedCode
      */
     public function update(User $user, array $input): void
@@ -36,7 +39,8 @@ final class UpdateUserProfileInformation implements
         ])->validateWithBag('updateProfileInformation');
 
         if ($input['email'] !== $user->email &&
-          $user instanceof MustVerifyEmail) {
+          $user instanceof MustVerifyEmail
+        ) {
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([

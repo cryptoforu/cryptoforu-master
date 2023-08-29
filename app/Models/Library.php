@@ -50,6 +50,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Library whereSize($value)
  * @method static Builder|Library whereUpdatedAt($value)
  * @method static Builder|Library whereWidth($value)
+ *
+ *
  */
 final class Library extends Model
 {

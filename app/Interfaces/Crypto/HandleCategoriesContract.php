@@ -11,5 +11,7 @@ interface HandleCategoriesContract
     /**
      * Handle Crypto Categories
      */
-    public function handle(Collection $data_values): bool;
+    public function handle(Collection $collection);
+
+    public function getCategories(): array;
 }

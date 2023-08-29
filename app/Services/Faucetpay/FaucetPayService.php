@@ -8,17 +8,25 @@ use App\Contracts\ApiCacheContract;
 use App\Interfaces\Faucetpay\FaucetPayServiceInterface;
 use App\Services\Faucetpay\Concerns\BuildRequests;
 use App\Services\Faucetpay\Concerns\LoadCache;
+use App\Services\Faucetpay\Concerns\Sortable;
 use Illuminate\Http\Client\PendingRequest;
 
-class FaucetPayService implements FaucetPayServiceInterface
+final class FaucetPayService implements FaucetPayServiceInterface
 {
     use BuildRequests;
     use LoadCache;
+    use Sortable;
+
+    protected ApiCacheContract $cache;
+
+    protected PendingRequest $client;
 
     public function __construct(
-        private readonly PendingRequest $client,
-        public readonly ApiCacheContract $cache,
+        ApiCacheContract $cache,
+        PendingRequest $client
     ) {
+        $this->client = $client;
+        $this->cache = $cache;
     }
 
     public function list(): FaucetPayListResource

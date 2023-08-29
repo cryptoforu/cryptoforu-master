@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection ALL */
 
 /** @noinspection ALL */
@@ -18,11 +19,11 @@ class Response implements Responsable
      * @property-read Http $status
      */
     public function toResponse(
-      $request
+        $request
     ): JsonResponse {
         return new JsonResponse(
-          data: $this->data,
-          status: $this->status->value,
+            data: $this->data,
+            status: $this->status->value,
         );
     }
 }

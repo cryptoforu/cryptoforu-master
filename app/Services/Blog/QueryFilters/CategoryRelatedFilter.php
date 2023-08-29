@@ -14,9 +14,10 @@ class CategoryRelatedFilter implements Filter
      */
     public function __invoke(Builder $query, $value, string $property)
     {
-        if ($value === 'category') {
+        if ('category' === $value) {
             return $query->inRandomOrder()->take(4);
         }
+
         return $query->whereNot('slug', $value)->inRandomOrder()->take(4);
     }
 }

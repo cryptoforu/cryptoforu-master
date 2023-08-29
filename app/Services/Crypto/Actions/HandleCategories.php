@@ -5,28 +5,23 @@ declare(strict_types=1);
 namespace App\Services\Crypto\Actions;
 
 use App\Interfaces\Crypto\HandleCategoriesContract;
-use App\Models\Crypto;
 use Illuminate\Support\Collection;
+use Spatie\Valuestore\Valuestore;
 
-final class HandleCategories implements HandleCategoriesContract
+final class HandleCategories extends Valuestore implements HandleCategoriesContract
 {
     /**
      * Handle Crypto Categories
      */
-    public function handle(Collection $data_values): bool
+    public function handle(Collection $collection): void
     {
-        if (Crypto::ofName('categories')) {
-            Crypto::ofName('categories')->update([
-                'data_values' => $data_values,
-            ]);
+        $collection->take(50)->map(function ($item, $key): void {
+            $this->put($key, $item);
+        });
+    }
 
-            return true;
-        }
-        Crypto::create([
-            'data_name' => 'categories',
-            'data_values' => $data_values,
-        ]);
-
-        return true;
+    public function getCategories(): array
+    {
+        return $this->all();
     }
 }

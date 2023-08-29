@@ -8,11 +8,12 @@ use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCategoriesContract;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use App\Interfaces\Crypto\HandleExchangesInterface;
-use App\Models\Crypto;
+use App\Services\Crypto\Actions\HandleCategories;
 use App\Services\Crypto\DataObjects\CryptoCategories;
 use App\Services\Crypto\DataObjects\CryptoCoin;
 use App\Services\Crypto\DataObjects\ExchangesData;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -24,7 +25,6 @@ final readonly class CryptoActions implements CryptoActionsInterface
     public function __construct(
         private CryptoService $service,
     ) {
-
     }
 
     /**
@@ -34,7 +34,7 @@ final readonly class CryptoActions implements CryptoActionsInterface
         HandleCategoriesContract $action
     ): void {
         $action->handle(
-            data_values: CryptoCategories::make(
+            collection: CryptoCategories::make(
                 attributes: $this->service
                     ->crypto()
                     ->categories(),
@@ -58,7 +58,6 @@ final readonly class CryptoActions implements CryptoActionsInterface
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             $e->getMessage();
         }
-
     }
 
     public function updateOrCreateFpCoins(
@@ -81,11 +80,14 @@ final readonly class CryptoActions implements CryptoActionsInterface
         HandleCoinsContract $action
     ): void {
         $state = settings()->get('category');
-        $count = Crypto::ofCategories()->data_values->count();
-        $categories = Crypto::ofCategories()->data_values->only([
+        $data = App::call(fn (HandleCategories $categories) => $categories->all());
+        $categories = collect($data)->values()->only([
             $state['from'], $state['from'] + 1, $state['to'],
         ]);
-        $collect = $this->service->crypto()->coin_categories($categories, $count);
+        $collect = $this->service->crypto()->coin_categories(
+            $categories,
+            50
+        );
         $collect->each(function (Collection $item, string $key) use (
             $action
         ): void {

@@ -9,11 +9,8 @@ use App\Models\Library;
 
 interface LibraryUpdateContract
 {
-    /**
-     * @return mixed
-     */
     public function handle(
-      UpdateLibraryRequest $request,
-      Library $library
+        UpdateLibraryRequest $request,
+        Library $library
     ): mixed;
 }

@@ -36,16 +36,19 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|EarnCategory whereName($value)
  * @method static Builder|EarnCategory whereSlug($value)
  * @method static Builder|EarnCategory whereUpdatedAt($value)
+ *
+ *
  */
 final class EarnCategory extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
-        'name',
-        'description',
-        'slug',
-        'category_image',
+      'name',
+      'description',
+      'slug',
+      'category_image',
     ];
 
     protected string $dataClass = EarnCategoryData::class;

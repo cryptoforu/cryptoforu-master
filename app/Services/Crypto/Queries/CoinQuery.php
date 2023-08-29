@@ -15,16 +15,17 @@ final class CoinQuery implements CoinQueryContract
     public function handle(Builder|Model $query): Builder
     {
         return QueryBuilder::for(
-          subject: $query
+            subject: $query
         )
-          ->allowedFilters([
-            AllowedFilter::exact('category'),
-            AllowedFilter::exact('name'),
-            AllowedFilter::exact('symbol'),
-            AllowedFilter::custom('unique', new FilterUniqueCoins())
-          ])
-          ->defaultSort('market_cap_rank')
-          ->allowedSorts('market_cap_rank', 'name')
-          ->getEloquentBuilder();
+            ->allowedFilters([
+                AllowedFilter::exact('category'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('symbol'),
+                AllowedFilter::custom('unique', new FilterUniqueCoins()),
+            ])
+            ->defaultSort('market_cap_rank')
+            ->allowedSorts('market_cap_rank', 'name')
+            ->getEloquentBuilder()
+        ;
     }
 }

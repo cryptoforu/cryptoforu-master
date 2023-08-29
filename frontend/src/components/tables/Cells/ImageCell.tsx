@@ -11,7 +11,7 @@ interface ImageCellProps {
 const ImageCell = (props: ImageCellProps) => {
   return (
     <>
-      <div className={'flex items-center space-x-2'}>
+      <div className={'flex w-full items-center space-x-2'}>
         <Image src={props.image} alt={props.alt} width={24} height={24} />
         <Heading as={'h3'} size={'sm'} variant={'secondary'}>
           {props.title}

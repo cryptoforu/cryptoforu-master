@@ -4,64 +4,47 @@ declare(strict_types=1);
 
 namespace App\Services\Faucetpay\DataObjects;
 
-use App\Enums\CoinColorsEnum;
+use App\Models\FaucetList;
+use App\Models\FaucetListCategory;
 use App\Services\Faucetpay\Transformers\CalcualtePercentageTransformer;
-use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 
 final class FaucetCoinStats extends Data
 {
     public function __construct(
-      public readonly string $coin,
-      public readonly float $sum,
-      #[WithTransformer(CalcualtePercentageTransformer::class)]
-      public readonly string|array $percentage,
-      public readonly string $color
+        public readonly string $coin,
+        public readonly float $sum,
+        #[WithTransformer(CalcualtePercentageTransformer::class)]
+        public readonly string|array $percentage,
+        public readonly string $color
     ) {
     }
 
-    public static function fromCollection(
-      Collection $collection
-    ): array {
-        $total = self::total($collection);
+    public static function make(): array
+    {
+        $count = collect();
+        $data = FaucetListCategory::query()->with('list')->get();
+        $total = FaucetList::query()->sum('paid_today');
+        $data->map(function ($item) use ($count, $total): void {
+            $count->push([
+                'coin' => $item->symbol,
+                'sum' => collect($item->list)->sum(fn (
+                    $i
+                ) => (float) $i['paid_today']),
+                'percentage' => [
+                    'amount' => collect($item->list)->sum(fn (
+                        $i
+                    ) => (float) $i['paid_today']),
+                    'total' => $total,
+                ],
+                'color' => $item->color,
+            ]);
+        });
 
         return [
-          'collection' => self::collection(self::sum_coin($collection, $total)),
-          'total' => $total,
+            'collection' => self::collection($count),
+            'total' => $total,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    private static function total(Collection $collection): mixed
-    {
-        return $collection
-          ->flatMap(
-            fn($item) => collect()
-              ->mergeRecursive(
-                $item['list_data']
-              )
-          )->values()->sum(fn($i) => (float) $i['paid_today']);
-    }
-
-    private static function sum_coin(
-      Collection $collection,
-      float $total
-    ): Collection {
-        return $collection->map(function ($coin) use ($total) {
-            $sum = $coin['list_data']->sum(fn($i) => (float) $i['paid_today']);
-
-            return self::from([
-              'coin' => $coin['currency'],
-              'sum' => $sum,
-              'percentage' => [
-                'amount' => $sum,
-                'total' => $total,
-              ],
-              'color' => CoinColorsEnum::tryFrom($coin['currency'])?->color(),
-            ]);
-        })->values();
     }
 }

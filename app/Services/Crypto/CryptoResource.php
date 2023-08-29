@@ -71,7 +71,9 @@ final readonly class CryptoResource
         ?int $max = 12
     ): Collection {
         $state = settings('category');
-        $collect = $collection->keyBy('id')->map(fn ($item) => $this->service->get(
+        $collect = $collection->keyBy('id')->map(fn (
+            $item
+        ) => $this->service->get(
             request: $this->client,
             method: 'coins/markets',
             param: [
@@ -115,7 +117,7 @@ final readonly class CryptoResource
             method: 'coins/markets',
             param: [
                 'vs_currency' => 'usd',
-                'ids' => 'bitcoin,ethereum,tether,binancecoin,solana,dogecoin,tron,litecoin,bitcoin-cash,zcash,dash,digibyte,feyorra,matic-network,ripple',
+                'ids' => 'bitcoin,ethereum,tether,binancecoin,solana,dogecoin,tron,litecoin,bitcoin-cash,zcash,dash,digibyte,feyorra,matic-network,ripple,cardano',
             ],
         );
     }

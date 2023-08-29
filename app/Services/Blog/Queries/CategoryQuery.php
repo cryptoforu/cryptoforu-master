@@ -19,27 +19,28 @@ final class CategoryQuery implements CategoryQueryContract
     public function handle(Builder|Model $query): Builder
     {
         return QueryBuilder::for(
-          subject: $query
+            subject: $query
         )
-          ->allowedFilters([
-            AllowedFilter::exact('id'),
-            AllowedFilter::exact('name'),
-            AllowedFilter::exact('slug'),
-            AllowedFilter::custom('related', new CategoryRelatedFilter()),
-          ])
-          ->allowedFields([
-            'id',
-            'name',
-            'slug',
-            'category_image',
-            'description',
-            'category_id',
-            'posts.id',
-            'posts.slug',
-          ])
-          ->allowedIncludes(includes: [
-            'posts.tags',
-          ])
-          ->getEloquentBuilder();
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('name'),
+                AllowedFilter::exact('slug'),
+                AllowedFilter::custom('related', new CategoryRelatedFilter()),
+            ])
+            ->allowedFields([
+                'id',
+                'name',
+                'slug',
+                'category_image',
+                'description',
+                'category_id',
+                'posts.id',
+                'posts.slug',
+            ])
+            ->allowedIncludes(includes: [
+                'posts.tags',
+            ])
+            ->getEloquentBuilder()
+        ;
     }
 }

@@ -43,7 +43,7 @@ const DataTable = memo(function DataTable<D extends object>({
           tableVariant[variant]
         )}
       >
-        <div className="mt-4 overflow-x-auto rounded-xl shadow-sm ring-1 ring-black/5">
+        <div className="overflow-x-auto">
           <table className="min-w-full table-auto divide-y divide-slate-300 text-left text-sm dark:divide-slate-900">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -79,11 +79,12 @@ const DataTable = memo(function DataTable<D extends object>({
               ))}
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row) => {
+              {table.getRowModel().rows.map((row, index) => {
                 return (
                   <tr
                     className={clsx(
-                      'text-sm text-slate-700 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-900'
+                      'text-sm text-slate-700 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-900',
+                      index % 2 !== 0 && 'bg-white dark:bg-gray-950'
                     )}
                     key={row.id}
                   >

@@ -6,7 +6,6 @@ import {
 } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 
-import { BtnExternalLink } from '@/components/elements'
 import LinkCell from '@/components/tables/Cells/LinkCell'
 import MeterCell from '@/components/tables/Cells/MeterCell'
 import TextCell from '@/components/tables/Cells/TextCell'
@@ -82,19 +81,12 @@ const ListData = () => {
         id: 'url',
         accessorFn: (row) => row.url,
         header: '#',
-        cell: (column) => {
-          return (
-            <div className={'p-2'}>
-              <BtnExternalLink
-                href={column.getValue()}
-                className={'z-10 overflow-hidden rounded-full'}
-                size={'sm'}
-              >
-                Visit
-              </BtnExternalLink>
-            </div>
-          )
-        },
+        cell: (column) =>
+          LinkCell({
+            href: column.getValue(),
+            label: 'Visit',
+            as: 'btn',
+          }),
       },
     ],
     []

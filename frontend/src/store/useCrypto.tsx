@@ -4,10 +4,11 @@ import { createStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 
-import { CryptoData } from '@/app/api/coins/crypto'
+import { CryptoCoin } from '@/app/api/coins/crypto'
+import type { DataItems } from '@/store/types/data-table-store'
 
 type CryptoState = {
-  crypto: CryptoData[]
+  crypto: DataItems<CryptoCoin>
 }
 type CryptoActions = {
   updatePrice: (id: string, price: number) => void
@@ -29,14 +30,14 @@ const createCryptoStore = (initProps?: Partial<CryptoState>) => {
         set((state) => {
           const coin = state.crypto.find((el) => el.id === id)
           if (coin) {
-            coin.attributes.current_price = price
-            coin.attributes.current_color =
-              coin.attributes.current_price > price ? 'danger' : 'success'
+            ;(coin.current_price.value as number) = Number(price)
           }
         }),
       getPrice: (id, price) => {
         const coin = get().crypto.find((el) => el.id === id)
-        return coin.attributes.current_price > price ? 'danger' : 'success'
+        return (coin.current_price.value as number) > price
+          ? 'danger'
+          : 'success'
       },
     }))
   )

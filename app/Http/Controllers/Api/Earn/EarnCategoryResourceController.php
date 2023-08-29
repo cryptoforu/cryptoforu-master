@@ -19,7 +19,7 @@ final class EarnCategoryResourceController extends Controller
      * Earning Methods Category Instance
      */
     public function __construct(
-      protected EarnCategoryQueryContract $earn,
+        protected EarnCategoryQueryContract $earn,
     ) {
     }
 
@@ -27,14 +27,14 @@ final class EarnCategoryResourceController extends Controller
      * Earning Methods Category Query Builder
      */
     public function __invoke(
-      Request $request
+        Request $request
     ): CursorPaginatedDataCollection|DataCollection|PaginatedDataCollection {
         $data = $this->earn->handle(
-          EarnCategory::query()->orderBy('id')
+            EarnCategory::query()->orderBy('id')
         )->get();
 
         return EarnCategoryApiData::collection(
-          $data
+            $data
         );
     }
 }

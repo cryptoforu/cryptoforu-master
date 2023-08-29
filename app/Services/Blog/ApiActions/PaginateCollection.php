@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Blog\ApiActions;
 
 use App\Contracts\ApiCacheContract;
@@ -9,34 +11,31 @@ use Illuminate\Support\Facades\Request;
 class PaginateCollection
 {
     public function __construct(
-      protected ApiCacheContract $cacheContract
+        protected ApiCacheContract $cacheContract
     ) {
     }
 
     /**
-     *
-     * @param  Builder  $builder
      * @return \Illuminate\Http\Request|Request|mixed
      */
     public function __invoke(
-      Builder $builder
+        Builder $builder
     ): mixed {
-        return Request::whenHas('page',
-          function () use ($builder) {
-              return $this->cacheContract->load_data(
-                key: Request::getQueryString(),
-                callback: function () use ($builder) {
-                    return $builder->jsonPaginate()->appends(Request::query());
-                },
-                ttl: now()->addDay()
-              );
-          }, function () use ($builder) {
-              return $this->cacheContract->load_data(
-                key: is_null(Request::getQueryString()) ? Request::path() : Request::getQueryString(),
-                callback: function () use ($builder) {
-                    return $builder->get();
-                }
-              );
-          });
+        return Request::whenHas(
+            'page',
+            function () use ($builder) {
+                return $this->cacheContract->load_data(
+                    key: Request::getQueryString(),
+                    callback: fn () => $builder->jsonPaginate()->appends(Request::query()),
+                    ttl: now()->addDay()
+                );
+            },
+            function () use ($builder) {
+                return $this->cacheContract->load_data(
+                    key: null === Request::getQueryString() ? Request::path() : Request::getQueryString(),
+                    callback: fn () => $builder->get()
+                );
+            }
+        );
     }
 }

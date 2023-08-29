@@ -22,6 +22,7 @@ use Spatie\Enum\Laravel\Enum;
  * @method static self SOL()
  * @method static self XRP()
  * @method static self MATIC()
+ * @method static self ADA()
  */
 final class CoinColorsEnum extends Enum
 {
@@ -42,7 +43,8 @@ final class CoinColorsEnum extends Enum
             self::BNB() => 'rgba(243, 186, 47, 1)',
             self::SOL() => 'rgba(220, 31, 255, 1)',
             self::XRP() => 'rgba(67, 76, 84, 1)',
-            self::MATIC() => 'rgba(130, 71, 229, 1)'
+            self::MATIC() => 'rgba(130, 71, 229, 1)',
+            self::ADA() => 'rgba(0, 51, 173, 1)'
         };
     }
 }

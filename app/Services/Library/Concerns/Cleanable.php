@@ -20,8 +20,8 @@ trait Cleanable
 
                     return true;
                 }
-                $f = Arr::get($files, "*.$value");
-                if (!empty($f)) {
+                $f = Arr::get($files, "*.{$value}");
+                if ( ! empty($f)) {
                     Storage::delete($f);
 
                     return true;
@@ -35,13 +35,14 @@ trait Cleanable
 
                 return true;
             }
-            $f = Arr::get($files, "*.$file");
-            if (!empty($f)) {
+            $f = Arr::get($files, "*.{$file}");
+            if ( ! empty($f)) {
                 Storage::delete($f);
             }
 
             return false;
         }
+
         return false;
     }
 }

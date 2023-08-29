@@ -6,7 +6,7 @@ namespace App\Interfaces\Faucetpay;
 
 use Illuminate\Support\LazyCollection;
 
-interface ListUpdateOrCreateContract
+interface HandleListContract
 {
     public function handle(LazyCollection $collection): void;
 }

@@ -13,17 +13,15 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminMiddleware
 {
     protected array $allowedRoutes = [
-      'api/placeholder/*',
-      'api/count-views/*',
+        'api/placeholder/*',
+        'api/count-views/*',
     ];
 
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
      * @param  Closure(Request): (Response)  $next
      *
-     * @return Response
      * @throws AuthorizationException
      */
     public function handle(Request $request, Closure $next): Response

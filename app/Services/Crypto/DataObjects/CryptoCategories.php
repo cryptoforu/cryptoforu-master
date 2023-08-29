@@ -27,24 +27,27 @@ final class CryptoCategories extends Data
     ) {
     }
 
-    public static function fromArray(array $attributes): self
-    {
-        return new self(
-            id: (string) (data_get($attributes, 'id')),
-            name: (string) (data_get($attributes, 'name')),
-            market_cap: data_get($attributes, 'market_cap'),
-            market_cap_change_24h: (data_get($attributes, 'market_cap_change_24h')),
-            top_3_coins: data_get($attributes, 'top_3_coins'),
-            volume_24h: data_get($attributes, 'volume_24h'),
-        );
-    }
-
     public static function make(Collection $attributes): Collection
     {
         return $attributes->map(
             fn ($item) => self::fromArray(
                 attributes: $item
             )
-        )->keyBy('id')->sortByDesc('market_cap')->values();
+        )->keyBy('id')->sortByDesc('market_cap');
+    }
+
+    public static function fromArray(array $attributes): self
+    {
+        return new self(
+            id: (string) (data_get($attributes, 'id')),
+            name: (string) (data_get($attributes, 'name')),
+            market_cap: data_get($attributes, 'market_cap'),
+            market_cap_change_24h: (data_get(
+                $attributes,
+                'market_cap_change_24h'
+            )),
+            top_3_coins: data_get($attributes, 'top_3_coins'),
+            volume_24h: data_get($attributes, 'volume_24h'),
+        );
     }
 }

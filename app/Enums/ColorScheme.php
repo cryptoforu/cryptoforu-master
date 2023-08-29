@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUndefinedMethodInspection */
 
 /** @noinspection PhpUndefinedMethodInspection */
@@ -43,20 +44,21 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 final class ColorScheme extends Enum
 {
     public static function randColor(
-      ?string $colorType = null
+        ?string $colorType = null
     ): \Spatie\Enum\Enum|ColorScheme|string|null {
         if (isset($colorType)) {
             $colors = collect(
-              ColorScheme::toValues()
+                ColorScheme::toValues()
             );
 
             return self::tryFrom(
-              $colors->random()
+                $colors->random()
             )
-              ->tw_color();
+                ->tw_color()
+            ;
         }
         $color = collect(
-          ColorScheme::toValues()
+            ColorScheme::toValues()
         )->random();
 
         return self::tryFrom($color);
@@ -76,7 +78,7 @@ final class ColorScheme extends Enum
 
     protected static function values(): Closure
     {
-        return static fn(string $name): string|int => mb_strtolower($name);
+        return static fn (string $name): string|int => mb_strtolower($name);
     }
 
     public function color(): string

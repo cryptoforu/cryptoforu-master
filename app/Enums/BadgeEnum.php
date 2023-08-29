@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUndefinedMethodInspection */
 
 /** @noinspection PhpUndefinedMethodInspection */
@@ -27,8 +28,8 @@ final class BadgeEnum extends Enum
     {
         return collect(self::cases())->map(function (BadgeEnum $item) {
             return [
-              'label' => $item->label,
-              'color' => $item->colors(),
+                'label' => $item->label,
+                'color' => $item->colors(),
             ];
         })->random();
     }

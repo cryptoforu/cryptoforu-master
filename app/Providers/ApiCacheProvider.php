@@ -8,6 +8,7 @@ use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Api\Blog\BlogApiController;
 use App\Http\Controllers\Api\Crypto\CryptoResourceController;
 use App\Http\Controllers\Api\Earn\EarnCategoryResourceController;
+use App\Http\Controllers\Api\FaucetPay\ListController;
 use App\Services\Store\ApiCacheService;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,22 +20,29 @@ class ApiCacheProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-          abstract: ApiCacheContract::class,
-          concrete: ApiCacheService::class
+            abstract: ApiCacheContract::class,
+            concrete: ApiCacheService::class
         );
         $this->app->when(
-          concrete: BlogApiController::class
+            concrete: BlogApiController::class
         )->needs(
-          abstract: ApiCacheContract::class
-        )->give(fn() => new ApiCacheService(['blog', 'api']));
+            abstract: ApiCacheContract::class
+        )->give(fn () => new ApiCacheService(['blog', 'api']));
         $this->app->when(
-          CryptoResourceController::class
+            CryptoResourceController::class
         )->needs(ApiCacheContract::class)
-          ->give(fn() => new ApiCacheService(['crypto', 'data']));
+            ->give(fn () => new ApiCacheService(['crypto', 'data']))
+        ;
         $this->app->when(
-          EarnCategoryResourceController::class
+            EarnCategoryResourceController::class
         )->needs(ApiCacheContract::class)
-          ->give(fn() => new ApiCacheService(['earn', 'categories']));
+            ->give(fn () => new ApiCacheService(['earn', 'categories']))
+        ;
+        $this->app->when(
+            ListController::class
+        )->needs(ApiCacheContract::class)
+            ->give(fn () => new ApiCacheService(['list', 'data']))
+        ;
     }
 
     /**

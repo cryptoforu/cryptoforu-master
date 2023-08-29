@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Faucetpay\DataObjects;
 
+use App\Models\FaucetList;
 use App\Services\Faucetpay\Transformers\SatoshiTransformer;
 use Carbon\CarbonImmutable;
 use DateTime;
@@ -25,7 +26,7 @@ class FaucetData extends Data
         #[WithTransformer(SatoshiTransformer::class)]
         public readonly float $reward_coin,
         #[WithCast(DateTimeInterfaceCast::class, type: CarbonImmutable::class, timeZone: 'Europe/Sarajevo')]
-        public readonly DateTime $creation_date,
+        public readonly DateTime|Carbon $creation_date,
         #[WithTransformer(SatoshiTransformer::class)]
         public readonly float $paid_today,
         #[WithTransformer(SatoshiTransformer::class)]
@@ -35,7 +36,28 @@ class FaucetData extends Data
         #[WithTransformer(SatoshiTransformer::class)]
         public readonly float $balance,
         public readonly string $health,
+        public readonly string $listCategory
     ) {
+    }
+
+    public static function fromModel(FaucetList $list): FaucetData
+    {
+        return new self(
+            name: $list->name,
+            url: $list->url,
+            currency: $list->currency,
+            timer_in_minutes: (string) $list->timer_in_minutes,
+            reward: (float) $list->reward,
+            reward_coin: (float) $list->reward_coin,
+            creation_date: Carbon::parse($list->creation_date),
+            paid_today: (float) $list->paid_today,
+            paid_today_coin: (float) $list->paid_today_coin,
+            total_users_paid: (string) $list->total_users_paid,
+            active_users: (string) $list->active_users,
+            balance: (float) $list->balance,
+            health: (string) $list->health,
+            listCategory: (string) $list->listCategory
+        );
     }
 
     public static function fromArray(array $attributes): self
@@ -57,6 +79,7 @@ class FaucetData extends Data
             active_users: data_get($attributes, 'active_users'),
             balance: (float) data_get($attributes, 'balance'),
             health: data_get($attributes, 'health'),
+            listCategory: (string) data_get($attributes, 'listCategory')
         );
     }
 }
