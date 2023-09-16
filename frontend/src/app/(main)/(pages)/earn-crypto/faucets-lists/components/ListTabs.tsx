@@ -1,29 +1,54 @@
 'use client'
 import { listDatum } from 'contentlayer/generated'
+import { useCallback, useTransition } from 'react'
 
+import { getList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/api/listFactory'
+import { FaucetsListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import { Button } from '@/components/elements'
 import LazyImage from '@/components/elements/LazyImage'
-import { useListActions } from '@/store/controllers/useListController'
-import type { CurrencyState } from '@/store/useListStore'
-import { useListContext } from '@/store/useListStore'
+import type { CurrencyState } from '@/store/types/faucet-list-store'
+import { useList, useListDispatch } from '@/store/useFaucetListProvider'
 
 const ListTabs = () => {
-  const { isPending, handleCurrency } = useListActions()
-  const currency = useListContext((state) => state.currency)
+  const {
+    data: { list, symbol },
+  } = useList()
+  const dispatch = useListDispatch()
+  const [isPending, startTransition] = useTransition()
+
+  const updateList = useCallback(
+    async (currency) => {
+      const data = (await getList(
+        currency,
+        `page[size]=${list.meta.per_page}&page[number]=${list.meta.current_page}`
+      )) as FaucetsListData
+      if (data) {
+        startTransition(() => {
+          dispatch({
+            type: 'SET_DATA',
+            payload: {
+              data,
+            },
+          })
+        })
+      }
+    },
+    [dispatch, list.meta.current_page, list.meta.per_page]
+  )
   const { tabs } = listDatum
   return tabs.map((tab) => (
     <Button
       layoutId={'selectedTab'}
       style={{
         borderBottom:
-          tab.id === currency ? '2.5px solid teal' : '2.5px solid transparent',
+          tab.id === symbol ? '2.5px solid teal' : '2.5px solid transparent',
       }}
       colorScheme={'secondary'}
       className={'relative overflow-hidden rounded-full'}
       size={'lg'}
-      disabled={isPending}
       key={tab.label}
-      onPress={() => handleCurrency(tab.id as CurrencyState)}
+      onPress={() => updateList(tab.id as CurrencyState)}
+      isDisabled={isPending}
     >
       <LazyImage
         src={tab.image}

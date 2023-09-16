@@ -9,7 +9,9 @@ export const preloadBreadcrumbs = () => {
   void getBreadcrumbs()
 }
 export const getBreadcrumbs = cache(async () => {
-  const response = await fetchData('site/shared/breadcrumbs')
+  const response = await fetchData('site/shared/breadcrumbs', {
+    cache: 'force-cache',
+  })
   if (!response.ok) {
     throw new Error('Failed to fetch Breadcrumbs Data')
   }

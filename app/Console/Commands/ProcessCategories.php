@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
+use Throwable;
 
 class ProcessCategories extends Command
 {
@@ -31,8 +32,15 @@ class ProcessCategories extends Command
         CryptoActionsInterface $action,
         HandleCoinsContract $handle,
     ): void {
-        $action->updateOrCreateCategory(
-            action: $handle,
-        );
+
+        try {
+            $action->updateOrCreateCategory(
+                action: $handle,
+            );
+            $this->info('Completed Succesfully');
+        } catch (Throwable $e) {
+            $this->error($e->getMessage());
+        }
+
     }
 }

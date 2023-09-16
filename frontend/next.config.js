@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -21,6 +21,14 @@ const nextConfig = {
     serverActions: true,
   },
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:80/api/:path*',
+      },
+    ]
+  },
 }
 const { withContentlayer } = require('next-contentlayer')
 

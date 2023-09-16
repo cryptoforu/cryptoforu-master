@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\ApiTestController;
 use App\Http\Controllers\Api\Site\SharedPropsController;
 use App\Services\Library\ImageFilters\Placeholder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\Facades\Image;
+use Tightenco\Ziggy\Ziggy;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,12 @@ Route::middleware([
     Route::prefix('faucetpay')->as('faucetpay:')->group(
         base_path('routes/resource/faucetpay.php')
     );
+    Route::get('/ziggy', fn (Request $request) => response()->json(
+        Cache::rememberForever('api-routes', fn () => new Ziggy(
+            group: 'api',
+            url: ''
+        ))
+    ));
 });
 Route::get(
     '/placeholder/{width}/{height}',
@@ -58,7 +66,8 @@ Route::get(
             ));
         }, lifetime: 1048, returnObj: true)->response();
     }
-);
+)->name('placeholder');
 Route::get('/count-views/{post}', [
     SharedPropsController::class, 'count_views',
 ])->name('count_views');
+Route::get('/test', ApiTestController::class)->name('test');

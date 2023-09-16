@@ -1,6 +1,9 @@
+import { CellProps } from '@/store/types/data-table-store'
+import type { IPaginationLinks, IPaginationMeta } from '@/types/shared-types'
 import { Nullable } from '@/types/shared-types'
 
 export type CryptoCoin = {
+  id: string
   name: string
   image: string
   current_price: number
@@ -19,31 +22,24 @@ export type CryptoCoin = {
   current_color: string
 }
 
-export interface CryptoData {
+export type CryptoCategories = {
   id: string
-  type: string
-  attributes: CryptoCoin
+  name: string
+  market_cap: number
+  market_cap_change_24h: string
+  top_3_coins: string
+  volume_24h: string
 }
 
-export type CoinTableProps = {
-  id: string
-  header: string
-  value: string | number
-  cellType:
-    | 'text'
-    | 'link'
-    | 'usd_crypto'
-    | 'time'
-    | 'meter'
-    | 'image'
-    | 'current_price'
-    | 'price'
+export type PaginatedCoins = {
+  columns: CellProps[]
+  coinsData: Array<CryptoCoin>
+  meta: IPaginationMeta
+  links: IPaginationLinks[]
 }
 
-export interface CryptoTableData {
-  id: string
-  type: string
-  attributes: {
-    [x: string]: CoinTableProps
-  }
+export interface CryptoDataProps extends CryptoCategories {
+  coins: PaginatedCoins
 }
+
+export interface ICryptoQueryParams {}

@@ -14,9 +14,9 @@ final class FilterUniqueCoins implements Filter
      */
     public function __invoke(Builder $query, $value, string $property)
     {
-        return $query->whereIn(
+        return $query->where('category', 'top-coins')->whereIn(
             'name',
             $value
-        )->where('category', 'all_coins');
+        );
     }
 }

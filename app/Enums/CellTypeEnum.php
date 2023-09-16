@@ -33,7 +33,7 @@ final class CellTypeEnum extends Enum
     public function faucets(): string
     {
         return match ($this) {
-            self::name() => 'link',
+            self::name() => 'name',
             self::usd_crypto() => 'usd_crypto',
             self::timer_in_minutes() => 'time',
             self::health() => 'meter',

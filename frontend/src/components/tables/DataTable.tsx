@@ -6,7 +6,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { clsx } from 'clsx'
-import { memo } from 'react'
 
 import { InteractiveDiv } from '@/components/elements'
 
@@ -22,7 +21,7 @@ export interface DataTableProps<D extends object> {
   options?: Omit<TableOptions<D>, 'data' | 'columns' | 'getCoreRowModel'>
 }
 
-const DataTable = memo(function DataTable<D extends object>({
+function DataTable<D extends object>({
   data,
   columns,
   variant = 'sm',
@@ -109,5 +108,6 @@ const DataTable = memo(function DataTable<D extends object>({
       </div>
     </div>
   )
-})
+}
+
 export default DataTable

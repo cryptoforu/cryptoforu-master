@@ -1,6 +1,7 @@
 export { ListDescription } from './faucet-list-desc.config'
 export { Footer } from './footer.config'
 export { ListData } from './list_data.config'
+export { Menu } from './menu.config'
 export { BreadCrumbsData, PagesData } from './pages.config'
 export { SidebarData } from './sidebar.config'
 export { SocialShareData } from './social_share.config'

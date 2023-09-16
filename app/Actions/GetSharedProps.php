@@ -8,6 +8,8 @@ use App\Contracts\SharedPropsContract;
 use App\Interfaces\Settings\GetMenuContract;
 use App\Interfaces\Site\SocialLinksContract;
 use Illuminate\Support\Facades\Request;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Tightenco\Ziggy\Ziggy;
 
 final class GetSharedProps implements SharedPropsContract
@@ -30,6 +32,10 @@ final class GetSharedProps implements SharedPropsContract
         ]);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     private static function ziggy()
     {
         if (auth()->guest()) {

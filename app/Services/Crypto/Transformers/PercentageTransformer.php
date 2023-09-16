@@ -11,7 +11,9 @@ final class PercentageTransformer implements Transformer
 {
     public function __construct(
         public ?int $divide = null,
-        public ?string $intl = 'en_US'
+        public ?string $intl = 'en_US',
+        public ?int $min = 2,
+        public ?int $max = 2
     ) {
 
     }
@@ -19,7 +21,13 @@ final class PercentageTransformer implements Transformer
     public function transform(
         DataProperty $property,
         mixed $value
-    ): mixed {
-        return format_percentage($value, $this->divide, $this->intl);
+    ): string|bool {
+        return format_percentage(
+            number: $value,
+            divide: $this->divide,
+            intl: $this->intl,
+            min: $this->min,
+            max: $this->max
+        );
     }
 }

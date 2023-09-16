@@ -3,11 +3,13 @@ import { PropsWithChildren } from 'react'
 
 export type CellType =
   | 'link'
+  | 'name'
   | 'usd_crypto'
   | 'time'
   | 'meter'
   | 'image'
   | 'price'
+  | 'default'
 
 export type ItemID = {
   id: string
@@ -17,7 +19,7 @@ export type CellProps = {
   header: string
   id: string
   cellType: CellType
-  value: string | number | { name: string; image: string }
+  original: string | number | Record<string, string>
 }
 export type DataItems<T> = Array<ItemID & Record<keyof T, CellProps>>
 

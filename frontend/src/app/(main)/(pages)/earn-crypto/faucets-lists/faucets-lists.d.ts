@@ -1,5 +1,5 @@
-import type { CryptoCoin } from '@/app/api/coins/crypto'
-import type { PaginationProps } from '@/types/shared-types'
+import { CellProps } from '@/store/types/data-table-store'
+import type { IPaginationLinks, IPaginationMeta } from '@/types/shared-types'
 
 export type Currency =
   | 'BTC'
@@ -17,8 +17,8 @@ export type Currency =
   | 'SOL'
   | 'XRP'
   | 'MATIC'
-  | 'top_hundred'
-  | 'new_faucets'
+  | 'TOP'
+  | 'NEW'
 
 export type FaucetData = {
   name: string
@@ -35,14 +35,21 @@ export type FaucetData = {
   timer_in_minutes: string
   total_users_paid: string
 }
+export type PaginatedList = {
+  columns: CellProps[]
+  listData: Array<FaucetData>
+  meta: IPaginationMeta
+  links: IPaginationLinks[]
+}
+export type FaucetListCategory = {
+  symbol: string
+  name: string
+  image: string
+  color: string
+}
 
-type ListData = { data: FaucetData[] } & PaginationProps
-
-export type FaucetListData = {
-  list_name: string
-  currency: Currency
-  coin_data?: CryptoCoin
-  list_data: ListData
+export interface FaucetsListData extends FaucetListCategory {
+  list: PaginatedList
   updated_at: string
 }
 

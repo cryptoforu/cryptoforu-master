@@ -102,8 +102,7 @@ final class User extends Authenticatable
     {
         $admin = $this->belongsToMany(Role::class)
             ->wherePivotIn('role_id', ['1'])
-            ->firstOrFail()
-        ;
+            ->firstOrFail();
 
         return (bool) ($admin);
     }

@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace App\Services\Faucetpay\DataObjects;
 
 use App\Models\FaucetList;
+use App\Services\Api\DataObjects\ColumnsData;
 use App\Services\Faucetpay\Transformers\SatoshiTransformer;
 use Carbon\CarbonImmutable;
 use DateTime;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Request;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
 
-class FaucetData extends Data
+final class FaucetData extends Data
 {
     public function __construct(
         public readonly string $name,
@@ -81,5 +83,20 @@ class FaucetData extends Data
             health: data_get($attributes, 'health'),
             listCategory: (string) data_get($attributes, 'listCategory')
         );
+    }
+
+    public static function make(mixed $data): array
+    {
+        $list = self::collection(
+            items: $data->fastJson()->appends(Request::query())
+        )->toArray();
+        $cols = FaucetList::columns();
+
+        return [
+            'columns' => ColumnsData::fromFaucets($cols)->values(),
+            'listData' => data_get($list, 'data'),
+            'links' => data_get($list, 'links'),
+            'meta' => data_get($list, 'meta'),
+        ];
     }
 }

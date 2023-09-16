@@ -42,14 +42,6 @@ final class CountActions extends ValueStore implements CountActionContract
     }
 
     /**
-     * Check if Ip Exists
-     */
-    private function check_ip(array $values, string $ip): bool
-    {
-        return Arr::has($values, $ip);
-    }
-
-    /**
      * Store or Update and Return
      */
     public function count_views(Post $post, string $ip): void
@@ -70,6 +62,14 @@ final class CountActions extends ValueStore implements CountActionContract
         }
 
         $this->store($post, $ip);
+    }
+
+    /**
+     * Check if Ip Exists
+     */
+    private function check_ip(array $values, string $ip): bool
+    {
+        return Arr::has($values, $ip);
     }
 
     /**

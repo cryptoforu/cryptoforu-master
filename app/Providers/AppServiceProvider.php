@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -76,5 +78,23 @@ final class AppServiceProvider extends ServiceProvider
             return (int) max(1, $minutesToRead);
         });
         Model::preventLazyLoading( ! $this->app->isProduction());
+        Builder::macro('fastJson', function ($perPage = null, $columns = ['*'], $pageName = 'page', $page = null) {
+            /** @var Builder $this */
+            return $this->fastPaginate(
+                perPage: request()->input('page.size', $perPage),
+                columns: $columns,
+                pageName: $pageName,
+                page: request()->input('page.number', $page)
+            );
+        });
+        Relation::macro('fastJson', function ($perPage = null, $columns = ['*'], $pageName = 'page', $page = null) {
+            /** @var Relation $this */
+            return $this->fastPaginate(
+                perPage: request()->input('page.size', $perPage),
+                columns: $columns,
+                pageName: $pageName,
+                page: request()->input('page.number', $page)
+            );
+        });
     }
 }

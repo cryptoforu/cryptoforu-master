@@ -21,8 +21,7 @@ Route::get(
     '/generate',
     StaticParamsController::class
 )
-    ->name('generate')
-;
+    ->name('generate');
 
 // Blog
 

@@ -7,22 +7,23 @@ namespace App\Console\Commands;
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
+use Throwable;
 
-final class ProcessCryptoCoins extends Command
+final class ProcessTopCoins extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:process-crypto-coins';
+    protected $signature = 'app:process-top-coins';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update Crypto Coins';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -31,8 +32,13 @@ final class ProcessCryptoCoins extends Command
         CryptoActionsInterface $action,
         HandleCoinsContract $handle,
     ): void {
-        $action->updateOrCreateCoins(
-            action: $handle,
-        );
+        try {
+            $action->handleTopCoins(
+                action: $handle
+            );
+            $this->info('Dispatched Successfully');
+        } catch (Throwable $e) {
+            $this->error($e->getMessage());
+        }
     }
 }

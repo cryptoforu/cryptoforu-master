@@ -16,13 +16,15 @@ final class HandleCategories extends Valuestore implements HandleCategoriesContr
      */
     public function handle(JsonParser $collection): void
     {
+        $this->flush();
         $collection->traverse(function (
             mixed $value,
             string|int $key,
-            JsonParser $parser
         ): void {
             if ($key <= 50) {
-                $dataValue = CryptoCategoriesData::from($value);
+                $dataValue = CryptoCategoriesData::from([
+                    ...$value,
+                ]);
                 $this->put($value['id'], $dataValue);
             }
         });

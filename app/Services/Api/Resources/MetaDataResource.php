@@ -7,6 +7,7 @@ namespace App\Services\Api\Resources;
 use App\Contracts\ApiCacheContract;
 use App\Models\Page;
 use Illuminate\Support\Facades\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 final readonly class MetaDataResource
@@ -31,7 +32,8 @@ final readonly class MetaDataResource
             callback: function () {
                 return QueryBuilder::for(Page::class)
                     ->allowedFilters([
-                        'page_name', 'route', 'page_type',
+                        AllowedFilter::exact('page_name'),
+                        'route', 'page_type',
                     ])->select(['label', 'meta_desc', 'route'])->first()
                 ;
             }

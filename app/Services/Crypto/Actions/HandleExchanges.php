@@ -21,8 +21,6 @@ final class HandleExchanges extends Valuestore implements HandleExchangesInterfa
     {
         $responses->traverse(function (
             mixed $value,
-            string|int $key,
-            JsonParser $parser
         ): void {
             $site = $this->replaceUrls($value['id']);
             if ($site) {

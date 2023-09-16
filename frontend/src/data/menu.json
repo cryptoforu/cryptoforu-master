@@ -1,0 +1,102 @@
+{
+  "menu": [
+    {
+      "id": 19,
+      "label": "Home",
+      "route": "\/",
+      "childs": []
+    },
+    {
+      "id": 20,
+      "label": "Earn Crypto",
+      "route": "\/earn-crypto",
+      "childs": [
+        {
+          "id": 21,
+          "label": "Popular Methods",
+          "route": "\/earn-crypto"
+        },
+        {
+          "id": 22,
+          "label": "Faucets Lists",
+          "route": "\/earn-crypto\/faucets-lists"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "label": "Learn Crypto",
+      "route": "\/learn-crypto",
+      "childs": [
+        {
+          "id": 1,
+          "label": "Crypto Reviews",
+          "route": "\/learn-crypto\/crypto-reviews"
+        },
+        {
+          "id": 2,
+          "label": "Crypto Faucets",
+          "route": "\/learn-crypto\/crypto-faucets"
+        },
+        {
+          "id": 3,
+          "label": "Earn Crypto",
+          "route": "\/learn-crypto\/earn-crypto"
+        },
+        {
+          "id": 4,
+          "label": "Blockchain",
+          "route": "\/learn-crypto\/blockchain"
+        },
+        {
+          "id": 5,
+          "label": "Crypto Basics",
+          "route": "\/learn-crypto\/crypto-basics"
+        },
+        {
+          "id": 6,
+          "label": "Cloud Mining",
+          "route": "\/learn-crypto\/cloud-mining"
+        },
+        {
+          "id": 7,
+          "label": "Crypto Wallets",
+          "route": "\/learn-crypto\/crypto-wallets"
+        },
+        {
+          "id": 8,
+          "label": "DeFi|dApps|NFT",
+          "route": "\/learn-crypto\/defidappsnft"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "label": "Cryptocurrencies",
+      "route": "\/crypto",
+      "childs": [
+        {
+          "id": 25,
+          "label": "All Cryptocurrencies",
+          "route": "\/crypto"
+        },
+        {
+          "id": 26,
+          "label": "Crypto News",
+          "route": "\/crypto\/crypto-news"
+        },
+        {
+          "id": 27,
+          "label": "Markets",
+          "route": "\/crypto\/crypto-markets"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "label": "Contact",
+      "route": "\/contact",
+      "childs": []
+    }
+  ]
+}

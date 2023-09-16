@@ -10,28 +10,25 @@ import Hero from '@/app/(main)/components/Hero'
 import CryptoData from '@/app/(main)/components/partials/CryptoData'
 import SubscribeHeader from '@/app/(main)/components/partials/SubscribeHeader'
 import EarningMethods from '@/app/(main)/ui/EarningMethods'
-import { CryptoCoin } from '@/app/api/coins/crypto'
-import { getCoins } from '@/app/api/coins/cryptoApiFactory'
+import { getCoins } from '@/app/api/crypto/cryptoRoutes'
+import { getMetaData } from '@/app/api/site_data/siteRoutes'
 import {
   CardSkeleton,
   ContentSkeleton,
   SectionSkeleton,
 } from '@/components/skeletons'
-import { getMetadata, preload } from '@/lib/getData'
-import type { DataItems } from '@/store/types/data-table-store'
 import { CryptoProvider } from '@/store/useCrypto'
-import TableProvider from '@/store/useDataTableStore'
-
-preload('site/shared/meta-data?filter[page_name]=home')
 
 export async function generateMetadata() {
-  return await getMetadata('home')
+  return await getMetaData('home')
 }
 
 export default async function Home() {
-  const data = (await getCoins(
-    '?filter[unique]=Bitcoin,Ethereum,Cardano,BNB,XRP,Solana'
-  )) as DataItems<CryptoCoin>
+  const data = await getCoins({
+    filter: {
+      unique: 'Bitcoin,Ethereum,Cardano,BNB,XRP,Solana',
+    },
+  })
 
   return (
     <>
@@ -39,11 +36,9 @@ export default async function Home() {
       <Features />
       <Suspense fallback={<SectionSkeleton />}>
         <CryptoProvider crypto={data}>
-          <TableProvider data={data}>
-            <Crypto>
-              <CryptoData />
-            </Crypto>
-          </TableProvider>
+          <Crypto>
+            <CryptoData />
+          </Crypto>
         </CryptoProvider>
       </Suspense>
       <Suspense fallback={<CardSkeleton cards={3} />}>

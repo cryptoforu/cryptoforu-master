@@ -1,18 +1,23 @@
+import { Suspense } from 'react'
+
 import PageHeader from '@/app/(main)/(pages)/SharedComponents/PageHeader'
 import { HeroPattern } from '@/components/content'
+import { TextSkeleton } from '@/components/skeletons'
 import { getBreadcrumbs, preloadBreadcrumbs } from '@/requests/getBreadcrumbs'
 
 preloadBreadcrumbs()
 
-const PageHero = async () => {
-  const crumbs = await getBreadcrumbs()
+const PageHero = () => {
+  const crumbs = getBreadcrumbs()
   return (
     <div
       className={
         'relative isolate mt-[-4.5rem] overflow-hidden bg-primary-white pb-24 pt-[4.5rem] dark:bg-slate-950 lg:mt-[-4.75rem] lg:pt-[4.75rem]'
       }
     >
-      <PageHeader crumbs={crumbs} />
+      <Suspense fallback={<TextSkeleton />}>
+        <PageHeader crumbs={crumbs} />
+      </Suspense>
       <HeroPattern />
       <div className="absolute inset-x-0 bottom-[-2px] z-10 origin-center scale-[2] overflow-hidden sm:-bottom-px">
         <svg

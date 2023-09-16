@@ -30,7 +30,7 @@ class NoRecordsFoundException extends Exception
         if ($request->is('api/*')) {
             return new ErrorResponse(
                 message: ['message' => 'Records Not Found'],
-                code: Http::NOT_FOUND()
+                code: Http::NOT_FOUND
             );
         }
 

@@ -16,18 +16,30 @@ use Illuminate\Support\ServiceProvider;
 
 final class SiteProvider extends ServiceProvider
 {
-    public array $bindings = [
-        StoreDataContract::class => StoreSiteData::class,
-        SiteInterface::class => SiteService::class,
-        DeleteDataContract::class => DeleteSiteData::class,
-        SocialLinksContract::class => GetSocialLinks::class,
-    ];
-
     /**
      * Register services.
      */
     public function register(): void
     {
+        $this->app->bind(
+            abstract: StoreDataContract::class,
+            concrete: StoreSiteData::class
+        );
+
+        $this->app->bind(
+            abstract: SiteInterface::class,
+            concrete: SiteService::class
+        );
+
+        $this->app->bind(
+            abstract: DeleteDataContract::class,
+            concrete: DeleteSiteData::class
+        );
+
+        $this->app->bind(
+            abstract: SocialLinksContract::class,
+            concrete: GetSocialLinks::class
+        );
     }
 
     /**

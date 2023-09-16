@@ -7,14 +7,16 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+final class AdminMiddleware
 {
-    protected array $allowedRoutes = [
+    private array $allowedRoutes = [
         'api/placeholder/*',
         'api/count-views/*',
+        'api/test',
     ];
 
     /**
@@ -26,10 +28,16 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $user = $request->user();
         if ($request->is(...$this->allowedRoutes)) {
             return $next($request);
         }
-        Gate::authorize('view-resource', [$request->user()]);
+
+        if ($request->is('api/*') && Auth::check()) {
+            Gate::authorize('view-resource', [$request->user()]);
+
+            return $next($request);
+        }
 
         return $next($request);
     }

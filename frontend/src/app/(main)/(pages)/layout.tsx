@@ -1,10 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { ReactNode, Suspense } from 'react'
+import { ReactNode } from 'react'
 
 import HeroWrapper from '@/app/(main)/(pages)/SharedComponents/HeroWrapper'
 import PageHero from '@/app/(main)/(pages)/SharedComponents/PageHero'
-import { TextSkeleton } from '@/components/skeletons'
 
 export default async function PageLayout({
   children,
@@ -14,11 +13,9 @@ export default async function PageLayout({
   return (
     <>
       <HeroWrapper>
-        <Suspense fallback={<TextSkeleton />}>
-          <PageHero />
-        </Suspense>
+        <PageHero />
       </HeroWrapper>
-      <div className="flex w-full grow flex-col flex-wrap py-4 sm:flex-row sm:flex-nowrap">
+      <div className="flex w-full grow flex-col py-4 sm:flex-row sm:flex-nowrap">
         {children}
       </div>
     </>

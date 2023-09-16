@@ -2,9 +2,9 @@
 
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { ReactNode } from 'react'
 
 import AppLogo from '@/components/AppLogo'
+import MainMenu from '@/components/navbar/MainMenu'
 import ThemeToggle from '@/components/navbar/ThemeToggle'
 import { useNavController } from '@/store/controllers/useNavController'
 
@@ -16,7 +16,7 @@ const variants = {
   notScrolled: 'bg-transparent',
 }
 
-const Navbar = ({ children }: { children: ReactNode }) => {
+const Navbar = () => {
   const isScrolled = useNavController()
 
   return (
@@ -36,7 +36,9 @@ const Navbar = ({ children }: { children: ReactNode }) => {
             <AppLogo variant="nav_logo" className="h-auto w-20" />
           </Link>
         </div>
-        <div className={'hidden lg:flex'}>{children}</div>
+        <div className={'hidden lg:flex'}>
+          <MainMenu />
+        </div>
         <div className="flex flex-1 items-center justify-end gap-4">
           <ThemeToggle />
         </div>

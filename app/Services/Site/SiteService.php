@@ -9,12 +9,12 @@ use App\Interfaces\Settings\PageInterface;
 use App\Interfaces\Site\SiteInterface;
 use App\Services\Site\Queries\ShowData;
 
-final class SiteService implements SiteInterface
+final readonly class SiteService implements SiteInterface
 {
     public function __construct(
-        private readonly PageInterface $page,
-        private readonly ShowData $show,
-        private readonly CacheContract $cache,
+        private PageInterface $page,
+        private ShowData $show,
+        private CacheContract $cache,
     ) {
     }
 

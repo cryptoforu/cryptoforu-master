@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Responses\CollectionResponse;
 use App\Responses\ErrorResponse;
-use App\Services\Site\ApiResource\SiteResource;
+use App\Services\Site\DataObjects\PageData;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -27,16 +27,17 @@ final class SiteResourceController extends Controller
      */
     public function __invoke(
         Request $request,
-        Site $site
+        Site    $site,
     ): CollectionResponse|ErrorResponse {
         $data = QueryBuilder::for($site)
             ->allowedFilters([AllowedFilter::exact('data_name')])
             ->allowedFields(['data_values'])
-            ->find($site->id)
-        ;
+            ->find($site->id);
 
         return new CollectionResponse(
-            data: SiteResource::make($data)
+            data: PageData::fromDataValues(
+                site: $data
+            )
         );
     }
 }

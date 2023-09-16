@@ -33,13 +33,10 @@ final class ListController extends Controller
     public function index(
         FaucetListCategory $listCategory
     ): CollectionResponse {
-        $query = $this->categoryContract->handle(
-            query: FaucetListCategory::query()
-        )->with('list')->find($listCategory->id);
 
         return new CollectionResponse(
-            data: $this->service->list()->getList(
-                query: $query
+            data: FaucetListCategoryData::fromModel(
+                listCategory: $listCategory->load('list')
             )
         );
     }

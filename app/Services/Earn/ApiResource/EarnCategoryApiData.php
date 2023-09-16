@@ -10,11 +10,8 @@ use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 
-class EarnCategoryApiData extends Data
+final class EarnCategoryApiData extends Data
 {
-    /**
-     * @param  Optional|Lazy|DataCollection  $earn
-     */
     public function __construct(
         public int $id,
         public string $name,

@@ -34,5 +34,7 @@ class UpdateFaucetList extends Command
         $service->list()->make_list(
             listContract: $listContract
         );
+        $this->info('The command was successful!');
+        $this->error('Something went wrong!');
     }
 }

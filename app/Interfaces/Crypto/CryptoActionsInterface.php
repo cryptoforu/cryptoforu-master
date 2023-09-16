@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Interfaces\Crypto;
 
+use Illuminate\Support\Collection;
+
 interface CryptoActionsInterface
 {
+    public function handleTopCoins(HandleCoinsContract $action);
+
     /**
      * Update or Create Crypto Categories
      */
@@ -13,22 +17,15 @@ interface CryptoActionsInterface
         HandleCategoriesContract $action
     ): void;
 
-    /**
-     * Update or Create Coins
-     */
-    public function updateOrCreateCoins(
-        HandleCoinsContract $action
-    ): void;
-
     public function updateOrCreateCategory(
         HandleCoinsContract $action
-    ): void;
+    ): Collection;
 
     public function updateOrCreateExchanges(
         HandleExchangesInterface $action,
     ): void;
 
-    public function updateOrCreateFpCoins(
+    public function fp_coins(
         HandleCoinsContract $action
     ): void;
 }

@@ -19,7 +19,7 @@ final class CurrencyTransformer implements Transformer
     public function transform(
         DataProperty $property,
         mixed $value
-    ): mixed {
+    ): string|bool {
         return format_currency($value, $this->intl, $this->currency);
     }
 }

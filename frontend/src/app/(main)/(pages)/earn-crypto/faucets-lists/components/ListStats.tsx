@@ -1,5 +1,5 @@
+import { getStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/api/listFactory'
 import ListCharts from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListCharts'
-import { getStats } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getStats'
 import { SectionHeader } from '@/components/content'
 import { Container, Grid, Section } from '@/components/wrappers'
 

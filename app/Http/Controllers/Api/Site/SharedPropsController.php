@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 final class SharedPropsController extends Controller
 {
     public function __construct(
-        protected ApiServiceContract $service,
+        protected ApiServiceContract  $service,
         protected CountActionContract $actionContract
     ) {
     }
@@ -50,26 +50,6 @@ final class SharedPropsController extends Controller
                 post: $post,
                 ip: $request->ip()
             )
-        );
-    }
-
-    /**
-     * Home Page Data
-     */
-    public function home_resource(): CollectionResponse
-    {
-        return new CollectionResponse(
-            data: $this->service->home()->generate()
-        );
-    }
-
-    /**
-     * Get Main Menu
-     */
-    public function front_menu(): JsonResponse
-    {
-        return new JsonResponse(
-            data: $this->service->menu()->get_front_menu()
         );
     }
 }

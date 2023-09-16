@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 type MenuLabelProps = {
@@ -27,14 +27,16 @@ const MenuLabel = ({ selected, title, isActive }: MenuLabelProps) => {
       )}
 
       {isActive && (
-        <motion.div
-          layoutId={'activeLink'}
-          className={
-            'absolute inset-x-2 bottom-0 h-px rounded-full bg-emerald-400'
-          }
-        />
+        <LayoutGroup id={'underline'}>
+          <motion.div
+            layoutId="underline"
+            className={
+              'absolute inset-x-4 bottom-0 h-px rounded-full bg-emerald-400'
+            }
+          />
+        </LayoutGroup>
       )}
-      {title}
+      <span className={'relative z-10'}>{title}</span>
     </>
   )
 }

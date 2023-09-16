@@ -31,30 +31,27 @@ trait SendPoolRequest
         $value = null
     ): Collection {
         $col = collect();
-        $pages = settings()->get($key);
+        $pages = $this->set_state(
+            key: 'page',
+            by: 3,
+            max: $max
+        );
         $collect = $request->pool(
             function (Pool $pool) use ($method, $param, $key, $value, $pages) {
                 return collect()
                     ->range($pages['from'], $pages['to'])
                     ->map(fn ($page) => $pool->get(
-                        config('services.coingecko.base_url') . $method,
+                        config('services.coingecko.base_url').$method,
                         data_set($param, $key, $value ?? $page)
-                    ))
-                ;
+                    ));
 
             }
         );
         for ($page = 0; $page < 3; $page++) {
             if ($collect[$page]->successful()) {
-                $col->push($collect[$page]->collect());
+                $col->push(...$collect[$page]->collect());
             }
         }
-        $this->set_state(
-            from: $pages['from'],
-            to: $pages['to'],
-            key: $key,
-            max: $max,
-        );
 
         return $col;
     }

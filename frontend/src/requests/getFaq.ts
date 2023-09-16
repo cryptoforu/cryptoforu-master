@@ -3,16 +3,11 @@ import { cache } from 'react'
 import { fetchData } from '@/lib/fetchClient'
 
 export type GetFaqProps = {
-  id: string
-  type: string
-  attributes: {
-    id: number
-    data_name: string
-    data_values: {
-      key: string
-      value: string
-    }[]
-  }
+  data_name: string
+  data_values: {
+    key: string
+    value: string
+  }[]
 }
 
 export const getFaq = cache(async () => {

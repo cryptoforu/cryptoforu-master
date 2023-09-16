@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\Crypto\Actions\HandleAllCoins;
+use App\Services\Crypto\DataObjects\CryptoCoin;
+use Cerbero\JsonParser\JsonParser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+use Laravel\Scout\Searchable;
+use Spatie\LaravelData\WithData;
 use Sushi\Sushi;
 
 /**
@@ -53,12 +56,18 @@ use Sushi\Sushi;
  * @method static Builder|Coin wherePriceChangePercentage7dInCurrency($value)
  * @method static Builder|Coin whereSymbol($value)
  * @method static Builder|Coin whereTotalVolume($value)
+ * @method static Builder|Coin ofPriceChange(string $direction = 'asc', int $limit = 3)
+ * @method static Builder|Coin columns()
  */
 final class Coin extends Model
 {
+    use Searchable;
     use Sushi;
+    use WithData;
 
     public $incrementing = false;
+
+    protected string $dataClass = CryptoCoin::class;
 
     protected $keyType = 'string';
 
@@ -80,28 +89,52 @@ final class Coin extends Model
         'price_change_percentage_1h_in_currency' => 'string',
         'price_change_percentage_7d_in_currency' => 'string',
         'price_change_percentage_24h_in_currency' => 'string',
-
     ];
 
-    public function coin_category(
-    ): BelongsTo {
+    public function coin_category(): BelongsTo
+    {
         return $this->belongsTo(CryptoCategories::class, 'id', 'category');
     }
 
     public function getRows(): array
     {
-        return $this->fetchModels()->toArray();
+        return $this->fetchModels();
     }
 
-    public function fetchModels(): Collection
+    public function fetchModels(): array
     {
-        $data = App::call(fn (HandleAllCoins $allCoins) => $allCoins->all());
 
-        return collect($data)->map(function ($item, $key) {
-            return collect($item)->map(fn ($coin) => [
-                'category' => $key, ...$coin,
-            ])->values();
-        })->collapse();
+        return Cache::remember(
+            'crypto_coins',
+            now()->addHour(),
+            function () {
+                return Arr::collapse(
+                    array: JsonParser::parse(
+                        storage_path('app/crypto/coins.json')
+                    )->toArray()
+                );
+            }
+        );
+    }
+
+    public function scopeColumns(Builder $query): null|Builder|Model
+    {
+        return $query->first(
+            [
+                'name', 'image', 'current_price',
+                'price_change_percentage_24h',
+                'price_change_percentage_1h_in_currency',
+                'price_change_percentage_24h_in_currency',
+                'price_change_percentage_7d_in_currency', 'market_cap']
+        );
+    }
+
+    public function scopeOfPriceChange(Builder $query, string $direction = 'asc', int $limit = 3): Builder
+    {
+        return $query->orderBy(
+            'price_change_percentage_24h',
+            $direction
+        )->take($limit);
     }
 
     /**
@@ -110,6 +143,15 @@ final class Coin extends Model
     public function getRouteKeyName(): string
     {
         return 'symbol';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'symbol' => (float) $this->symbol,
+            'category' => $this->category,
+        ];
     }
 
     protected function sushiShouldCache(): true

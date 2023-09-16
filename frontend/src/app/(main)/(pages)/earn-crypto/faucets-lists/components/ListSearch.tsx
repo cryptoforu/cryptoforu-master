@@ -1,12 +1,9 @@
 'use client'
 import { Search } from '@/components/elements'
-import { useListContext } from '@/store/useListStore'
+import { useGlobalFilter } from '@/store/controllers/useFaucetListActions'
 
 const ListSearch = () => {
-  const [globalFilter, setGlobalFilter] = useListContext((state) => [
-    state.globalFilter,
-    state.setGlobalFilter,
-  ])
+  const [globalFilter, setGlobalFilter] = useGlobalFilter()
   return (
     <Search
       aria-label={'List Data'}

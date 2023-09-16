@@ -1,12 +1,12 @@
 {
   "tabs": [
     {
-      "id": "top_hundred",
+      "id": "TOP",
       "label": "Top Hundred",
       "image": "top-hundred.png"
     },
     {
-      "id": "new_faucets",
+      "id": "NEW",
       "label": "New Faucets",
       "image": "new-faucets.png"
     },

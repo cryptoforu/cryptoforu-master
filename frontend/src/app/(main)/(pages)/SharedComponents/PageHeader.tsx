@@ -1,5 +1,6 @@
 'use client'
 import { usePathname, useSelectedLayoutSegments } from 'next/navigation'
+import { use } from 'react'
 import { useOverlayTriggerState } from 'react-stately'
 
 import { VideoPlayer } from '@/components/content'
@@ -50,11 +51,12 @@ function HeaderButtons({ render }: { render: boolean }) {
   }
 }
 
-const PageHeader = ({ crumbs }: { crumbs: BreadcrumbsProps[] }) => {
+const PageHeader = ({ crumbs }: { crumbs: Promise<BreadcrumbsProps[]> }) => {
+  const crumbsData = use(crumbs)
   const path = usePathname()
   const segments = useSelectedLayoutSegments()
 
-  const header = filterCrumbs(crumbs, path, segments)
+  const header = filterCrumbs(crumbsData, path, segments)
 
   return (
     <Container className="mx-auto max-w-7xl px-6 py-16 lg:px-8">

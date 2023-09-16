@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Console\Commands;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
+use Throwable;
 
 class ProcessFpCoins extends Command
 {
@@ -22,7 +21,7 @@ class ProcessFpCoins extends Command
      *
      * @var string
      */
-    protected $description = 'Process Faucetpay Coin Data';
+    protected $description = 'Process FaucetPay Coins';
 
     /**
      * Execute the console command.
@@ -31,8 +30,13 @@ class ProcessFpCoins extends Command
         CryptoActionsInterface $action,
         HandleCoinsContract $handle,
     ): void {
-        $action->updateOrCreateFpCoins(
-            action: $handle
-        );
+        try {
+            $action->fp_coins(
+                action: $handle
+            );
+            $this->info('Updated Succesfully');
+        } catch (Throwable $e) {
+            $this->error($e->getMessage());
+        }
     }
 }

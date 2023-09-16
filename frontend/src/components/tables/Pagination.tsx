@@ -9,6 +9,7 @@ import { PaginationProps } from '@/types/shared-types'
 
 interface IPaginate extends PaginationProps {
   onPageChange: (page: string) => void
+  isDisabled?: boolean
 }
 
 const Pagination = ({
@@ -19,6 +20,7 @@ const Pagination = ({
   links,
   prev_page_url,
   next_page_url,
+  isDisabled,
 }: IPaginate) => {
   if (links.length <= 4) {
     return
@@ -32,7 +34,11 @@ const Pagination = ({
       </div>
       <div className={'flex gap-2 p-2'}>
         {prev_page_url && (
-          <Button colorScheme={'secondary'} onClick={() => onPageChange('1')}>
+          <Button
+            colorScheme={'secondary'}
+            onPress={() => onPageChange('1')}
+            isDisabled={isDisabled}
+          >
             <ChevronDoubleLeftIcon className={'h-5 w-5'} />{' '}
           </Button>
         )}
@@ -41,11 +47,12 @@ const Pagination = ({
             <Button
               key={index}
               colorScheme={link.active ? 'primary' : 'secondary'}
-              onClick={() =>
+              onPress={() =>
                 onPageChange(
                   links.length - 1 === index ? index.toString() : link.label
                 )
               }
+              isDisabled={isDisabled}
             >
               <span dangerouslySetInnerHTML={{ __html: link.label }} />
             </Button>
@@ -54,7 +61,8 @@ const Pagination = ({
         {next_page_url && (
           <Button
             colorScheme={'secondary'}
-            onClick={() => onPageChange(to.toString())}
+            onPress={() => onPageChange(to.toString())}
+            isDisabled={isDisabled}
           >
             <ChevronDoubleRightIcon className={'h-5 w-5'} />{' '}
           </Button>

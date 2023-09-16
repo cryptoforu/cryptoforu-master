@@ -39,21 +39,42 @@ final class CryptoCategories extends Model
 
     protected $keyType = 'string';
 
+    protected array $schema = [
+        'id' => 'string',
+        'name' => 'string',
+        'market_cap' => 'string',
+        'market_cap_change_24h' => 'string',
+        'top_3_coins' => 'string',
+        'volume_24h' => 'string',
+    ];
+
+    /**
+     * Coins Relationship
+     * @return HasMany
+     */
     public function coins(): HasMany
     {
         return $this->hasMany(Coin::class, 'category', 'id');
     }
 
+    /**
+     * Make SQLLite Rows
+     * @return array
+     */
     public function getRows(): array
     {
         return $this->getCategories();
     }
 
+    /**
+     * Get Categories For Table
+     * @return array
+     */
     private function getCategories(): array
     {
         $data = App::call(
             fn (
-                HandleCategories $categories
+                HandleCategories $categories,
             ) => $categories->all()
         );
 

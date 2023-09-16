@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ForceJsonMiddleware
+final class ForceJsonMiddleware
 {
     /**
      * Handle an incoming request.

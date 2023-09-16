@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CorsMiddleware
+final class CorsMiddleware
 {
     /**
      * Handle an incoming request.
@@ -26,7 +26,6 @@ class CorsMiddleware
             ->header(
                 'Access-Control-Allow-Headers',
                 'X-Requested-With, Content-Type, X-Token-Auth, Authorization'
-            )
-        ;
+            );
     }
 }

@@ -1,22 +1,37 @@
 'use client'
 import { listDatum } from 'contentlayer/generated'
+import { useTransition } from 'react'
+import { useListData } from 'react-stately'
 
+import { updateSize } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/api/listActions'
 import { MenuButton, MenuItem } from '@/components/elements/Menu'
-import { useListActions } from '@/store/controllers/useListController'
-import { useListContext } from '@/store/useListStore'
 
 const ListPageSize = () => {
-  const { isPending, handleSize } = useListActions()
   const items = listDatum.page_size
-  const page_size = useListContext((state) => state.page_size)
+  const listData = useListData({
+    initialItems: items,
+    initialSelectedKeys: ['50'],
+    getKey: (item) => item.size,
+  })
+
+  const [isPending, startTransition] = useTransition()
+
+  function onSizeChange(size: string) {
+    startTransition(() => {
+      void updateSize(size)
+    })
+  }
 
   return (
     <MenuButton
       colorScheme={'secondary'}
+      label={listData.selectedKeys}
+      items={listData.items}
+      selectionMode={'single'}
+      selectedKeys={listData.selectedKeys}
+      onSelectionChange={listData.setSelectedKeys}
+      onAction={(key) => onSizeChange(key as string)}
       disabled={isPending}
-      label={page_size.toString()}
-      items={items}
-      onAction={(key) => handleSize(key as string)}
     >
       {(item) => (
         <MenuItem id={item.size} key={item.size}>

@@ -4,7 +4,7 @@ import { getFaq } from '@/requests/getFaq'
 
 const Faq = async () => {
   const faq = await getFaq()
-  const data = faq.attributes.data_values.map((val) => ({
+  const data = faq.data_values.map((val) => ({
     label: val.key,
     content: val.value,
   }))

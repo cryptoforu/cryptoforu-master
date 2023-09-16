@@ -1,9 +1,11 @@
 'use client'
 import { Text } from '@/components/typography'
-import { useListContext } from '@/store/useListStore'
+import { useList } from '@/store/useFaucetListProvider'
 
 const ListLastUpdate = () => {
-  const updated_at = useListContext((state) => state.data?.updated_at)
+  const {
+    data: { updated_at },
+  } = useList()
 
   return (
     <Text className={'flex items-center'}>

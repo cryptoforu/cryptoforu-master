@@ -1,14 +1,16 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { listDescription } from 'contentlayer/generated'
-import lazy from 'next/dynamic'
 import { Suspense } from 'react'
 
+import { getList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/api/listFactory'
 import ListData from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListData'
 import ListFilters from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListFilters'
 import ListPagination from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListPagination'
-import { fetchList } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/getLists'
+import ListStats from '@/app/(main)/(pages)/earn-crypto/faucets-lists/components/ListStats'
+import { FaucetsListData } from '@/app/(main)/(pages)/earn-crypto/faucets-lists/faucets-lists'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
+import { getMetaData } from '@/app/api/site_data/siteRoutes'
 import { AdPlaceholder } from '@/components/content'
 import MdxContent from '@/components/mdx-components'
 import {
@@ -17,40 +19,38 @@ import {
   TableSkeleton,
 } from '@/components/skeletons'
 import { Container, Section } from '@/components/wrappers'
-import { getMetadata } from '@/lib/getData'
-import FaucetListProvider from '@/store/useListStore'
-
+import { FaucetListProvider } from '@/store/useFaucetListProvider'
 // noinspection JSUnusedGlobalSymbols
-export const dynamic = 'force-dynamic'
-
-const ListStats = lazy(() => import('./components/ListStats'), {
-  loading: () => <CardSkeleton cards={2} />,
-})
+export const dynamic = 'auto'
+export const revalidate = 3600
 
 export async function generateMetadata() {
-  return await getMetadata('faucets_list')
+  return await getMetaData('faucets_list')
 }
 
-export default async function ListPage() {
-  const initialList = await fetchList('top_hundred', '50', '1')
+export default function ListPage() {
+  const dataPromise = getList('TOP') as Promise<FaucetsListData>
+
   return (
     <PageWrapper>
       <AdPlaceholder ad={'leaderboard'} />
       <Suspense fallback={<SectionSkeleton />}>
-        <FaucetListProvider data={initialList}>
-          <Section id={'list'} ariaLabel={'Faucet List'}>
-            <Container variant={'flex'} className={'flex-col'}>
-              <ListFilters />
-              <Suspense fallback={<TableSkeleton rows={10} />}>
+        <Section id={'list'} ariaLabel={'Faucet List'}>
+          <Container variant={'flex'} className={'flex-col'}>
+            <Suspense fallback={<TableSkeleton rows={10} />}>
+              <FaucetListProvider dataPromise={dataPromise}>
+                <ListFilters />
                 <ListData />
-              </Suspense>
-              <ListPagination />
-            </Container>
-          </Section>
-        </FaucetListProvider>
+                <ListPagination />
+              </FaucetListProvider>
+            </Suspense>
+          </Container>
+        </Section>
       </Suspense>
-      <ListStats />
-      <MdxContent code={listDescription.body.code} />
+      <Suspense fallback={<CardSkeleton cards={2} />}>
+        <ListStats />
+        <MdxContent code={listDescription.body.code} />
+      </Suspense>
     </PageWrapper>
   )
 }

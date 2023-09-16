@@ -1,3 +1,4 @@
+'use client'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 import { useState } from 'react'

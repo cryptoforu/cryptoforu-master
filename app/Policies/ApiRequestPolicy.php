@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ApiRequestPolicy
+final class ApiRequestPolicy
 {
     /**
      * Create a new policy instance.

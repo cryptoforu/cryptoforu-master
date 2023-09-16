@@ -6,7 +6,7 @@ namespace App\Services\Api\DataObjects;
 
 use Spatie\LaravelData\Data;
 
-class PostViews extends Data
+final class PostViews extends Data
 {
     public function __construct(
         public int $id,

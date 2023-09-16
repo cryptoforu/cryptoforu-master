@@ -4,40 +4,42 @@ import { createStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 
-import { CryptoCoin } from '@/app/api/coins/crypto'
-import type { DataItems } from '@/store/types/data-table-store'
+import { PaginatedCoins } from '@/app/api/crypto/crypto'
+import { getColumns } from '@/lib/generateColumns'
+import type { ColumnProps } from '@/store/types/data-table-store'
 
 type CryptoState = {
-  crypto: DataItems<CryptoCoin>
+  crypto?: PaginatedCoins
 }
 type CryptoActions = {
   updatePrice: (id: string, price: number) => void
   getPrice: (id: string, price: number) => 'danger' | 'success'
 }
 
-interface ICrypto extends CryptoState, CryptoActions {}
+interface ICrypto extends CryptoState, CryptoActions {
+  columns: ColumnProps[]
+}
 
 type CryptoStore = ReturnType<typeof createCryptoStore>
 const createCryptoStore = (initProps?: Partial<CryptoState>) => {
   const DEFAULT_PROPS: CryptoState = {
-    crypto: [],
+    crypto: undefined,
   }
   return createStore(
     immer<ICrypto>((set, get) => ({
       ...DEFAULT_PROPS,
       ...initProps,
+      columns: getColumns(Object.values(initProps.crypto.columns)),
       updatePrice: (id, price) =>
         set((state) => {
-          const coin = state.crypto.find((el) => el.id === id)
+          const coin = state.crypto.coinsData.find((el) => el.id === id)
           if (coin) {
-            ;(coin.current_price.value as number) = Number(price)
+            ;(coin.current_price as number) = Number(price)
           }
         }),
       getPrice: (id, price) => {
-        const coin = get().crypto.find((el) => el.id === id)
-        return (coin.current_price.value as number) > price
-          ? 'danger'
-          : 'success'
+        const coin = get().crypto.coinsData.find((el) => el.id === id)
+        return (coin.current_price as number) > price ? 'danger' : 'success'
       },
     }))
   )

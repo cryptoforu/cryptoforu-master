@@ -1,11 +1,13 @@
-import { defineDocumentType } from 'contentlayer/source-files'
 import { makeSource } from '@contentlayer/source-files'
+import { defineDocumentType } from 'contentlayer/source-files'
 import remarkMdxImages from 'remark-mdx-images'
+
 import {
   BreadCrumbsData,
   Footer,
   ListData,
   ListDescription,
+  Menu,
   PagesData,
   SidebarData,
   SocialShareData,
@@ -34,6 +36,7 @@ export default makeSource({
     Features,
     ListData,
     ListDescription,
+    Menu,
   ],
   mdx: {
     remarkPlugins: [remarkMdxImages],

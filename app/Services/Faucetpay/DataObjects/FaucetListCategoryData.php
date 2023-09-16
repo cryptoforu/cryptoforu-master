@@ -6,7 +6,8 @@ namespace App\Services\Faucetpay\DataObjects;
 
 use App\Models\FaucetListCategory;
 use App\Services\Faucetpay\Concerns\Sortable;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -37,23 +38,25 @@ final class FaucetListCategoryData extends Data
             list: Lazy::whenLoaded(
                 'list',
                 $listCategory,
-                function () use ($listCategory) {
-                    return Request::whenHas(
-                        'page',
-                        fn (
-                        ) => FaucetData::collection($listCategory->list()->jsonPaginate()->appends(Request::query())),
-                        static fn () => FaucetData::collection(
-                            items: $listCategory->list->sortBy(
-                                [
-                                    ['health', 'desc'],
-                                    ['paid_today', 'desc'],
-                                    ['total_users_paid', 'desc'],
-                                ]
-                            )->values()
-                        )
-                    );
-                }
+                fn () => FaucetData::make(
+                    data: $listCategory->list()
+                )
             )
         );
+    }
+
+    public function with(): array
+    {
+        $time = File::lastModified(storage_path('app/list/list_data.json'));
+        $parsed = Carbon::parse($time)->diffForHumans(
+            [
+                'parts' => '3',
+                'join' => true,
+            ]
+        );
+
+        return [
+            'updated_at' => $parsed,
+        ];
     }
 }

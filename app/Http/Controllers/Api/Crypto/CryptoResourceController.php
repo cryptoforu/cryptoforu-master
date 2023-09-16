@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Crypto;
 
-use App\Actions\Api\PaginatedData;
 use App\Contracts\ApiCacheContract;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Crypto\Contracts\CoinQueryContract;
 use App\Models\Coin;
 use App\Responses\CollectionResponse;
-use App\Services\Api\DataObjects\DataTable;
 use App\Services\Crypto\ApiResource\CoinResource;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Pipeline;
+use App\Services\Crypto\DataObjects\CryptoCoin;
+use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\QueryBuilder;
 use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
@@ -33,16 +31,14 @@ final class CryptoResourceController extends Controller
      */
     public function index(): CollectionResponse
     {
-        $data = Pipeline::send($this->coinQuery->handle(
+        $query = $this->coinQuery->handle(
             query: Coin::query()
-        ))
-            ->through([
-                PaginatedData::class,
-            ])->then(fn ($data) => $data)
-        ;
+        );
 
         return new CollectionResponse(
-            data: DataTable::fromCoins($data)
+            data: CryptoCoin::make(
+                attributes: $query
+            )
         );
     }
 
@@ -64,11 +60,23 @@ final class CryptoResourceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
+    public function gainers_losers(): CollectionResponse
     {
-        $query = Coin::query()->find($id);
-        $query->name = $request->input('name');
-        $query->save();
+        return new CollectionResponse(
+            data: Cache::remember('gainers-losers', now()->addDay(), function () {
+                $gainers = Coin::ofPriceChange(
+                    direction: 'desc'
+                )->get();
+                $losers = Coin::ofPriceChange()
+                    ->get();
+
+                return [
+                    'gainers' => $gainers,
+                    'losers' => $losers,
+                ];
+            })
+        );
+
     }
 
     /**

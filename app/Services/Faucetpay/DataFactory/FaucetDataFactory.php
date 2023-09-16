@@ -59,8 +59,8 @@ final class FaucetDataFactory
 
     private function faucet_coins(): Collection
     {
-        $query = Coin::query()->where('category', 'fp_coins')->get();
-
-        return $query->keyBy('symbol');
+        return Coin::query()
+            ->where('category', 'fp_coins')
+            ->get()->keyBy('symbol');
     }
 }
