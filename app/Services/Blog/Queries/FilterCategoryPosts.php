@@ -12,14 +12,13 @@ use App\Services\Blog\QueryFilters\PostIdFilter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class FilterCategoryPosts extends QueryBuilder
+final class FilterCategoryPosts extends QueryBuilder
 {
     public function __construct(Category $category)
     {
         $postsQuery = Post::query()
             ->where('category_id', $category->id)
-            ->with(['category', 'tags:id,name'])
-        ;
+            ->with(['category', 'tags:id,name']);
 
         parent::__construct($postsQuery);
 

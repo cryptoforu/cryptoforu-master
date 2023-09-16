@@ -1,14 +1,12 @@
 import { Suspense } from 'react'
 
 import PageHeader from '@/app/(main)/(pages)/SharedComponents/PageHeader'
+import { getBreadCrumbs } from '@/app/api/site_data/siteRoutes'
 import { HeroPattern } from '@/components/content'
 import { TextSkeleton } from '@/components/skeletons'
-import { getBreadcrumbs, preloadBreadcrumbs } from '@/requests/getBreadcrumbs'
-
-preloadBreadcrumbs()
 
 const PageHero = () => {
-  const crumbs = getBreadcrumbs()
+  const crumbs = getBreadCrumbs()
   return (
     <div
       className={

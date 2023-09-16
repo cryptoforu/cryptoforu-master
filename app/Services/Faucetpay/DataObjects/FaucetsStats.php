@@ -10,7 +10,7 @@ use App\Services\Faucetpay\Transformers\CalcualtePercentageTransformer;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 
-class FaucetsStats extends Data
+final class FaucetsStats extends Data
 {
     public function __construct(
         public readonly string $coin,

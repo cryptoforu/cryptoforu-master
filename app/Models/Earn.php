@@ -35,7 +35,7 @@ use Spatie\LaravelData\WithData;
  * @property int $earn_category_id
  * @property int|null $post_id
  * @property string|null $main_features
- * @property Enum|null|null $status
+ * @property Enum|null $status
  * @property Enum|null $nullable_enum
  * @property Enum[]|null $array_of_enums
  * @property Enum[]|null $nullable_array_of_enums
@@ -67,58 +67,58 @@ use Spatie\LaravelData\WithData;
  */
 final class Earn extends Model
 {
-    use HasFactory;
-    use WithData;
+  use HasFactory;
+  use WithData;
 
-    protected $fillable = [
-        'title',
-        'content',
-        'slug',
-        'image',
-        'thumb',
-        'link',
-        'featured',
-        'image_name',
-        'earn_category_id',
-        'post_id',
-        'main_features',
-        'status',
-    ];
+  protected $fillable = [
+    'title',
+    'content',
+    'slug',
+    'image',
+    'thumb',
+    'link',
+    'featured',
+    'image_name',
+    'earn_category_id',
+    'post_id',
+    'main_features',
+    'status',
+  ];
 
-    protected $casts = [
-        'featured' => FeaturedEnum::class,
-        'status' => EarnStatus::class,
-        'nullable_enum' => EarnStatus::class . ':nullable',
-        'array_of_enums' => EarnStatus::class . ':collection',
-        'nullable_array_of_enums' => EarnStatus::class . ':collection,nullable',
-    ];
+  protected $casts = [
+    'featured' => FeaturedEnum::class,
+    'status' => EarnStatus::class,
+    'nullable_enum' => EarnStatus::class.':nullable',
+    'array_of_enums' => EarnStatus::class.':collection',
+    'nullable_array_of_enums' => EarnStatus::class.':collection,nullable',
+  ];
 
-    protected string $dataClass = EarnData::class;
+  protected string $dataClass = EarnData::class;
 
-    public function earnCategory(): BelongsTo
-    {
-        return $this->belongsTo(EarnCategory::class);
-    }
+  public function earnCategory(): BelongsTo
+  {
+    return $this->belongsTo(EarnCategory::class);
+  }
 
-    public function post(): HasOne
-    {
-        return $this->hasOne(Post::class);
-    }
+  public function post(): HasOne
+  {
+    return $this->hasOne(Post::class);
+  }
 
-    public function images(): MorphMany
-    {
-        return $this->morphMany(Library::class, 'imageable');
-    }
+  public function images(): MorphMany
+  {
+    return $this->morphMany(Library::class, 'imageable');
+  }
 
-    public function scopeOfFeatured(
-        Builder $query,
-        FeaturedEnum $featured
-    ): Builder {
-        return $query->where('featured', $featured);
-    }
+  public function scopeOfFeatured(
+    Builder $query,
+    FeaturedEnum $featured
+  ): Builder {
+    return $query->where('featured', $featured);
+  }
 
-    public function scopeOfStatus(Builder $query, string $status): Builder
-    {
-        return $query->where('status', EarnStatus::tryFrom($status));
-    }
+  public function scopeOfStatus(Builder $query, string $status): Builder
+  {
+    return $query->where('status', EarnStatus::tryFrom($status));
+  }
 }

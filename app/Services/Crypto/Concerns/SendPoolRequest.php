@@ -17,7 +17,6 @@ trait SendPoolRequest
     /**
      * Coin Gecko Pool Request
      *
-     * @param  null  $value
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -41,7 +40,7 @@ trait SendPoolRequest
                 return collect()
                     ->range($pages['from'], $pages['to'])
                     ->map(fn ($page) => $pool->get(
-                        config('services.coingecko.base_url').$method,
+                        config('services.coingecko.base_url') . $method,
                         data_set($param, $key, $value ?? $page)
                     ));
 

@@ -19571,6 +19571,20 @@
         {
                         return \Illuminate\Database\Eloquent\Relations\Relation::jsonPaginate($maxResults, $defaultSize);
         }
+                    /**
+         * 
+         *
+         * @see \App\Providers\AppServiceProvider::boot()
+         * @param mixed $perPage
+         * @param mixed $columns
+         * @param mixed $pageName
+         * @param mixed $page
+         * @static 
+         */ 
+        public static function fastJson($perPage = null, $columns = [], $pageName = 'page', $page = null)
+        {
+                        return \Illuminate\Database\Eloquent\Relations\Relation::fastJson($perPage, $columns, $pageName, $page);
+        }
          
     }
             /**
@@ -21302,6 +21316,21 @@ namespace  {
             public static function jsonPaginate($maxResults = null, $defaultSize = null)
             {
                                 return \Illuminate\Database\Eloquent\Builder::jsonPaginate($maxResults, $defaultSize);
+            }
+             
+                /**
+             * 
+             *
+             * @see \App\Providers\AppServiceProvider::boot()
+             * @param mixed $perPage
+             * @param mixed $columns
+             * @param mixed $pageName
+             * @param mixed $page
+             * @static 
+             */ 
+            public static function fastJson($perPage = null, $columns = [], $pageName = 'page', $page = null)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::fastJson($perPage, $columns, $pageName, $page);
             }
              
                 /**

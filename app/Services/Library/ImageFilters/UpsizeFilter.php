@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
 use Intervention\Image\Filters\FilterInterface;
 use Intervention\Image\Image;
 
-class UpsizeFilter implements FilterInterface
+final class UpsizeFilter implements FilterInterface
 {
     /**
      * {@inheritDoc}

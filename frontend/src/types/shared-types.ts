@@ -87,3 +87,11 @@ export type MenuItem = {
 export interface MainMenu extends MenuItem {
   childs: Array<MenuItem>
 }
+
+export type GetFaqProps = {
+  data_name: string
+  data_values: {
+    key: string
+    value: string
+  }[]
+}

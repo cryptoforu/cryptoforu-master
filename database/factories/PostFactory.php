@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<Post>
  */
-class PostFactory extends Factory
+final class PostFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -50,8 +50,7 @@ class PostFactory extends Factory
             ->newLine()
             ->append($secHeading)
             ->newLine(2)
-            ->append($content)
-        ;
+            ->append($content);
 
         return [
             'title' => $title,

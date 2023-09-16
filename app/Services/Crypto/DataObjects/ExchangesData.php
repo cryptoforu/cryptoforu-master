@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 
-class ExchangesData extends Data
+final class ExchangesData extends Data
 {
     public function __construct(
         public readonly ?string $id,

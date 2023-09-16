@@ -1,4 +1,5 @@
 import { buildRequest } from '@/app/api/apiFactory'
+import { BreadcrumbsProps } from '@/types/shared-types'
 
 export async function getMetaData(page: string) {
   const meta = await buildRequest({
@@ -19,4 +20,21 @@ export async function getMetaData(page: string) {
       canonical: meta.route,
     },
   }
+}
+
+export async function getBreadCrumbs() {
+  return (await buildRequest({
+    routeName: 'site:breadcrumbs',
+    message: 'Failed To Fetch BreadCrumbs',
+  })) as BreadcrumbsProps[]
+}
+
+export async function getSiteData(param: string) {
+  return await buildRequest({
+    routeName: 'site:home',
+    message: 'Failed To Fetch FaqQuestions',
+    params: {
+      site: param,
+    },
+  })
 }

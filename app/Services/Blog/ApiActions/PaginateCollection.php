@@ -8,7 +8,7 @@ use App\Contracts\ApiCacheContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Request;
 
-class PaginateCollection
+final class PaginateCollection
 {
     public function __construct(
         protected ApiCacheContract $cacheContract

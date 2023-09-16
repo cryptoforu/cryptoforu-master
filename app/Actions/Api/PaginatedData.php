@@ -24,8 +24,7 @@ final class PaginatedData
                     ->cursorPaginate(
                         perPage: Request::query(key: 'page_size', default: 15)
                     )
-                    ->appends(Request::query())
-                ;
+                    ->appends(Request::query());
             },
             fn () => $builder->get()
         );

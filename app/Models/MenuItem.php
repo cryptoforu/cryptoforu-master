@@ -107,8 +107,7 @@ final class MenuItem extends Model
                 ->where('position', 'front_main')
                 ->with('items')->first()
         )->with('parents:id,label,route,parent_id')
-            ->select(['id', 'label', 'route', 'parent_id'])->get()
-        ;
+            ->select(['id', 'label', 'route', 'parent_id'])->get();
     }
 
     public function scopeOfItems(
@@ -117,7 +116,6 @@ final class MenuItem extends Model
     ): Collection|array {
         return $query->whereBelongsTo($menu)
             ->where('parent_id', 0)
-            ->with('childs')->get()
-        ;
+            ->with('childs')->get();
     }
 }

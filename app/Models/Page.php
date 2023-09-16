@@ -123,8 +123,7 @@ final class Page extends Model
     ): Builder {
         return $query->with('parents')
             ->where('page_type', $page_type)
-            ->where('page_name', $page)
-        ;
+            ->where('page_name', $page);
     }
 
     /**

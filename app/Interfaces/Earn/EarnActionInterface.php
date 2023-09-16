@@ -10,23 +10,24 @@ use App\Models\Earn;
 
 interface EarnActionInterface
 {
-    /**
-     * Store Earn Data
-     */
-    public function store(StoreEarnRequest $request): bool;
+  /**
+   * Store Earn Data
+   */
+  public function store(StoreEarnRequest $request): bool;
 
-    /**
-     * Update Earn Data
-     */
-    public function update(
-        UpdateEarnRequest $request,
-        Earn $earn
-    ): bool;
+  /**
+   * Update Earn Data
+   */
+  public function update(
+    UpdateEarnRequest $request,
+    Earn $earn
+  ): bool;
 
-    /**
-     * Delete earn Data
-     *
-     * @param  string|int  $id
-     */
-    public function destroy(Earn $earn): bool;
+  /**
+   * Delete earn Data
+   *
+   * @param  Earn  $earn
+   * @return bool
+   */
+  public function destroy(Earn $earn): bool;
 }

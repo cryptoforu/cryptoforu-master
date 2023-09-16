@@ -13,33 +13,33 @@ use Spatie\Valuestore\Valuestore;
 
 final class ApiService extends Valuestore implements ApiServiceContract
 {
-    /**
-     * Get Breadcrumbs
-     */
-    public function breadcrumbs(): BreadCrumbsResource
-    {
-        return new BreadCrumbsResource(
-            cache: new ApiCacheService(['api', 'breadcrumbs'])
-        );
-    }
+  /**
+   * Get Breadcrumbs
+   */
+  public function breadcrumbs(): BreadCrumbsResource
+  {
+    return new BreadCrumbsResource(
+      cache: new ApiCacheService(['api', 'breadcrumbs'])
+    );
+  }
 
-    /**
-     * Get Menu Items
-     */
-    public function menu(): MenuResource
-    {
-        return new MenuResource(
-            cache: new ApiCacheService(['api', 'front_menu'])
-        );
-    }
+  /**
+   * Get Menu Items
+   */
+  public function menu(): MenuResource
+  {
+    return new MenuResource(
+      cache: new ApiCacheService(['api', 'front_menu'])
+    );
+  }
 
-    /**
-     * Get MetaData
-     */
-    public function meta(): MetaDataResource
-    {
-        return new MetaDataResource(
-            cache: new ApiCacheService(['api', 'meta'])
-        );
-    }
+  /**
+   * Get MetaData
+   */
+  public function meta(): MetaDataResource
+  {
+    return new MetaDataResource(
+      cache: new ApiCacheService(['api', 'meta'])
+    );
+  }
 }

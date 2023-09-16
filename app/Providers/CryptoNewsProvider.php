@@ -10,7 +10,7 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
-class CryptoNewsProvider extends ServiceProvider
+final class CryptoNewsProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -29,8 +29,7 @@ class CryptoNewsProvider extends ServiceProvider
         $this->app->when(
             concrete: CryptoNewsService::class,
         )->needs('$decrypt')
-            ->giveConfig('services.descrypt.base_url')
-        ;
+            ->giveConfig('services.descrypt.base_url');
     }
 
     /**

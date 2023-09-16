@@ -7,7 +7,7 @@ namespace App\Services\Blog\QueryFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class StaticParamsFilter implements Filter
+final class StaticParamsFilter implements Filter
 {
     /**
      * {@inheritDoc}

@@ -9,30 +9,30 @@ use App\Models\MenuItem;
 
 final class DeleteMenuItem
 {
-    public function __construct(
-        private LibraryActionsInterface $action,
-    ) {
+  public function __construct(
+    private readonly LibraryActionsInterface $action,
+  ) {
 
-    }
+  }
 
-    /**
-     * Delete Menu Item
-     */
-    public function handle(string|int $id): bool
-    {
-        $item = MenuItem::find($id);
+  /**
+   * Delete Menu Item
+   */
+  public function handle(string|int $id): bool
+  {
+    $item = MenuItem::query()->find($id);
 
-        if ($item->exists) {
-            if ( ! empty($item->images)) {
-                foreach ($item->images as $img) {
-                    $this->action->delete($img);
-                }
-            }
-            $item->delete();
-
-            return true;
+    if ($item->exists) {
+      if (!empty($item->images)) {
+        foreach ($item->images as $img) {
+          $this->action->delete($img);
         }
+      }
+      $item->delete();
 
-        return false;
+      return true;
     }
+
+    return false;
+  }
 }

@@ -34,8 +34,7 @@ final readonly class MetaDataResource
                     ->allowedFilters([
                         AllowedFilter::exact('page_name'),
                         'route', 'page_type',
-                    ])->select(['label', 'meta_desc', 'route'])->first()
-                ;
+                    ])->select(['label', 'meta_desc', 'route'])->first();
             }
         );
     }

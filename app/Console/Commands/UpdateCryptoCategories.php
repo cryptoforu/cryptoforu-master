@@ -9,7 +9,7 @@ use App\Interfaces\Crypto\HandleCategoriesContract;
 use Illuminate\Console\Command;
 use Throwable;
 
-class UpdateCryptoCategories extends Command
+final class UpdateCryptoCategories extends Command
 {
     /**
      * The name and signature of the console command.

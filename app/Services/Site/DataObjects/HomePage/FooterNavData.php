@@ -6,7 +6,7 @@ namespace App\Services\Site\DataObjects\HomePage;
 
 use Spatie\LaravelData\Data;
 
-class FooterNavData extends Data
+final class FooterNavData extends Data
 {
     public function __construct(
         public string $id,

@@ -54,8 +54,7 @@ final class ColorScheme extends Enum
             return self::tryFrom(
                 $colors->random()
             )
-                ->tw_color()
-            ;
+                ->tw_color();
         }
         $color = collect(
             ColorScheme::toValues()
@@ -76,11 +75,6 @@ final class ColorScheme extends Enum
         };
     }
 
-    protected static function values(): Closure
-    {
-        return static fn (string $name): string|int => mb_strtolower($name);
-    }
-
     public function color(): string
     {
         return match ($this) {
@@ -91,5 +85,10 @@ final class ColorScheme extends Enum
             ColorScheme::CYAN() => 'cyan',
             ColorScheme::GREEN() => 'green',
         };
+    }
+
+    protected static function values(): Closure
+    {
+        return static fn (string $name): string|int => mb_strtolower($name);
     }
 }

@@ -26,8 +26,7 @@ trait Imageable
                     $img
                 )
                 ->first()
-                ->toArray()
-            ;
+                ->toArray();
 
         }
 

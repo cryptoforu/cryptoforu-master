@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 final class SharedPropsController extends Controller
 {
     public function __construct(
-        protected ApiServiceContract  $service,
+        protected ApiServiceContract $service,
         protected CountActionContract $actionContract
     ) {
     }

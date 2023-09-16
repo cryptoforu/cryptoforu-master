@@ -8,27 +8,27 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Collection;
 
-final class CoinStatsResource
+final readonly class CoinStatsResource
 {
-    public function __construct(
-        private readonly PendingRequest $client,
-    ) {
-    }
+  public function __construct(
+    private PendingRequest $client,
+  ) {
+  }
 
-    /**
-     * Latest Coin Stats News
-     *
-     * @throws RequestException
-     */
-    public function latest(): Collection
-    {
+  /**
+   * Latest Coin Stats News
+   *
+   * @throws RequestException
+   */
+  public function latest(): Collection
+  {
 
-        return $this->client->get(
-            url: 'news/latest',
-            query: [
-                'skip' => '0',
-                'limit' => '3',
-            ]
-        )->throw()->collect('news');
-    }
+    return $this->client->get(
+      url: 'news/latest',
+      query: [
+        'skip' => '0',
+        'limit' => '3',
+      ]
+    )->throw()->collect('news');
+  }
 }

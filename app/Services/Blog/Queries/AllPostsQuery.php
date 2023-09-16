@@ -36,7 +36,6 @@ final class AllPostsQuery implements AllPostsContract
             ->allowedIncludes(
                 includes: ['category', 'tags']
             )
-            ->getEloquentBuilder()
-        ;
+            ->getEloquentBuilder();
     }
 }

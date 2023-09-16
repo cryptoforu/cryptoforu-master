@@ -1,4 +1,12 @@
-<?php
+<?php /** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+/** @noinspection PhpUndefinedMethodInspection */
 
 declare(strict_types=1);
 
@@ -18,34 +26,34 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 final class PostStatus extends Enum
 {
-    public static function options(): array
-    {
-        return Arr::map(self::cases(), static function ($value, $key) {
-            return
-              [
-                  'name' => $value,
-              ];
-        });
-    }
+  public static function options(): array
+  {
+    return Arr::map(self::cases(), static function ($value) {
+      return
+        [
+          'name' => $value,
+        ];
+    });
+  }
 
-    public function color(): string
-    {
-        return match ($this) {
-            PostStatus::DRAFT() => 'grey',
-            PostStatus::PUBLISHED() => 'green',
-            PostStatus::PREVIEW() => 'blue',
-            PostStatus::ARCHIVED() => 'red',
-            PostStatus::FEATURED() => 'teal'
-        };
-    }
+  public function color(): string
+  {
+    return match ($this) {
+      PostStatus::DRAFT() => 'grey',
+      PostStatus::PUBLISHED() => 'green',
+      PostStatus::PREVIEW() => 'blue',
+      PostStatus::ARCHIVED() => 'red',
+      PostStatus::FEATURED() => 'teal'
+    };
+  }
 
-    public function tw_color(): string
-    {
-        return match ($this) {
-            self::DRAFT() => 'slate-500',
-            self::FEATURED() => 'emerald-400',
-            self::PUBLISHED() => 'cyan-400',
-            self::PREVIEW() => 'teal-400',
-        };
-    }
+  public function tw_color(): string
+  {
+    return match ($this) {
+      self::DRAFT() => 'slate-500',
+      self::FEATURED() => 'emerald-400',
+      self::PUBLISHED() => 'cyan-400',
+      self::PREVIEW() => 'teal-400',
+    };
+  }
 }

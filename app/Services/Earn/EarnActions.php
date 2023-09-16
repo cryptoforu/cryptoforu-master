@@ -13,69 +13,69 @@ use App\Services\Earn\Actions\StoreEarn;
 use App\Services\Earn\Actions\UpdateEarn;
 use Illuminate\Support\Facades\Cache;
 
-final class EarnActions implements EarnActionInterface
+final readonly class EarnActions implements EarnActionInterface
 {
-    /**
-     * Earn Action Instance
-     */
-    public function __construct(
-        private readonly DeleteEarn $delete,
-        private readonly StoreEarn $store,
-        private readonly UpdateEarn $update,
-    ) {
+  /**
+   * Earn Action Instance
+   */
+  public function __construct(
+    private DeleteEarn $delete,
+    private StoreEarn $store,
+    private UpdateEarn $update,
+  ) {
+  }
+
+  /**
+   * Store Earn Data
+   */
+  public function store(StoreEarnRequest $request): bool
+  {
+    $store = $this->store->handle(
+      request: $request,
+    );
+    if ($store) {
+      Cache::flush();
+
+      return true;
     }
 
-    /**
-     * Store Earn Data
-     */
-    public function store(StoreEarnRequest $request): bool
-    {
-        $store = $this->store->handle(
-            request: $request,
-        );
-        if ($store) {
-            Cache::flush();
+    return false;
+  }
 
-            return true;
-        }
+  /**
+   * Update Earn Data
+   */
+  public function update(
+    UpdateEarnRequest $request,
+    Earn $earn
+  ): bool {
+    $update = $this->update->handle(
+      request: $request,
+      earn: $earn,
+    );
+    if ($update) {
+      Cache::flush();
 
-        return false;
+      return true;
     }
 
-    /**
-     * Update Earn Data
-     */
-    public function update(
-        UpdateEarnRequest $request,
-        Earn $earn
-    ): bool {
-        $update = $this->update->handle(
-            request: $request,
-            earn: $earn,
-        );
-        if ($update) {
-            Cache::flush();
+    return false;
+  }
 
-            return true;
-        }
+  /**
+   * Delete earn Data
+   */
+  public function destroy(Earn $earn): bool
+  {
+    $delete = $this->delete->handle(
+      earn: $earn,
+    );
+    if ($delete) {
+      Cache::flush();
 
-        return false;
+      return true;
     }
 
-    /**
-     * Delete earn Data
-     */
-    public function destroy(Earn $earn): bool
-    {
-        $delete = $this->delete->handle(
-            earn: $earn,
-        );
-        if ($delete) {
-            Cache::flush();
-
-            return true;
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

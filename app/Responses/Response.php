@@ -14,16 +14,17 @@ use JustSteveKing\StatusCode\Http;
 
 class Response implements Responsable
 {
-    /**
-     * @property-read mixed $data
-     * @property-read Http $status
-     */
-    public function toResponse(
-        $request
-    ): JsonResponse {
-        return new JsonResponse(
-            data: $this->data,
-            status: $this->status->value,
-        );
-    }
+  /**
+   * @property-read mixed $data
+   * @property-read Http $status
+   */
+  public function toResponse(
+    $request
+  ): JsonResponse
+  {
+    return new JsonResponse(
+      data: $this->data,
+      status: $this->status->value,
+    );
+  }
 }

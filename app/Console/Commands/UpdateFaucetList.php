@@ -8,7 +8,7 @@ use App\Interfaces\Faucetpay\FaucetPayServiceInterface;
 use App\Interfaces\Faucetpay\HandleListContract;
 use Illuminate\Console\Command;
 
-class UpdateFaucetList extends Command
+final class UpdateFaucetList extends Command
 {
     /**
      * The name and signature of the console command.

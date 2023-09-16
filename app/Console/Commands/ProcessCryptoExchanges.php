@@ -8,7 +8,7 @@ use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleExchangesInterface;
 use Illuminate\Console\Command;
 
-class ProcessCryptoExchanges extends Command
+final class ProcessCryptoExchanges extends Command
 {
     /**
      * The name and signature of the console command.

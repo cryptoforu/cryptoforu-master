@@ -12,7 +12,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('TagsApiResource')]
-class TagsApiResource extends Data
+final class TagsApiResource extends Data
 {
     public function __construct(
         public int $id,

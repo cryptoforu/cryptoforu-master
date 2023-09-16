@@ -20,42 +20,44 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
+Route::get('/phpinfo', function () {
+  return phpinfo();
+});
 Route::redirect('/', '/admin');
-Route::middleware('auth:sanctum')->prefix('admin')->as('admin:')->group(function (
-): void {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::prefix('settings')->as('settings:')->group(
-        base_path('routes/admin/settings.php')
-    );
-    Route::prefix('blog')->as('blog:')->group(
-        base_path('routes/admin/blog.php')
-    );
-    Route::prefix('library')->group(
-        base_path('routes/admin/library.php')
-    );
-    Route::resource('earn', EarnController::class);
-    Route::post(
-        '/site/delete',
-        [SiteController::class, 'delete']
-    )->name('site.delete');
-    Route::resource('site', SiteController::class);
-    Route::get('/profile', ProfileController::class)->name('profile');
+Route::middleware('auth:sanctum')->prefix('admin')->as('admin:')->group(function (): void {
+  Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+  Route::prefix('settings')->as('settings:')->group(
+    base_path('routes/admin/settings.php')
+  );
+  Route::prefix('blog')->as('blog:')->group(
+    base_path('routes/admin/blog.php')
+  );
+  Route::prefix('library')->group(
+    base_path('routes/admin/library.php')
+  );
+  Route::resource('earn', EarnController::class);
+  Route::post(
+    '/site/delete',
+    [SiteController::class, 'delete']
+  )->name('site.delete');
+  Route::resource('site', SiteController::class);
+  Route::get('/profile', ProfileController::class)->name('profile');
 });
 Route::post('/tokens/create', function (Request $request) {
-    if ($request->user()->tokens()->where('name', $request->token_name)) {
-        $request->user()->tokens()->where('name', $request->token_name)->delete();
-    }
-    $token = $request->user()->createToken(
-        $request->token_name,
-        ['admin']
-    );
+  if ($request->user()->tokens()->where('name', $request->token_name)) {
+    $request->user()->tokens()->where('name', $request->token_name)->delete();
+  }
+  $token = $request->user()->createToken(
+    $request->token_name,
+    ['admin']
+  );
 
-    return back()->with('token', $token->plainTextToken);
+  return back()->with('token', $token->plainTextToken);
 })->middleware('auth:sanctum');
 Route::get('/login/{provider}', [
-    SocialAuthController::class, 'redirectToProvider',
+  SocialAuthController::class, 'redirectToProvider',
 ]);
 Route::get('/login/{provider}/callback', [
-    SocialAuthController::class,
-    'handleProviderCallback',
+  SocialAuthController::class,
+  'handleProviderCallback',
 ]);

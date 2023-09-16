@@ -7,7 +7,7 @@ namespace App\Services\Library\ImageFilters;
 use Intervention\Image\Filters\FilterInterface;
 use Intervention\Image\Image;
 
-class AspectHeight implements FilterInterface
+final class AspectHeight implements FilterInterface
 {
     /**
      * {@inheritDoc}

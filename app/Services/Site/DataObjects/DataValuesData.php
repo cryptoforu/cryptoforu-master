@@ -6,7 +6,7 @@ namespace App\Services\Site\DataObjects;
 
 use Spatie\LaravelData\Data;
 
-class DataValuesData extends Data
+final class DataValuesData extends Data
 {
     public function __construct(
         public string $key,

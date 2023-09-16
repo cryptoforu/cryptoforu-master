@@ -8,7 +8,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 
-class BreadcrumbsData extends Data
+final class BreadcrumbsData extends Data
 {
     public function __construct(
         public string $label,

@@ -85,8 +85,7 @@ final class LibraryController extends Controller
                 if (null !== $query) {
                     $this->delete->handle($query);
                 }
-            })
-        ;
+            });
 
         cache()->flush();
 

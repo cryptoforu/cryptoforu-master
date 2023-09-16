@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection as ECollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 
-class LimitCollection
+final class LimitCollection
 {
     public function __invoke(
         Collection|ECollection $collection

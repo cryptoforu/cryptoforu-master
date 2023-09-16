@@ -8,7 +8,7 @@ use App\Contracts\ApiCacheContract;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class ApiCacheService implements ApiCacheContract
+final class ApiCacheService implements ApiCacheContract
 {
     private array $tags;
 
@@ -30,8 +30,7 @@ class ApiCacheService implements ApiCacheContract
                 key: $key,
                 ttl: $ttl,
                 callback: $callback
-            )
-        ;
+            );
     }
 
     /**

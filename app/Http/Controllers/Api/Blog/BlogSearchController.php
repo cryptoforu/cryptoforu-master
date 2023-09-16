@@ -25,11 +25,9 @@ final class BlogSearchController extends Controller
                         'posts.id', 'posts.title', 'posts.introduction',
                         'categories.name as category',
                     ])
-                    ->orderBy('posts.id', 'DESC')
-                ;
+                    ->orderBy('posts.id', 'DESC');
             })
-            ->get()
-        ;
+            ->get();
 
         return new CollectionResponse(
             data: $posts

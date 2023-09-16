@@ -10,7 +10,7 @@ use App\Responses\CollectionResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class CryptoSearchController extends Controller
+final class CryptoSearchController extends Controller
 {
     /**
      * Search Coins
@@ -27,10 +27,8 @@ class CryptoSearchController extends Controller
                     'price_change_percentage_24h_in_currency',
                     'price_change_percentage_7d_in_currency', 'market_cap',
                 ])->orderBy('market_cap_rank')
-                    ->orderBy('market_cap', 'desc')
-                ;
-            })->get()
-        ;
+                    ->orderBy('market_cap', 'desc');
+            })->get();
 
         return new CollectionResponse(
             data: $coin

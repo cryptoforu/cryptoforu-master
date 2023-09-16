@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class CreateNewUser
+final class CreateNewUser
 {
     public function create(
         $user

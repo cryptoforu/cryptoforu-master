@@ -8,7 +8,7 @@ use App\Models\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class PostUpdateSeeder extends Seeder
+final class PostUpdateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -42,8 +42,7 @@ class PostUpdateSeeder extends Seeder
             ->newLine()
             ->append($secHeading)
             ->newLine(2)
-            ->append($content)
-        ;
+            ->append($content);
         $posts = Post::query()->whereNotIn('id', [14, 16, 22])->get();
         $posts->map(function (Post $post) use ($text): void {
             $post->content = $text;

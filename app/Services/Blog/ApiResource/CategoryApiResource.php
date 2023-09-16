@@ -17,7 +17,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript('CategoryApiResource')]
-class CategoryApiResource extends Data
+final class CategoryApiResource extends Data
 {
     public function __construct(
         public int $id,

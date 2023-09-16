@@ -1,9 +1,10 @@
+import { getSiteData } from '@/app/api/site_data/siteRoutes'
 import { Accordion, SectionHeader } from '@/components/content'
 import { Container, Section } from '@/components/wrappers'
-import { getFaq } from '@/requests/getFaq'
+import { GetFaqProps } from '@/types/shared-types'
 
 const Faq = async () => {
-  const faq = await getFaq()
+  const faq = (await getSiteData('faq_questions')) as GetFaqProps
   const data = faq.data_values.map((val) => ({
     label: val.key,
     content: val.value,

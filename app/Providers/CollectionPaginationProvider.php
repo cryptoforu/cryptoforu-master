@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
-class CollectionPaginationProvider extends ServiceProvider
+final class CollectionPaginationProvider extends ServiceProvider
 {
     /**
      * Register services.

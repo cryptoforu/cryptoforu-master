@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 
-class CreateViewsTable extends Migration
+final class CreateViewsTable extends Migration
 {
     /**
      * The database schema.

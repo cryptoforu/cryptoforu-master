@@ -77,8 +77,7 @@ final class Handler extends ExceptionHandler
         if ( ! $request->isMethod('GET')) {
             return back()
                 ->setStatusCode($status)
-                ->with('error', $this->messages[$status])
-            ;
+                ->with('error', $this->messages[$status]);
         }
 
         return Inertia::render('Errors/Index', [
@@ -86,8 +85,7 @@ final class Handler extends ExceptionHandler
             'message' => $this->messages[$status],
         ])
             ->toResponse($request)
-            ->setStatusCode($status)
-        ;
+            ->setStatusCode($status);
     }
 
     /**

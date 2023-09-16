@@ -16,7 +16,7 @@ use App\Services\Store\ApiCacheService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
-class FaucetPayProvider extends ServiceProvider
+final class FaucetPayProvider extends ServiceProvider
 {
     /**
      * Register services.

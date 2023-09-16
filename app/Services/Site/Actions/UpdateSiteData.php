@@ -9,7 +9,7 @@ use App\Interfaces\Library\LibraryActionsInterface;
 use App\Models\Site;
 use App\Services\Site\Concerns\Collectable;
 
-class UpdateSiteData
+final class UpdateSiteData
 {
     use Collectable;
 

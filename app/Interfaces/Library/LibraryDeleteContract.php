@@ -8,8 +8,8 @@ use App\Models\Library;
 
 interface LibraryDeleteContract
 {
-    /**
-     * Delet Files
-     */
-    public function handle(Library $library): bool;
+  /**
+   * Delete Files
+   */
+  public function handle(Library $library, bool $destroy): bool;
 }

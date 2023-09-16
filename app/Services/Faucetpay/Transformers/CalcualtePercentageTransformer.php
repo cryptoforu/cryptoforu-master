@@ -7,7 +7,7 @@ namespace App\Services\Faucetpay\Transformers;
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Transformers\Transformer;
 
-class CalcualtePercentageTransformer implements Transformer
+final class CalcualtePercentageTransformer implements Transformer
 {
     public function __construct(
         public ?string $intl = 'en_US',

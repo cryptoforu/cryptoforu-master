@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\SocialAuth;
 
-class CreateProvider
+final class CreateProvider
 {
     public function create($userCreated, $user, $provider): void
     {

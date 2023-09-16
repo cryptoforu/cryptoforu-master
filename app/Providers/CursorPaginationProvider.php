@@ -8,7 +8,7 @@ use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
-class CursorPaginationProvider extends ServiceProvider
+final class CursorPaginationProvider extends ServiceProvider
 {
     /**
      * Register services.

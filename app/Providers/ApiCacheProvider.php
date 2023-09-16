@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\FaucetPay\ListController;
 use App\Services\Store\ApiCacheService;
 use Illuminate\Support\ServiceProvider;
 
-class ApiCacheProvider extends ServiceProvider
+final class ApiCacheProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -31,18 +31,15 @@ class ApiCacheProvider extends ServiceProvider
         $this->app->when(
             CryptoResourceController::class
         )->needs(ApiCacheContract::class)
-            ->give(fn () => new ApiCacheService(['crypto', 'data']))
-        ;
+            ->give(fn () => new ApiCacheService(['crypto', 'data']));
         $this->app->when(
             EarnCategoryResourceController::class
         )->needs(ApiCacheContract::class)
-            ->give(fn () => new ApiCacheService(['earn', 'categories']))
-        ;
+            ->give(fn () => new ApiCacheService(['earn', 'categories']));
         $this->app->when(
             ListController::class
         )->needs(ApiCacheContract::class)
-            ->give(fn () => new ApiCacheService(['list', 'data']))
-        ;
+            ->give(fn () => new ApiCacheService(['list', 'data']));
     }
 
     /**

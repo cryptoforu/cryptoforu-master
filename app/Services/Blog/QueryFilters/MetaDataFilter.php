@@ -7,7 +7,7 @@ namespace App\Services\Blog\QueryFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class MetaDataFilter implements Filter
+final class MetaDataFilter implements Filter
 {
     /**
      * {@inheritDoc}

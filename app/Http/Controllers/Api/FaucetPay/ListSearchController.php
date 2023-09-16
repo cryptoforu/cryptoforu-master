@@ -23,11 +23,9 @@ final class ListSearchController extends Controller
                     'list.listCategory',
                     'list_category.symbol'
                 )
-                    ->orderBy('list.paid_today', 'DESC')
-                ;
+                    ->orderBy('list.paid_today', 'DESC');
             })
-            ->get()
-        ;
+            ->get();
 
         return new CollectionResponse(
             data: $list

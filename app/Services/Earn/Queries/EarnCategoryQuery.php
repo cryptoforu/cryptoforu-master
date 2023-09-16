@@ -13,7 +13,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class EarnCategoryQuery implements EarnCategoryQueryContract
+final class EarnCategoryQuery implements EarnCategoryQueryContract
 {
     public function handle(Builder $query): Builder
     {
@@ -32,8 +32,7 @@ class EarnCategoryQuery implements EarnCategoryQueryContract
             ->allowedIncludes([
                 'earn', AllowedInclude::custom('data', new IncludeDataFilter()),
             ])
-            ->getEloquentBuilder()
-        ;
+            ->getEloquentBuilder();
 
     }
 }

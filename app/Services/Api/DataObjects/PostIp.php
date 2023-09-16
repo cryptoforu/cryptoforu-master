@@ -6,7 +6,7 @@ namespace App\Services\Api\DataObjects;
 
 use Spatie\LaravelData\Data;
 
-class PostIp extends Data
+final class PostIp extends Data
 {
     public function __construct(
         public array $ips

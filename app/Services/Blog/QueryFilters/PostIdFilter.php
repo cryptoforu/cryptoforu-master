@@ -7,7 +7,7 @@ namespace App\Services\Blog\QueryFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class PostIdFilter implements Filter
+final class PostIdFilter implements Filter
 {
     /**
      * {@inheritDoc}

@@ -17,8 +17,7 @@ trait BuildQueries
         $query = Category::query()
             ->where('id', '<', $id)
             ->orderBy('id', 'desc')
-            ->select(['name', 'slug'])->first()
-        ;
+            ->select(['name', 'slug'])->first();
         if (null !== $query) {
             return [
                 'name' => $query->name,
@@ -34,8 +33,7 @@ trait BuildQueries
         $query = Category::query()
             ->where('id', '>', $id)
             ->orderBy('id')
-            ->select(['name', 'slug'])->first()
-        ;
+            ->select(['name', 'slug'])->first();
         if (null !== $query) {
             return [
                 'name' => $query->name,
@@ -53,8 +51,7 @@ trait BuildQueries
             ->orderBy('id', 'desc')
             ->select(['title', 'slug', 'category_id'])
             ->with('category:id,slug')
-            ->first()
-        ;
+            ->first();
         if (null !== $post) {
             return [
                 'name' => $post->title,
@@ -71,8 +68,7 @@ trait BuildQueries
             ->where('id', '>', $id)
             ->orderBy('id')
             ->select(['title', 'slug', 'category_id'])
-            ->with('category:id,slug')->first()
-        ;
+            ->with('category:id,slug')->first();
         if (null !== $post) {
             return [
                 'name' => $post->title,

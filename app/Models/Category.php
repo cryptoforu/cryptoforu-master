@@ -54,6 +54,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Category newModelQuery()
  * @method static Builder|Category newQuery()
  * @method static Builder|Category ofData()
+ * @method static Builder|Category ofNext(int $id)
+ * @method static Builder|Category ofPrev(int $id)
  * @method static Builder|Category query()
  * @method static Builder|Category whereCategoryImage($value)
  * @method static Builder|Category whereCategoryThumb($value)
@@ -67,96 +69,94 @@ use Spatie\LaravelData\WithData;
  */
 final class Category extends Model
 {
-    use HasFactory;
-    use WithData;
+  use HasFactory;
+  use WithData;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'slug',
-        'category_image',
-        'category_thumb',
-        'posts',
-        'headline',
-        'category_links',
-    ];
+  protected $fillable = [
+    'name',
+    'description',
+    'slug',
+    'category_image',
+    'category_thumb',
+    'posts',
+    'headline',
+    'category_links',
+  ];
 
-    protected string $dataClass = CategoryData::class;
+  protected string $dataClass = CategoryData::class;
 
-    protected $casts = [
-        'category_links' => AsCollection::class,
-    ];
+  protected $casts = [
+    'category_links' => AsCollection::class,
+  ];
 
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
+  public function posts(): HasMany
+  {
+    return $this->hasMany(Post::class);
+  }
+
+  public function images(): MorphOne
+  {
+    return $this->morphOne(Library::class, 'imageable');
+  }
+
+  public function pages(): MorphToMany
+  {
+    return $this->morphToMany(Page::class, 'paggable', 'paggables');
+  }
+
+  public function scopeOfData(): Collection
+  {
+    return $this->all()
+      ->map(
+        fn($category) => CategoryData::fromData($category)
+      );
+  }
+
+  public function scopeOfNext(Builder $query, int $id): ?array
+  {
+    $next = $query->where('id', '>', $id)->first([
+      'name', 'slug',
+    ]);
+    if (null !== $next) {
+      return [
+        'name' => $next->name,
+        'slug' => '/learn-crypto/'.$next->slug,
+      ];
     }
 
-    public function images(): MorphOne
-    {
-        return $this->morphOne(Library::class, 'imageable');
+    return null;
+  }
+
+  public function scopeOfPrev(Builder $query, int $id): ?array
+  {
+    $prev = $query->where('id', '<', $id)->orderBy('id', 'desc')
+      ->first(['name', 'slug']);
+    if (null !== $prev) {
+      return [
+        'name' => $prev->name,
+        'slug' => '/learn-crypto/'.$prev->slug,
+      ];
     }
 
-    public function pages(): MorphToMany
-    {
-        return $this->morphToMany(Page::class, 'paggable', 'paggables');
-    }
+    return null;
+  }
 
-    public function scopeOfData(): Collection
-    {
-        return $this->all()
-            ->map(
-                fn ($category) => CategoryData::fromData($category)
-            )
-        ;
-    }
+  /**
+   * Get the route key for the model.
+   */
+  public function getRouteKeyName(): string
+  {
+    return 'slug';
+  }
 
-    public function scopeOfNext(Builder $query, int $id): ?array
-    {
-        $next = $query->where('id', '>', $id)->first([
-            'name', 'slug',
-        ]);
-        if (null !== $next) {
-            return [
-                'name' => $next->name,
-                'slug' => '/learn-crypto/' . $next->slug,
-            ];
-        }
-
-        return null;
-    }
-
-    public function scopeOfPrev(Builder $query, int $id): ?array
-    {
-        $prev = $query->where('id', '<', $id)->orderBy('id', 'desc')
-            ->first(['name', 'slug'])
-        ;
-        if (null !== $prev) {
-            return [
-                'name' => $prev->name,
-                'slug' => '/learn-crypto/' . $prev->slug,
-            ];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    /**
-     * Retrieve the model for a bound value.
-     *
-     * @param  mixed  $value
-     * @param  string|null  $field
-     */
-    public function resolveRouteBinding($value, $field = null): ?Model
-    {
-        return $this->where('slug', $value)->firstOrFail();
-    }
+  /**
+   * Retrieve the model for a bound value.
+   *
+   * @param  mixed  $value
+   * @param  string|null  $field
+   */
+  public function resolveRouteBinding($value, $field = null): ?Model
+  {
+    return $this->where('slug', $value)->firstOrFail();
+  }
 }

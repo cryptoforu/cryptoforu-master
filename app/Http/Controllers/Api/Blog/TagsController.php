@@ -29,8 +29,7 @@ final class TagsController extends Controller
         )->allowedFilters([
             AllowedFilter::exact('name'),
         ])->allowedIncludes(['posts'])
-            ->get()
-        ;
+            ->get();
 
         return TagsApiResource::collection(
             $tags

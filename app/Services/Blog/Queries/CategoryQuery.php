@@ -40,7 +40,6 @@ final class CategoryQuery implements CategoryQueryContract
             ->allowedIncludes(includes: [
                 'posts.tags',
             ])
-            ->getEloquentBuilder()
-        ;
+            ->getEloquentBuilder();
     }
 }

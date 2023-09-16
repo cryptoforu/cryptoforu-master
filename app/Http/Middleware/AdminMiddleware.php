@@ -13,32 +13,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class AdminMiddleware
 {
-    private array $allowedRoutes = [
-        'api/placeholder/*',
-        'api/count-views/*',
-        'api/test',
-    ];
+  private array $allowedRoutes = [
+    'api/placeholder/*',
+    'api/count-views/*',
+    'api/test',
+  ];
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     *
-     * @throws AuthorizationException
-     */
-    public function handle(Request $request, Closure $next): Response
-    {
-        $user = $request->user();
-        if ($request->is(...$this->allowedRoutes)) {
-            return $next($request);
-        }
+  /**
+   * Handle an incoming request.
+   *
+   * @param  Closure(Request): (Response)  $next
+   *
+   * @throws AuthorizationException
+   */
+  public function handle(Request $request, Closure $next): Response
+  {
 
-        if ($request->is('api/*') && Auth::check()) {
-            Gate::authorize('view-resource', [$request->user()]);
-
-            return $next($request);
-        }
-
-        return $next($request);
+    if ($request->is(...$this->allowedRoutes)) {
+      return $next($request);
     }
+
+    if ($request->is('api/*') && Auth::check()) {
+      Gate::authorize('view-resource', [$request->user()]);
+
+      return $next($request);
+    }
+
+    return $next($request);
+  }
 }

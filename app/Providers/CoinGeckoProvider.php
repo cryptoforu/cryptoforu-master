@@ -31,8 +31,7 @@ final class CoinGeckoProvider extends ServiceProvider
                         7,
                         new RateLimiterStore()
                     )
-                )->throw()->acceptJson()
-            ;
+                )->throw()->acceptJson();
         });
     }
 }

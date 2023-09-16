@@ -50,7 +50,6 @@ final class CryptoCategories extends Model
 
     /**
      * Coins Relationship
-     * @return HasMany
      */
     public function coins(): HasMany
     {
@@ -59,7 +58,6 @@ final class CryptoCategories extends Model
 
     /**
      * Make SQLLite Rows
-     * @return array
      */
     public function getRows(): array
     {
@@ -68,7 +66,6 @@ final class CryptoCategories extends Model
 
     /**
      * Get Categories For Table
-     * @return array
      */
     private function getCategories(): array
     {

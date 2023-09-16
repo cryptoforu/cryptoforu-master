@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
-class RssReaderProvider extends ServiceProvider
+final class RssReaderProvider extends ServiceProvider
 {
     /**
      * Register services.

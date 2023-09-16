@@ -43,8 +43,7 @@ final readonly class BreadCrumbsResource
         $pages = Page::query()
             ->where('page_type', 'front')
             ->with('parents')
-            ->get()
-        ;
+            ->get();
 
         return BreadcrumbsData::collection($pages)->toArray();
     }

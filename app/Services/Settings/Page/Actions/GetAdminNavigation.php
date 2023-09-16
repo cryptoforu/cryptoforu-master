@@ -18,8 +18,7 @@ final class GetAdminNavigation
         $route = Route::currentRouteName();
         $query = Page::route($route, $fallback)
             ->with('childs')
-            ->first()
-        ;
+            ->first();
         if (0 !== $query->parent_id) {
             $query->load('parents');
         }

@@ -12,14 +12,10 @@ final class PageData extends Data
 {
     public function __construct(
         public string $data_name,
-        public mixed  $data_values,
+        public mixed $data_values,
     ) {
     }
 
-    /**
-     * @param Site $site
-     * @return self
-     */
     public static function fromModel(Site $site): self
     {
         return new self(
@@ -29,8 +25,7 @@ final class PageData extends Data
     }
 
     /**
-     * @param Site $site
-     * @return self
+     * @param  Site  $site
      */
     public static function fromDataValues(Model $site): self
     {

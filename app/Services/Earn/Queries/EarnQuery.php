@@ -19,7 +19,6 @@ final class EarnQuery implements EarnQueryContract
             AllowedFilter::exact('id'),
             AllowedFilter::exact('status'),
         ])->allowedIncludes(['earnCategory'])
-            ->getEloquentBuilder()
-        ;
+            ->getEloquentBuilder();
     }
 }

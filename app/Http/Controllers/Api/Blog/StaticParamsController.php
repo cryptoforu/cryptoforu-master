@@ -30,8 +30,7 @@ final class StaticParamsController extends Controller
             AllowedFilter::custom('metadata', new MetaDataFilter()),
             AllowedFilter::custom('params', new StaticParamsFilter()),
         ])
-            ->get()
-        ;
+            ->get();
 
         return new CollectionResponse(
             data: $data

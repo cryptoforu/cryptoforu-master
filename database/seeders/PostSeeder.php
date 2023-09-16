@@ -8,7 +8,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
-class PostSeeder extends Seeder
+final class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +16,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $posts = Post::factory()->count(150)
-            ->create()
-        ;
+            ->create();
         $posts->map(function (Post $post): void {
             $arrTag = [
                 Tag::all()->random(), Tag::all()->random(), Tag::all()->random(),

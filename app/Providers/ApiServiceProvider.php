@@ -8,7 +8,7 @@ use App\Contracts\ApiServiceContract;
 use App\Services\Api\ApiService;
 use Illuminate\Support\ServiceProvider;
 
-class ApiServiceProvider extends ServiceProvider
+final class ApiServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

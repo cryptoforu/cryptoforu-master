@@ -68,6 +68,8 @@ use Spatie\LaravelData\WithData;
  * @method static Builder|Post newQuery()
  * @method static Builder|Post ofLatest(int $take)
  * @method static Builder|Post ofStatus(PostStatus $status)
+ * @method static Builder|Post ofNext(int $id)
+ * @method static Builder|Post ofPrev(int $id)
  * @method static Builder|Post query()
  * @method static Builder|Post whereCategoryId($value)
  * @method static Builder|Post whereContent($value)
@@ -87,123 +89,122 @@ use Spatie\LaravelData\WithData;
  */
 final class Post extends Model implements Viewable
 {
-    use HasFactory;
-    use InteractsWithViews;
-    use Searchable;
-    use WithData;
+  use HasFactory;
+  use InteractsWithViews;
+  use Searchable;
+  use WithData;
 
-    protected $fillable = [
-        'title',
-        'content',
-        'introduction',
-        'slug',
-        'featured_image',
-        'thumb',
-        'category_id',
-        'image_name',
-        'excerpt',
-        'status',
-        'headline',
-        'post_links',
+  protected $fillable = [
+    'title',
+    'content',
+    'introduction',
+    'slug',
+    'featured_image',
+    'thumb',
+    'category_id',
+    'image_name',
+    'excerpt',
+    'status',
+    'headline',
+    'post_links',
 
+  ];
+
+  protected string $dataClass = PostData::class;
+
+  protected $casts = [
+    'status' => PostStatus::class,
+    'nullable_enum' => PostStatus::class.':nullable',
+    'array_of_enums' => PostStatus::class.':collection',
+    'nullable_array_of_enums' => PostStatus::class.':collection,nullable',
+    'post_links' => AsCollection::class,
+
+  ];
+
+  protected $with = ['tags'];
+
+  public function category(): BelongsTo
+  {
+    return $this->belongsTo(Category::class);
+  }
+
+  public function tags(): BelongsToMany
+  {
+    return $this->belongsToMany(Tag::class)->as('tags');
+  }
+
+  public function images(): MorphMany
+  {
+    return $this->morphMany(Library::class, 'imageable');
+  }
+
+  public function scopeOfStatus(Builder $query, PostStatus $status): Builder
+  {
+    return $query->where('status', $status);
+  }
+
+  public function scopeOfLatest(Builder $query, int $take): Builder
+  {
+    return $query->where(
+      'status',
+      'published'
+    )->orWhere('status', 'featured')->take($take)->latest();
+  }
+
+  public function scopeFeatured(Builder $query): void
+  {
+    $query->where('status', PostStatus::FEATURED());
+  }
+
+  public function scopePublished(Builder $query): void
+  {
+    $query->where('status', PostStatus::PUBLISHED());
+  }
+
+  public function scopeOfNext(Builder $query, int $id): ?array
+  {
+    $next = $query->with('category')->where('id', '>', $id)->first([
+      'title', 'slug', 'category_id',
+    ]);
+    if (null !== $next) {
+      return [
+        'name' => $next->title,
+        'slug' => '/learn-crypto/'.$next->category->slug.'/'.$next->slug,
+      ];
+    }
+
+    return null;
+  }
+
+  public function scopeOfPrev(Builder $query, int $id): ?array
+  {
+    $prev = $query->with('category')->where('id', '<', $id)->orderBy(
+      'id',
+      'desc'
+    )
+      ->first(['title', 'slug', 'category_id']);
+    if (null !== $prev) {
+      return [
+        'name' => $prev->title,
+        'slug' => '/learn-crypto/'.$prev->category->slug.'/'.$prev->slug,
+      ];
+    }
+
+    return null;
+  }
+
+  /**
+   * Get the route key for the model.
+   */
+  public function getRouteKeyName(): string
+  {
+    return 'slug';
+  }
+
+  public function toSearchableArray(): array
+  {
+    return [
+      'title' => $this->title,
     ];
-
-    protected string $dataClass = PostData::class;
-
-    protected $casts = [
-        'status' => PostStatus::class,
-        'nullable_enum' => PostStatus::class . ':nullable',
-        'array_of_enums' => PostStatus::class . ':collection',
-        'nullable_array_of_enums' => PostStatus::class . ':collection,nullable',
-        'post_links' => AsCollection::class,
-
-    ];
-
-    protected $with = ['tags'];
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class)->as('tags');
-    }
-
-    public function images(): MorphMany
-    {
-        return $this->morphMany(Library::class, 'imageable');
-    }
-
-    public function scopeOfStatus(Builder $query, PostStatus $status): Builder
-    {
-        return $query->where('status', $status);
-    }
-
-    public function scopeOfLatest(Builder $query, int $take): Builder
-    {
-        return $query->where(
-            'status',
-            'published'
-        )->orWhere('status', 'featured')->take($take)->latest();
-    }
-
-    public function scopeFeatured(Builder $query): void
-    {
-        $query->where('status', PostStatus::FEATURED());
-    }
-
-    public function scopePublished(Builder $query): void
-    {
-        $query->where('status', PostStatus::PUBLISHED());
-    }
-
-    public function scopeOfNext(Builder $query, int $id): ?array
-    {
-        $next = $query->with('category')->where('id', '>', $id)->first([
-            'title', 'slug', 'category_id',
-        ]);
-        if (null !== $next) {
-            return [
-                'name' => $next->title,
-                'slug' => '/learn-crypto/' . $next->category->slug . '/' . $next->slug,
-            ];
-        }
-
-        return null;
-    }
-
-    public function scopeOfPrev(Builder $query, int $id): ?array
-    {
-        $prev = $query->with('category')->where('id', '<', $id)->orderBy(
-            'id',
-            'desc'
-        )
-            ->first(['title', 'slug', 'category_id'])
-        ;
-        if (null !== $prev) {
-            return [
-                'name' => $prev->title,
-                'slug' => '/learn-crypto/' . $prev->category->slug . '/' . $prev->slug,
-            ];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-        ];
-    }
+  }
 }

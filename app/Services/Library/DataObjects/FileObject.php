@@ -6,7 +6,7 @@ namespace App\Services\Library\DataObjects;
 
 use Spatie\LaravelData\Data;
 
-class FileObject extends Data
+final class FileObject extends Data
 {
     public function __construct(
         public string $file_name,

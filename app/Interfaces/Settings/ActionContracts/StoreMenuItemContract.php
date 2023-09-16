@@ -8,10 +8,11 @@ use App\Http\Requests\StoreMenuItemRequest;
 
 interface StoreMenuItemContract
 {
-    /**
-     * Store Menu Items
-     *
-     * @param  StoreMenuItemRequest  $request
-     */
-    public function handle(StoreMenuItemRequest $from): bool;
+  /**
+   * Store Menu Items
+   *
+   * @param  StoreMenuItemRequest  $from
+   * @return bool
+   */
+  public function handle(StoreMenuItemRequest $from): bool;
 }

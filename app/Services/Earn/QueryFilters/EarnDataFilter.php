@@ -9,7 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder as B;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Filters\Filter;
 
-class EarnDataFilter implements Filter
+final class EarnDataFilter implements Filter
 {
     /**
      * {@inheritDoc}

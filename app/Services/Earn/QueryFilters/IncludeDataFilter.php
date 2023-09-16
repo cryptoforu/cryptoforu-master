@@ -9,7 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder as B;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Includes\IncludeInterface;
 
-class IncludeDataFilter implements IncludeInterface
+final class IncludeDataFilter implements IncludeInterface
 {
     /**
      * {@inheritDoc}

@@ -27,10 +27,10 @@ Route::get(
 
 Route::controller(BlogApiController::class)->group(
     function (): void {
-        Route::get('/', 'index');
-        Route::get('/latest', 'latest');
-        Route::get('/{category}/posts', 'category');
-        Route::get('/{category}/posts/{post}', 'post');
+        Route::get('/', 'index')->name('index');
+        Route::get('/latest', 'latest')->name('latest');
+        Route::get('/{category}/posts', 'category')->name('category');
+        Route::get('/{category}/posts/{post}', 'post')->name('post');
     }
 )->scopeBindings();
 

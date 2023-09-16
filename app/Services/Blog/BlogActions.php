@@ -11,37 +11,37 @@ use App\Models\Post;
 use App\Services\Blog\Actions\StorePost;
 use App\Services\Blog\Actions\UpdatePost;
 
-final class BlogActions implements BlogActionInterface
+final readonly class BlogActions implements BlogActionInterface
 {
-    /**
-     * Blog Actions Instance
-     */
-    public function __construct(
-        private readonly StorePost $store,
-        private readonly UpdatePost $update,
-    ) {
-    }
+  /**
+   * Blog Actions Instance
+   */
+  public function __construct(
+    private StorePost $store,
+    private UpdatePost $update,
+  ) {
+  }
 
-    /**
-     * Store Post
-     */
-    public function store(StorePostRequest $request): void
-    {
-        $this->store->handle(
-            request: $request
-        );
-    }
+  /**
+   * Store Post
+   */
+  public function store(StorePostRequest $request): void
+  {
+    $this->store->handle(
+      request: $request
+    );
+  }
 
-    /**
-     * Update Post
-     */
-    public function update(
-        UpdatePostRequest $request,
-        Post $post,
-    ): bool {
-        return $this->update->handle(
-            request: $request,
-            post: $post,
-        );
-    }
+  /**
+   * Update Post
+   */
+  public function update(
+    UpdatePostRequest $request,
+    Post $post,
+  ): bool {
+    return $this->update->handle(
+      request: $request,
+      post: $post,
+    );
+  }
 }

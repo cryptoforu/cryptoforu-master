@@ -7,27 +7,32 @@ namespace App\Services\Settings\Menu;
 use App\Interfaces\Settings\MenuInterface;
 use App\Services\Settings\Menu\Actions\GetMenu;
 use App\Services\Settings\Menu\Actions\ShowMenus;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-final class MenuResources implements MenuInterface
+final readonly class MenuResources implements MenuInterface
 {
-    public function __construct(
-        private readonly GetMenu $getMenu,
-        private readonly ShowMenus $menus,
-    ) {
-    }
+  public function __construct(
+    private GetMenu $getMenu,
+    private ShowMenus $menus,
+  ) {
+  }
 
-    public function getMenu($position)
-    {
-        $menu = $this->getMenu->handle($position);
+  /**
+   * @throws ContainerExceptionInterface
+   * @throws NotFoundExceptionInterface
+   */
+  public function getMenu($position)
+  {
+    $menu = $this->getMenu->handle($position);
+    return lazy_load()->load(
+      key: $position,
+      callback: fn() => $menu,
+    );
+  }
 
-        return lazy_load()->load(
-            key: $position,
-            callback: fn () => $menu,
-        );
-    }
-
-    public function show(): mixed
-    {
-        return $this->menus->handle();
-    }
+  public function show(): array
+  {
+    return $this->menus->handle();
+  }
 }

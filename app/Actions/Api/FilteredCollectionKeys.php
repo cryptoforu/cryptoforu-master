@@ -7,7 +7,7 @@ namespace App\Actions\Api;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 
-class FilteredCollectionKeys
+final class FilteredCollectionKeys
 {
     public function __invoke(Collection $collection): Collection
     {
@@ -18,8 +18,7 @@ class FilteredCollectionKeys
                     ->only(
                         Request::string('only')
                             ->split('/[\s,]+/')
-                    )
-                ;
+                    );
             },
             static fn (): Collection => $collection
         );

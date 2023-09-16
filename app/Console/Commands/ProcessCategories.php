@@ -9,7 +9,7 @@ use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
 use Throwable;
 
-class ProcessCategories extends Command
+final class ProcessCategories extends Command
 {
     /**
      * The name and signature of the console command.

@@ -15,7 +15,6 @@ trait Popular
     ): mixed {
         return $collection
             ->whereIn($compare, $names)
-            ->map(fn ($item) => $item)
-        ;
+            ->map(fn ($item) => $item);
     }
 }

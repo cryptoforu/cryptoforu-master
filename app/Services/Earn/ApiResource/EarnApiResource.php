@@ -36,8 +36,6 @@ final class EarnApiResource extends Data
 
     /**
      * Get earn Data From Model
-     * @param  Earn  $earn
-     * @return self
      */
     public static function fromModel(Earn $earn): self
     {

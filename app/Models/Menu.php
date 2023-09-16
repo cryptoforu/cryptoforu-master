@@ -66,7 +66,6 @@ final class Menu extends Model
     ): Model {
         return $query
             ->where('position', $position)
-            ->with('items')->first()
-        ;
+            ->with('items')->first();
     }
 }

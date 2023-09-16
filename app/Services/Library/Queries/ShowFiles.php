@@ -12,23 +12,23 @@ use Illuminate\Support\Str;
 
 final class ShowFiles
 {
-    use Selectable;
+  use Selectable;
 
-    /**
-     * Get Files Per Category
-     */
-    public function handle(): Collection
-    {
-        $lib = LibraryCategory::with('media')->get();
-        $data = (new Collection(
-            items: LibraryCategoryData::collection(
-                items: $lib->map(fn ($l) => $l->getData())
-            )->include('media.{conversions,size,width,height}')
-        ))->keyBy(fn (array $item) => Str::slug($item['name']));
+  /**
+   * Get Files Per Category
+   */
+  public function handle(): Collection
+  {
+    $lib = LibraryCategory::with('media')->get();
+    $data = collect(
+      value: LibraryCategoryData::collection(
+        items: $lib->map(fn($l) => $l->getData())
+      )->include('media.{conversions,size,width,height}')
+    )->keyBy(fn(array $item) => Str::slug($item['name']));
 
-        return collect([
-            'data' => $data,
-            'select' => $this->selectable($data, 'name'),
-        ]);
-    }
+    return collect([
+      'data' => $data,
+      'select' => $this->selectable($data, 'name'),
+    ]);
+  }
 }

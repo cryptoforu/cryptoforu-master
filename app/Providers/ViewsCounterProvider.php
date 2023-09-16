@@ -8,7 +8,7 @@ use App\Contracts\CountActionContract;
 use App\Services\Api\Resources\CountActions;
 use Illuminate\Support\ServiceProvider;
 
-class ViewsCounterProvider extends ServiceProvider
+final class ViewsCounterProvider extends ServiceProvider
 {
     /**
      * Register services.

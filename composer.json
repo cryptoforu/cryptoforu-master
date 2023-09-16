@@ -39,7 +39,8 @@
     "swayok/alternative-laravel-cache": "6.1.*",
     "swayok/cache-filesystem-adapter": "^1.0.0",
     "tightenco/ziggy": "*",
-    "timacdonald/json-api": "^1.0@beta"
+    "timacdonald/json-api": "^1.0@beta",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.13",
@@ -48,6 +49,7 @@
     "laravel/sail": "^1.18",
     "mockery/mockery": "^1.4.4",
     "nunomaduro/collision": "^7.0",
+    "pestphp/pest": "*",
     "roave/security-advisories": "dev-latest",
     "spatie/laravel-ignition": "^2.0"
   },

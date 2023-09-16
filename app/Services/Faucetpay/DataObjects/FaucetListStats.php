@@ -10,7 +10,7 @@ use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
-class FaucetListStats extends Data
+final class FaucetListStats extends Data
 {
     public function __construct(
         #[DataCollectionOf(FaucetCoinStats::class)]

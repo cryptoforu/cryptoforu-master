@@ -31,7 +31,7 @@ return [
     |
     */
 
-  'preset' => 'laravel',
+    'preset' => 'laravel',
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-  'ide' => null,
+    'ide' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -64,34 +64,34 @@ return [
     |
     */
 
-  'exclude' => [
-      //  'path/to/directory-or-file'
-  ],
-
-  'add' => [
-    Classes::class => [
-      ForbiddenFinalClasses::class,
+    'exclude' => [
+        //  'path/to/directory-or-file'
     ],
-  ],
 
-  'remove' => [
-    AlphabeticallySortedUsesSniff::class,
-    DeclareStrictTypesSniff::class,
-    DisallowMixedTypeHintSniff::class,
-    ForbiddenDefineFunctions::class,
-    ForbiddenNormalClasses::class,
-    ForbiddenTraits::class,
-    ParameterTypeHintSniff::class,
-    PropertyTypeHintSniff::class,
-    ReturnTypeHintSniff::class,
-    UselessFunctionDocCommentSniff::class,
-  ],
-
-  'config' => [
-    ForbiddenPrivateMethods::class => [
-      'title' => 'The usage of private methods is not idiomatic in Laravel.',
+    'add' => [
+        Classes::class => [
+            ForbiddenFinalClasses::class,
+        ],
     ],
-  ],
+
+    'remove' => [
+        AlphabeticallySortedUsesSniff::class,
+        DeclareStrictTypesSniff::class,
+        DisallowMixedTypeHintSniff::class,
+        ForbiddenDefineFunctions::class,
+        ForbiddenNormalClasses::class,
+        ForbiddenTraits::class,
+        ParameterTypeHintSniff::class,
+        PropertyTypeHintSniff::class,
+        ReturnTypeHintSniff::class,
+        UselessFunctionDocCommentSniff::class,
+    ],
+
+    'config' => [
+        ForbiddenPrivateMethods::class => [
+            'title' => 'The usage of private methods is not idiomatic in Laravel.',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -104,13 +104,13 @@ return [
     |
     */
 
-  'requirements' => [
-//        'min-quality' => 0,
-//        'min-complexity' => 0,
-//        'min-architecture' => 0,
-//        'min-style' => 0,
-//        'disable-security-check' => false,
-  ],
+    'requirements' => [
+        //        'min-quality' => 0,
+        //        'min-complexity' => 0,
+        //        'min-architecture' => 0,
+        //        'min-style' => 0,
+        //        'disable-security-check' => false,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -123,6 +123,6 @@ return [
     |
     */
 
-  'threads' => null,
+    'threads' => null,
 
 ];

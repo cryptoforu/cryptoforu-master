@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Interfaces\Crypto\CryptoActionsInterface;
@@ -7,7 +9,7 @@ use App\Interfaces\Crypto\HandleCoinsContract;
 use Illuminate\Console\Command;
 use Throwable;
 
-class ProcessFpCoins extends Command
+final class ProcessFpCoins extends Command
 {
     /**
      * The name and signature of the console command.

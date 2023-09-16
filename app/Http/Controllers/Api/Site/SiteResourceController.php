@@ -27,7 +27,7 @@ final class SiteResourceController extends Controller
      */
     public function __invoke(
         Request $request,
-        Site    $site,
+        Site $site,
     ): CollectionResponse|ErrorResponse {
         $data = QueryBuilder::for($site)
             ->allowedFilters([AllowedFilter::exact('data_name')])

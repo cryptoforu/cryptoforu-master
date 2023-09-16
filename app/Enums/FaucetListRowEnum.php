@@ -1,4 +1,8 @@
 <?php
+/** @noinspection ALL */
+
+
+declare(strict_types=1);
 
 /** @noinspection PhpUndefinedMethodInspection */
 
@@ -19,29 +23,29 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 final class FaucetListRowEnum extends Enum
 {
-    public function rows(): array|string|object
-    {
-        return match ($this) {
-            self::name() => ['url', 'name'],
-            self::paid_today() => ['paid_today', 'paid_today_coin', 'currency'],
-            self::active_users() => ['active_users', 'total_users_paid'],
-            self::reward() => ['reward', 'reward_coin', 'currency'],
-            self::timer_in_minutes() => 'timer_in_minutes',
-            self::health() => ['health', 'balance'],
-            self::url() => 'url'
-        };
-    }
+  public function rows(): array|string|object
+  {
+    return match ($this) {
+      self::name() => ['url', 'name'],
+      self::paid_today() => ['paid_today', 'paid_today_coin', 'currency'],
+      self::active_users() => ['active_users', 'total_users_paid'],
+      self::reward() => ['reward', 'reward_coin', 'currency'],
+      self::timer_in_minutes() => 'timer_in_minutes',
+      self::health() => ['health', 'balance'],
+      self::url() => 'url'
+    };
+  }
 
-    public function cell(): string
-    {
-        return match ($this) {
-            self::name() => 'name',
-            self::paid_today() => 'usd_crypto',
-            self::active_users() => 'default',
-            self::reward() => 'usd_crypto',
-            self::timer_in_minutes() => 'time',
-            self::health() => 'meter',
-            self::url() => 'link'
-        };
-    }
+  public function cell(): string
+  {
+    return match ($this) {
+      self::name() => 'name',
+      self::paid_today() => 'usd_crypto',
+      self::active_users() => 'default',
+      self::reward() => 'usd_crypto',
+      self::timer_in_minutes() => 'time',
+      self::health() => 'meter',
+      self::url() => 'link'
+    };
+  }
 }
