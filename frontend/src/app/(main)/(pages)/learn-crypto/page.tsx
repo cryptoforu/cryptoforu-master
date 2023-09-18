@@ -2,11 +2,6 @@
 
 import { Suspense } from 'react'
 
-import {
-  CategoryWithPosts,
-  PostWithCategory,
-} from '@/app/(main)/(pages)/learn-crypto/blog'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
 import { getMetaData } from '@/app/api/site_data/siteRoutes'
 import { AdPlaceholder } from '@/components/content'
@@ -20,17 +15,13 @@ export async function generateMetadata() {
 }
 
 export default async function LearnCrypto() {
-  const latest = (await getCategories('/latest')) as PostWithCategory[]
-  const categoriesData = getCategories(
-    '?include=posts&page[size]=6'
-  ) as Promise<CategoryWithPosts[]>
   return (
     <PageWrapper>
       <Suspense fallback={<ContentSkeleton cards={3} />}>
-        <LatestPosts latest={latest} />
+        <LatestPosts />
       </Suspense>
       <Suspense fallback={<ContentSkeleton cards={6} />}>
-        <CategoryPosts categories={categoriesData} />
+        <CategoryPosts />
       </Suspense>
       <div className={'mx-auto max-w-5xl'}>
         <AdPlaceholder ad={'leaderboard'} />

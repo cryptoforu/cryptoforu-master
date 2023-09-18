@@ -1,13 +1,19 @@
-import { useMotionValueEvent, useScroll } from 'framer-motion'
-import { useState } from 'react'
+import { useCallback } from 'react'
+import { useIsSSR } from 'react-aria'
 
 const useScrollPosition = () => {
-  const [position, setPosition] = useState(0)
-  const { scrollY } = useScroll()
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    setPosition(latest)
-  })
+  const isSSR = useIsSSR()
 
-  return position
+  return useCallback(
+    (action: boolean, id: string) => {
+      if (action && !isSSR) {
+        const element = document.getElementById(id)
+        return element.scrollIntoView({
+          block: 'start',
+        })
+      }
+    },
+    [isSSR]
+  )
 }
 export default useScrollPosition

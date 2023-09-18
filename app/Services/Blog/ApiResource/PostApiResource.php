@@ -6,13 +6,15 @@ namespace App\Services\Blog\ApiResource;
 
 use App\Contracts\CountActionContract;
 use App\Models\Post;
+use App\Services\Blog\Casts\ReadingTime;
 use App\Services\Blog\Enums\PostStatus;
-use Carbon\CarbonImmutable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\Attributes\WithCastable;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
@@ -30,10 +32,11 @@ final class PostApiResource extends Data
     public Lazy|string $content,
     public Lazy|PostStatus $status,
     public int $category_id,
-    public Lazy|CarbonImmutable|string $created_at,
-    public Lazy|CarbonImmutable|string $updated_at,
+    public Lazy|Carbon|string $created_at,
+    public Lazy|Carbon|string $updated_at,
     public Lazy|string $image_name,
     public Lazy|string $headline,
+    #[WithCastable(ReadingTime::class)]
     public Lazy|string $reading_time,
     public Lazy|Collection $post_links,
     public Optional|Lazy|CategoryApiResource $category,
@@ -42,10 +45,6 @@ final class PostApiResource extends Data
   ) {
   }
 
-  public static function allowedRequestIncludes(): ?array
-  {
-    return null;
-  }
 
   public static function fromModel(Post $post): self
   {
@@ -65,18 +64,18 @@ final class PostApiResource extends Data
         fn() => $post->content
       ),
       status: Lazy::when(
-        fn() => null !== PostStatus::tryFrom($post->status),
+        fn() => !is_null(PostStatus::tryFrom($post->status)),
         fn() => PostStatus::tryFrom($post->status)
       ),
       category_id: $post->category_id,
       created_at: Lazy::create(
-        static fn() => CarbonImmutable::create(
+        static fn() => Carbon::create(
           $post->created_at
         )->isoFormat('lll')
       ),
       updated_at: Lazy::when(
         fn() => null !== $post->updated_at,
-        fn() => CarbonImmutable::create($post->updated_at)->isoFormat(
+        fn() => Carbon::create($post->updated_at)->isoFormat(
           'lll'
         )
       ),
@@ -90,7 +89,7 @@ final class PostApiResource extends Data
       ),
       reading_time: Lazy::when(
         fn() => null !== $post->content,
-        fn() => Str::readDuration($post->content).' min read'
+        fn() => Str::readDuration($post->content) . ' min read'
       ),
       post_links: Lazy::when(
         fn() => null !== $post->post_links,
@@ -100,7 +99,7 @@ final class PostApiResource extends Data
         'category',
         $post,
         static fn() => CategoryApiResource::from($post->category)->only(
-          'category'.Request::string('fields[categories]')->toString()
+          'category' . Request::string('fields[categories]')->toString()
         )
       ),
       tags: Lazy::whenLoaded(

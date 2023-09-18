@@ -1,13 +1,12 @@
 import { Route } from 'next'
 
-import { CategoryProps } from '@/app/(main)/(pages)/learn-crypto/blog'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
+import { getCategories } from '@/app/api/blog/blogRoutes'
 import { List, ListItem } from '@/components/content'
 import { InternalLink } from '@/components/elements'
 import { Heading } from '@/components/typography'
 
 const CategoriesNav = async () => {
-  const categories = (await getCategories()) as CategoryProps[]
+  const categories = await getCategories()
   return (
     <nav
       aria-label={'Categories'}

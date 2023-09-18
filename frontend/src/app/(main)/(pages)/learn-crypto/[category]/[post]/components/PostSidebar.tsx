@@ -1,4 +1,4 @@
-import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { PostWithCategory } from '@/app/api/blog/blog'
 import Sidebar from '@/components/sidebar/Sidebar'
 import SidebarProvider from '@/store/controllers/SidebarProvider'
 

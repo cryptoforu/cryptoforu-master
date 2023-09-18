@@ -95,3 +95,8 @@ export type GetFaqProps = {
     value: string
   }[]
 }
+export type GetReturnType<Type> = Type extends (
+  ...args: never[]
+) => infer Return
+  ? Return
+  : never

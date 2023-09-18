@@ -1,18 +1,17 @@
 'use client'
-import { Suspense } from 'react'
+import { useMemo } from 'react'
 
-import { TableSkeleton } from '@/components/skeletons'
 import DataTable from '@/components/tables/DataTable'
+import { getColumns } from '@/lib/generateColumns'
 import useCryptoController from '@/store/controllers/useCryptoController'
-import { useCryptoContext } from '@/store/useCrypto'
+import { CellProps } from '@/store/types/data-table-store'
 
-const CryptoData = () => {
+const CryptoData = ({ tableColumns }: { tableColumns: CellProps[] }) => {
   const { coinsData } = useCryptoController()
-  const columns = useCryptoContext((state) => state.columns)
-  return (
-    <Suspense fallback={<TableSkeleton rows={6} />}>
-      <DataTable data={coinsData} columns={columns} />
-    </Suspense>
+  const columns = useMemo(
+    () => getColumns(Object.values(tableColumns)),
+    [tableColumns]
   )
+  return <DataTable data={coinsData} columns={columns} />
 }
 export default CryptoData

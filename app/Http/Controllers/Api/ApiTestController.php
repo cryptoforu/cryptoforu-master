@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Crypto\CryptoActionsInterface;
 use App\Interfaces\Crypto\HandleCoinsContract;
-use App\Models\FaucetList;
 use App\Services\Crypto\CryptoResource;
 use App\Services\Crypto\CryptoService;
 
@@ -24,9 +23,8 @@ final class ApiTestController extends Controller
   /**
    * Handle the incoming request.
    */
-  public function __invoke(): int
+  public function __invoke()
   {
-    return FaucetList::query()->get()->count();
-
+    //
   }
 }

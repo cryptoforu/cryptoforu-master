@@ -11,6 +11,7 @@ import {
   PagesData,
   SidebarData,
   SocialShareData,
+  Ziggy,
 } from './src/config'
 
 const Features = defineDocumentType(() => ({
@@ -37,6 +38,7 @@ export default makeSource({
     ListData,
     ListDescription,
     Menu,
+    Ziggy,
   ],
   mdx: {
     remarkPlugins: [remarkMdxImages],

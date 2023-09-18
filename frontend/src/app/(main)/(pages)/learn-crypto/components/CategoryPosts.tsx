@@ -1,6 +1,7 @@
 import { Route } from 'next'
 
-import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
+import type { CategoryWithPosts } from '@/app/api/blog/blog'
+import { getCategories } from '@/app/api/blog/blogRoutes'
 import {
   Card,
   CardBody,
@@ -16,13 +17,14 @@ import SectionGrid from '@/components/patterns/SectionGrid'
 import { Text } from '@/components/typography'
 import { Container, Section } from '@/components/wrappers'
 
-const CategoryPosts = async ({
-  categories,
-}: {
-  categories: Promise<CategoryWithPosts[]>
-}) => {
-  const data = await categories
-  const tabsData = data.map((category) => {
+const CategoryPosts = async () => {
+  const categoriesData = await getCategories<CategoryWithPosts[]>({
+    include: 'posts',
+    page: {
+      size: '6',
+    },
+  })
+  const tabsData = categoriesData.map((category) => {
     return {
       id: category.id.toString(),
       key: category.id,

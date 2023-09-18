@@ -9,18 +9,14 @@ import Navbar from '@/components/navbar/Navbar'
 
 const NewsLetter = dynamic(() => import('@/components/footer/NewsLetter'))
 
-export default async function MainLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+export default function MainLayout({ children }: { children: ReactNode }) {
   return (
-    <>
+    <div className={'flex min-h-full flex-col'}>
       <Navbar />
-      <main className={'relative flex-1 focus:outline-none'}>{children}</main>
+      <main>{children}</main>
       <NewsLetter />
       <Footer />
       <BackToTop />
-    </>
+    </div>
   )
 }

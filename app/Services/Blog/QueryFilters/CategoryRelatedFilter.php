@@ -9,15 +9,19 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 final class CategoryRelatedFilter implements Filter
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function __invoke(Builder $query, $value, string $property)
-    {
-        if ('category' === $value) {
-            return $query->inRandomOrder()->take(4);
-        }
-
-        return $query->whereNot('slug', $value)->inRandomOrder()->take(4);
+  /**
+   * {@inheritDoc}
+   */
+  public function __invoke(Builder $query, $value, string $property)
+  {
+    if ('category' === $value) {
+      $query->whereHas('posts', function (Builder $builder) {
+        $builder->inRandomOrder();
+      });
     }
+
+    $query->whereHas('posts', function (Builder $builder) use ($value) {
+      $builder->with('category')->whereNot('slug', $value);
+    });
+  }
 }

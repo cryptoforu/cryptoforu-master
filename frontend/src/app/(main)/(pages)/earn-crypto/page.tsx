@@ -13,7 +13,7 @@ export async function generateMetadata() {
   return await getMetaData('earn_crypto')
 }
 
-export default async function EarnCrypto() {
+export default function EarnCrypto() {
   return (
     <PageWrapper>
       <Suspense fallback={<ContentSkeleton cards={6} />}>

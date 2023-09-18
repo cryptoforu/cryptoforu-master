@@ -3,7 +3,7 @@ import { BreadcrumbsProps } from '@/types/shared-types'
 
 export async function getMetaData(page: string) {
   const meta = await buildRequest({
-    routeName: 'site:meta_data',
+    routeName: 'site_meta_data',
     message: `Failed To Fetch ${page} Meta Data`,
     params: {
       _query: {
@@ -24,14 +24,14 @@ export async function getMetaData(page: string) {
 
 export async function getBreadCrumbs() {
   return (await buildRequest({
-    routeName: 'site:breadcrumbs',
+    routeName: 'site_breadcrumbs',
     message: 'Failed To Fetch BreadCrumbs',
   })) as BreadcrumbsProps[]
 }
 
 export async function getSiteData(param: string) {
   return await buildRequest({
-    routeName: 'site:home',
+    routeName: 'site_home',
     message: 'Failed To Fetch FaqQuestions',
     params: {
       site: param,

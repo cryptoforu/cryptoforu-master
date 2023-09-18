@@ -64,9 +64,9 @@ use Spatie\LaravelData\WithData;
  *
  * @method static PostFactory factory($count = null, $state = [])
  * @method static Builder|Post featured()
+ * @method static Builder|Post related(?string $slug = null, ?int $id = null)
  * @method static Builder|Post newModelQuery()
  * @method static Builder|Post newQuery()
- * @method static Builder|Post ofLatest(int $take)
  * @method static Builder|Post ofStatus(PostStatus $status)
  * @method static Builder|Post ofNext(int $id)
  * @method static Builder|Post ofPrev(int $id)
@@ -113,12 +113,8 @@ final class Post extends Model implements Viewable
   protected string $dataClass = PostData::class;
 
   protected $casts = [
-    'status' => PostStatus::class,
-    'nullable_enum' => PostStatus::class.':nullable',
-    'array_of_enums' => PostStatus::class.':collection',
-    'nullable_array_of_enums' => PostStatus::class.':collection,nullable',
+    'status' => PostStatus::class . ':nullable',
     'post_links' => AsCollection::class,
-
   ];
 
   protected $with = ['tags'];
@@ -143,14 +139,6 @@ final class Post extends Model implements Viewable
     return $query->where('status', $status);
   }
 
-  public function scopeOfLatest(Builder $query, int $take): Builder
-  {
-    return $query->where(
-      'status',
-      'published'
-    )->orWhere('status', 'featured')->take($take)->latest();
-  }
-
   public function scopeFeatured(Builder $query): void
   {
     $query->where('status', PostStatus::FEATURED());
@@ -164,12 +152,14 @@ final class Post extends Model implements Viewable
   public function scopeOfNext(Builder $query, int $id): ?array
   {
     $next = $query->with('category')->where('id', '>', $id)->first([
-      'title', 'slug', 'category_id',
+      'title',
+      'slug',
+      'category_id',
     ]);
     if (null !== $next) {
       return [
         'name' => $next->title,
-        'slug' => '/learn-crypto/'.$next->category->slug.'/'.$next->slug,
+        'slug' => '/learn-crypto/' . $next->category->slug . '/' . $next->slug,
       ];
     }
 
@@ -186,11 +176,42 @@ final class Post extends Model implements Viewable
     if (null !== $prev) {
       return [
         'name' => $prev->title,
-        'slug' => '/learn-crypto/'.$prev->category->slug.'/'.$prev->slug,
+        'slug' => '/learn-crypto/' . $prev->category->slug . '/' . $prev->slug,
       ];
     }
 
     return null;
+  }
+
+  public function scopeRelated(
+    Builder $query,
+    ?string $slug = null,
+    ?int $id = null
+  ) {
+    if (!is_null($slug)) {
+      $query->whereNot('slug', $slug)->where('category_id', $id)->select(
+        [
+          'id',
+          'title',
+          'slug',
+          'image_name',
+          'introduction',
+          'category_id',
+          'post_links'
+        ]
+      )->limit(4);
+    }
+    $query->where('category_id', $id)->select(
+      [
+        'id',
+        'title',
+        'slug',
+        'image_name',
+        'introduction',
+        'category_id',
+        'post_links'
+      ]
+    )->limit(4);
   }
 
   /**

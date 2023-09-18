@@ -2,11 +2,10 @@
 
 import { ReactNode } from 'react'
 
-import { CategoryProps } from '@/app/(main)/(pages)/learn-crypto/blog'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
+import { getCategories } from '@/app/api/blog/blogRoutes'
 
 export async function generateStaticParams() {
-  const categoryApiResources = (await getCategories()) as CategoryProps[]
+  const categoryApiResources = await getCategories()
   return categoryApiResources.map((c) => ({
     category: c.slug,
   }))

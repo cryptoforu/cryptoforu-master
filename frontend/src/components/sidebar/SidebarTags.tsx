@@ -1,6 +1,6 @@
 import { Route } from 'next'
 
-import { TagsProps } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { ITags } from '@/app/api/blog/blog'
 import { Card, CardBody, CardHeader } from '@/components/content'
 import { InternalLink, Tag } from '@/components/elements'
 import { Heading } from '@/components/typography'
@@ -8,7 +8,7 @@ import { Heading } from '@/components/typography'
 export type SidebarTagsProps = {
   heading: string
   href: string
-  tags: TagsProps[]
+  tags: ITags[]
 }
 
 const SideBarTags = (props: SidebarTagsProps) => {

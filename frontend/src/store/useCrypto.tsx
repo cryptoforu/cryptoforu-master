@@ -5,8 +5,6 @@ import { immer } from 'zustand/middleware/immer'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 
 import { PaginatedCoins } from '@/app/api/crypto/crypto'
-import { getColumns } from '@/lib/generateColumns'
-import type { ColumnProps } from '@/store/types/data-table-store'
 
 type CryptoState = {
   crypto?: PaginatedCoins
@@ -16,9 +14,7 @@ type CryptoActions = {
   getPrice: (id: string, price: number) => 'danger' | 'success'
 }
 
-interface ICrypto extends CryptoState, CryptoActions {
-  columns: ColumnProps[]
-}
+interface ICrypto extends CryptoState, CryptoActions {}
 
 type CryptoStore = ReturnType<typeof createCryptoStore>
 const createCryptoStore = (initProps?: Partial<CryptoState>) => {
@@ -29,7 +25,6 @@ const createCryptoStore = (initProps?: Partial<CryptoState>) => {
     immer<ICrypto>((set, get) => ({
       ...DEFAULT_PROPS,
       ...initProps,
-      columns: getColumns(Object.values(initProps.crypto.columns)),
       updatePrice: (id, price) =>
         set((state) => {
           const coin = state.crypto.coinsData.find((el) => el.id === id)

@@ -12,17 +12,9 @@ import { markdownComponents } from '@/app/(main)/(pages)/learn-crypto/[category]
 import PostHeader from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/PostHeader'
 import PostLeftSidebar from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/PostLeftSidebar'
 import ResetToc from '@/app/(main)/(pages)/learn-crypto/[category]/[post]/components/ResetToc'
-import {
-  CategoryParams,
-  PostParams,
-  PostWithCategory,
-} from '@/app/(main)/(pages)/learn-crypto/blog'
-import {
-  getArticle,
-  getArticleMeta,
-  getCategory,
-} from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import RelatedPosts from '@/app/(main)/(pages)/learn-crypto/components/RelatedPosts'
+import { CategoryWithPosts, PostParams } from '@/app/api/blog/blog'
+import { fetchCategory, getPost, getPostMeta } from '@/app/api/blog/blogRoutes'
 import { AdPlaceholder } from '@/components/content'
 import { BtnLink } from '@/components/elements'
 import { ContentSkeleton } from '@/components/skeletons'
@@ -34,32 +26,29 @@ import AnimatedImage from '@/motion/AnimatedImage'
 
 export const revalidate = 3600
 export const dynamicParams = true
-export const generateMetadata = async ({ params }: PostParams) =>
-  getArticleMeta({ params })
 
-export async function generateStaticParams({ params }: CategoryParams) {
-  const posts = (await getCategory(
-    params.category,
-    '?filter[postId]=6'
-  )) as PostWithCategory[]
-  return posts.map((post) => ({
+export async function generateMetadata({ params }: PostParams) {
+  return await getPostMeta({ params })
+}
+
+export async function generateStaticParams({ params }: PostParams) {
+  const categoryData = await fetchCategory<CategoryWithPosts>({
+    params,
+    include: 'posts',
+  })
+
+  return categoryData.posts.data.map((post) => ({
     post: post.slug,
   }))
 }
 
 export default async function Post({ params }: PostParams) {
-  const article = (await getArticle(
-    params.category,
-    params.post
-  )) as unknown as PostWithCategory
+  const article = await getPost({ params })
 
   const markdown = useMarkdown(article.content, {
     components: markdownComponents,
   })
-  const related = getCategory(
-    params.category,
-    `?filter[related]=${params.post}`
-  ) as unknown as Promise<PostWithCategory[]>
+
   return (
     <>
       <ResetToc />
@@ -115,7 +104,7 @@ export default async function Post({ params }: PostParams) {
         <AdPlaceholder ad={'leaderboard'} />
       </div>
       <Suspense fallback={<ContentSkeleton cards={4} />}>
-        <RelatedPosts data={related} title={'Related'} description={'Posts'} />
+        <RelatedPosts params={params} title={'Related'} description={'Posts'} />
       </Suspense>
     </>
   )

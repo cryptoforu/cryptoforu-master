@@ -5,7 +5,7 @@ import { CryptoCoin, PaginatedCoins } from '@/app/api/crypto/crypto'
 
 export async function getCoins(queryParams?: QueryParams) {
   return (await buildRequest({
-    routeName: 'crypto:index',
+    routeName: 'crypto_index',
     message: 'Failed To Fetch Coins',
     params: {
       _query: queryParams,
@@ -15,7 +15,7 @@ export async function getCoins(queryParams?: QueryParams) {
 
 export async function getGainersLosers() {
   return (await buildRequest({
-    routeName: 'crypto:gainers_losers',
+    routeName: 'crypto_gainers_losers',
     message: 'Failed To Fetch Gainers and Losers',
   })) as {
     gainers: CryptoCoin[]

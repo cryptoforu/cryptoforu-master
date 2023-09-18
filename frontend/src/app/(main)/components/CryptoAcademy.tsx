@@ -2,8 +2,7 @@ import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Route } from 'next'
 
-import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
+import { getCategories } from '@/app/api/blog/blogRoutes'
 import {
   Card,
   CardBody,
@@ -16,11 +15,14 @@ import { Badge, Button, InternalLink } from '@/components/elements'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Heading, ProseMarkdown } from '@/components/typography'
 import { Container, Grid, Section } from '@/components/wrappers'
+import { randomBadge } from '@/lib/randomStrings'
 
 const CryptoAcademy = async () => {
-  const categories = (await getCategories(
-    '?filter[id]=1,7,8'
-  )) as CategoryWithPosts[]
+  const categories = await getCategories({
+    filter: {
+      id: '1,3,7',
+    },
+  })
   return (
     <Section
       id={'crypto-academy'}
@@ -78,7 +80,7 @@ const CryptoAcademy = async () => {
               </CardHeader>
               <CardBody variant={'secondary'} className={'p-4'}>
                 <div className={'flex justify-start'}>
-                  <Badge variant={'primary'} size={'md'}>
+                  <Badge variant={randomBadge()} size={'md'}>
                     {category.name === 'NFT' ? 'Popular' : 'Beginners'}
                   </Badge>
                 </div>

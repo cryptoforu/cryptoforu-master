@@ -1,45 +1,40 @@
 // noinspection JSUnusedGlobalSymbols
 
+import { Metadata } from 'next'
 import { Suspense } from 'react'
 
-import type { CategoryParams } from '@/app/(main)/(pages)/learn-crypto/blog'
-import {
-  PaginatedPosts,
-  PostWithCategory,
-} from '@/app/(main)/(pages)/learn-crypto/blog'
-import {
-  filterCategory,
-  getCategory,
-  getCategoryMeta,
-} from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
-import CategoryArticles from '@/app/(main)/(pages)/learn-crypto/components/CategoryArticles'
+import CategoryController from '@/app/(main)/(pages)/learn-crypto/components/CategoryController'
 import RelatedPosts from '@/app/(main)/(pages)/learn-crypto/components/RelatedPosts'
 import ScrollContainer from '@/app/(main)/(pages)/learn-crypto/components/ScrollContainer'
+import type { CategoryParams, CategoryWithPosts } from '@/app/api/blog/blog'
+import {
+  fetchCategory,
+  getCategoryMeta,
+  getTags,
+} from '@/app/api/blog/blogRoutes'
 import { AdPlaceholder, PrevNext } from '@/components/content'
 import Sidebar from '@/components/sidebar/Sidebar'
-import { ContentSkeleton } from '@/components/skeletons'
-import CategoryArticlesSkeleton from '@/components/skeletons/CategoryArticlesSkeleton'
+import { ContentSkeleton, SectionSkeleton } from '@/components/skeletons'
+import SidebarSkeleton from '@/components/skeletons/SidebarSkeleton'
 import { Container } from '@/components/wrappers'
-import { getTags } from '@/requests/getTags'
 import SidebarProvider from '@/store/controllers/SidebarProvider'
-import CategoryProvider from '@/store/useCategoryStore'
+import { CategoryProvider } from '@/store/useCategoryProvider'
 
-export const revalidate = 3600
-
-export const generateMetadata = async ({ params }: CategoryParams) =>
-  getCategoryMeta(params.category)
+export async function generateMetadata({
+  params,
+}: CategoryParams): Promise<Metadata> {
+  return await getCategoryMeta({ params })
+}
 
 export default async function CategoryPage({ params }: CategoryParams) {
-  const data = (await getCategory(
-    params.category,
-    '?page[size]=6'
-  )) as unknown as PaginatedPosts
-  const category = await filterCategory(params.category)
+  const category = await fetchCategory<CategoryWithPosts>({
+    params,
+    include: 'posts',
+    page: {
+      size: '6',
+    },
+  })
   const tags = await getTags()
-  const promise = getCategory(
-    params.category,
-    `?filter[related]=category`
-  ) as unknown as Promise<PostWithCategory[]>
   return (
     <>
       <Container variant={'flex'}>
@@ -48,10 +43,10 @@ export default async function CategoryPage({ params }: CategoryParams) {
             'relative mx-auto flex max-w-8xl justify-center border-b border-gray-100 pb-24 dark:border-gray-900 sm:px-2'
           }
         >
-          <Suspense fallback={<CategoryArticlesSkeleton cards={6} />}>
-            <CategoryProvider posts={data}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <CategoryProvider category={category}>
               <ScrollContainer header={category.description}>
-                <CategoryArticles />
+                <CategoryController />
                 <PrevNext
                   prev={category.category_links.prev}
                   next={category.category_links.next}
@@ -59,19 +54,21 @@ export default async function CategoryPage({ params }: CategoryParams) {
               </ScrollContainer>
             </CategoryProvider>
           </Suspense>
-          <SidebarProvider
-            selectedType={'category_page'}
-            data={{ id: category.name, tagsProps: tags }}
-          >
-            <Sidebar />
-          </SidebarProvider>
+          <Suspense fallback={<SidebarSkeleton />}>
+            <SidebarProvider
+              selectedType={'category_page'}
+              data={{ id: category.name, tagsProps: tags }}
+            >
+              <Sidebar />
+            </SidebarProvider>
+          </Suspense>
         </div>
       </Container>
       <div className={'mx-auto max-w-5xl py-12'}>
         <AdPlaceholder ad={'leaderboard'} />
       </div>
       <Suspense fallback={<ContentSkeleton cards={4} />}>
-        <RelatedPosts data={promise} title={'Related'} description={'Posts'} />
+        <RelatedPosts params={params} title={'Related'} description={'Posts'} />
       </Suspense>
     </>
   )

@@ -115,12 +115,13 @@ final class Category extends Model
   public function scopeOfNext(Builder $query, int $id): ?array
   {
     $next = $query->where('id', '>', $id)->first([
-      'name', 'slug',
+      'name',
+      'slug',
     ]);
     if (null !== $next) {
       return [
         'name' => $next->name,
-        'slug' => '/learn-crypto/'.$next->slug,
+        'slug' => '/learn-crypto/' . $next->slug,
       ];
     }
 
@@ -134,7 +135,7 @@ final class Category extends Model
     if (null !== $prev) {
       return [
         'name' => $prev->name,
-        'slug' => '/learn-crypto/'.$prev->slug,
+        'slug' => '/learn-crypto/' . $prev->slug,
       ];
     }
 
@@ -152,8 +153,8 @@ final class Category extends Model
   /**
    * Retrieve the model for a bound value.
    *
-   * @param  mixed  $value
-   * @param  string|null  $field
+   * @param mixed $value
+   * @param string|null $field
    */
   public function resolveRouteBinding($value, $field = null): ?Model
   {

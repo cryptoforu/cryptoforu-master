@@ -2,6 +2,7 @@ import Image, { ImageProps } from 'next/image'
 import { forwardRef } from 'react'
 
 import { ResponsiveImage } from '@/components/elements'
+import { generateImageUrl } from '@/lib/generateImageUrl'
 
 export interface LazyImageProps extends ImageProps {
   filter?: 'lg' | 'aspect-height' | 'upsize' | 'icon' | 'original'
@@ -24,9 +25,9 @@ const LazyImage = forwardRef<HTMLImageElement, LazyImageProps>(
     }
     return (
       <Image
-        src={`${process.env.NEXT_PUBLIC_IMG_URL}${filter}/${src}`}
+        src={generateImageUrl(filter, src)}
         placeholder={'blur'}
-        blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}data-image/${src}`}
+        blurDataURL={generateImageUrl('data-image', src as string)}
         alt={alt}
         ref={ref}
         {...rest}

@@ -7,12 +7,8 @@ import { Container, Grid, Section } from '@/components/wrappers'
 
 const Features = () => {
   return (
-    <Section
-      id={'features'}
-      ariaLabel={'Main Features'}
-      className={'isolate overflow-hidden'}
-    >
-      <Container>
+    <Section id={'features'} ariaLabel={'Main Features'}>
+      <Container className={'relative'}>
         <SectionHeader
           className={'mb-4 max-w-2xl text-center'}
           title={'Our Main'}
@@ -30,8 +26,8 @@ const Features = () => {
             />
           ))}
         </Grid>
+        <PolygonBlur />
       </Container>
-      <PolygonBlur />
     </Section>
   )
 }

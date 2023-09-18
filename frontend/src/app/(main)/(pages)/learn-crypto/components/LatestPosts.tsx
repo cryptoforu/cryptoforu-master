@@ -1,6 +1,4 @@
-import { Route } from 'next'
-
-import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { getLatest } from '@/app/api/blog/blogRoutes'
 import {
   Card,
   CardBody,
@@ -13,7 +11,8 @@ import { DateFormatter } from '@/components/misc/DateFormatter'
 import { Heading, Text } from '@/components/typography'
 import { Container, Section } from '@/components/wrappers'
 
-const LatestPosts = async ({ latest }: { latest: PostWithCategory[] }) => {
+const LatestPosts = async () => {
+  const latest = await getLatest('3')
   return (
     <Section id={'latest-posts'} ariaLabel={'Latest Posts'}>
       <Container>
@@ -53,14 +52,14 @@ const LatestPosts = async ({ latest }: { latest: PostWithCategory[] }) => {
                   className={
                     'relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800'
                   }
-                  href={`/learn-crypto/${post.category?.slug}` as Route}
+                  href={post.category.category_links.category_link}
                 >
-                  {post.category?.name}
+                  {post.category.name}
                 </InternalLink>
               </CardHeader>
               <CardBody variant={'article'} size={'none'}>
                 <Heading as={'h3'} className="mt-3 leading-6">
-                  <InternalLink href={post.post_links.post_link as Route}>
+                  <InternalLink href={post.post_links.post_link}>
                     <span className="absolute inset-0" />
                     {post.title}
                   </InternalLink>
@@ -71,7 +70,7 @@ const LatestPosts = async ({ latest }: { latest: PostWithCategory[] }) => {
               </CardBody>
               <CardFooter variant={'secondary'} size={'article'}>
                 <BtnLink
-                  href={post.post_links.post_link as Route}
+                  href={post.post_links.post_link}
                   colorScheme={'secondary'}
                   size={'sm'}
                   className={'rounded-full'}

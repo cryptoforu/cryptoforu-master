@@ -36,7 +36,7 @@ function HeroPattern() {
   )
 }
 
-const Hero = async () => {
+const Hero = () => {
   return (
     <div
       className={

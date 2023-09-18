@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -64,11 +62,14 @@ final class AppServiceProvider extends ServiceProvider
     $this->app->register(
       provider: ViewsCounterProvider::class
     );
+    $this->app->register(
+      provider: PaginationMacroProvider::class
+    );
   }
 
   /**
    * Bootstrap any application services.
-   * @noinspection PhpUndefinedMethodInspection
+   *
    */
   public function boot(): void
   {
@@ -76,36 +77,8 @@ final class AppServiceProvider extends ServiceProvider
       $totalWords = str_word_count(implode(' ', $text));
       $minutesToRead = round($totalWords / 200);
 
-      return (int) max(1, $minutesToRead);
+      return (int)max(1, $minutesToRead);
     });
     Model::preventLazyLoading(!$this->app->isProduction());
-    Builder::macro('fastJson', function (
-      $perPage = null,
-      $columns = ['*'],
-      $pageName = 'page',
-      $page = null
-    ) {
-      /** @var Builder $this */
-      return $this->fastPaginate(
-        perPage: request()->input('page.size', $perPage),
-        columns: $columns,
-        pageName: $pageName,
-        page: request()->input('page.number', $page)
-      );
-    });
-    Relation::macro('fastJson', function (
-      $perPage = null,
-      $columns = ['*'],
-      $pageName = 'page',
-      $page = null
-    ) {
-      /** @var Relation $this */
-      return $this->fastPaginate(
-        perPage: request()->input('page.size', $perPage),
-        columns: $columns,
-        pageName: $pageName,
-        page: request()->input('page.number', $page)
-      );
-    });
   }
 }

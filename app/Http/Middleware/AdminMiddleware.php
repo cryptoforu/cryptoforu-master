@@ -17,18 +17,18 @@ final class AdminMiddleware
     'api/placeholder/*',
     'api/count-views/*',
     'api/test',
+    'api/ziggy'
   ];
 
   /**
    * Handle an incoming request.
    *
-   * @param  Closure(Request): (Response)  $next
+   * @param Closure(Request): (Response) $next
    *
    * @throws AuthorizationException
    */
   public function handle(Request $request, Closure $next): Response
   {
-
     if ($request->is(...$this->allowedRoutes)) {
       return $next($request);
     }

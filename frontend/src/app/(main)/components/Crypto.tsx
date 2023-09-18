@@ -1,11 +1,20 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
-import { ReactNode } from 'react'
 
+import CryptoData from '@/app/(main)/components/partials/CryptoData'
+import { getCoins } from '@/app/api/crypto/cryptoRoutes'
 import { SectionHeader } from '@/components/content'
 import { Button } from '@/components/elements'
 import { Container, Section } from '@/components/wrappers'
+import { CryptoProvider } from '@/store/useCrypto'
 
-const Crypto = ({ children }: { children: ReactNode }) => {
+const Crypto = async () => {
+  const data = await getCoins({
+    filter: {
+      unique: 'Bitcoin,Ethereum,Cardano,BNB,XRP,Solana',
+    },
+    sort: 'market_cap_rank',
+  })
+
   return (
     <Section
       id={'crypto-home'}
@@ -45,7 +54,9 @@ const Crypto = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
           </div>
-          {children}
+          <CryptoProvider crypto={data}>
+            <CryptoData tableColumns={data.columns} />
+          </CryptoProvider>
         </div>
       </Container>
     </Section>
