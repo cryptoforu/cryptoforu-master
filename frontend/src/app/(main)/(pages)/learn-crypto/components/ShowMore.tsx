@@ -1,51 +1,31 @@
 'use client'
-import { useTransition } from 'react'
-
-import { PaginatedPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
-import { Button } from '@/components/elements'
-import { useUpdateCategory } from '@/store/controllers/useCategoryController'
-import { useCategoryContext } from '@/store/useCategoryStore'
+import { Button, LoadingState } from '@/components/elements'
+import { IPaginationMeta } from '@/types/shared-types'
 
 type ShowMoreProps = {
   handleDown: () => void
-  posts: PaginatedPosts
+  handleUp: () => void
+  size: number
+  meta: IPaginationMeta
+  isPending: boolean
 }
 
 const ShowMore = (props: ShowMoreProps) => {
-  const [pageSize, per_page] = useCategoryContext((state) => [
-    state.pageSize,
-    state.per_page,
-  ])
-  const updateCategory = useUpdateCategory()
-  const [isPending, startTransition] = useTransition()
-  const { handleDown, posts } = props
-
-  function onChangeUp() {
-    startTransition(() => {
-      void updateCategory('up')
-    })
-  }
-
-  function onChangeDown() {
-    startTransition(() => {
-      void updateCategory('down')
-      handleDown()
-    })
-  }
+  const { handleDown, handleUp, size, meta, isPending } = props
 
   return (
     <div
       id={'scroll-region'}
       className={'flex items-center justify-center gap-4 py-6'}
     >
-      {posts.meta.next_page_url !== null && (
-        <Button onPress={() => onChangeUp()} disabled={isPending}>
-          Show More
+      {meta.next_page_url !== null && (
+        <Button onPress={handleUp} disabled={isPending}>
+          {isPending ? <LoadingState /> : 'Show More'}
         </Button>
       )}
-      {pageSize !== per_page && (
-        <Button onPress={() => onChangeDown()} disabled={isPending}>
-          Show Less
+      {size !== 1 && (
+        <Button onPress={handleDown} disabled={isPending}>
+          {isPending ? <LoadingState /> : 'Show Less'}
         </Button>
       )}
     </div>

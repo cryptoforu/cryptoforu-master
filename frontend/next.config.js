@@ -21,13 +21,9 @@ const nextConfig = {
     serverActions: true,
   },
   reactStrictMode: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:80/api/:path*',
-      },
-    ]
+  env: {
+    adminToken: '14|bcy2ucCe1qO0FGljdSkGoAAhE43XKPhcxnU3GKKg',
+    backendHost: 'http://localhost:80',
   },
 }
 const { withContentlayer } = require('next-contentlayer')

@@ -1,3 +1,7 @@
+import { QueryParams } from 'ziggy-js'
+
+import { IPaginationLinks, IPaginationMeta } from '@/types/shared-types'
+
 export type CategoryParams = {
   params: { category: string }
 }
@@ -9,7 +13,7 @@ export type PostParams = {
   }
 }
 
-export type CategoryProps = {
+export type ICategory = {
   id: number
   name: string
   slug: string
@@ -30,11 +34,11 @@ export type CategoryProps = {
   }
 }
 
-export type TagsProps = {
+export type ITags = {
   id: number
   name: string
 }
-export type PostProps = {
+export type IPost = {
   id: number
   title: string
   slug: string
@@ -58,7 +62,7 @@ export type PostProps = {
     } | null
     post_link: string
   }
-  tags: TagsProps[]
+  tags: ITags[]
   count: CountProps
 }
 export type PostStatus =
@@ -73,24 +77,33 @@ export type CountProps = {
   views: number
   ips: string[]
 }
-
-export type CursorPagination = {
-  path: string
-  per_page: number
-  next_page_url: string | null
-  prev_page_url: string | null
-  total: number
+export type IPaginatedPost = {
+  data: Array<IPost>
+  links: IPaginationLinks
+  meta: IPaginationMeta
 }
 
-export interface CategoryWithPosts extends CategoryProps {
-  posts: PaginatedPosts
+export interface CategoryWithPosts extends ICategory {
+  posts: IPaginatedPost
 }
 
-export interface PostWithCategory extends PostProps {
-  category: CategoryProps
+export interface PostWithCategory extends IPost {
+  category: ICategory
 }
 
-export type PaginatedPosts = {
-  data: Array<PostWithCategory>
-  meta: CursorPagination
+export interface CategoriesQuery extends QueryParams {
+  include?: 'posts' | 'tags'
+  filter?: Record<string, string>
+  sort?: string
+  page?: {
+    size?: string
+    number?: string
+  }
 }
+
+export interface CategoryQuery extends CategoriesQuery, CategoryParams {}
+
+export type GetCategoryReturnType<Type extends CategoryQuery> =
+  Type extends CategoriesQuery ? CategoryWithPosts : ICategory
+
+export interface PostQuery extends QueryParams, PostParams {}

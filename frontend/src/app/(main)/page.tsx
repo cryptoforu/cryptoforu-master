@@ -8,7 +8,6 @@ import CryptoAcademy from '@/app/(main)/components/CryptoAcademy'
 import Features from '@/app/(main)/components/Features'
 import Hero from '@/app/(main)/components/Hero'
 import CryptoData from '@/app/(main)/components/partials/CryptoData'
-import SubscribeHeader from '@/app/(main)/components/partials/SubscribeHeader'
 import EarningMethods from '@/app/(main)/ui/EarningMethods'
 import { getCoins } from '@/app/api/crypto/cryptoRoutes'
 import { getMetaData } from '@/app/api/site_data/siteRoutes'
@@ -28,6 +27,7 @@ export default async function Home() {
     filter: {
       unique: 'Bitcoin,Ethereum,Cardano,BNB,XRP,Solana',
     },
+    sort: 'market_cap_rank',
   })
 
   return (
@@ -44,9 +44,7 @@ export default async function Home() {
       <Suspense fallback={<CardSkeleton cards={3} />}>
         <CryptoAcademy />
       </Suspense>
-      <BlogPosts>
-        <SubscribeHeader />
-      </BlogPosts>
+      <BlogPosts />
       <Suspense fallback={<ContentSkeleton cards={3} />}>
         <EarningMethods page={'home'} />
       </Suspense>

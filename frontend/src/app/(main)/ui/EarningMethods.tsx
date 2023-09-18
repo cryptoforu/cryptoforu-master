@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 
-import type { EarnCategoryProps } from '@/app/(main)/(pages)/earn-crypto/earning-methods'
-import { getCategoryMethods } from '@/app/(main)/(pages)/earn-crypto/getMethods'
+import type { EarnCategoryProps } from '@/app/api/earning-methods/earning-methods'
+import { getEarnCategories } from '@/app/api/earning-methods/earnRoutes'
 import {
   AdPlaceholder,
   Card,
@@ -19,7 +19,7 @@ import { Container, Section } from '@/components/wrappers'
 import { filterArrayByIndices } from '@/lib/filterArray'
 
 const EarningMethods = async ({ page }: { page: 'home' | 'earn' }) => {
-  const methods = await getCategoryMethods()
+  const methods = await getEarnCategories()
   const filteredMethods = filterArrayByIndices<EarnCategoryProps>(methods, {
     id: [1, 2, 7, 8],
   })

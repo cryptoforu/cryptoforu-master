@@ -1,11 +1,11 @@
 import { ReactElement } from 'react'
 
-import { PostProps } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { IPost } from '@/app/api/blog/blog'
 import { PrevNext } from '@/components/content'
 
 interface PostMainContent {
   children: ReactElement
-  post_links: PostProps['post_links']
+  post_links: IPost['post_links']
 }
 
 export default function PostMainContent({

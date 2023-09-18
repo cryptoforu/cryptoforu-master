@@ -1,13 +1,20 @@
-import 'server-only'
-
 import { NextRequest } from 'next/server'
-import route, { RouteParam, RouteParamsWithQueryOverload } from 'ziggy-js'
+import route, {
+  Config,
+  RouteParam,
+  RouteParamsWithQueryOverload,
+} from 'ziggy-js'
 
-import { getBaseUrl } from '@/lib/getApiUrl'
+import { getBackEndHost } from '@/lib/getApiUrl'
 
-interface IApiRequest {
-  url: URL | RequestInfo
-  init?: RequestInit | undefined
+const DEFAULT_HEADERS = {
+  Accept: 'application/json',
+  Authorization: `Bearer ${process.env.adminToken}`,
+}
+
+const DEFAULT_OPTIONS: Pick<RequestInit, 'credentials' | 'mode'> = {
+  credentials: 'include',
+  mode: 'cors',
 }
 
 interface IBuildRequest {
@@ -17,24 +24,17 @@ interface IBuildRequest {
   initOptions?: RequestInit
 }
 
-export async function baseRequest({ url, init }: IApiRequest) {
-  const request = new NextRequest(`${getBaseUrl()}/api/${url}`, {
+export async function getRoutes() {
+  const routes = await fetch(`${getBackEndHost()}/api/ziggy`, {
     credentials: 'include',
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${process.env.NEXT_ADMIN_TOKEN}`,
     },
     mode: 'cors',
-    ...init,
+    cache: 'force-cache',
   })
-  return fetch(request)
-}
-
-export async function getRoutes() {
-  const routes = await baseRequest({
-    url: 'ziggy',
-  })
-  return await routes.json()
+  return (await routes.json()) as Config
 }
 
 export async function buildRequest({
@@ -43,15 +43,26 @@ export async function buildRequest({
   message,
   initOptions,
 }: IBuildRequest) {
-  const buildUrl = `${getBaseUrl()}${route(routeName, params)}`
-  const request = new NextRequest(buildUrl, {
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_ADMIN_TOKEN}`,
-    },
-    mode: 'cors',
+  const headers = new Headers(DEFAULT_HEADERS)
+  const options = {
+    ...DEFAULT_OPTIONS,
     ...initOptions,
+  }
+  if (options && options.headers) {
+    for (const [key, value] of Object.entries(options.headers)) {
+      headers.append(key, value)
+    }
+  }
+  const Ziggy = await getRoutes()
+  const buildUrl = `${getBackEndHost()}${route(
+    routeName,
+    params,
+    undefined,
+    Ziggy
+  )}`
+  const request = new NextRequest(buildUrl, {
+    ...options,
+    headers,
   })
   const response = await fetch(request)
   if (!response.ok) {

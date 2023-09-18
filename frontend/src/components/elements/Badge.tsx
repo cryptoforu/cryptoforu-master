@@ -10,6 +10,8 @@ const badge = cva('rounded-full', {
         'text-slate-600 ring-1 ring-slate-900/10 hover:ring-slate-900/20 dark:text-slate-300 dark:ring-slate-900/95 dark:hover:ring-slate-900/80',
       secondary:
         'text-slate-600 ring-1 ring-emerald-900/10 hover:ring-emerald-900/20 dark:text-slate-300 dark:ring-emerald-900/95 dark:hover:ring-emerald-900/80',
+      teal: 'text-slate-600 ring-1 ring-teal-900/10 hover:ring-teal-900/20 dark:text-slate-300 dark:ring-teal-900/95 dark:hover:ring-teal-900/80',
+      cyan: 'text-slate-600 ring-1 ring-cyan-900/10 hover:ring-cyan-900/20 dark:text-slate-300 dark:ring-cyan-900/95 dark:hover:ring-cyan-900/80',
     },
     size: {
       xs: 'px-2.5 py-1 text-sm',

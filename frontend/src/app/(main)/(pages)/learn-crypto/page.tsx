@@ -2,12 +2,8 @@
 
 import { Suspense } from 'react'
 
-import {
-  CategoryWithPosts,
-  PostWithCategory,
-} from '@/app/(main)/(pages)/learn-crypto/blog'
-import { getCategories } from '@/app/(main)/(pages)/learn-crypto/blogApiFactory'
 import PageWrapper from '@/app/(main)/(pages)/SharedComponents/PageWrapper'
+import { getCategories, getLatest } from '@/app/api/blog/blogRoutes'
 import { getMetaData } from '@/app/api/site_data/siteRoutes'
 import { AdPlaceholder } from '@/components/content'
 import { ContentSkeleton } from '@/components/skeletons'
@@ -20,10 +16,13 @@ export async function generateMetadata() {
 }
 
 export default async function LearnCrypto() {
-  const latest = (await getCategories('/latest')) as PostWithCategory[]
-  const categoriesData = getCategories(
-    '?include=posts&page[size]=6'
-  ) as Promise<CategoryWithPosts[]>
+  const latest = await getLatest('3')
+  const categoriesData = getCategories({
+    include: 'posts',
+    page: {
+      size: '6',
+    },
+  })
   return (
     <PageWrapper>
       <Suspense fallback={<ContentSkeleton cards={3} />}>

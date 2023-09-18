@@ -1,6 +1,6 @@
 import { Route } from 'next'
 
-import { CategoryWithPosts } from '@/app/(main)/(pages)/learn-crypto/blog'
+import type { CategoryWithPosts } from '@/app/api/blog/blog'
 import {
   Card,
   CardBody,

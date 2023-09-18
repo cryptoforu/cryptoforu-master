@@ -1,7 +1,7 @@
 'use client'
 import { Fragment } from 'react'
 
-import { TagsProps } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { ITags } from '@/app/api/blog/blog'
 import { AdPlaceholder } from '@/components/content'
 import { useSidebarContext } from '@/store/controllers/SidebarProvider'
 
@@ -9,7 +9,7 @@ import { SidebarSocial, SideBarTags } from './'
 
 type ComponentsProps = {
   id: 'Components'
-  tagsProps: TagsProps[]
+  tagsProps: ITags[]
 }
 
 const SidebarComponents = () => {

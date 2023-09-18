@@ -1,11 +1,11 @@
-import { PostWithCategory } from '@/app/(main)/(pages)/learn-crypto/blog'
+import { CategoryWithPosts } from '@/app/api/blog/blog'
 import { List, SectionHeader, SmallImageCard } from '@/components/content'
 import SectionGrid from '@/components/patterns/SectionGrid'
 import { Container, Section } from '@/components/wrappers'
 import HoveredComponent from '@/motion/HoveredComponent'
 
 interface RelatedPostsProps {
-  data: Promise<PostWithCategory[]>
+  data: Promise<CategoryWithPosts>
   title: string
   description: string
 }
@@ -27,7 +27,7 @@ const RelatedPosts = async ({
           className={'ml-2.5 max-w-5xl lg:mx-0'}
         />
         <List
-          items={related}
+          items={related.posts.data}
           as={'div'}
           className={
             'mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4'

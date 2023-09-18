@@ -12,3 +12,8 @@ export const getImageUrl = () =>
   process.env.CRYPTOFORU_API_IMAGE_URL
     ? `https://cryptoforu.net/api/img/cache/original/`
     : process.env.NEXT_PUBLIC_IMG_URL
+
+export const getBackEndHost = () =>
+  process.env.CRYPTOFORU_API_URL
+    ? 'https://cryptoforu.net/api'
+    : process.env.backendHost
