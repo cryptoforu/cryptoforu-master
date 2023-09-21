@@ -1,0 +1,102 @@
+{
+  "url": "",
+  "port": null,
+  "defaults": {},
+  "routes": {
+    "site_home": {
+      "uri": "api/site/{site}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "site": "data_name" }
+    },
+    "site_breadcrumbs": {
+      "uri": "api/site/shared/breadcrumbs",
+      "methods": ["GET", "HEAD"]
+    },
+    "site_meta_data": {
+      "uri": "api/site/shared/meta-data",
+      "methods": ["GET", "HEAD"]
+    },
+    "blog_search": { "uri": "api/blog/search", "methods": ["GET", "HEAD"] },
+    "blog_category_index": {
+      "uri": "api/blog/category",
+      "methods": ["GET", "HEAD"]
+    },
+    "blog_category_show": {
+      "uri": "api/blog/category/{category}",
+      "methods": ["GET", "POST", "HEAD"],
+      "bindings": { "category": "slug" }
+    },
+    "blog_category_related": {
+      "uri": "api/blog/category/{category}/related",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "category": "slug" }
+    },
+    "blog_posts_index": { "uri": "api/blog/posts", "methods": ["GET", "HEAD"] },
+    "blog_posts_latest": {
+      "uri": "api/blog/posts/latest",
+      "methods": ["GET", "HEAD"]
+    },
+    "blog_posts_show": {
+      "uri": "api/blog/posts/{post}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "post": "slug" }
+    },
+    "blog_posts_related": {
+      "uri": "api/blog/posts/{post}/related",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "post": "slug" }
+    },
+    "blog_tags": { "uri": "api/blog/tags", "methods": ["GET", "HEAD"] },
+    "crypto_index": { "uri": "api/crypto", "methods": ["GET", "HEAD"] },
+    "crypto_search": { "uri": "api/crypto/search", "methods": ["GET", "HEAD"] },
+    "crypto_show": {
+      "uri": "api/crypto/coins/{crypto}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "crypto": "symbol" }
+    },
+    "crypto_gainers_losers": {
+      "uri": "api/crypto/gainers-losers",
+      "methods": ["GET", "HEAD"]
+    },
+    "crypto_categories": {
+      "uri": "api/crypto/categories/{category}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "category": "id" }
+    },
+    "earn_earn_categories": {
+      "uri": "api/earn/earn_categories",
+      "methods": ["GET", "HEAD"]
+    },
+    "earn_earn_data": {
+      "uri": "api/earn/earn-methods",
+      "methods": ["GET", "HEAD"]
+    },
+    "faucetpay_list": {
+      "uri": "api/faucetpay/list/categories/{listCategory}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "listCategory": "symbol" }
+    },
+    "faucetpay_list_categories": {
+      "uri": "api/faucetpay/list/categories",
+      "methods": ["GET", "HEAD"]
+    },
+    "faucetpay_stats": {
+      "uri": "api/faucetpay/list/stats",
+      "methods": ["GET", "HEAD"]
+    },
+    "faucetpay_search": {
+      "uri": "api/faucetpay/search",
+      "methods": ["GET", "HEAD"]
+    },
+    "placeholder": {
+      "uri": "api/placeholder/{width}/{height}",
+      "methods": ["GET", "HEAD"]
+    },
+    "count_views": {
+      "uri": "api/count-views/{post}",
+      "methods": ["GET", "HEAD"],
+      "bindings": { "post": "slug" }
+    },
+    "ziggy": { "uri": "api/ziggy", "methods": ["GET", "HEAD"] }
+  }
+}
